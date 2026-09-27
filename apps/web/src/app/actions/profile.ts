@@ -11,7 +11,8 @@ function dbError(e: { code?: string; message: string }) {
   return e.message;
 }
 
-export type ActionResult = { ok: true } | { ok: false; error: string; fields?: Record<string, string> };
+export type ActionResult =
+  { ok: true } | { ok: false; error: string; fields?: Record<string, string> };
 
 function fieldErrors(issues: { path: PropertyKey[]; message: string }[]) {
   const out: Record<string, string> = {};

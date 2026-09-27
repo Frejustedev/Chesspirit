@@ -15,6 +15,7 @@ export async function AdminNav() {
   const items: [string, string][] = [["/admin", t("home")]];
   if (admin) {
     items.push(["/admin/utilisateurs", t("users")]);
+    if (has("admin_competitions")) items.push(["/admin/ligues", t("leagues")]);
     if (has("admin_competitions", "admin_shop")) items.push(["/admin/paiements", t("payments")]);
     if (has("admin_shop")) items.push(["/admin/boutique", t("shop")]);
     items.push(["/admin/coaching", t("coaching")]);

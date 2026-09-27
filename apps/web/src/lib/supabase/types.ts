@@ -2027,6 +2027,7 @@ export type Database = {
           is_active: boolean;
           is_demo: boolean;
           created_at: string;
+          max_uses_per_user: number | null;
         };
         Insert: {
           id?: string;
@@ -2041,6 +2042,7 @@ export type Database = {
           is_active?: boolean;
           is_demo?: boolean;
           created_at?: string;
+          max_uses_per_user?: number | null;
         };
         Update: {
           id?: string;
@@ -2055,6 +2057,7 @@ export type Database = {
           is_active?: boolean;
           is_demo?: boolean;
           created_at?: string;
+          max_uses_per_user?: number | null;
         };
         Relationships: [];
       };
@@ -3081,6 +3084,7 @@ export type Database = {
       admin_overview: { Args: Record<PropertyKey, never>; Returns: { users: number; profiles: number; registrations: number; payments_succeeded: number; revenue_xof: number; pending_data_requests: number; contact_new: number }[] };
       admin_record_refund: { Args: { p_payment: string; p_amount: number; p_reason: string }; Returns: Database["public"]["Tables"]["refunds"]["Row"] };
       agree_postponement: { Args: { p_id: string }; Returns: undefined };
+      allocate_season_by_rating: { Args: { p_season: string }; Returns: number };
       approve_coach_application: { Args: { p_application_id: string }; Returns: Database["public"]["Tables"]["coach_profiles"]["Row"] };
       assign_start_numbers: { Args: { p_tournament_id: string; p_only_checked_in?: boolean }; Returns: number };
       book_slot: { Args: { p_slot_id: string; p_offer_id: string; p_student_id: string; p_notes?: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };
@@ -3089,9 +3093,11 @@ export type Database = {
       cancel_registration: { Args: { p_registration_id: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
       check_in: { Args: { p_ticket_code: string; p_mark_paid?: boolean }; Returns: { registration_id: string; tournament_id: string; display_name: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in_at: string; already: boolean }[] };
       check_promo: { Args: { p_code: string; p_subtotal: number }; Returns: { valid: boolean; kind: string; discount_xof: number }[] };
+      close_league: { Args: { p_league: string }; Returns: string };
       complete_onboarding: { Args: { p_profile: Json; p_consents: Json; p_version?: string }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
       compute_tour_points: { Args: { p_tournament: string }; Returns: number };
       confirm_payment: { Args: { p_payment_id: string; p_status: string; p_provider_ref: string; p_reason?: string }; Returns: Database["public"]["Tables"]["payments"]["Row"] };
+      create_league_matchday: { Args: { p_league: string; p_date?: string }; Returns: string };
       duplicate_tournament: { Args: { p_tournament_id: string; p_slug: string; p_starts_at: string }; Returns: Database["public"]["Tables"]["tournaments"]["Row"] };
       gift_card_balance: { Args: { p_code: string }; Returns: number };
       import_standings: { Args: { p_tournament_id: string; p_rows: Json; p_publish?: boolean }; Returns: number };
