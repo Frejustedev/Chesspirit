@@ -30,5 +30,5 @@ export default defineConfig({
   ],
   webServer: process.env.E2E_BASE_URL
     ? undefined
-    : { command: "pnpm dev", url: baseURL, reuseExistingServer: true, timeout: 120_000 },
+    : { command: "node ../../scripts/dev.mjs", url: baseURL, reuseExistingServer: true, timeout: 180_000 },
 });
