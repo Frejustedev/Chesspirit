@@ -946,5 +946,87 @@
       "status": "Statut WhatsApp",
       "banner": "Bannière Facebook"
     }
+  },
+  "wizard": {
+    "progress": "Étapes de création",
+    "step": {
+      "infos": "Informations",
+      "format": "Cadence et appariements",
+      "prizes": "Frais, places et dotations",
+      "access": "Conditions et homologation",
+      "form": "Formulaire d'inscription"
+    },
+    "endDate": "Date de fin",
+    "byePoints": "Points de l'exempt",
+    "initialColor": "Couleur du n° 1 à la ronde 1",
+    "white1": "Blancs",
+    "black1": "Noirs",
+    "tiebreaks": "Ordre des départages",
+    "tiebreaksHelp": "Appliqués dans cet ordre en cas d'égalité de points.",
+    "tb": {
+      "buchholz_cut1": "Buchholz tronqué",
+      "buchholz": "Buchholz",
+      "sonneborn_berger": "Sonneborn-Berger",
+      "direct_encounter": "Confrontation directe",
+      "wins": "Nombre de victoires",
+      "performance": "Performance"
+    },
+    "up": "Monter",
+    "down": "Descendre",
+    "remove": "Retirer",
+    "specialPrizes": "Prix spéciaux (meilleur jeune, meilleure joueuse, meilleur vétéran) : ajoutez une ligne par prix.",
+    "minRating": "Cote minimale",
+    "maxRating": "Cote maximale",
+    "minAge": "Âge minimal",
+    "maxAge": "Âge maximal",
+    "sex": "Réservé à",
+    "sexAll": "Tous",
+    "sexF": "Joueuses",
+    "sexM": "Joueurs",
+    "validation": "Validation des inscriptions",
+    "auto": "Automatique",
+    "manual": "Manuelle (par l'organisateur)",
+    "countsForTour": "Étape du Chesspirit Tour",
+    "waitlist": "Liste d'attente quand le tournoi est complet",
+    "formHelp": "Ajoutez vos propres champs (taille de t-shirt, repas, établissement…). Nom, date de naissance et club sont déjà connus grâce au profil.",
+    "fieldLabel": "Libellé",
+    "fieldOptions": "Choix (séparés par des virgules)",
+    "fieldType": "Type",
+    "type": {
+      "text": "Texte",
+      "select": "Liste",
+      "checkbox": "Case à cocher",
+      "number": "Nombre"
+    },
+    "required": "Obligatoire",
+    "addField": "Ajouter un champ",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "create": "Créer le tournoi"
+  },
+  "staff": {
+    "title": "Équipe du tournoi",
+    "none": "Aucun membre pour l'instant.",
+    "remove": "Retirer",
+    "identifier": "Téléphone ou e-mail",
+    "identifierHelp": "La personne doit avoir un profil Chesspirit.",
+    "roleLabel": "Rôle",
+    "role": {
+      "organizer": "Organisateur",
+      "chief_arbiter": "Arbitre principal",
+      "deputy_arbiter": "Arbitre adjoint",
+      "operator": "Opérateur de saisie"
+    },
+    "add": "Ajouter",
+    "added": "Membre ajouté.",
+    "duplicateTitle": "Dupliquer pour une nouvelle édition",
+    "duplicateHelp": "Copie la fiche, les partenaires, les dotations, le formulaire et l'équipe dans un nouveau tournoi en brouillon.",
+    "newSlug": "Nouvelle adresse",
+    "newDate": "Date",
+    "duplicate": "Dupliquer",
+    "err": {
+      "profile_not_found": "Aucun profil ne correspond à ce téléphone ou cet e-mail.",
+      "invalid_role": "Rôle invalide."
+    }
   }
 }

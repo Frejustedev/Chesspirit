@@ -946,5 +946,87 @@
       "status": "WhatsApp status",
       "banner": "Facebook banner"
     }
+  },
+  "wizard": {
+    "progress": "Creation steps",
+    "step": {
+      "infos": "Information",
+      "format": "Time control and pairings",
+      "prizes": "Fees, places and prizes",
+      "access": "Conditions and rating",
+      "form": "Registration form"
+    },
+    "endDate": "End date",
+    "byePoints": "Points for a bye",
+    "initialColor": "Colour of no. 1 in round 1",
+    "white1": "White",
+    "black1": "Black",
+    "tiebreaks": "Tiebreak order",
+    "tiebreaksHelp": "Applied in this order when points are equal.",
+    "tb": {
+      "buchholz_cut1": "Buchholz cut 1",
+      "buchholz": "Buchholz",
+      "sonneborn_berger": "Sonneborn-Berger",
+      "direct_encounter": "Direct encounter",
+      "wins": "Number of wins",
+      "performance": "Performance"
+    },
+    "up": "Move up",
+    "down": "Move down",
+    "remove": "Remove",
+    "specialPrizes": "Special prizes (best junior, best woman, best veteran): add one line per prize.",
+    "minRating": "Minimum rating",
+    "maxRating": "Maximum rating",
+    "minAge": "Minimum age",
+    "maxAge": "Maximum age",
+    "sex": "Open to",
+    "sexAll": "Everyone",
+    "sexF": "Women",
+    "sexM": "Men",
+    "validation": "Registration approval",
+    "auto": "Automatic",
+    "manual": "Manual (by the organiser)",
+    "countsForTour": "Chesspirit Tour stage",
+    "waitlist": "Waiting list when full",
+    "formHelp": "Add your own fields (T-shirt size, meal, school…). Name, birth date and club are already known from the profile.",
+    "fieldLabel": "Label",
+    "fieldOptions": "Choices (comma-separated)",
+    "fieldType": "Type",
+    "type": {
+      "text": "Text",
+      "select": "List",
+      "checkbox": "Checkbox",
+      "number": "Number"
+    },
+    "required": "Required",
+    "addField": "Add a field",
+    "previous": "Previous",
+    "next": "Next",
+    "create": "Create tournament"
+  },
+  "staff": {
+    "title": "Tournament team",
+    "none": "No members yet.",
+    "remove": "Remove",
+    "identifier": "Phone or e-mail",
+    "identifierHelp": "The person must have a Chesspirit profile.",
+    "roleLabel": "Role",
+    "role": {
+      "organizer": "Organiser",
+      "chief_arbiter": "Chief arbiter",
+      "deputy_arbiter": "Deputy arbiter",
+      "operator": "Data-entry operator"
+    },
+    "add": "Add",
+    "added": "Member added.",
+    "duplicateTitle": "Duplicate for a new edition",
+    "duplicateHelp": "Copies the details, partners, prizes, form and team into a new draft tournament.",
+    "newSlug": "New address",
+    "newDate": "Date",
+    "duplicate": "Duplicate",
+    "err": {
+      "profile_not_found": "No profile matches this phone or e-mail.",
+      "invalid_role": "Invalid role."
+    }
   }
 }

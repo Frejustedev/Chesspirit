@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { Chess } from "chess.js";
 import {
+  customFieldSchema,
   normalizeName,
   parsePgn,
   standingImportRowSchema,
@@ -158,11 +159,25 @@ export async function importPgnAction(
   return { ok: true, data: { imported: rows.length, rejected, linked } };
 }
 
+const TIEBREAK_KEYS = [
+  "buchholz_cut1",
+  "buchholz",
+  "sonneborn_berger",
+  "direct_encounter",
+  "wins",
+  "performance",
+] as const;
+
 const settingsSchema = tournamentSchema.omit({ starts_at: true }).extend({
   starts_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   starts_time: z
     .string()
     .regex(/^\d{2}:\d{2}$/)
+    .optional()
+    .or(z.literal("")),
+  ends_date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
     .optional()
     .or(z.literal("")),
   status: z.enum([
@@ -184,6 +199,22 @@ const settingsSchema = tournamentSchema.omit({ starts_at: true }).extend({
   allow_on_site_payment: z.boolean().default(true),
   prizes_text: z.string().max(4000).optional(),
   partners_text: z.string().max(2000).optional(),
+  tiebreaks: z.array(z.enum(TIEBREAK_KEYS)).min(1).max(6).optional(),
+  conditions: z
+    .object({
+      min_rating: z.coerce.number().int().min(0).max(3500).optional(),
+      max_rating: z.coerce.number().int().min(0).max(3500).optional(),
+      min_age: z.coerce.number().int().min(3).max(120).optional(),
+      max_age: z.coerce.number().int().min(3).max(120).optional(),
+      sex: z.enum(["M", "F"]).optional(),
+    })
+    .optional(),
+  validation_mode: z.enum(["auto", "manual"]).optional(),
+  waitlist_enabled: z.boolean().optional(),
+  counts_for_tour: z.boolean().optional(),
+  bye_points: z.union([z.literal(0), z.literal(0.5), z.literal(1)]).optional(),
+  initial_color: z.enum(["white1", "black1"]).optional(),
+  form_fields: z.array(customFieldSchema).max(20).optional(),
 });
 
 export async function saveTournamentAction(
@@ -197,11 +228,19 @@ export async function saveTournamentAction(
       error: `invalid:${parsed.error.issues.map((i) => i.path.join(".")).join(",")}`,
     };
   const v = parsed.data;
-  // Heure locale de Porto-Novo (UTC+1) ; sans heure, le tournoi est daté du jour à minuit et les horaires restent « À confirmer ».
+  // Heure locale de Porto-Novo (UTC+1) ; sans heure, le tournoi est daté du jour et les horaires restent « À confirmer ».
   const time = v.starts_time || "00:00";
   const startsAt = new Date(`${v.starts_date}T${time}:00+01:00`).toISOString();
+  const endsAt =
+    v.ends_date && v.ends_date >= v.starts_date
+      ? new Date(`${v.ends_date}T23:00:00+01:00`).toISOString()
+      : null;
   const unconfirmed = new Set(v.unconfirmed_fields);
   if (!v.starts_time) unconfirmed.add("schedule");
+  else unconfirmed.delete("schedule");
+  const conditions = Object.fromEntries(
+    Object.entries(v.conditions ?? {}).filter(([, x]) => x !== undefined),
+  );
   const row = {
     name: v.name,
     slug: v.slug,
@@ -209,6 +248,7 @@ export async function saveTournamentAction(
     venue: v.venue || null,
     city: v.city || null,
     starts_at: startsAt,
+    ends_at: endsAt,
     cadence: v.cadence || null,
     base_minutes: v.base_minutes ?? null,
     increment_seconds: v.increment_seconds ?? null,
@@ -223,6 +263,13 @@ export async function saveTournamentAction(
     unconfirmed_fields: [...unconfirmed],
     allow_online_payment: v.allow_online_payment,
     allow_on_site_payment: v.allow_on_site_payment,
+    conditions,
+    ...(v.tiebreaks ? { tiebreaks: v.tiebreaks } : {}),
+    ...(v.validation_mode ? { validation_mode: v.validation_mode } : {}),
+    ...(v.waitlist_enabled !== undefined ? { waitlist_enabled: v.waitlist_enabled } : {}),
+    ...(v.counts_for_tour !== undefined ? { counts_for_tour: v.counts_for_tour } : {}),
+    ...(v.bye_points !== undefined ? { bye_points: v.bye_points } : {}),
+    ...(v.initial_color ? { initial_color: v.initial_color } : {}),
   };
   const supabase = await createClient();
   let tid = id;
@@ -241,6 +288,11 @@ export async function saveTournamentAction(
     await supabase
       .from("registration_forms")
       .insert({ tournament_id: tid, fields: [] as CustomField[] });
+  }
+  if (v.form_fields) {
+    await supabase
+      .from("registration_forms")
+      .upsert({ tournament_id: tid!, fields: v.form_fields }, { onConflict: "tournament_id" });
   }
   // Dotations : une ligne par prix « libellé ; montant ».
   if (v.prizes_text !== undefined) {
@@ -274,6 +326,56 @@ export async function saveTournamentAction(
   }
   revalidatePath("/", "layout");
   return { ok: true, data: { id: tid! } };
+}
+
+export async function addStaffAction(
+  tournamentId: string,
+  identifier: string,
+  role: string,
+): Promise<Result> {
+  if (!uuid.safeParse(tournamentId).success || identifier.trim().length < 5)
+    return { ok: false, error: "invalid" };
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("add_tournament_staff", {
+    p_tournament_id: tournamentId,
+    p_identifier: identifier,
+    p_role: role,
+  });
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/admin/tournois/${tournamentId}`);
+  return { ok: true };
+}
+
+export async function removeStaffAction(tournamentId: string, staffId: string): Promise<Result> {
+  if (!uuid.safeParse(staffId).success) return { ok: false, error: "invalid" };
+  const supabase = await createClient();
+  const { error } = await supabase.from("tournament_staff").delete().eq("id", staffId);
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/admin/tournois/${tournamentId}`);
+  return { ok: true };
+}
+
+export async function duplicateTournamentAction(
+  tournamentId: string,
+  slug: string,
+  date: string,
+): Promise<Result<{ id: string }>> {
+  if (
+    !uuid.safeParse(tournamentId).success ||
+    !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug) ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(date)
+  ) {
+    return { ok: false, error: "invalid" };
+  }
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("duplicate_tournament", {
+    p_tournament_id: tournamentId,
+    p_slug: slug,
+    p_starts_at: new Date(`${date}T00:00:00+01:00`).toISOString(),
+  });
+  if (error || !data) return { ok: false, error: error?.message ?? "server" };
+  revalidatePath("/admin");
+  return { ok: true, data: { id: data.id } };
 }
 
 /** Recalcul complet des cotes (administrateur compétitions). */

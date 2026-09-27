@@ -12,6 +12,8 @@ import { ResultsImport } from "@/components/admin/results-import";
 import { TournamentSettings } from "@/components/admin/tournament-settings";
 import { RoundsManager } from "@/components/admin/rounds-manager";
 import { PostersPanel } from "@/components/admin/posters-panel";
+import { StaffPanel } from "@/components/admin/staff-panel";
+import type { CustomField } from "@chesspirit/shared";
 import { loadState } from "@/lib/tournament-engine";
 import { IconDownload } from "@/components/icons";
 
@@ -30,7 +32,7 @@ export default async function AdminTournament({
   setRequestLocale(locale);
   const { onglet } = await searchParams;
   const isNew = id === "nouveau";
-  await requireStaff(locale, `/admin/tournois/${id}`);
+  const session = await requireStaff(locale, `/admin/tournois/${id}`);
   const t = await getTranslations("admin");
   const supabase = await createClient();
 
@@ -184,22 +186,50 @@ export default async function AdminTournament({
   } else if (tab === "resultats") {
     body = <ResultsImport tournamentId={tn.id} slug={tn.slug} />;
   } else {
-    const [{ data: prizes }, { data: partners }] = await Promise.all([
+    const [
+      { data: prizes },
+      { data: partners },
+      { data: staff },
+      { data: form },
+      { data: manageable },
+    ] = await Promise.all([
       supabase.from("prizes").select("*").eq("tournament_id", tn.id).order("position"),
       supabase.from("tournament_partners").select("*").eq("tournament_id", tn.id).order("position"),
+      supabase.rpc("tournament_staff_list", { p_tournament_id: tn.id }),
+      supabase.from("registration_forms").select("fields").eq("tournament_id", tn.id).maybeSingle(),
+      supabase.rpc("my_managed_tournaments"),
     ]);
+    const canManage =
+      !!session.admin ||
+      (manageable ?? []).some(
+        (x) => x.id === tn.id && x.organizer_profile_id === session.session.profile?.id,
+      );
     body = (
-      <TournamentSettings
-        tournament={{
-          ...tn,
-          description_fr: tr(tn.description, "fr"),
-          description_en: tr(tn.description, "en"),
-        }}
-        prizesText={(prizes ?? [])
-          .map((p) => `${tr(p.label, "fr")}${p.amount_xof != null ? ` ; ${p.amount_xof}` : ""}`)
-          .join("\n")}
-        partnersText={(partners ?? []).map((p) => p.name).join("\n")}
-      />
+      <div className="space-y-12">
+        <StaffPanel
+          tournamentId={tn.id}
+          slug={tn.slug}
+          canManage={canManage}
+          staff={(staff ?? []).map((s) => ({
+            id: s.id,
+            role: s.role,
+            name: s.name,
+            phone: s.phone,
+          }))}
+        />
+        <TournamentSettings
+          tournament={{
+            ...tn,
+            description_fr: tr(tn.description, "fr"),
+            description_en: tr(tn.description, "en"),
+          }}
+          prizesText={(prizes ?? [])
+            .map((p) => `${tr(p.label, "fr")}${p.amount_xof != null ? ` ; ${p.amount_xof}` : ""}`)
+            .join("\n")}
+          partnersText={(partners ?? []).map((p) => p.name).join("\n")}
+          formFields={(form?.fields ?? []) as CustomField[]}
+        />
+      </div>
     );
   }
 
