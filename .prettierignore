@@ -1,0 +1,9 @@
+pnpm-lock.yaml
+.next
+node_modules
+coverage
+docs/BRIEF.md
+*.pdf
+supabase/migrations
+services
+apps/web/public/vendor
