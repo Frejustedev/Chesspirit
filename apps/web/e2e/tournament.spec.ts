@@ -37,20 +37,18 @@ test("tournoi suisse complet : génération, résultats, publication, direct, cl
       players!.map((p) => p.id),
     );
   const r = new Map((ratings ?? []).map((x) => [x.profile_id, x.rating]));
-  await db
-    .from("registrations")
-    .insert(
-      players!.map((p) => ({
-        tournament_id: t!.id,
-        player_id: p.id,
-        status: "confirmed",
-        payment_status: "not_required",
-        payment_method: "free",
-        seed_rating: r.get(p.id) ?? null,
-        checked_in_at: new Date().toISOString(),
-        source: "admin",
-      })),
-    );
+  await db.from("registrations").insert(
+    players!.map((p) => ({
+      tournament_id: t!.id,
+      player_id: p.id,
+      status: "confirmed",
+      payment_status: "not_required",
+      payment_method: "free",
+      seed_rating: r.get(p.id) ?? null,
+      checked_in_at: new Date().toISOString(),
+      source: "admin",
+    })),
+  );
 
   await loginAsAdmin(page);
   await page.goto(`/admin/tournois/${t!.id}?onglet=rondes`);

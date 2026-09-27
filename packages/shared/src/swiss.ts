@@ -32,7 +32,12 @@ function colorDiff(p: SwissState) {
 }
 
 /** Attribue les couleurs : le joueur le plus « en retard » de blancs prend les blancs. */
-export function allocateColors(a: SwissState, b: SwissState, boardIndex: number, round: number): [SwissState, SwissState] {
+export function allocateColors(
+  a: SwissState,
+  b: SwissState,
+  boardIndex: number,
+  round: number,
+): [SwissState, SwissState] {
   const da = colorDiff(a);
   const db = colorDiff(b);
   if (da !== db) return da < db ? [a, b] : [b, a];

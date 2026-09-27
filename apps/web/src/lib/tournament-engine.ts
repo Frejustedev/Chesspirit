@@ -269,13 +269,11 @@ export async function generateNextRound(
     .update({ status: "ongoing" })
     .eq("id", tournamentId)
     .in("status", ["registration_open", "registration_closed", "published"]);
-  await supabase
-    .from("tournament_audit")
-    .insert({
-      tournament_id: tournamentId,
-      action: "generate_round",
-      details: { round: roundNumber, engine, warning: warning ?? null },
-    });
+  await supabase.from("tournament_audit").insert({
+    tournament_id: tournamentId,
+    action: "generate_round",
+    details: { round: roundNumber, engine, warning: warning ?? null },
+  });
   return { roundNumber, engine, warning };
 }
 
