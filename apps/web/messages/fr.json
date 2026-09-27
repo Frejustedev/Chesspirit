@@ -29,7 +29,9 @@
     "comingSoonText": "Cette rubrique ouvrira dans une prochaine étape. Laissez votre e-mail en bas de page pour être prévenu.",
     "backHome": "Retour à l'accueil",
     "notFoundTitle": "Page introuvable",
-    "notFoundText": "Cette case est vide. Revenez à l'accueil pour reprendre la partie."
+    "notFoundText": "Cette case est vide. Revenez à l'accueil pour reprendre la partie.",
+    "share": "Partager",
+    "linkCopied": "Lien copié"
   },
   "nav": {
     "main": "Navigation principale",
@@ -385,7 +387,10 @@
       "waitlisted": "liste d'attente",
       "cancelled": "annulée",
       "refused": "refusée"
-    }
+    },
+    "tournaments": "Mes tournois",
+    "games": "Mes parties",
+    "stats": "Statistiques"
   },
   "family": {
     "title": "Compte famille",
@@ -861,5 +866,67 @@
     "rapid": "Rapide",
     "blitz": "Blitz",
     "empty": "La première liste FIDE sera importée au prochain import mensuel."
+  },
+  "engine": {
+    "start": "Analyser avec Stockfish",
+    "bar": "Évaluation (Blancs à gauche en clair)",
+    "depth": "Profondeur {depth}",
+    "thinking": "Analyse en cours…",
+    "loading": "Chargement du moteur…",
+    "license": "Moteur Stockfish, logiciel libre sous licence",
+    "source": "code source",
+    "stop": "Arrêter l'analyse"
+  },
+  "myTournaments": {
+    "title": "Mes tournois",
+    "none": "Aucun tournoi pour l'instant.",
+    "tournament": "Tournoi",
+    "rank": "Rang",
+    "score": "Score",
+    "perf": "Perf.",
+    "delta": "Cote ±",
+    "prize": "Prix",
+    "certificate": "Attestation",
+    "upcoming": "à venir"
+  },
+  "myGames": {
+    "title": "Mes parties",
+    "opponent": "Adversaire",
+    "color": "Couleur",
+    "anyColor": "Toutes couleurs",
+    "white": "Blancs",
+    "black": "Noirs",
+    "result": "Résultat",
+    "anyResult": "Tous résultats",
+    "win": "Victoire",
+    "draw": "Nulle",
+    "loss": "Défaite",
+    "eco": "ECO (ex. B20)",
+    "from": "Depuis le",
+    "filter": "Filtrer",
+    "count": "{n, plural, =0 {Aucune partie} one {# partie} other {# parties}}",
+    "downloadAll": "Tout télécharger (PGN)",
+    "round": "ronde {n}"
+  },
+  "myStats": {
+    "title": "Statistiques",
+    "none": "Vos statistiques apparaîtront après vos premières parties enregistrées.",
+    "curve": "Cote {cadence}",
+    "byColor": "Résultats par couleur",
+    "white": "Avec les Blancs",
+    "black": "Avec les Noirs",
+    "openings": "Répertoire d'ouvertures",
+    "opponents": "Adversaires fréquents",
+    "unclassified": "Ouverture non classée"
+  },
+  "notes": {
+    "title": "Mes annotations",
+    "private": "Visibles uniquement par vous.",
+    "ply": "{n}.{side}",
+    "start": "Début",
+    "add": "Ajouter",
+    "delete": "Supprimer la note",
+    "placeholder": "Note sur la position initiale",
+    "placeholderMove": "Note après {san}"
   }
 }

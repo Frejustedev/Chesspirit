@@ -143,12 +143,10 @@ export async function recomputeAllRatings(): Promise<{
       .eq("tournament_id", h.tournamentId)
       .eq("player_id", h.playerId);
   }
-  await db
-    .from("audit_logs")
-    .insert({
-      action: "recompute_ratings",
-      object_type: "ratings",
-      after: { engine, tournaments: ids.length, players: playerIds.length },
-    });
+  await db.from("audit_logs").insert({
+    action: "recompute_ratings",
+    object_type: "ratings",
+    after: { engine, tournaments: ids.length, players: playerIds.length },
+  });
   return { engine, tournaments: ids.length, players: playerIds.length };
 }

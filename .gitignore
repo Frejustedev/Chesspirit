@@ -37,3 +37,4 @@ supabase/.branches/
 # Divers
 .DS_Store
 *.log
+public/vendor/

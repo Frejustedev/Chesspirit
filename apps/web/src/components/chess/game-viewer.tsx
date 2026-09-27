@@ -4,10 +4,19 @@ import { useEffect, useMemo, useState } from "react";
 import { Chess, type Move } from "chess.js";
 import { useTranslations } from "next-intl";
 import { Board } from "./board";
+import { EnginePanel } from "./engine-panel";
 import { IconFirst, IconPrev, IconNext, IconLast, IconFlip } from "@/components/icons";
 
 /** Lecteur PGN : échiquier, liste des coups, navigation au clavier. */
-export function GameViewer({ pgn, analysis }: { pgn: string; analysis?: React.ReactNode }) {
+export function GameViewer({
+  pgn,
+  analysis,
+  onPlyChange,
+}: {
+  pgn: string;
+  analysis?: React.ReactNode;
+  onPlyChange?: (ply: number, san: string | null) => void;
+}) {
   const t = useTranslations("viewer");
   const { moves, fens, error } = useMemo(() => {
     const c = new Chess();
@@ -36,6 +45,9 @@ export function GameViewer({ pgn, analysis }: { pgn: string; analysis?: React.Re
   }, [fens.length]);
 
   const last = ply > 0 ? moves[ply - 1] : null;
+  useEffect(() => {
+    onPlyChange?.(ply, last?.san ?? null);
+  }, [ply, last, onPlyChange]);
   const fen = fens[ply]!;
   const check = useMemo(() => {
     const c = new Chess(fen);
@@ -136,6 +148,7 @@ export function GameViewer({ pgn, analysis }: { pgn: string; analysis?: React.Re
             </li>
           ))}
         </ol>
+        <EnginePanel fen={fen} />
         {analysis}
       </div>
     </div>

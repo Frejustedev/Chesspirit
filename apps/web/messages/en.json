@@ -29,7 +29,9 @@
     "comingSoonText": "This section will open in an upcoming release. Leave your e-mail at the bottom of the page to be notified.",
     "backHome": "Back to home",
     "notFoundTitle": "Page not found",
-    "notFoundText": "This square is empty. Head back home to resume the game."
+    "notFoundText": "This square is empty. Head back home to resume the game.",
+    "share": "Share",
+    "linkCopied": "Link copied"
   },
   "nav": {
     "main": "Main navigation",
@@ -385,7 +387,10 @@
       "waitlisted": "waiting list",
       "cancelled": "cancelled",
       "refused": "refused"
-    }
+    },
+    "tournaments": "My tournaments",
+    "games": "My games",
+    "stats": "Statistics"
   },
   "family": {
     "title": "Family account",
@@ -861,5 +866,67 @@
     "rapid": "Rapid",
     "blitz": "Blitz",
     "empty": "The first FIDE list will be imported at the next monthly import."
+  },
+  "engine": {
+    "start": "Analyse with Stockfish",
+    "bar": "Evaluation (White in light)",
+    "depth": "Depth {depth}",
+    "thinking": "Analysing…",
+    "loading": "Loading engine…",
+    "license": "Stockfish engine, free software under",
+    "source": "source code",
+    "stop": "Stop analysis"
+  },
+  "myTournaments": {
+    "title": "My tournaments",
+    "none": "No tournaments yet.",
+    "tournament": "Tournament",
+    "rank": "Rank",
+    "score": "Score",
+    "perf": "Perf.",
+    "delta": "Rating ±",
+    "prize": "Prize",
+    "certificate": "Certificate",
+    "upcoming": "upcoming"
+  },
+  "myGames": {
+    "title": "My games",
+    "opponent": "Opponent",
+    "color": "Colour",
+    "anyColor": "Any colour",
+    "white": "White",
+    "black": "Black",
+    "result": "Result",
+    "anyResult": "Any result",
+    "win": "Win",
+    "draw": "Draw",
+    "loss": "Loss",
+    "eco": "ECO (e.g. B20)",
+    "from": "Since",
+    "filter": "Filter",
+    "count": "{n, plural, =0 {No games} one {# game} other {# games}}",
+    "downloadAll": "Download all (PGN)",
+    "round": "round {n}"
+  },
+  "myStats": {
+    "title": "Statistics",
+    "none": "Your statistics will appear after your first recorded games.",
+    "curve": "{cadence} rating",
+    "byColor": "Results by colour",
+    "white": "With White",
+    "black": "With Black",
+    "openings": "Opening repertoire",
+    "opponents": "Frequent opponents",
+    "unclassified": "Unclassified opening"
+  },
+  "notes": {
+    "title": "My notes",
+    "private": "Visible only to you.",
+    "ply": "{n}.{side}",
+    "start": "Start",
+    "add": "Add",
+    "delete": "Delete note",
+    "placeholder": "Note on the starting position",
+    "placeholderMove": "Note after {san}"
   }
 }

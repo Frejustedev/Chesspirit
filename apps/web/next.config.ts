@@ -28,6 +28,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   transpilePackages: ["@chesspirit/shared"],
+  serverExternalPackages: ["@react-pdf/renderer"],
   typedRoutes: false,
   images: { formats: ["image/avif", "image/webp"] },
   async headers() {

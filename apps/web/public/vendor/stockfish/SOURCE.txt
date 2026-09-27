@@ -1,0 +1,1 @@
+Stockfish.js 19.0.0 (GPL v3). Code source : https://github.com/nmrugg/stockfish.js/tree/v19.0.0 et https://github.com/official-stockfish/Stockfish

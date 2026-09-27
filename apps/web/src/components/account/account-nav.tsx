@@ -6,6 +6,9 @@ export async function AccountNav({ current, isAdmin }: { current: string; isAdmi
   const t = await getTranslations("account");
   const items = [
     { href: "/compte", key: "dashboard" },
+    { href: "/compte/tournois", key: "tournaments" },
+    { href: "/compte/parties", key: "games" },
+    { href: "/compte/statistiques", key: "stats" },
     { href: "/compte/profil", key: "profile" },
     { href: "/compte/famille", key: "family" },
     { href: "/compte/donnees", key: "data" },
