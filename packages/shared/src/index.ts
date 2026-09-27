@@ -9,3 +9,4 @@ export * from "./tour";
 export * from "./trf";
 export * from "./pgn";
 export * from "./schemas";
+export * from "./swiss";

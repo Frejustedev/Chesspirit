@@ -522,7 +522,8 @@
       "inscrits": "Entrants",
       "pointage": "Check-in",
       "resultats": "Results and games",
-      "reglages": "Settings"
+      "reglages": "Settings",
+      "rondes": "Rounds"
     },
     "registrantsSummary": "{total} entrants · {checked} checked in",
     "exportCsv": "Export CSV",
@@ -612,7 +613,10 @@
     "save": "Save",
     "saving": "Saving…",
     "saved": "Changes saved.",
-    "saveError": "Save failed"
+    "saveError": "Save failed",
+    "exportsTitle": "Exports",
+    "exportTrf": "Export the tournament as TRF (FIDE, Swiss Manager)",
+    "exportPgn": "Download all games (PGN)"
   },
   "viewer": {
     "board": "Game position",
@@ -686,5 +690,103 @@
     "send": "Send",
     "thanks": "Thank you, your message has been sent.",
     "error": "Please check the fields and try again."
+  },
+  "rounds": {
+    "summary": "{players} players · {rounds} of {total} rounds",
+    "onlyCheckedIn": "Checked-in players only",
+    "generate": "Pair round {n}",
+    "generated": "Round {round} paired (not published). Check it, then publish.",
+    "fallbackWarning": "Round {round} paired with the fallback engine (bbpPairings service unavailable): check before publishing.",
+    "roundsNav": "Rounds",
+    "noRounds": "No rounds yet. Starting numbers are assigned when round 1 is paired, by descending rating.",
+    "round": "Round {n}",
+    "engine": {
+      "bbp": "bbpPairings (FIDE)",
+      "fallback": "fallback, not endorsed",
+      "round_robin": "Berger tables",
+      "knockout": "knockout",
+      "manual": "manual"
+    },
+    "missing": "{n} result(s) missing",
+    "complete": "All results entered",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "print": "Print",
+    "stage": {
+      "main": "",
+      "blitz": "Blitz tiebreak",
+      "armageddon": "Armageddon"
+    },
+    "bye": "Bye",
+    "byeKind": {
+      "full": "Bye (1 point)",
+      "half": "Bye (½ point)",
+      "zero": "Absent (0 point)"
+    },
+    "manual": "Edited manually",
+    "edit": "Edit pairing",
+    "resultFor": "Result on board {board}",
+    "otherResults": "Other results",
+    "other": "Other…",
+    "result": {
+      "+-": "1–0 forfeit",
+      "-+": "0–1 forfeit",
+      "=-=": "½–½ administrative",
+      "0-0": "Double forfeit"
+    },
+    "tiebreak": "Add a tiebreak game",
+    "deleteRound": "Delete this round",
+    "deleteConfirm": "Delete the last round? (not possible once results are entered)",
+    "participants": "Players ({n})",
+    "byeNext": "Bye in round {n}",
+    "byeNone": "Plays round {n}",
+    "byeHalf": "½-point bye",
+    "byeZero": "Absent (0)",
+    "withdraw": "Withdraw",
+    "reinstate": "Reinstate",
+    "live": "Live page",
+    "projection": "Projection mode",
+    "close": "Close tournament",
+    "closeConfirm": "Close the tournament and publish final standings?",
+    "closed": "Tournament closed, final standings published.",
+    "whitePlayer": "White",
+    "blackPlayer": "Black",
+    "swap": "Swap colours",
+    "savePairing": "Save",
+    "err": {
+      "previous_round_unfinished": "Enter all results of the current round before pairing a new one.",
+      "all_rounds_generated": "All rounds have been paired.",
+      "not_enough_players": "Not enough confirmed (and checked-in, if selected) players.",
+      "system_not_supported": "This pairing system will be available in a future version.",
+      "knockout_undecided": "A match is not decided yet.",
+      "round_has_results": "Not possible: results have already been entered.",
+      "results_missing": "Some results are still missing.",
+      "same_player": "A player cannot play against themselves.",
+      "no_more_tiebreaks": "Blitz and Armageddon already added."
+    }
+  },
+  "live": {
+    "title": "Live",
+    "board": "Bd",
+    "white": "White",
+    "black": "Black",
+    "result": "Res.",
+    "bye": "bye",
+    "round": "Round {n}",
+    "noRound": "Pairings will be published here.",
+    "standings": "Standings"
+  },
+  "print": {
+    "appariements": "Pairings",
+    "cartes": "Table cards",
+    "feuilles": "Score sheets",
+    "round": "Round {n}",
+    "board": "Board",
+    "white": "White",
+    "black": "Black",
+    "result": "Result",
+    "bye": "Bye",
+    "signWhite": "White signature",
+    "signBlack": "Black signature"
   }
 }

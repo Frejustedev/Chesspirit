@@ -19,7 +19,7 @@ insert into public.tournament_staff (tournament_id, profile_id, role)
   select '00000000-0000-0000-0000-00000000a001', id, 'chief_arbiter' from public.profiles where first_name = 'Ari';
 
 select tests.as_anon();
-select tests.eq((select count(*)::int from public.tournaments), 1, 'anonyme : brouillons masqués');
+select tests.eq((select count(*)::int from public.tournaments where slug in ('test-open', 'brouillon')), 1, 'anonyme : brouillons masqués');
 select tests.throws($$select public.register_for_tournament('00000000-0000-0000-0000-00000000a001', gen_random_uuid())$$,
   'anonyme : inscription impossible');
 
@@ -74,7 +74,7 @@ select tests.throws($$update public.tournaments set name = 'Autre nom' where slu
 
 -- Les appariements non publiés restent invisibles au public.
 select tests.as_anon();
-select tests.eq((select count(*)::int from public.pairings), 0, 'appariements non publiés masqués');
+select tests.eq((select count(*)::int from public.pairings where tournament_id = '00000000-0000-0000-0000-00000000a001'), 0, 'appariements non publiés masqués');
 
 -- Organisateur : import du classement final.
 select tests.login_as((select orga from ids));
@@ -82,8 +82,8 @@ select tests.eq(public.import_standings('00000000-0000-0000-0000-00000000a001',
   '[{"rank":1,"name":"Paul Joueur","points":1},{"rank":2,"name":"Nouveau, Joueur","points":0,"club":"Club démo"}]'::jsonb), 2,
   'import du classement');
 select tests.as_anon();
-select tests.eq((select string_agg(display_name, ',' order by rank) from public.public_standings), 'Paul Joueur,Joueur Nouveau',
+select tests.eq((select string_agg(display_name, ',' order by rank) from public.public_standings where tournament_id = '00000000-0000-0000-0000-00000000a001'), 'Paul Joueur,Joueur Nouveau',
   'classement public, profil pré-créé pour un joueur inconnu');
 
 select tests.reset_role();
-select tests.eq((select count(*)::int from public.audit_logs where object_type = 'pairings'), 2, 'chaque modification d''appariement est journalisée');
+select tests.eq((select count(*)::int from public.audit_logs where object_type = 'pairings' and (after ->> 'tournament_id') = '00000000-0000-0000-0000-00000000a001'), 2, 'chaque modification d''appariement est journalisée');

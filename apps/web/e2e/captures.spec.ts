@@ -39,7 +39,11 @@ test("espace joueur", async ({ page }) => {
 
 test("administration", async ({ page }) => {
   await loginAsAdmin(page);
-  const { data: t } = await serviceDb().from("tournaments").select("id").eq("slug", "tournoi-chesspirit-2026").single();
+  const { data: t } = await serviceDb()
+    .from("tournaments")
+    .select("id")
+    .eq("slug", "tournoi-chesspirit-2026")
+    .single();
   await shoot(page, "20-admin", "/admin");
   await shoot(page, "21-admin-inscrits", `/admin/tournois/${t!.id}`);
   await shoot(page, "22-admin-pointage", `/admin/tournois/${t!.id}?onglet=pointage`);

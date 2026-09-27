@@ -613,6 +613,9 @@ export type Database = {
           updated_by: string | null;
           created_at: string;
           updated_at: string;
+          stage: string;
+          result_entered_by: string | null;
+          result_entered_at: string | null;
         };
         Insert: {
           id?: string;
@@ -627,6 +630,9 @@ export type Database = {
           updated_by?: string | null;
           created_at?: string;
           updated_at?: string;
+          stage?: string;
+          result_entered_by?: string | null;
+          result_entered_at?: string | null;
         };
         Update: {
           id?: string;
@@ -641,6 +647,9 @@ export type Database = {
           updated_by?: string | null;
           created_at?: string;
           updated_at?: string;
+          stage?: string;
+          result_entered_by?: string | null;
+          result_entered_at?: string | null;
         };
         Relationships: [{ foreignKeyName: "pairings_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "pairings_round_id_fkey"; columns: ["round_id"]; isOneToOne: false; referencedRelation: "rounds"; referencedColumns: ["id"] }, { foreignKeyName: "pairings_white_id_fkey"; columns: ["white_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "pairings_black_id_fkey"; columns: ["black_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
@@ -1114,6 +1123,9 @@ export type Database = {
           source: string;
           created_at: string;
           updated_at: string;
+          start_number: number | null;
+          withdrawn_at: string | null;
+          bye_requests: Json;
         };
         Insert: {
           id?: string;
@@ -1135,6 +1147,9 @@ export type Database = {
           source?: string;
           created_at?: string;
           updated_at?: string;
+          start_number?: number | null;
+          withdrawn_at?: string | null;
+          bye_requests?: Json;
         };
         Update: {
           id?: string;
@@ -1156,6 +1171,9 @@ export type Database = {
           source?: string;
           created_at?: string;
           updated_at?: string;
+          start_number?: number | null;
+          withdrawn_at?: string | null;
+          bye_requests?: Json;
         };
         Relationships: [{ foreignKeyName: "registrations_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "registrations_player_id_fkey"; columns: ["player_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
@@ -1169,6 +1187,8 @@ export type Database = {
           published_at: string | null;
           created_at: string;
           updated_at: string;
+          pairing_engine: string | null;
+          notes: string | null;
         };
         Insert: {
           id?: string;
@@ -1179,6 +1199,8 @@ export type Database = {
           published_at?: string | null;
           created_at?: string;
           updated_at?: string;
+          pairing_engine?: string | null;
+          notes?: string | null;
         };
         Update: {
           id?: string;
@@ -1189,6 +1211,8 @@ export type Database = {
           published_at?: string | null;
           created_at?: string;
           updated_at?: string;
+          pairing_engine?: string | null;
+          notes?: string | null;
         };
         Relationships: [{ foreignKeyName: "rounds_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }];
       };
@@ -1390,6 +1414,8 @@ export type Database = {
           created_by: string | null;
           created_at: string;
           updated_at: string;
+          initial_color: string;
+          bye_points: number;
         };
         Insert: {
           id?: string;
@@ -1440,6 +1466,8 @@ export type Database = {
           created_by?: string | null;
           created_at?: string;
           updated_at?: string;
+          initial_color?: string;
+          bye_points?: number;
         };
         Update: {
           id?: string;
@@ -1490,6 +1518,8 @@ export type Database = {
           created_by?: string | null;
           created_at?: string;
           updated_at?: string;
+          initial_color?: string;
+          bye_points?: number;
         };
         Relationships: [{ foreignKeyName: "tournaments_organizer_profile_id_fkey"; columns: ["organizer_profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "tournaments_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "tournaments_duplicated_from_fkey"; columns: ["duplicated_from"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }];
       };
@@ -1537,6 +1567,9 @@ export type Database = {
           white_name: string | null;
           black_id: string | null;
           black_name: string | null;
+          stage: string | null;
+          white_start: number | null;
+          black_start: number | null;
         };
         Relationships: [];
       };
@@ -1629,6 +1662,7 @@ export type Database = {
     Functions: {
       add_child: { Args: { p_profile: Json; p_image_rights?: boolean }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
       admin_overview: { Args: Record<PropertyKey, never>; Returns: { users: number; profiles: number; registrations: number; payments_succeeded: number; revenue_xof: number; pending_data_requests: number; contact_new: number }[] };
+      assign_start_numbers: { Args: { p_tournament_id: string; p_only_checked_in?: boolean }; Returns: number };
       cancel_registration: { Args: { p_registration_id: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
       check_in: { Args: { p_ticket_code: string; p_mark_paid?: boolean }; Returns: { registration_id: string; tournament_id: string; display_name: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in_at: string; already: boolean }[] };
       complete_onboarding: { Args: { p_profile: Json; p_consents: Json; p_version?: string }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };

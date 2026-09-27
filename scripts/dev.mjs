@@ -35,5 +35,37 @@ const stack = useCli
     });
 if (stack.status !== 0) process.exit(stack.status ?? 1);
 
+// Service échecs Python (facultatif : sans uv, l'appariement de secours prend le relais).
+const env = Object.fromEntries(
+  fs
+    .readFileSync(envFile, "utf8")
+    .split("\n")
+    .filter((l) => l.includes("="))
+    .map((l) => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1)]),
+);
+const engineDir = path.join(root, "services/chess-engine");
+const hasUv = spawnSync("uv", ["--version"]).status === 0;
+let engine;
+if (hasUv) {
+  const bbp = path.join(engineDir, "bin/bbpPairings");
+  if (!fs.existsSync(bbp) && spawnSync("g++", ["--version"]).status === 0) {
+    spawnSync("bash", [path.join(engineDir, "scripts/build-bbp.sh")], { stdio: "inherit" });
+  }
+  engine = spawn("uv", ["run", "uvicorn", "app.main:app", "--port", "8000"], {
+    cwd: engineDir,
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      CHESS_ENGINE_KEY: env.CHESS_ENGINE_KEY ?? "",
+      BBP_PAIRINGS_BIN: fs.existsSync(bbp) ? bbp : "",
+    },
+  });
+} else {
+  console.log("• uv absent : service échecs non démarré (appariement de secours utilisé).");
+}
+
 const web = spawn("pnpm", ["--filter", "web", "dev"], { cwd: root, stdio: "inherit" });
-web.on("exit", (code) => process.exit(code ?? 0));
+web.on("exit", (code) => {
+  engine?.kill();
+  process.exit(code ?? 0);
+});

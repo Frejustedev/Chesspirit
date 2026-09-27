@@ -1,0 +1,69 @@
+import { describe, expect, it } from "vitest";
+import { pairSwissFallback, type SwissState } from "./swiss";
+
+function field(n: number): SwissState[] {
+  return Array.from({ length: n }, (_, i) => ({
+    id: `p${i + 1}`,
+    startNo: i + 1,
+    rating: 2000 - i * 50,
+    points: 0,
+    opponents: [],
+    colors: [],
+    hadBye: false,
+  }));
+}
+
+function play(players: SwissState[], pairs: ReturnType<typeof pairSwissFallback>) {
+  const by = new Map(players.map((p) => [p.id, p]));
+  for (const { white, black } of pairs) {
+    const w = by.get(white)!;
+    if (!black) {
+      w.points += 1;
+      w.hadBye = true;
+      continue;
+    }
+    const b = by.get(black)!;
+    w.opponents.push(b.id);
+    b.opponents.push(w.id);
+    w.colors.push("w");
+    b.colors.push("b");
+    if (w.rating >= b.rating) w.points += 1;
+    else b.points += 1;
+  }
+}
+
+describe("appariement suisse de secours", () => {
+  it("ronde 1 : moitié haute contre moitié basse, bye au dernier", () => {
+    const p = field(7);
+    const pairs = pairSwissFallback(p, 1);
+    expect(pairs).toHaveLength(4);
+    expect(pairs.at(-1)).toEqual({ white: "p7", black: null });
+    const first = pairs[0]!;
+    expect([first.white, first.black].sort()).toEqual(["p1", "p4"]);
+  });
+
+  it("7 rondes à 12 joueurs sans rematch, couleurs équilibrées", () => {
+    const p = field(12);
+    for (let r = 1; r <= 7; r++) play(p, pairSwissFallback(p, r));
+    for (const x of p) {
+      expect(new Set(x.opponents).size).toBe(x.opponents.length);
+      const d = x.colors.filter((c) => c === "w").length - x.colors.filter((c) => c === "b").length;
+      expect(Math.abs(d)).toBeLessThanOrEqual(2);
+    }
+  });
+
+  it("un seul bye par joueur et les absents sont exclus", () => {
+    const p = field(5);
+    const byes = new Set<string>();
+    for (let r = 1; r <= 4; r++) {
+      const pairs = pairSwissFallback(p, r);
+      const b = pairs.find((x) => x.black === null)!;
+      expect(byes.has(b.white)).toBe(false);
+      byes.add(b.white);
+      play(p, pairs);
+    }
+    p[0]!.absent = true;
+    const pairs = pairSwissFallback(p, 5);
+    expect(pairs.flatMap((x) => [x.white, x.black])).not.toContain("p1");
+  });
+});

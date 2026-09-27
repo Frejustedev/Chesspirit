@@ -135,6 +135,25 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           }}
         />
         {pending ? <p className="mt-3 text-sm text-stone">{t("loading")}</p> : null}
+        <h2 className="mt-10 font-display text-2xl font-semibold">{t("exportsTitle")}</h2>
+        <ul className="mt-3 space-y-2">
+          <li>
+            <a
+              href={`/api/admin/tournaments/${tournamentId}/trf`}
+              className="font-semibold text-bordeaux hover:underline"
+            >
+              {t("exportTrf")}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`/api/tournaments/${slug}/pgn`}
+              className="font-semibold text-bordeaux hover:underline"
+            >
+              {t("exportPgn")}
+            </a>
+          </li>
+        </ul>
         {pgnMsg ? (
           <p role="status" className="mt-3 rounded bg-cream px-3 py-2 text-sm font-semibold">
             {pgnMsg}

@@ -35,7 +35,7 @@ def test_berger_matches_fide_table():
 
 def test_api_requires_key(monkeypatch):
     monkeypatch.setenv("CHESS_ENGINE_KEY", "k")
-    assert client.get("/health").json() == {"status": "ok"}
+    assert client.get("/health").json()["status"] == "ok"
     assert client.post("/pairings/round-robin", json={"players": 4}).status_code == 401
     res = client.post("/pairings/round-robin", json={"players": 4}, headers={"x-engine-key": "k"})
     assert res.status_code == 200 and len(res.json()) == 6
@@ -54,3 +54,38 @@ def test_replay_idempotent(monkeypatch):
             "b": {"rating": 1780, "games": 1, "provisional": False},
         }
     )
+
+
+def test_swiss_with_bbp(monkeypatch):
+    import os
+
+    import pytest
+
+    binary = os.path.join(os.path.dirname(__file__), "..", "bin", "bbpPairings")
+    if not os.path.exists(binary):
+        pytest.skip("bbpPairings non compilé (scripts/build-bbp.sh)")
+    monkeypatch.setenv("BBP_PAIRINGS_BIN", binary)
+    monkeypatch.setenv("CHESS_ENGINE_KEY", "k")
+    players = [
+        {"start_no": i, "name": f"Joueur {i}", "rating": 2000 - 100 * i, "points": 0, "history": []}
+        for i in range(1, 8)
+    ]
+    r1 = client.post(
+        "/pairings/swiss",
+        json={"total_rounds": 5, "round": 1, "players": players},
+        headers={"x-engine-key": "k"},
+    )
+    assert r1.status_code == 200
+    pairs = r1.json()
+    assert len(pairs) == 4 and sum(1 for p in pairs if p["black"] is None) == 1
+    # Ronde 1 néerlandaise : 1 contre 4 (moitié haute contre moitié basse), bye au dernier.
+    assert {"white": 1, "black": 4} in pairs or {"white": 4, "black": 1} in pairs
+    assert {"white": 7, "black": None} in pairs
+    # Un joueur absent n'est pas apparié.
+    players[6]["absent"] = True
+    r2 = client.post(
+        "/pairings/swiss",
+        json={"total_rounds": 5, "round": 1, "players": players},
+        headers={"x-engine-key": "k"},
+    ).json()
+    assert all(7 not in (p["white"], p["black"]) for p in r2) and len(r2) == 3

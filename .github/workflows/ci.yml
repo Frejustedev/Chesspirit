@@ -41,6 +41,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: uv sync
+      - name: Compiler bbpPairings
+        run: bash scripts/build-bbp.sh
       - run: uv run ruff check .
       - run: uv run ruff format --check .
       - run: uv run pytest -q
@@ -56,6 +58,11 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Service échecs (bbpPairings)
+        run: bash services/chess-engine/scripts/build-bbp.sh && (cd services/chess-engine && uv sync)
       - name: Pile Supabase locale (Postgres, PostgREST, GoTrue)
         run: bash scripts/local-stack.sh start
       - run: pnpm test:rls

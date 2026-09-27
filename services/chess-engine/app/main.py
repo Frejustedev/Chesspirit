@@ -14,6 +14,7 @@ from pydantic import BaseModel, Field
 
 from .rating import RatingState, apply_game
 from .roundrobin import berger_tables
+from .swiss import Pair, SwissRequest, bbp_binary, pair_round
 
 app = FastAPI(title="Chesspirit chess-engine", version="0.1.0", docs_url=None, redoc_url=None)
 
@@ -25,8 +26,16 @@ def require_key(x_engine_key: str = Header(default="")) -> None:
 
 
 @app.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok"}
+def health() -> dict[str, str | bool]:
+    return {"status": "ok", "bbp": bbp_binary() is not None}
+
+
+@app.post("/pairings/swiss", dependencies=[Depends(require_key)])
+def swiss(req: SwissRequest) -> list[Pair]:
+    try:
+        return pair_round(req)
+    except RuntimeError as e:
+        raise HTTPException(status_code=422, detail=str(e)) from e
 
 
 class RRRequest(BaseModel):

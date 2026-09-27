@@ -94,7 +94,7 @@ apply_migrations() {
     name="$(basename "$f")"
     if [ -z "$(psql "$DB_URL" -tAc "select 1 from public._local_migrations where name='$name'")" ]; then
       echo "   · $name"
-      psql "$DB_URL" -q -v ON_ERROR_STOP=1 -f "$f"
+      psql "$DB_URL" -q -v ON_ERROR_STOP=1 --single-transaction -f "$f"
       psql "$DB_URL" -q -c "insert into public._local_migrations(name) values ('$name')"
     fi
   done

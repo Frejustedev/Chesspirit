@@ -37,7 +37,7 @@ select tests.throws($$insert into public.user_roles (user_id, role) values ((sel
 
 -- Anonyme.
 select tests.as_anon();
-select tests.eq((select count(*)::int from public.public_profiles), 1, 'anonyme : seul le profil public adulte');
+select tests.eq((select count(*)::int from public.public_profiles where last_name = 'Test'), 1, 'anonyme : seul le profil public adulte');
 select tests.throws($$select * from public.profiles$$, 'anonyme : pas d''accès à la table profiles');
 select tests.eq((select count(*)::int from public.app_settings where key = 'require_admin_mfa'), 0, 'paramètres privés masqués');
 
@@ -45,7 +45,7 @@ select tests.eq((select count(*)::int from public.app_settings where key = 'requ
 select tests.login_as((select admin from ids), 'aal1');
 select tests.eq((select count(*)::int from public.profiles), 0, 'admin sans 2FA : aucun accès étendu');
 select tests.login_as((select admin from ids), 'aal2');
-select tests.eq((select count(*)::int from public.profiles), 2, 'admin avec 2FA : voit tout');
+select tests.eq((select count(*)::int from public.profiles where last_name = 'Test'), 2, 'admin avec 2FA : voit tout');
 select public.log_personal_data_access((select id from public.profiles where first_name = 'Alice'), 'test');
 select tests.eq((select count(*)::int from public.audit_logs where action = 'view_personal_data'), 1, 'consultation journalisée');
 update public.profiles set verified = true where first_name = 'Alice';

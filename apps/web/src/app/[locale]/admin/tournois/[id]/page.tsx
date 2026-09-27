@@ -10,11 +10,13 @@ import { RegistrationActions } from "@/components/admin/registration-actions";
 import { CheckInScanner } from "@/components/admin/check-in-scanner";
 import { ResultsImport } from "@/components/admin/results-import";
 import { TournamentSettings } from "@/components/admin/tournament-settings";
+import { RoundsManager } from "@/components/admin/rounds-manager";
+import { loadState } from "@/lib/tournament-engine";
 import { IconDownload } from "@/components/icons";
 
 export const metadata: Metadata = { robots: { index: false } };
 
-const TABS = ["inscrits", "pointage", "resultats", "reglages"] as const;
+const TABS = ["inscrits", "pointage", "rondes", "resultats", "reglages"] as const;
 
 export default async function AdminTournament({
   params,
@@ -128,6 +130,50 @@ export default async function AdminTournament({
     );
   } else if (tab === "pointage") {
     body = <CheckInScanner />;
+  } else if (tab === "rondes") {
+    const st = await loadState(supabase, tn.id);
+    const { data: canManage } = await supabase
+      .from("tournaments")
+      .select("id")
+      .eq("id", tn.id)
+      .maybeSingle();
+    body = (
+      <RoundsManager
+        tournamentId={tn.id}
+        slug={tn.slug}
+        system={tn.pairing_system}
+        roundsCount={tn.rounds_count}
+        canClose={!!canManage}
+        participants={st.participants.map((p) => ({
+          registrationId: p.registrationId,
+          playerId: p.playerId,
+          startNo: p.startNo,
+          name: p.name,
+          rating: p.rating,
+          checkedIn: p.checkedIn,
+          withdrawn: p.withdrawn,
+          byeRequests: p.byeRequests,
+        }))}
+        rounds={st.rounds.map((r) => ({
+          id: r.id,
+          number: r.number,
+          status: r.status,
+          published: !!r.published_at,
+          engine: r.pairing_engine,
+        }))}
+        pairings={st.pairings.map((p) => ({
+          id: p.id,
+          roundId: p.round_id,
+          board: p.board,
+          white: p.white_id,
+          black: p.black_id,
+          result: p.result,
+          byeType: p.bye_type,
+          stage: p.stage,
+          manual: p.is_manual,
+        }))}
+      />
+    );
   } else if (tab === "resultats") {
     body = <ResultsImport tournamentId={tn.id} slug={tn.slug} />;
   } else {

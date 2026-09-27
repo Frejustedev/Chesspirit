@@ -522,7 +522,8 @@
       "inscrits": "Inscrits",
       "pointage": "Pointage",
       "resultats": "Résultats et parties",
-      "reglages": "Réglages"
+      "reglages": "Réglages",
+      "rondes": "Rondes"
     },
     "registrantsSummary": "{total} inscrits · {checked} pointés",
     "exportCsv": "Exporter en CSV",
@@ -612,7 +613,10 @@
     "save": "Enregistrer",
     "saving": "Enregistrement…",
     "saved": "Modifications enregistrées.",
-    "saveError": "Échec de l'enregistrement"
+    "saveError": "Échec de l'enregistrement",
+    "exportsTitle": "Exports",
+    "exportTrf": "Exporter le tournoi au format TRF (FIDE, Swiss Manager)",
+    "exportPgn": "Télécharger toutes les parties (PGN)"
   },
   "viewer": {
     "board": "Position de la partie",
@@ -686,5 +690,103 @@
     "send": "Envoyer",
     "thanks": "Merci, votre message a bien été envoyé.",
     "error": "Vérifiez les champs et réessayez."
+  },
+  "rounds": {
+    "summary": "{players} joueurs · {rounds} rondes sur {total}",
+    "onlyCheckedIn": "Uniquement les joueurs pointés",
+    "generate": "Générer la ronde {n}",
+    "generated": "Ronde {round} générée (non publiée). Vérifiez puis publiez.",
+    "fallbackWarning": "Ronde {round} générée avec l'appariement de secours (service bbpPairings indisponible) : vérifiez avant de publier.",
+    "roundsNav": "Rondes",
+    "noRounds": "Aucune ronde. Les numéros de départ sont attribués à la génération de la première ronde, par cote décroissante.",
+    "round": "Ronde {n}",
+    "engine": {
+      "bbp": "bbpPairings (FIDE)",
+      "fallback": "secours, non homologué",
+      "round_robin": "tables de Berger",
+      "knockout": "élimination directe",
+      "manual": "manuel"
+    },
+    "missing": "{n} résultat(s) manquant(s)",
+    "complete": "Tous les résultats sont saisis",
+    "publish": "Publier",
+    "unpublish": "Retirer la publication",
+    "print": "Imprimer",
+    "stage": {
+      "main": "",
+      "blitz": "Départage blitz",
+      "armageddon": "Armageddon"
+    },
+    "bye": "Exempt",
+    "byeKind": {
+      "full": "Exempt (1 point)",
+      "half": "Bye (½ point)",
+      "zero": "Absent (0 point)"
+    },
+    "manual": "Modifié manuellement",
+    "edit": "Modifier l'appariement",
+    "resultFor": "Résultat de l'échiquier {board}",
+    "otherResults": "Autres résultats",
+    "other": "Autre…",
+    "result": {
+      "+-": "1–0 forfait",
+      "-+": "0–1 forfait",
+      "=-=": "½–½ administratif",
+      "0-0": "Double forfait"
+    },
+    "tiebreak": "Ajouter un départage",
+    "deleteRound": "Supprimer cette ronde",
+    "deleteConfirm": "Supprimer la dernière ronde ? (impossible si des résultats sont saisis)",
+    "participants": "Joueurs ({n})",
+    "byeNext": "Bye à la ronde {n}",
+    "byeNone": "Joue la ronde {n}",
+    "byeHalf": "Bye ½ point",
+    "byeZero": "Absent (0)",
+    "withdraw": "Forfait général",
+    "reinstate": "Réintégrer",
+    "live": "Page en direct",
+    "projection": "Mode projection",
+    "close": "Clôturer le tournoi",
+    "closeConfirm": "Clôturer le tournoi et publier le classement final ?",
+    "closed": "Tournoi clôturé, classement final publié.",
+    "whitePlayer": "Blancs",
+    "blackPlayer": "Noirs",
+    "swap": "Inverser les couleurs",
+    "savePairing": "Enregistrer",
+    "err": {
+      "previous_round_unfinished": "Saisissez tous les résultats de la ronde en cours avant d'en générer une nouvelle.",
+      "all_rounds_generated": "Toutes les rondes ont été générées.",
+      "not_enough_players": "Pas assez de joueurs confirmés (et pointés, si l'option est cochée).",
+      "system_not_supported": "Ce système d'appariement sera disponible dans une prochaine version.",
+      "knockout_undecided": "Un match n'est pas encore départagé.",
+      "round_has_results": "Impossible : des résultats sont déjà saisis.",
+      "results_missing": "Des résultats manquent encore.",
+      "same_player": "Un joueur ne peut pas jouer contre lui-même.",
+      "no_more_tiebreaks": "Blitz et Armageddon déjà ajoutés."
+    }
+  },
+  "live": {
+    "title": "En direct",
+    "board": "Éch.",
+    "white": "Blancs",
+    "black": "Noirs",
+    "result": "Rés.",
+    "bye": "exempt",
+    "round": "Ronde {n}",
+    "noRound": "Les appariements seront publiés ici.",
+    "standings": "Classement"
+  },
+  "print": {
+    "appariements": "Appariements",
+    "cartes": "Cartes de table",
+    "feuilles": "Feuilles de notation",
+    "round": "Ronde {n}",
+    "board": "Échiquier",
+    "white": "Blancs",
+    "black": "Noirs",
+    "result": "Résultat",
+    "bye": "Exempt",
+    "signWhite": "Signature Blancs",
+    "signBlack": "Signature Noirs"
   }
 }
