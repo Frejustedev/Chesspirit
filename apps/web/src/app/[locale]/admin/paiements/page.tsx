@@ -30,7 +30,7 @@ export default async function AdminPayments({
   let q = supabase
     .from("payments")
     .select(
-      "id, provider, status, amount_xof, object_type, object_id, description, provider_ref, created_at, confirmed_at, refunds(amount_xof, status)",
+      "id, provider, status, amount_xof, object_type, object_id, description, provider_ref, created_at, confirmed_at, metadata, refunds(amount_xof, status)",
     )
     .order("created_at", { ascending: false })
     .limit(300);
@@ -119,6 +119,11 @@ export default async function AdminPayments({
                 {t(`statuses.${p.status}`)}
               </span>
               <span className="tabular font-semibold">{formatXof(p.amount_xof, locale)}</span>
+              {(p.metadata as { needs_refund?: boolean } | null)?.needs_refund && !refunded ? (
+                <span className="rounded-full bg-bordeaux px-2 py-0.5 text-xs font-semibold text-cream">
+                  {t("needsRefund")}
+                </span>
+              ) : null}
               {refunded ? (
                 <span className="tabular text-bordeaux">−{formatXof(refunded, locale)}</span>
               ) : null}

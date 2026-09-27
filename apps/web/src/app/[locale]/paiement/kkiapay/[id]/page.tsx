@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { getProvider } from "@/lib/payments";
 import { env } from "@/lib/env";
 
@@ -16,7 +16,9 @@ export default async function KkiapayPage({
   const { locale, id } = await params;
   setRequestLocale(locale);
   if (!getProvider("kkiapay") || !/^[0-9a-f-]{36}$/.test(id)) notFound();
-  const { data: pay } = await createAdminClient()
+  const { data: pay } = await (
+    await createClient()
+  )
     .from("payments")
     .select("id, amount_xof, status")
     .eq("id", id)

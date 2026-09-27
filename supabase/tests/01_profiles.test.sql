@@ -51,3 +51,13 @@ select tests.eq((select count(*)::int from public.audit_logs where action = 'vie
   and object_id = (select id::text from public.profiles where first_name = 'Alice' and last_name = 'Test')), 1, 'consultation journalisée');
 update public.profiles set verified = true where first_name = 'Alice';
 select tests.eq((select verified from public.profiles where first_name = 'Alice'), true, 'admin peut vérifier un profil');
+
+-- Correctifs de sécurité : indicateurs non forçables à la création, titres réservés.
+select tests.reset_role();
+create temp table sec as select tests.create_user('secu@test.bj') as u;
+grant select on sec to authenticated;
+select tests.login_as((select u from sec));
+insert into public.profiles (user_id, first_name, last_name, verified, claimed, is_demo, titles)
+  select u, 'Secu', 'Test', true, true, true, '{GM}' from sec;
+select tests.eq((select verified or claimed or is_demo or titles <> '{}' from public.profiles where first_name = 'Secu'), false, 'indicateurs et titres ignorés à la création');
+select tests.throws($$update public.profiles set titles = '{IM}' where first_name = 'Secu'$$, 'titres non modifiables par le joueur');

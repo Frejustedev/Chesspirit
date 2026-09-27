@@ -54,3 +54,16 @@ describe("KKiaPay", () => {
     expect(await p.verifyWebhook("{}", new Headers({ "x-kkiapay-secret": "x" }))).toBeNull();
   });
 });
+
+describe("contrôle du montant payé", async () => {
+  const { amountMismatch } = await import("./amount");
+  it("refuse un paiement réussi d'un montant différent", () => {
+    expect(amountMismatch("kkiapay", { status: "succeeded", amountXof: 100 }, 5000)).toBe(true);
+    expect(amountMismatch("kkiapay", { status: "succeeded" }, 5000)).toBe(true);
+    expect(amountMismatch("fedapay", { status: "succeeded", amountXof: 5000 }, 5000)).toBe(false);
+  });
+  it("ignore les échecs et le fournisseur factice", () => {
+    expect(amountMismatch("kkiapay", { status: "failed", amountXof: 1 }, 5000)).toBe(false);
+    expect(amountMismatch("fake", { status: "succeeded" }, 5000)).toBe(false);
+  });
+});

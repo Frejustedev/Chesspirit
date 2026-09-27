@@ -64,7 +64,7 @@ select tests.eq((select reviews_count from public.products where slug = 'produit
 create temp table o2 as select * from public.place_order('[{"variant_id":"00000000-0000-0000-0000-0000000d0012","quantity":1,"gift":{"recipient_name":"Ami"}}]',
   'pickup', '{}', 'Cli Ent', '+22990000000', null, null, null, 10000);
 grant select on o2 to authenticated, service_role, anon;
-select tests.eq((select total_xof from o2), 4855, 'points utilisés (145) puis reste à payer');
+select tests.eq((select total_xof from o2), 5000, 'les points ne paient pas une carte cadeau');
 select tests.eq((select delivery_method from o2), 'none', 'pas de livraison pour une carte cadeau');
 
 select tests.login_as((select autre from ids));
@@ -81,3 +81,12 @@ select tests.eq((select coalesce(sum(points), 0)::int from public.loyalty_ledger
 
 select tests.login_as((select shop from ids), 'aal1');
 select tests.eq((select count(*)::int from public.orders), 0, 'sans double authentification : aucune commande visible');
+
+-- Correctifs de sécurité : remise interdite sur les cartes cadeaux, code limité par client.
+select tests.login_as((select client from ids));
+select tests.throws($$select public.place_order('[{"variant_id":"00000000-0000-0000-0000-0000000d0011","quantity":1}]', 'pickup', '{}', 'Cli Ent', '+22990000000', null, 'TEST20')$$, 'code promo déjà utilisé par ce client');
+select tests.throws($$select public.place_order('[{"variant_id":"00000000-0000-0000-0000-0000000d0012","quantity":1}]', 'pickup', '{}', 'Cli Ent', '+22990000000', null, 'EPUISE')$$, 'code épuisé refusé à la commande');
+select tests.reset_role();
+update public.promo_codes set uses = 0, max_uses = 5 where code = 'EPUISE';
+select tests.login_as((select client from ids));
+select tests.eq((select total_xof from public.place_order('[{"variant_id":"00000000-0000-0000-0000-0000000d0012","quantity":1}]', 'pickup', '{}', 'Cli Ent', '+22990000000', null, 'EPUISE')), 5000, 'pas de remise sur une carte cadeau');

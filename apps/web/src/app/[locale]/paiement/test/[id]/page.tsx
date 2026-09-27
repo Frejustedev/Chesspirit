@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { formatXof } from "@chesspirit/shared";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { getProvider } from "@/lib/payments";
 import { FakeCheckout } from "./fake-checkout";
 
@@ -17,7 +17,9 @@ export default async function FakeCheckoutPage({
   const { locale, id } = await params;
   setRequestLocale(locale);
   if (!getProvider("fake") || !/^[0-9a-f-]{36}$/.test(id)) notFound();
-  const { data: pay } = await createAdminClient()
+  const { data: pay } = await (
+    await createClient()
+  )
     .from("payments")
     .select("id, amount_xof, description, status")
     .eq("id", id)

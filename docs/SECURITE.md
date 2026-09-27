@@ -1,0 +1,25 @@
+# Revues de sécurité
+
+## Revue de fin de phase 1 (v0.2.0)
+
+Revue complète menée par un sous-agent dédié (lecture du code, requêtes sur le catalogue de la base locale). Toutes les constatations ont été corrigées ; les correctifs sont couverts par des tests (SQL, unitaires, bout en bout).
+
+| # | Gravité | Constatation | Correctif |
+| --- | --- | --- | --- |
+| H1 | Haute | Webhook KKiaPay : le montant (fixé dans le widget, côté navigateur) n'était pas comparé au montant attendu. | Le prestataire renvoie le montant payé ; tout paiement « réussi » d'un montant différent est enregistré en échec (`amount_mismatch`). Même contrôle pour FedaPay. `lib/payments/amount.ts` + tests. |
+| H2 | Haute | Un coach ou un arbitre pouvait réaffecter une réservation ou une inscription à une autre personne pour lire sa fiche, ou modifier montants et commission. | Déclencheurs de garde `bookings_guard` et `registrations_guard` (colonnes figées hors fonctions internes et administrateurs). Tests RLS. |
+| M1 | Moyenne | Paiement confirmé après annulation ou expiration de la commande ; expiration concurrente d'un paiement. | `expire_orders` verrouille (`skip locked`) et annule les paiements en attente ; `confirm_payment` signale `needs_refund` (badge « À rembourser » dans l'administration, journal d'audit). |
+| M2 | Moyenne | Points de fidélité dépensables deux fois par commandes simultanées. | Verrou consultatif par client dans `place_order`. |
+| M3 | Moyenne | Limites des codes promo contournables ; remise convertible en crédit via les cartes cadeaux. | Utilisation réservée à la commande (verrou, restituée à l'annulation), limite par client (`max_uses_per_user`), ni remise ni points sur les cartes cadeaux. |
+| M4 | Moyenne | Annulations répétées d'une inscription : promotions multiples depuis la liste d'attente. | `cancel_registration` idempotente ; promotion seulement si une place comptée est libérée. |
+| M5 | Moyenne | Redirection ouverte après connexion (`/\t/evil.com`). | `safeNext` refuse caractères de contrôle et antislash et vérifie l'origine. Tests. |
+| M6 | Moyenne | Champs d'identité modifiables (titres, FIDE) ; désignation du staff par un e-mail de profil non vérifié ; indicateurs forçables à la création. | Staff désigné par identifiant vérifié du compte ; titres réservés aux administrateurs ; FIDE unique ; garde à l'insertion. |
+| L1 | Faible | Injection de formules dans l'export CSV des inscrits. | `escapeFormulae`. |
+| L2 | Faible | Charge utile de webhook non signée stockée sans limite. | Limite de 64 Ko ; seul un extrait est conservé si la signature est invalide. |
+| L3 | Faible | Remboursement complet sans effets (stock, points, cartes cadeaux émises). | `unwind_paid_order` et restitution conditionnelle. |
+| L4 | Faible | Fonctions internes `private.*` exécutables par les rôles d'API. | `revoke execute` sur les fonctions sensibles ; table locale des migrations fermée. |
+| L5 | Faible | Simulation de paiement : adresse du webhook tirée de l'en-tête Host. | Adresse configurée (`NEXT_PUBLIC_SITE_URL`) et contrôle d'appartenance du paiement. |
+| L6 | Faible | Pages de paiement lues avec la clé de service. | Client utilisateur (RLS). |
+| L7 | Faible | Service Python : saut de ligne dans les noms (fichier TRF), taille des requêtes. | Motif sur les noms, limite de taille (413/411), identifiants inconnus refusés. Tests. |
+
+Points vérifiés sans anomalie : RLS activée partout, fonctions `SECURITY DEFINER` avec `search_path` vide et contrôle d'accès, `confirm_payment` réservée au rôle service, montants toujours issus de la base, signatures HMAC à fenêtre temporelle et comparaison à temps constant, en-têtes de sécurité, absence de secret dans l'historique Git.

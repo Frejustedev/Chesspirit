@@ -40,3 +40,8 @@ select tests.eq((select count(*)::int from public.progress_notes), 1, 'le coach 
 select tests.throws($$update public.coach_profiles set status = 'approved', is_chesspirit = true where slug = 'carla-coach-test'$$, 'le coach ne change pas son statut');
 select tests.eq((select count(*)::int from public.profiles where first_name = 'Eli'), 1, 'le coach voit la fiche de son élève');
 select tests.eq((select count(*)::int from public.profiles where first_name = 'Aude'), 0, 'mais pas celle d''une autre personne');
+
+-- Correctifs de sécurité : le coach ne réaffecte pas une réservation ni ne change les montants.
+select tests.login_as((select coach from ids));
+select tests.throws($$update public.bookings set student_id = (select id from public.profiles where first_name = 'Aude' limit 1)$$, 'le coach ne change pas l''élève d''une réservation');
+select tests.throws($$update public.bookings set commission_xof = 0$$, 'le coach ne change pas la commission');

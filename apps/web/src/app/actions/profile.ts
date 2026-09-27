@@ -5,8 +5,13 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 
-export type ActionResult =
-  { ok: true } | { ok: false; error: string; fields?: Record<string, string> };
+/** Erreur SQL → code d'erreur affichable (identifiant FIDE déjà rattaché à une autre fiche). */
+function dbError(e: { code?: string; message: string }) {
+  if (e.code === "23505" && e.message.includes("fide")) return "fide_taken";
+  return e.message;
+}
+
+export type ActionResult = { ok: true } | { ok: false; error: string; fields?: Record<string, string> };
 
 function fieldErrors(issues: { path: PropertyKey[]; message: string }[]) {
   const out: Record<string, string> = {};
@@ -28,7 +33,7 @@ export async function saveProfile(input: unknown, consents: unknown): Promise<Ac
       p_profile: parsed.data,
       p_consents: c.data,
     });
-    if (error) return { ok: false, error: error.message };
+    if (error) return { ok: false, error: dbError(error) };
   } else {
     const { error } = await supabase
       .from("profiles")
@@ -38,7 +43,7 @@ export async function saveProfile(input: unknown, consents: unknown): Promise<Ac
         fide_id: parsed.data.fide_id || null,
       })
       .eq("id", session.profile.id);
-    if (error) return { ok: false, error: error.message };
+    if (error) return { ok: false, error: dbError(error) };
   }
   revalidatePath("/", "layout");
   return { ok: true };
@@ -55,7 +60,7 @@ export async function addChild(input: unknown, imageRights: boolean): Promise<Ac
     p_profile: parsed.data,
     p_image_rights: imageRights,
   });
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: dbError(error) };
   revalidatePath("/compte/famille");
   return { ok: true };
 }
@@ -67,7 +72,7 @@ export async function requestDeletion(): Promise<ActionResult> {
   const { error } = await supabase
     .from("data_requests")
     .insert({ profile_id: session.profile.id, type: "delete" });
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: dbError(error) };
   revalidatePath("/compte/donnees");
   return { ok: true };
 }
@@ -82,7 +87,7 @@ export async function setConsent(
   const { error } = await supabase
     .from("consents")
     .insert({ profile_id: session.profile.id, type, version: "2026-09", granted });
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: dbError(error) };
   if (type === "public_profile") {
     await supabase
       .from("profiles")

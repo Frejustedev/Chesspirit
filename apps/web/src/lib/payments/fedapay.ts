@@ -56,7 +56,12 @@ export function fedapayProvider(opts: {
       if (!safeEqual(parts.s, hmacHex(opts.webhookSecret, `${parts.t}.${rawBody}`))) return null;
       const evt = JSON.parse(rawBody) as {
         name: string;
-        entity: { id: number; status: string; custom_metadata?: { payment_id?: string } };
+        entity: {
+          id: number;
+          status: string;
+          amount?: number;
+          custom_metadata?: { payment_id?: string };
+        };
       };
       const map: Record<string, PaymentStatus> = {
         approved: "succeeded",
@@ -67,6 +72,7 @@ export function fedapayProvider(opts: {
       };
       return {
         type: evt.name,
+        amountXof: evt.entity.amount,
         providerRef: String(evt.entity.id),
         paymentId: evt.entity.custom_metadata?.payment_id,
         status: map[evt.entity.status] ?? "pending",

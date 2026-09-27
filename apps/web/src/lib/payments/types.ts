@@ -20,6 +20,8 @@ export interface WebhookEvent {
   providerRef?: string;
   status: PaymentStatus;
   type: string;
+  /** Montant réellement payé selon le prestataire (vérifié contre la base avant confirmation). */
+  amountXof?: number;
 }
 
 export interface PaymentProvider {

@@ -21,7 +21,7 @@ class RoundEntry(BaseModel):
 
 class SwissPlayer(BaseModel):
     start_no: int = Field(ge=1)
-    name: str = Field(max_length=33)
+    name: str = Field(max_length=33, pattern=r"^[^\r\n]*$")
     rating: int | None = None
     points: float = 0
     history: list[RoundEntry] = []

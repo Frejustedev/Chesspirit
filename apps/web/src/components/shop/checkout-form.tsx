@@ -67,7 +67,16 @@ export function CheckoutForm({
     (s, l) => s + (details[l.variantId]?.unitXof ?? 0) * l.quantity,
     0,
   );
-  const discount = promo ? Math.min(promo.discount, subtotal) : 0;
+  // Les cartes cadeaux ne sont ni remisées ni payables en points (règle appliquée aussi en base).
+  const giftSubtotal = cart.lines.reduce(
+    (s, l) =>
+      s +
+      (details[l.variantId]?.kind === "gift_card"
+        ? (details[l.variantId]?.unitXof ?? 0) * l.quantity
+        : 0),
+    0,
+  );
+  const discount = promo ? Math.min(promo.discount, subtotal - giftSubtotal) : 0;
   const shipping =
     !physical || delivery === "pickup" || promo?.kind === "free_shipping"
       ? 0
@@ -80,7 +89,13 @@ export function CheckoutForm({
   const giftUsed = gift ? Math.min(gift.balance, remaining) : 0;
   remaining -= giftUsed;
   const pts = usePoints
-    ? Math.min(points, Math.floor(remaining / Math.max(1, settings.pointValue)))
+    ? Math.max(
+        0,
+        Math.min(
+          points,
+          Math.floor(Math.max(0, remaining - giftSubtotal) / Math.max(1, settings.pointValue)),
+        ),
+      )
     : 0;
   remaining -= pts * settings.pointValue;
   const blocked = cart.lines.some((l) => lineIssue(l, details[l.variantId]));
@@ -261,7 +276,7 @@ export function CheckoutForm({
               className="min-h-11 rounded-full border border-ink/25 px-3 text-sm font-semibold hover:bg-cream"
               onClick={async () => {
                 setError(null);
-                const r = await checkPromoAction(promoInput, subtotal);
+                const r = await checkPromoAction(promoInput, subtotal - giftSubtotal);
                 if (r.ok) setPromo({ code: promoInput.trim(), ...r.data! });
                 else {
                   setPromo(null);

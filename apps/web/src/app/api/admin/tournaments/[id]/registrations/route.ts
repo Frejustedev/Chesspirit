@@ -46,7 +46,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     ),
   }));
   // BOM pour une ouverture correcte des accents dans Excel ; « ; » est le séparateur attendu en français.
-  const csv = "\uFEFF" + Papa.unparse(rows, { delimiter: ";" });
+  const csv = "\uFEFF" + Papa.unparse(rows, { delimiter: ";", escapeFormulae: true });
   return new Response(csv, {
     headers: {
       "content-type": "text/csv; charset=utf-8",

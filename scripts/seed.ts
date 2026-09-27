@@ -6,7 +6,13 @@
  */
 import { createClient } from "@supabase/supabase-js";
 import { Chess } from "chess.js";
-import { computeStandings, type PairingInput, type ResultCode, buildPgn } from "@chesspirit/shared";
+import {
+  bergerTables,
+  computeStandings,
+  type PairingInput,
+  type ResultCode,
+  buildPgn,
+} from "@chesspirit/shared";
 
 const LOCAL_URL = "http://localhost:54321";
 // Clé « service_role » de démonstration de la CLI Supabase : valable uniquement en local.
@@ -1071,8 +1077,8 @@ async function seedShop(demo: boolean) {
   }
   must(
     await db.from("promo_codes").insert([
-      { code: "DEMO10", kind: "percent", value: 10, is_demo: true },
-      { code: "LIVRAISON-DEMO", kind: "free_shipping", value: 0, is_demo: true },
+      { code: "DEMO10", kind: "percent", value: 10, is_demo: true, max_uses_per_user: null },
+      { code: "LIVRAISON-DEMO", kind: "free_shipping", value: 0, is_demo: true, max_uses_per_user: null },
     ]),
     "codes promo",
   );
@@ -1091,8 +1097,297 @@ async function seedShop(demo: boolean) {
   );
 }
 
+const LEAGUE_FORMATS = {
+  classical: {
+    base: 60,
+    inc: 30,
+    closed: "round_robin",
+    rounds: 11,
+    fr: "Classique",
+    en: "Classical",
+  },
+  rapid: { base: 15, inc: 10, closed: "double_round_robin", rounds: 22, fr: "Rapide", en: "Rapid" },
+  blitz: { base: 3, inc: 2, closed: "double_round_robin", rounds: 22, fr: "Blitz", en: "Blitz" },
+} as const;
+const DIVISIONS = { l1: "Ligue 1", l2: "Ligue 2", amateur: "Ligue Amateur" } as const;
+const SCHEDULE = {
+  classical: {
+    fr: "Une ronde toutes les deux semaines",
+    en: "One round every two weeks",
+  },
+  rapid: { fr: "22 rondes sur 4 journées", en: "22 rounds over 4 matchdays" },
+  blitz: { fr: "22 rondes sur 2 journées", en: "22 rounds over 2 matchdays" },
+} as const;
+
+async function ensureSeason(
+  slug: string,
+  name: string,
+  startsOn: string,
+  endsOn: string,
+  isDemo: boolean,
+) {
+  const found = must(
+    await db.from("seasons").select("id").eq("slug", slug).maybeSingle(),
+    "saison",
+  );
+  if (found) return { id: found.id, created: false };
+  const season = must(
+    await db
+      .from("seasons")
+      .insert({
+        slug,
+        name,
+        starts_on: startsOn,
+        ends_on: endsOn,
+        is_demo: isDemo,
+        status: isDemo ? "active" : "planned",
+      })
+      .select("id")
+      .single(),
+    "saison",
+  );
+  const rows = [];
+  for (const [division, divName] of Object.entries(DIVISIONS))
+    for (const [cadence, f] of Object.entries(LEAGUE_FORMATS)) {
+      const amateur = division === "amateur";
+      rows.push({
+        season_id: season.id,
+        slug: `${slug}-${division}-${cadence === "classical" ? "classique" : cadence === "rapid" ? "rapide" : "blitz"}`,
+        division,
+        cadence: cadence as "blitz" | "rapid" | "classical",
+        format: amateur ? "swiss" : f.closed,
+        size: amateur ? null : 12,
+        base_minutes: f.base,
+        increment_seconds: f.inc,
+        rounds_count: amateur ? null : f.rounds,
+        schedule_note: amateur
+          ? { fr: "Système suisse, une journée par mois", en: "Swiss system, one matchday a month" }
+          : SCHEDULE[cadence as keyof typeof SCHEDULE],
+      });
+      void divName;
+    }
+  must(await db.from("leagues").insert(rows), "ligues");
+  return { id: season.id, created: true };
+}
+
+/** Saison 2026-2027 (structure du dossier, calendrier à confirmer) et saison de démonstration. */
+async function seedLeagues(demo: boolean) {
+  const real = await ensureSeason(
+    "2026-2027",
+    "Saison 2026-2027",
+    "2026-09-01",
+    "2027-06-30",
+    false,
+  );
+  if (real.created) {
+    const cities = ["Cotonou", "Porto-Novo", "Abomey-Calavi", "Bohicon", "Parakou", "Natitingou"];
+    must(
+      await db.from("tour_stages").insert(
+        cities.map((city, i) => ({
+          season_id: real.id,
+          number: i + 1,
+          name: `Étape de ${city} (pressentie)`,
+          city,
+        })),
+      ),
+      "étapes pressenties",
+    );
+    console.log(
+      "✓ Saison 2026-2027 : 9 ligues et 6 étapes pressenties du Tour (dates à confirmer)",
+    );
+  }
+  if (!demo) return;
+  const d = await ensureSeason(
+    "saison-demo",
+    "Saison de démonstration",
+    "2025-09-01",
+    "2026-06-30",
+    true,
+  );
+  if (!d.created) {
+    console.log("• Saison de démonstration déjà présente");
+    return;
+  }
+  const { data: league } = await db
+    .from("leagues")
+    .select("id")
+    .eq("slug", "saison-demo-l1-classique")
+    .single();
+  const people = must(
+    await db
+      .from("profiles")
+      .select("id, first_name, last_name, ratings(rating, type)")
+      .eq("is_demo", true)
+      .is("user_id", null)
+      .limit(12),
+    "joueurs démo",
+  )
+    .map((p) => ({
+      id: p.id,
+      name: `${p.first_name} ${p.last_name}`,
+      rating:
+        (p.ratings as { rating: number; type: string }[]).find((r) => r.type === "classical")
+          ?.rating ?? 1500,
+    }))
+    .sort((a, b) => b.rating - a.rating);
+  must(
+    await db
+      .from("league_members")
+      .insert(people.map((p, i) => ({ league_id: league!.id, profile_id: p.id, seed: i + 1 }))),
+    "membres ligue démo",
+  );
+  const t = must(
+    await db
+      .from("tournaments")
+      .insert({
+        slug: "ligue-1-classique-demo",
+        name: "Ligue 1 classique — démonstration",
+        summary: {
+          fr: "Ligue fictive servant à la démonstration.",
+          en: "Fictitious league used for demonstration.",
+        },
+        city: "Cotonou",
+        venue: "Salle démo",
+        starts_at: "2025-10-04T09:00:00Z",
+        ends_at: "2026-03-07T18:00:00Z",
+        cadence: "classical",
+        base_minutes: 60,
+        increment_seconds: 30,
+        rounds_count: 11,
+        pairing_system: "round_robin",
+        tiebreaks: ["sonneborn_berger", "wins"],
+        rated: true,
+        status: "finished",
+        results_published: true,
+        league_id: league!.id,
+        is_demo: true,
+      })
+      .select("id")
+      .single(),
+    "tournoi de ligue démo",
+  );
+  must(
+    await db.from("registrations").insert(
+      people.map((p, i) => ({
+        tournament_id: t.id,
+        player_id: p.id,
+        status: "confirmed",
+        payment_status: "not_required",
+        seed_rating: p.rating,
+        start_number: i + 1,
+        source: "admin",
+      })),
+    ),
+    "inscriptions ligue démo",
+  );
+  const tables = bergerTables(people.length);
+  const pairings: PairingInput[] = [];
+  for (let r = 1; r <= 11; r++) {
+    const round = must(
+      await db
+        .from("rounds")
+        .insert({
+          tournament_id: t.id,
+          number: r,
+          status: "finished",
+          published_at: "2025-10-04T09:00:00Z",
+        })
+        .select("id")
+        .single(),
+      "ronde ligue",
+    );
+    const rows = tables
+      .filter((x) => x.round === r)
+      .map((x) => {
+        const w = people[x.white - 1]!;
+        const b = people[x.black - 1]!;
+        const pw = 1 / (1 + 10 ** ((b.rating - w.rating) / 400));
+        const u = rand();
+        const result: ResultCode = u < pw * 0.75 ? "1-0" : u < pw * 0.75 + 0.3 ? "1/2-1/2" : "0-1";
+        pairings.push({ round: r, white: w.id, black: b.id, result });
+        return {
+          tournament_id: t.id,
+          round_id: round.id,
+          board: x.board,
+          white_id: w.id,
+          black_id: b.id,
+          result,
+        };
+      });
+    must(await db.from("pairings").insert(rows), "appariements ligue");
+  }
+  const st = computeStandings(people, pairings, ["sonneborn_berger", "wins"]);
+  must(
+    await db.from("standings").insert(
+      st.map((s) => ({
+        tournament_id: t.id,
+        player_id: s.playerId,
+        rank: s.rank,
+        points: s.points,
+        games: s.games,
+        tiebreaks: s.tiebreaks,
+        rating_before: s.rating,
+        is_final: true,
+      })),
+    ),
+    "classement ligue",
+  );
+  must(
+    await db
+      .from("league_matchdays")
+      .insert({ league_id: league!.id, number: 1, rounds: "1-11", tournament_id: t.id }),
+    "journée",
+  );
+  must(
+    await db
+      .from("leagues")
+      .update({ status: "finished", champion_id: st[0]!.playerId })
+      .eq("id", league!.id),
+    "champion",
+  );
+  // Tour de démonstration : l'Open démo est une Majeure (coefficient 1,5).
+  const { data: open } = await db
+    .from("tournaments")
+    .select("id")
+    .eq("slug", "open-demo-cotonou")
+    .single();
+  const { data: blitz } = await db
+    .from("tournaments")
+    .select("id")
+    .eq("slug", "blitz-demo-porto-novo")
+    .single();
+  must(
+    await db.from("tour_stages").insert([
+      {
+        season_id: d.id,
+        number: 1,
+        name: "Open de démonstration de Cotonou",
+        city: "Cotonou",
+        kind: "major",
+        coefficient: 1.5,
+        tournament_id: open?.id ?? null,
+        planned_on: "2026-06-13",
+      },
+      {
+        season_id: d.id,
+        number: 2,
+        name: "Blitz de démonstration de Porto-Novo",
+        city: "Porto-Novo",
+        kind: "regular",
+        coefficient: 1,
+        tournament_id: blitz?.id ?? null,
+        planned_on: "2026-11-14",
+      },
+    ]),
+    "étapes démo",
+  );
+  if (open) must(await db.rpc("compute_tour_points", { p_tournament: open.id }), "points du Tour");
+  console.log("✓ Saison de démonstration : Ligue 1 classique jouée (12 joueurs), 2 étapes du Tour");
+}
+
 const launchId = await seedLaunchTournament();
 await seedShop(withDemo);
+
 if (withDemo) {
   await seedDemo();
   await seedCoachingDemo();
@@ -1100,4 +1395,5 @@ if (withDemo) {
   // données fictives et événement réel.
   void launchId;
 }
+await seedLeagues(withDemo);
 console.log("✓ Seed terminé");

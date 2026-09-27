@@ -8,7 +8,7 @@ insert into public.user_roles (user_id, role) select admin, 'admin' from ids;
 insert into public.profiles (id, user_id, first_name, last_name, birth_date, phone)
   select '00000000-0000-0000-0000-0000000e0001', joueur, 'Jean', 'Dossou', '1990-05-05', '+22997000001' from ids;
 insert into public.profiles (id, first_name, last_name, birth_date, fide_id, source)
-  values ('00000000-0000-0000-0000-0000000e0002', 'Jéan', 'DOSSOU', '1990-05-05', '12345678', 'import');
+  values ('00000000-0000-0000-0000-0000000e0002', 'Jéan', 'DOSSOU', '1990-05-05', '99990001', 'import');
 insert into public.tournaments (id, slug, name, starts_at, status)
   values ('00000000-0000-0000-0000-0000000e0010', 'test-fusion', 'Fusion', now() - interval '3 days', 'finished'),
          ('00000000-0000-0000-0000-0000000e0011', 'test-fusion-2', 'Fusion 2', now() - interval '2 days', 'finished');
@@ -32,7 +32,7 @@ select tests.login_as((select admin from ids), 'aal2');
 select tests.eq((select reason from public.admin_find_duplicates('00000000-0000-0000-0000-0000000e0001') limit 1), 'name', 'doublon trouvé (nom sans accents + naissance)');
 select public.admin_merge_profiles('00000000-0000-0000-0000-0000000e0001', '00000000-0000-0000-0000-0000000e0002');
 select tests.eq((select count(*)::int from public.registrations where player_id = '00000000-0000-0000-0000-0000000e0001'), 2, 'inscriptions reportées (conflit du même tournoi résolu)');
-select tests.eq((select fide_id from public.profiles where id = '00000000-0000-0000-0000-0000000e0001'), '12345678', 'identifiant FIDE récupéré');
+select tests.eq((select fide_id from public.profiles where id = '00000000-0000-0000-0000-0000000e0001'), '99990001', 'identifiant FIDE récupéré');
 select tests.eq((select merged_into from public.profiles where id = '00000000-0000-0000-0000-0000000e0002'), '00000000-0000-0000-0000-0000000e0001'::uuid, 'doublon marqué fusionné');
 select tests.throws($$select public.admin_merge_profiles('00000000-0000-0000-0000-0000000e0001', '00000000-0000-0000-0000-0000000e0002')$$, 'pas de double fusion');
 

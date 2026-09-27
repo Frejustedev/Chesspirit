@@ -38,9 +38,10 @@ export function kkiapayProvider(opts: {
         body: JSON.stringify({ transactionId: evt.transactionId }),
       });
       if (!res.ok) return null;
-      const st = (await res.json()) as { status: string };
+      const st = (await res.json()) as { status: string; amount?: number | string };
       return {
         type: "transaction.status",
+        amountXof: st.amount === undefined ? undefined : Number(st.amount),
         providerRef: evt.transactionId,
         paymentId: evt.stateData?.payment_id ?? evt.partnerId,
         status:

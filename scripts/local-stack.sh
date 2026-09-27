@@ -88,7 +88,7 @@ migrate_auth() {
 
 apply_migrations() {
   echo "→ Migrations Chesspirit"
-  psql "$DB_URL" -q -v ON_ERROR_STOP=1 -c "create table if not exists public._local_migrations(name text primary key, applied_at timestamptz default now())" 2>/dev/null
+  psql "$DB_URL" -q -v ON_ERROR_STOP=1 -c "create table if not exists public._local_migrations(name text primary key, applied_at timestamptz default now()); revoke all on public._local_migrations from anon, authenticated" 2>/dev/null
   for f in "$ROOT"/supabase/migrations/*.sql; do
     [ -e "$f" ] || continue
     name="$(basename "$f")"
