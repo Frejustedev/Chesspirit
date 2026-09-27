@@ -11,12 +11,13 @@ import { CheckInScanner } from "@/components/admin/check-in-scanner";
 import { ResultsImport } from "@/components/admin/results-import";
 import { TournamentSettings } from "@/components/admin/tournament-settings";
 import { RoundsManager } from "@/components/admin/rounds-manager";
+import { PostersPanel } from "@/components/admin/posters-panel";
 import { loadState } from "@/lib/tournament-engine";
 import { IconDownload } from "@/components/icons";
 
 export const metadata: Metadata = { robots: { index: false } };
 
-const TABS = ["inscrits", "pointage", "rondes", "resultats", "reglages"] as const;
+const TABS = ["inscrits", "pointage", "rondes", "resultats", "affiches", "reglages"] as const;
 
 export default async function AdminTournament({
   params,
@@ -174,6 +175,12 @@ export default async function AdminTournament({
         }))}
       />
     );
+  } else if (tab === "affiches") {
+    const { count } = await supabase
+      .from("standings")
+      .select("id", { count: "exact", head: true })
+      .eq("tournament_id", tn.id);
+    body = <PostersPanel slug={tn.slug} hasResults={(count ?? 0) > 0} />;
   } else if (tab === "resultats") {
     body = <ResultsImport tournamentId={tn.id} slug={tn.slug} />;
   } else {

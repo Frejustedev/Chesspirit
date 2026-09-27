@@ -528,7 +528,8 @@
       "pointage": "Pointage",
       "resultats": "Résultats et parties",
       "reglages": "Réglages",
-      "rondes": "Rondes"
+      "rondes": "Rondes",
+      "affiches": "Affiches"
     },
     "registrantsSummary": "{total} inscrits · {checked} pointés",
     "exportCsv": "Exporter en CSV",
@@ -621,7 +622,8 @@
     "saveError": "Échec de l'enregistrement",
     "exportsTitle": "Exports",
     "exportTrf": "Exporter le tournoi au format TRF (FIDE, Swiss Manager)",
-    "exportPgn": "Télécharger toutes les parties (PGN)"
+    "exportPgn": "Télécharger toutes les parties (PGN)",
+    "exportReport": "Rapport d'arbitrage (PDF)"
   },
   "viewer": {
     "board": "Position de la partie",
@@ -928,5 +930,21 @@
     "delete": "Supprimer la note",
     "placeholder": "Note sur la position initiale",
     "placeholderMove": "Note après {san}"
+  },
+  "posters": {
+    "intro": "Affiches générées gratuitement à partir des informations confirmées du tournoi (les éléments « À confirmer » n'y figurent pas), avec un QR code vers l'inscription ou les résultats.",
+    "brand": "Modèle Chesspirit",
+    "neutral": "Modèle neutre",
+    "announce": "Annonce",
+    "results": "Résultats",
+    "preview": "Aperçu {format}",
+    "format": {
+      "a4": "A4 à imprimer",
+      "a3": "A3 à imprimer",
+      "post": "Instagram — post",
+      "story": "Instagram — story",
+      "status": "Statut WhatsApp",
+      "banner": "Bannière Facebook"
+    }
   }
 }

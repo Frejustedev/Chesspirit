@@ -528,7 +528,8 @@
       "pointage": "Check-in",
       "resultats": "Results and games",
       "reglages": "Settings",
-      "rondes": "Rounds"
+      "rondes": "Rounds",
+      "affiches": "Posters"
     },
     "registrantsSummary": "{total} entrants · {checked} checked in",
     "exportCsv": "Export CSV",
@@ -621,7 +622,8 @@
     "saveError": "Save failed",
     "exportsTitle": "Exports",
     "exportTrf": "Export the tournament as TRF (FIDE, Swiss Manager)",
-    "exportPgn": "Download all games (PGN)"
+    "exportPgn": "Download all games (PGN)",
+    "exportReport": "Arbiter report (PDF)"
   },
   "viewer": {
     "board": "Game position",
@@ -928,5 +930,21 @@
     "delete": "Delete note",
     "placeholder": "Note on the starting position",
     "placeholderMove": "Note after {san}"
+  },
+  "posters": {
+    "intro": "Free posters generated from the tournament's confirmed information (items “to be confirmed” are left out), with a QR code to registration or results.",
+    "brand": "Chesspirit template",
+    "neutral": "Neutral template",
+    "announce": "Announcement",
+    "results": "Results",
+    "preview": "{format} preview",
+    "format": {
+      "a4": "A4 print",
+      "a3": "A3 print",
+      "post": "Instagram — post",
+      "story": "Instagram — story",
+      "status": "WhatsApp status",
+      "banner": "Facebook banner"
+    }
   }
 }

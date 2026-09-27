@@ -147,6 +147,14 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           </li>
           <li>
             <a
+              href={`/api/admin/tournaments/${tournamentId}/rapport`}
+              className="font-semibold text-bordeaux hover:underline"
+            >
+              {t("exportReport")}
+            </a>
+          </li>
+          <li>
+            <a
               href={`/api/tournaments/${slug}/pgn`}
               className="font-semibold text-bordeaux hover:underline"
             >
