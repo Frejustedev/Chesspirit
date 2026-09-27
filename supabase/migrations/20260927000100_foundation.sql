@@ -110,7 +110,7 @@ create table public.user_roles (
   granted_by uuid references auth.users(id),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  unique (user_id, role, scope_id)
+  unique nulls not distinct (user_id, role, scope_id)
 );
 create trigger user_roles_updated_at before update on public.user_roles
   for each row execute function private.set_updated_at();

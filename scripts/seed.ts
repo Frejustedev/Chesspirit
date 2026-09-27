@@ -286,7 +286,7 @@ async function seedDemo() {
       pairings.push({ round: r, white: w.id, black: b.id, result });
       prs.push({ tournament_id: t.id, round_id: round.id, board: i + 1, white_id: w.id, black_id: b.id, result });
       const g = randomGame(40 + Math.floor(rand() * 50));
-      const moves = g.pgn().replace(/\[.*\]\s*/g, "").trim();
+      const moves = g.pgn().replace(/\[.*\]\s*/g, "").replace(/\s*\*\s*$/, "").trim();
       const gameResult = g.isCheckmate() ? (g.turn() === "w" ? "0-1" : "1-0") : result;
       games.push({
         tournament_id: t.id,

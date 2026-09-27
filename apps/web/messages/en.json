@@ -131,7 +131,14 @@
     "white": "white",
     "black": "black",
     "promotion": "Choose promotion piece",
-    "pieces": { "p": "pawn", "n": "knight", "b": "bishop", "r": "rook", "q": "queen", "k": "king" }
+    "pieces": {
+      "p": "pawn",
+      "n": "knight",
+      "b": "bishop",
+      "r": "rook",
+      "q": "queen",
+      "k": "king"
+    }
   },
   "puzzle": {
     "boardLabel": "Daily puzzle, interactive board",
@@ -156,18 +163,40 @@
     "ecosystemTitle": "Six pillars, one account.",
     "ecosystemText": "Every lesson, every tournament and every recorded game feeds your dashboard.",
     "pillars": {
-      "coaching": { "title": "Coaching", "text": "In-person or online lessons, in French, English or Fon." },
-      "competitions": { "title": "Competitions", "text": "Tournaments, three-division leagues, Chesspirit Tour, team events." },
-      "rankings": { "title": "Ratings", "text": "Chesspirit rating in blitz, rapid and classical, next to FIDE Elo." },
-      "directory": { "title": "Directory", "text": "Players, coaches, arbiters, clubs and organisations." },
-      "shop": { "title": "Shop", "text": "Boards, clocks, books, accessories and equipment rental." },
-      "media": { "title": "Media and academy", "text": "Videos, podcasts, lessons, puzzles and resources." }
+      "coaching": {
+        "title": "Coaching",
+        "text": "In-person or online lessons, in French, English or Fon."
+      },
+      "competitions": {
+        "title": "Competitions",
+        "text": "Tournaments, three-division leagues, Chesspirit Tour, team events."
+      },
+      "rankings": {
+        "title": "Ratings",
+        "text": "Chesspirit rating in blitz, rapid and classical, next to FIDE Elo."
+      },
+      "directory": {
+        "title": "Directory",
+        "text": "Players, coaches, arbiters, clubs and organisations."
+      },
+      "shop": {
+        "title": "Shop",
+        "text": "Boards, clocks, books, accessories and equipment rental."
+      },
+      "media": {
+        "title": "Media and academy",
+        "text": "Videos, podcasts, lessons, puzzles and resources."
+      }
     },
     "top10": "Top 10 — rapid rating",
     "fullRanking": "Full ranking",
     "rankingEmpty": "The first ranking will be published after the first rated tournaments.",
     "figures": "In numbers",
-    "stats": { "ratedPlayers": "Rated players", "tournaments": "Tournaments held", "games": "Games archived" },
+    "stats": {
+      "ratedPlayers": "Rated players",
+      "tournaments": "Tournaments held",
+      "games": "Games archived"
+    },
     "statsDemo": "Figures include demonstration data.",
     "organizersTitle": "Organisers: the tool is free",
     "organizersText": "Registrations, pairings, results, posters and archives: the tournament manager is free for every organiser in Benin.",
@@ -175,7 +204,11 @@
     "partnersTitle": "With our partners"
   },
   "tournament": {
-    "cadence": { "blitz": "Blitz", "rapid": "Rapid", "classical": "Classical" },
+    "cadence": {
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
     "status": {
       "draft": "Draft",
       "published": "Announced",
@@ -241,6 +274,225 @@
     "addToCalendar": "Add to my calendar",
     "share": "Share",
     "waitlisted": "Waiting list",
-    "pending": "Pending"
+    "pending": "Pending",
+    "fullResults": "Full results",
+    "free": "Free",
+    "roundN": "Round {n}"
+  },
+  "auth": {
+    "title": "Sign in",
+    "intro": "One account to enter tournaments, book lessons, shop and follow your progress.",
+    "method": "Sign-in method",
+    "phone": "Phone",
+    "email": "E-mail",
+    "phoneLabel": "Phone number",
+    "emailLabel": "E-mail address",
+    "phoneHelp": "You will receive a 6-digit code by SMS. Beninese numbers can be typed without +229.",
+    "emailHelp": "You will receive a 6-digit code by e-mail.",
+    "sendCode": "Send me a code",
+    "sending": "Sending…",
+    "codeSent": "Code sent to {to}.",
+    "codeLabel": "6-digit code",
+    "verify": "Sign in",
+    "verifying": "Checking…",
+    "change": "Change",
+    "resend": "Resend code",
+    "resendIn": "Resend in {s} s",
+    "or": "or",
+    "google": "Continue with Google",
+    "newAccount": "No account yet? One is created automatically the first time you sign in. By continuing you accept the terms of use and privacy policy.",
+    "phoneInvalid": "Invalid phone number.",
+    "emailInvalid": "Invalid e-mail address.",
+    "sendError": "Could not send the code. Please try again.",
+    "codeInvalid": "Wrong or expired code.",
+    "tooMany": "Too many attempts. Please wait a few minutes.",
+    "oauthError": "Google sign-in failed. Try again or use your phone."
+  },
+  "errors": {
+    "required": "Required field",
+    "invalid": "Invalid value",
+    "date_invalid": "Invalid date",
+    "phone_invalid": "Invalid number",
+    "fide_id_invalid": "Invalid FIDE ID (digits only)",
+    "terms_required": "You must accept the terms of use.",
+    "child_must_be_minor": "Family accounts are for children under 18.",
+    "server": "Something went wrong. Please try again.",
+    "auth_required": "Sign in to continue.",
+    "profile_required": "Please complete your profile first.",
+    "profile_incomplete": "Incomplete profile: birth date and sex are required.",
+    "registration_closed": "Registration is closed.",
+    "tournament_full": "The tournament is full.",
+    "conditions_not_met": "This player does not meet the entry conditions.",
+    "forbidden": "Action not allowed.",
+    "invalid_answers": "Please check the form fields.",
+    "payment_unavailable": "Online payment is temporarily unavailable. Choose payment on site.",
+    "invalid_payment_method": "Payment method not available for this tournament.",
+    "ticket_not_found": "Ticket not found."
+  },
+  "profile": {
+    "title": "My profile",
+    "welcomeTitle": "Welcome to Chesspirit",
+    "welcomeText": "A few details to create your player profile. They are used for age categories, rankings and registrations.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "birthDate": "Date of birth",
+    "sex": "Sex",
+    "female": "Female",
+    "male": "Male",
+    "choose": "Choose…",
+    "city": "City",
+    "department": "Department",
+    "club": "Club",
+    "fideId": "FIDE ID",
+    "fideHint": "Your FIDE rating will be imported every month.",
+    "optional": "optional",
+    "consents": "Your choices",
+    "consentTerms": "I accept the terms of use and the privacy policy (required).",
+    "consentPublic": "Show my profile in the public directory and rankings.",
+    "consentImage": "I allow photos of me to be published (image rights).",
+    "consentNewsletter": "Receive the newsletter by e-mail.",
+    "consentImageChild": "I allow photos of my child to be published.",
+    "parentalConsent": "Parental consent",
+    "parentalText": "By creating this profile you confirm you are the child's parent or legal guardian and accept the terms on their behalf. A minor's public profile stays limited, without photo.",
+    "create": "Create my profile",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Profile saved.",
+    "addChild": "Add child",
+    "childAdded": "Child profile created."
+  },
+  "account": {
+    "nav": "My space",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "family": "Family",
+    "data": "My data",
+    "admin": "Administration",
+    "signOut": "Sign out",
+    "hello": "Hello {name}",
+    "tickets": "My registrations",
+    "noTickets": "No registrations yet.",
+    "seeCalendar": "See the calendar",
+    "ratings": "My Chesspirit ratings",
+    "online": "Online",
+    "provisional": "prov.",
+    "ratingsNote": "Ratings are updated after each rated tournament.",
+    "memberCard": "Member card",
+    "regStatus": {
+      "pending_payment": "payment pending",
+      "pending_validation": "awaiting approval",
+      "confirmed": "confirmed",
+      "waitlisted": "waiting list",
+      "cancelled": "cancelled",
+      "refused": "refused"
+    }
+  },
+  "family": {
+    "title": "Family account",
+    "intro": "Create and manage your children's profiles: you can register them for tournaments and lessons from your account.",
+    "none": "No children registered.",
+    "add": "Add a child"
+  },
+  "data": {
+    "title": "My data",
+    "intro": "View, correct, export or delete your personal data, in line with Benin's Digital Code.",
+    "consents": "Consents",
+    "export": "Export my data",
+    "exportText": "Download all your data (profile, registrations, payments, ratings) as JSON.",
+    "exportButton": "Download (JSON)",
+    "delete": "Delete my account",
+    "deleteText": "Your request will be processed within 30 days. Tournament results and games are kept as sporting archives, anonymised on request.",
+    "deleteButton": "Request deletion",
+    "deleteConfirm": "Confirm request",
+    "deletePending": "Your deletion request is being processed.",
+    "cancel": "Cancel"
+  },
+  "ticket": {
+    "ticket": "Ticket",
+    "player": "Player",
+    "event": "Event",
+    "qrLabel": "Ticket QR code, to show at check-in",
+    "status": "Registration",
+    "payment": "Payment",
+    "status_confirmed": "Confirmed",
+    "status_pending_payment": "Payment pending",
+    "status_pending_validation": "Awaiting approval",
+    "status_waitlisted": "Waiting list",
+    "status_cancelled": "Cancelled",
+    "status_refused": "Refused",
+    "payment_not_required": "No fee",
+    "payment_pending": "Pending",
+    "payment_paid": "Paid",
+    "payment_due_on_site": "Pay on site",
+    "payment_refunded": "Refunded",
+    "payment_failed": "Failed",
+    "checkedIn": "Checked in.",
+    "help": "Show this QR code at the desk on tournament day (on your phone or printed).",
+    "seeTournament": "See the tournament"
+  },
+  "registration": {
+    "title": "Registration",
+    "fee": "Fee",
+    "feeTbc": "To be confirmed",
+    "free": "Free",
+    "closed": "Registration is not open for this tournament.",
+    "who": "Who are you registering?",
+    "me": "me",
+    "addChild": "Registering a child? Add them to your family account",
+    "optional": "optional",
+    "payment": "Payment",
+    "method": {
+      "online": "Pay now (Mobile Money or card)",
+      "on_site": "Pay on site",
+      "free": "Free entry"
+    },
+    "methodHelp": {
+      "online": "MTN MoMo, Moov Money, Celtiis Cash or bank card, through our secure provider.",
+      "on_site": "Your place is reserved; pay at the desk on tournament day.",
+      "free": "No entry fee."
+    },
+    "feeTbcHelp": "The fee is not set yet: it will be paid on site.",
+    "accept": "I accept the <link>tournament rules</link>.",
+    "acceptRequired": "You must accept the rules.",
+    "submit": "Confirm registration",
+    "submitPay": "Continue to payment",
+    "sending": "Sending…",
+    "pay": "Pay",
+    "ticket": "See ticket",
+    "allRegistered": "Everyone on your account is already registered.",
+    "status": {
+      "pending_payment": "payment pending",
+      "pending_validation": "awaiting approval",
+      "confirmed": "registration confirmed",
+      "waitlisted": "waiting list",
+      "cancelled": "cancelled",
+      "refused": "refused"
+    }
+  },
+  "payment": {
+    "fakeKicker": "Test mode",
+    "fakeTitle": "Simulated payment",
+    "fakeText": "Development test provider: no money is taken. Choose the outcome to simulate.",
+    "fakeSuccess": "Simulate a successful payment",
+    "fakeFailure": "Simulate a failure",
+    "fakePending": "Leave pending",
+    "seeTicket": "See my ticket",
+    "account": "My account",
+    "status": {
+      "pending": "Payment in progress",
+      "succeeded": "Payment confirmed",
+      "failed": "Payment declined",
+      "cancelled": "Payment cancelled",
+      "refunded": "Payment refunded",
+      "unknown": "Payment not found"
+    },
+    "statusText": {
+      "pending": "We are waiting for the provider's confirmation. This page updates by itself.",
+      "succeeded": "Thank you! Your registration is confirmed.",
+      "failed": "The payment did not go through. You can try again from the registration page.",
+      "cancelled": "The payment was cancelled.",
+      "refunded": "This payment was refunded.",
+      "unknown": "Check your registrations in your account."
+    }
   }
 }

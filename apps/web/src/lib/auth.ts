@@ -39,3 +39,14 @@ export const getSession = cache(async (): Promise<SessionInfo | null> => {
 export function isAdminRole(roles: string[]) {
   return roles.some((r) => ADMIN_ROLES.includes(r));
 }
+
+/** Exige une session (et un profil complété si `onboarded`) ; sinon redirige. */
+export async function requireSession(locale: string, next: string, opts: { onboarded?: boolean } = { onboarded: true }) {
+  const { redirect } = await import("@/i18n/navigation");
+  const session = await getSession();
+  if (!session) redirect({ href: `/connexion?next=${encodeURIComponent(next)}`, locale });
+  if (opts.onboarded && !session!.profile?.onboarded) {
+    redirect({ href: `/compte/profil?next=${encodeURIComponent(next)}`, locale });
+  }
+  return session!;
+}

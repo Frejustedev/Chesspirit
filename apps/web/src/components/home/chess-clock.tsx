@@ -5,13 +5,17 @@ import { useTranslations } from "next-intl";
 import { countdownParts } from "@chesspirit/shared";
 
 /** Compte à rebours présenté comme une pendule d'échecs (effet signature de l'accueil). */
-export function ChessClock({ target }: { target: string }) {
+export function ChessClock({ target, compact = false }: { target: string; compact?: boolean }) {
   const t = useTranslations("countdown");
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
-    setNow(new Date());
-    const id = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(id);
+    const tick = () => setNow(new Date());
+    const first = setTimeout(tick, 0);
+    const id = setInterval(tick, 1000);
+    return () => {
+      clearTimeout(first);
+      clearInterval(id);
+    };
   }, []);
   const c = countdownParts(new Date(target), now ?? new Date(0));
   const ready = now !== null;
@@ -22,7 +26,7 @@ export function ChessClock({ target }: { target: string }) {
   }
 
   return (
-    <div className="relative inline-block" role="timer" aria-label={ready ? t("aria", { days: c.days, hours: c.hours, minutes: c.minutes }) : t("loading")}>
+    <div className={`relative inline-block ${compact ? "origin-top scale-[0.86]" : ""}`} role="timer" aria-label={ready ? t("aria", { days: c.days, hours: c.hours, minutes: c.minutes }) : t("loading")}>
       {/* Poussoirs de la pendule */}
       <div className="absolute -top-3 left-0 flex w-full justify-between px-[18%]" aria-hidden>
         <span className="h-3 w-10 rounded-t-md bg-cream/25" />

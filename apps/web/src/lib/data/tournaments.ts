@@ -87,3 +87,8 @@ export async function getLatestResults(limit = 6) {
 export function isTbc(t: Tournament, field: string, value: unknown) {
   return value === null || value === undefined || t.unconfirmed_fields.includes(field);
 }
+
+/** Tournoi à venir (ou commencé il y a moins de 18 h). */
+export function isUpcoming(startsAt: string) {
+  return new Date(startsAt).getTime() > Date.now() - 18 * 3600_000;
+}

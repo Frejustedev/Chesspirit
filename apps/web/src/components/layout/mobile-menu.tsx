@@ -17,14 +17,15 @@ export function MobileMenu({
   labels: { open: string; close: string; account: string; cta: string };
   ctaHref: string;
 }) {
-  const [open, setOpen] = useState(false);
-  const [expanded, setExpanded] = useState<string | null>(null);
   const pathname = usePathname();
-
-  useEffect(() => setOpen(false), [pathname]);
+  // Le menu se ferme de lui-même quand la page change : il n'est ouvert que pour la page où on l'a ouvert.
+  const [openOn, setOpenOn] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const open = openOn === pathname;
+  const setOpen = (v: boolean) => setOpenOn(v ? pathname : null);
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenOn(null);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);

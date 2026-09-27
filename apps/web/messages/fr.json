@@ -131,7 +131,14 @@
     "white": "blanc",
     "black": "noir",
     "promotion": "Choisir la pièce de promotion",
-    "pieces": { "p": "pion", "n": "cavalier", "b": "fou", "r": "tour", "q": "dame", "k": "roi" }
+    "pieces": {
+      "p": "pion",
+      "n": "cavalier",
+      "b": "fou",
+      "r": "tour",
+      "q": "dame",
+      "k": "roi"
+    }
   },
   "puzzle": {
     "boardLabel": "Puzzle du jour, échiquier interactif",
@@ -156,18 +163,40 @@
     "ecosystemTitle": "Six piliers, un seul compte.",
     "ecosystemText": "Chaque cours suivi, chaque tournoi joué et chaque partie enregistrée alimentent votre tableau de bord.",
     "pillars": {
-      "coaching": { "title": "Coaching", "text": "Cours en présentiel ou en ligne, en français, anglais ou fon." },
-      "competitions": { "title": "Compétitions", "text": "Tournois, ligues en trois divisions, Chesspirit Tour, équipes." },
-      "rankings": { "title": "Classement", "text": "La cote Chesspirit en blitz, rapide et classique, avec l'Elo FIDE." },
-      "directory": { "title": "Annuaire", "text": "Joueurs, entraîneurs, arbitres, clubs et structures du pays." },
-      "shop": { "title": "Boutique", "text": "Échiquiers, pendules, livres, accessoires et location de matériel." },
-      "media": { "title": "Média et académie", "text": "Vidéos, podcasts, leçons, puzzles et ressources." }
+      "coaching": {
+        "title": "Coaching",
+        "text": "Cours en présentiel ou en ligne, en français, anglais ou fon."
+      },
+      "competitions": {
+        "title": "Compétitions",
+        "text": "Tournois, ligues en trois divisions, Chesspirit Tour, équipes."
+      },
+      "rankings": {
+        "title": "Classement",
+        "text": "La cote Chesspirit en blitz, rapide et classique, avec l'Elo FIDE."
+      },
+      "directory": {
+        "title": "Annuaire",
+        "text": "Joueurs, entraîneurs, arbitres, clubs et structures du pays."
+      },
+      "shop": {
+        "title": "Boutique",
+        "text": "Échiquiers, pendules, livres, accessoires et location de matériel."
+      },
+      "media": {
+        "title": "Média et académie",
+        "text": "Vidéos, podcasts, leçons, puzzles et ressources."
+      }
     },
     "top10": "Top 10 — cote rapide",
     "fullRanking": "Classement complet",
     "rankingEmpty": "Le premier classement sera publié après les premiers tournois homologués.",
     "figures": "En chiffres",
-    "stats": { "ratedPlayers": "Joueurs classés", "tournaments": "Tournois organisés", "games": "Parties archivées" },
+    "stats": {
+      "ratedPlayers": "Joueurs classés",
+      "tournaments": "Tournois organisés",
+      "games": "Parties archivées"
+    },
     "statsDemo": "Chiffres incluant des données de démonstration.",
     "organizersTitle": "Organisateurs : l'outil est gratuit",
     "organizersText": "Inscriptions, appariements, résultats, affiches et archives : le module de gestion de tournois est offert à tous les organisateurs du Bénin.",
@@ -175,7 +204,11 @@
     "partnersTitle": "Avec nos partenaires"
   },
   "tournament": {
-    "cadence": { "blitz": "Blitz", "rapid": "Rapide", "classical": "Classique" },
+    "cadence": {
+      "blitz": "Blitz",
+      "rapid": "Rapide",
+      "classical": "Classique"
+    },
     "status": {
       "draft": "Brouillon",
       "published": "Annoncé",
@@ -241,6 +274,225 @@
     "addToCalendar": "Ajouter à mon agenda",
     "share": "Partager",
     "waitlisted": "Liste d'attente",
-    "pending": "En attente"
+    "pending": "En attente",
+    "fullResults": "Résultats complets",
+    "free": "Gratuit",
+    "roundN": "Ronde {n}"
+  },
+  "auth": {
+    "title": "Connexion",
+    "intro": "Un seul compte pour vous inscrire aux tournois, réserver un cours, acheter et suivre votre progression.",
+    "method": "Méthode de connexion",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "phoneLabel": "Numéro de téléphone",
+    "emailLabel": "Adresse e-mail",
+    "phoneHelp": "Vous recevrez un code à 6 chiffres par SMS. Les numéros béninois peuvent être saisis sans +229.",
+    "emailHelp": "Vous recevrez un code à 6 chiffres par e-mail.",
+    "sendCode": "Recevoir le code",
+    "sending": "Envoi…",
+    "codeSent": "Code envoyé à {to}.",
+    "codeLabel": "Code à 6 chiffres",
+    "verify": "Se connecter",
+    "verifying": "Vérification…",
+    "change": "Modifier",
+    "resend": "Renvoyer le code",
+    "resendIn": "Renvoyer dans {s} s",
+    "or": "ou",
+    "google": "Continuer avec Google",
+    "newAccount": "Pas encore de compte ? Il est créé automatiquement à la première connexion. En continuant, vous acceptez les CGU et la politique de confidentialité.",
+    "phoneInvalid": "Numéro de téléphone invalide.",
+    "emailInvalid": "Adresse e-mail invalide.",
+    "sendError": "Impossible d'envoyer le code. Réessayez.",
+    "codeInvalid": "Code incorrect ou expiré.",
+    "tooMany": "Trop de tentatives. Patientez quelques minutes.",
+    "oauthError": "La connexion avec Google a échoué. Réessayez ou utilisez votre téléphone."
+  },
+  "errors": {
+    "required": "Champ obligatoire",
+    "invalid": "Valeur invalide",
+    "date_invalid": "Date invalide",
+    "phone_invalid": "Numéro invalide",
+    "fide_id_invalid": "Identifiant FIDE invalide (chiffres uniquement)",
+    "terms_required": "Vous devez accepter les conditions générales d'utilisation.",
+    "child_must_be_minor": "Le compte famille concerne les enfants de moins de 18 ans.",
+    "server": "Une erreur est survenue. Réessayez.",
+    "auth_required": "Connectez-vous pour continuer.",
+    "profile_required": "Complétez d'abord votre profil.",
+    "profile_incomplete": "Profil incomplet : date de naissance et sexe sont nécessaires.",
+    "registration_closed": "Les inscriptions sont fermées.",
+    "tournament_full": "Le tournoi est complet.",
+    "conditions_not_met": "Ce joueur ne remplit pas les conditions d'accès du tournoi.",
+    "forbidden": "Action non autorisée.",
+    "invalid_answers": "Vérifiez les champs du formulaire.",
+    "payment_unavailable": "Le paiement en ligne est momentanément indisponible. Choisissez le paiement sur place.",
+    "invalid_payment_method": "Moyen de paiement indisponible pour ce tournoi.",
+    "ticket_not_found": "Billet introuvable."
+  },
+  "profile": {
+    "title": "Mon profil",
+    "welcomeTitle": "Bienvenue sur Chesspirit",
+    "welcomeText": "Quelques informations pour créer votre profil de joueur. Elles servent aux catégories d'âge, aux classements et aux inscriptions.",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "birthDate": "Date de naissance",
+    "sex": "Sexe",
+    "female": "Femme",
+    "male": "Homme",
+    "choose": "Choisir…",
+    "city": "Ville",
+    "department": "Département",
+    "club": "Club",
+    "fideId": "Identifiant FIDE",
+    "fideHint": "Votre Elo FIDE sera importé chaque mois.",
+    "optional": "facultatif",
+    "consents": "Vos choix",
+    "consentTerms": "J'accepte les conditions générales d'utilisation et la politique de confidentialité (obligatoire).",
+    "consentPublic": "Afficher mon profil dans l'annuaire et les classements publics.",
+    "consentImage": "J'autorise la publication de photos où j'apparais (droit à l'image).",
+    "consentNewsletter": "Recevoir la lettre d'information par e-mail.",
+    "consentImageChild": "J'autorise la publication de photos où mon enfant apparaît.",
+    "parentalConsent": "Accord parental",
+    "parentalText": "En créant ce profil, vous confirmez être le parent ou le tuteur légal de l'enfant et accepter les conditions d'utilisation en son nom. Le profil public d'un mineur reste réduit, sans photo.",
+    "create": "Créer mon profil",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "saved": "Profil enregistré.",
+    "addChild": "Ajouter l'enfant",
+    "childAdded": "Profil de l'enfant créé."
+  },
+  "account": {
+    "nav": "Mon espace",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil",
+    "family": "Famille",
+    "data": "Mes données",
+    "admin": "Administration",
+    "signOut": "Se déconnecter",
+    "hello": "Bonjour {name}",
+    "tickets": "Mes inscriptions",
+    "noTickets": "Aucune inscription pour l'instant.",
+    "seeCalendar": "Voir le calendrier",
+    "ratings": "Mes cotes Chesspirit",
+    "online": "En ligne",
+    "provisional": "prov.",
+    "ratingsNote": "La cote est calculée après chaque tournoi homologué.",
+    "memberCard": "Carte de membre",
+    "regStatus": {
+      "pending_payment": "paiement en attente",
+      "pending_validation": "en attente de validation",
+      "confirmed": "confirmée",
+      "waitlisted": "liste d'attente",
+      "cancelled": "annulée",
+      "refused": "refusée"
+    }
+  },
+  "family": {
+    "title": "Compte famille",
+    "intro": "Créez et gérez les profils de vos enfants mineurs : vous pourrez les inscrire aux tournois et aux cours depuis votre compte.",
+    "none": "Aucun enfant enregistré.",
+    "add": "Ajouter un enfant"
+  },
+  "data": {
+    "title": "Mes données",
+    "intro": "Consultez, corrigez, exportez ou supprimez vos données personnelles, conformément au Code du numérique du Bénin.",
+    "consents": "Consentements",
+    "export": "Exporter mes données",
+    "exportText": "Téléchargez toutes vos données (profil, inscriptions, paiements, cotes) au format JSON.",
+    "exportButton": "Télécharger (JSON)",
+    "delete": "Supprimer mon compte",
+    "deleteText": "Votre demande sera traitée sous 30 jours. Les résultats et parties de tournois restent conservés comme archives sportives, sous forme anonymisée si vous le demandez.",
+    "deleteButton": "Demander la suppression",
+    "deleteConfirm": "Confirmer la demande",
+    "deletePending": "Votre demande de suppression est en cours de traitement.",
+    "cancel": "Annuler"
+  },
+  "ticket": {
+    "ticket": "Billet",
+    "player": "Joueur",
+    "event": "Événement",
+    "qrLabel": "QR code du billet, à présenter au pointage",
+    "status": "Inscription",
+    "payment": "Paiement",
+    "status_confirmed": "Confirmée",
+    "status_pending_payment": "Paiement en attente",
+    "status_pending_validation": "En attente de validation",
+    "status_waitlisted": "Liste d'attente",
+    "status_cancelled": "Annulée",
+    "status_refused": "Refusée",
+    "payment_not_required": "Aucun frais",
+    "payment_pending": "En attente",
+    "payment_paid": "Payé",
+    "payment_due_on_site": "À régler sur place",
+    "payment_refunded": "Remboursé",
+    "payment_failed": "Échec",
+    "checkedIn": "Présence pointée.",
+    "help": "Présentez ce QR code à l'accueil le jour du tournoi (sur votre téléphone ou imprimé).",
+    "seeTournament": "Voir le tournoi"
+  },
+  "registration": {
+    "title": "Inscription",
+    "fee": "Frais",
+    "feeTbc": "À confirmer",
+    "free": "Gratuit",
+    "closed": "Les inscriptions ne sont pas ouvertes pour ce tournoi.",
+    "who": "Qui inscrivez-vous ?",
+    "me": "moi",
+    "addChild": "Inscrire un enfant ? Ajoutez-le à votre compte famille",
+    "optional": "facultatif",
+    "payment": "Paiement",
+    "method": {
+      "online": "Payer maintenant (Mobile Money ou carte)",
+      "on_site": "Payer sur place",
+      "free": "Inscription gratuite"
+    },
+    "methodHelp": {
+      "online": "MTN MoMo, Moov Money, Celtiis Cash ou carte bancaire, via notre prestataire sécurisé.",
+      "on_site": "Votre place est réservée ; vous réglez à l'accueil le jour du tournoi.",
+      "free": "Aucun frais d'inscription."
+    },
+    "feeTbcHelp": "Les frais ne sont pas encore fixés : ils seront réglés sur place.",
+    "accept": "J'accepte le <link>règlement du tournoi</link>.",
+    "acceptRequired": "Vous devez accepter le règlement.",
+    "submit": "Confirmer l'inscription",
+    "submitPay": "Continuer vers le paiement",
+    "sending": "Envoi…",
+    "pay": "Payer",
+    "ticket": "Voir le billet",
+    "allRegistered": "Toutes les personnes de votre compte sont déjà inscrites.",
+    "status": {
+      "pending_payment": "paiement en attente",
+      "pending_validation": "en attente de validation",
+      "confirmed": "inscription confirmée",
+      "waitlisted": "liste d'attente",
+      "cancelled": "annulée",
+      "refused": "refusée"
+    }
+  },
+  "payment": {
+    "fakeKicker": "Mode test",
+    "fakeTitle": "Paiement simulé",
+    "fakeText": "Fournisseur factice de développement : aucun argent n'est débité. Choisissez l'issue à simuler.",
+    "fakeSuccess": "Simuler un paiement réussi",
+    "fakeFailure": "Simuler un échec",
+    "fakePending": "Laisser en attente",
+    "seeTicket": "Voir mon billet",
+    "account": "Mon compte",
+    "status": {
+      "pending": "Paiement en cours",
+      "succeeded": "Paiement confirmé",
+      "failed": "Paiement refusé",
+      "cancelled": "Paiement annulé",
+      "refunded": "Paiement remboursé",
+      "unknown": "Paiement introuvable"
+    },
+    "statusText": {
+      "pending": "Nous attendons la confirmation du prestataire. Cette page se met à jour toute seule.",
+      "succeeded": "Merci ! Votre inscription est confirmée.",
+      "failed": "Le paiement n'a pas abouti. Vous pouvez réessayer depuis la page d'inscription.",
+      "cancelled": "Le paiement a été annulé.",
+      "refunded": "Ce paiement a été remboursé.",
+      "unknown": "Vérifiez vos inscriptions dans votre compte."
+    }
   }
 }
