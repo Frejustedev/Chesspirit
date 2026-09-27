@@ -1628,12 +1628,15 @@ export type Database = {
     };
     Functions: {
       add_child: { Args: { p_profile: Json; p_image_rights?: boolean }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
+      admin_overview: { Args: Record<PropertyKey, never>; Returns: { users: number; profiles: number; registrations: number; payments_succeeded: number; revenue_xof: number; pending_data_requests: number; contact_new: number }[] };
       cancel_registration: { Args: { p_registration_id: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
       check_in: { Args: { p_ticket_code: string; p_mark_paid?: boolean }; Returns: { registration_id: string; tournament_id: string; display_name: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in_at: string; already: boolean }[] };
       complete_onboarding: { Args: { p_profile: Json; p_consents: Json; p_version?: string }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
       confirm_payment: { Args: { p_payment_id: string; p_status: string; p_provider_ref: string; p_reason?: string }; Returns: Database["public"]["Tables"]["payments"]["Row"] };
       import_standings: { Args: { p_tournament_id: string; p_rows: Json; p_publish?: boolean }; Returns: number };
+      log_admin_view: { Args: { p_object_type: string; p_object_id: string; p_context: string }; Returns: undefined };
       log_personal_data_access: { Args: { p_profile_id: string; p_context: string }; Returns: undefined };
+      my_managed_tournaments: { Args: Record<PropertyKey, never>; Returns: Database["public"]["Tables"]["tournaments"]["Row"][] };
       public_stats: { Args: Record<PropertyKey, never>; Returns: { rated_players: number; tournaments: number; games: number; demo: boolean }[] };
       register_for_tournament: { Args: { p_tournament_id: string; p_player_id: string; p_answers?: Json; p_payment_method?: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
       ticket_info: { Args: { p_ticket_code: string }; Returns: { display_name: string; tournament_name: string; tournament_slug: string; starts_at: string; venue: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in: boolean }[] };

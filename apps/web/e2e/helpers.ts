@@ -33,3 +33,38 @@ export async function loginWithPhone(page: Page, phone: string, next = "/compte"
 export function randomPhone() {
   return `+22997${String(Math.floor(Math.random() * 1e6)).padStart(6, "0")}`;
 }
+
+import { createClient } from "@supabase/supabase-js";
+import { TOTP } from "otpauth";
+
+// Clé de service de démonstration de la CLI Supabase (locale uniquement).
+export const serviceDb = () =>
+  createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? "http://localhost:54321",
+    process.env.SUPABASE_SERVICE_ROLE_KEY ??
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU",
+    { auth: { persistSession: false } },
+  );
+
+export async function resetMfa(phone: string) {
+  const db = serviceDb();
+  const { data } = await db.auth.admin.listUsers({ perPage: 1000 });
+  const u = data.users.find((x) => x.phone === phone.replace(/^\+/, ""));
+  if (!u) throw new Error("utilisateur introuvable");
+  const { data: f } = await db.auth.admin.mfa.listFactors({ userId: u.id });
+  for (const factor of f?.factors ?? []) await db.auth.admin.mfa.deleteFactor({ id: factor.id, userId: u.id });
+}
+
+export const totp = (secret: string) => new TOTP({ secret, digits: 6, period: 30, algorithm: "SHA1" }).generate();
+
+/** Connexion administrateur complète : SMS puis enrôlement TOTP. */
+export async function loginAsAdmin(page: Page) {
+  const phone = "+22990000009";
+  await resetMfa(phone);
+  await loginWithPhone(page, phone, "/admin");
+  await page.waitForURL(/admin\/securite/);
+  const secret = (await page.getByTestId("totp-secret").textContent())!.trim();
+  await page.getByLabel("Code à 6 chiffres").fill(totp(secret));
+  await page.getByRole("button", { name: "Valider" }).click();
+  await page.waitForURL(/\/admin$/);
+}

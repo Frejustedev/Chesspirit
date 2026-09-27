@@ -19,7 +19,9 @@
     "test:rls": "bash supabase/tests/run.sh",
     "e2e": "pnpm --filter web e2e",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "create-admin": "tsx scripts/create-super-admin.ts",
+    "gen:types": "node scripts/gen-types.mjs"
   },
   "devDependencies": {
     "@chesspirit/shared": "workspace:*",

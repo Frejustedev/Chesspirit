@@ -1,14 +1,20 @@
 import { expect, test } from "@playwright/test";
-import { loginWithPhone, randomPhone } from "./helpers";
+import { loginWithPhone, randomPhone, serviceDb } from "./helpers";
+
+test.beforeAll(async () => {
+  // Le tournoi de démonstration payant doit être ouvert aux inscriptions.
+  await serviceDb().from("tournaments").update({ status: "registration_open", results_published: false }).eq("slug", "blitz-demo-porto-novo");
+});
 
 test("nouveau joueur : connexion SMS, profil, inscription payante, paiement test, billet", async ({ page }) => {
   const phone = randomPhone();
+  const last = `Parcours${phone.slice(-4)}`;
   await loginWithPhone(page, phone, "/competitions/blitz-demo-porto-novo/inscription");
 
   // Création du profil (redirection automatique puis retour vers l'inscription)
   await expect(page.getByRole("heading", { name: "Bienvenue sur Chesspirit" })).toBeVisible();
   await page.getByLabel("Prénom").fill("Test");
-  await page.getByLabel("Nom", { exact: true }).fill("Parcours");
+  await page.getByLabel("Nom", { exact: true }).fill(last);
   await page.getByLabel("Date de naissance").fill("1999-04-05");
   await page.getByLabel("Sexe").selectOption("F");
   await page.getByLabel("Ville").fill("Cotonou");
@@ -26,13 +32,13 @@ test("nouveau joueur : connexion SMS, profil, inscription payante, paiement test
   await page.getByRole("button", { name: "Simuler un paiement réussi" }).click();
   await expect(page.getByRole("heading", { name: "Paiement confirmé" })).toBeVisible();
   await page.getByRole("link", { name: "Voir mon billet" }).click();
-  await expect(page.getByText("Test Parcours")).toBeVisible();
+  await expect(page.getByText(`Test ${last}`)).toBeVisible();
   await expect(page.getByText("Confirmée")).toBeVisible();
   await expect(page.getByText("Payé")).toBeVisible();
 
   // La liste publique affiche le nouvel inscrit
   await page.goto("/competitions/blitz-demo-porto-novo");
-  await expect(page.getByRole("cell", { name: /Test Parcours/ })).toBeVisible();
+  await expect(page.getByRole("cell", { name: `Test ${last}` })).toBeVisible();
 });
 
 test("tournoi du 3 octobre : frais à confirmer, inscription avec paiement sur place", async ({ page }) => {
