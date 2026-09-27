@@ -1,0 +1,39 @@
+# Dépendances et builds
+node_modules/
+.pnpm-store/
+.next/
+out/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.turbo/
+.expo/
+.vercel/
+playwright-report/
+test-results/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Environnement et secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+secrets/
+
+# Pile locale
+.local/
+supabase/.temp/
+supabase/.branches/
+
+# Divers
+.DS_Store
+*.log
