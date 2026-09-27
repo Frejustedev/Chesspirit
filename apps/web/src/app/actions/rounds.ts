@@ -252,6 +252,8 @@ export async function closeTournamentAction(tournamentId: string): Promise<Resul
     await audit(supabase, tournamentId, "close_tournament", { players: n });
     // Tournoi homologué : recalcul des cotes (la mise à jour ci-dessus prouve le droit de gestion).
     if (t.rated) await recomputeAllRatings();
+    // Étape du Tour : points calculés depuis le classement final (sans effet sinon).
+    await supabase.rpc("compute_tour_points", { p_tournament: tournamentId });
     done(tournamentId);
     return { ok: true, data: n };
   } catch (e) {

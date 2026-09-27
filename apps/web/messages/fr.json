@@ -329,7 +329,8 @@
     "invalid_answers": "Vérifiez les champs du formulaire.",
     "payment_unavailable": "Le paiement en ligne est momentanément indisponible. Choisissez le paiement sur place.",
     "invalid_payment_method": "Moyen de paiement indisponible pour ce tournoi.",
-    "ticket_not_found": "Billet introuvable."
+    "ticket_not_found": "Billet introuvable.",
+    "fide_taken": "Cet identifiant FIDE est déjà rattaché à une autre fiche : contactez-nous pour fusionner les fiches."
   },
   "profile": {
     "title": "Mon profil",
@@ -393,7 +394,8 @@
     "stats": "Statistiques",
     "lessons": "Mes cours",
     "coach": "Espace coach",
-    "orders": "Commandes"
+    "orders": "Commandes",
+    "leagues": "Ligues"
   },
   "family": {
     "title": "Compte famille",
@@ -1030,7 +1032,7 @@
     "newDate": "Date",
     "duplicate": "Dupliquer",
     "err": {
-      "profile_not_found": "Aucun profil ne correspond à ce téléphone ou cet e-mail.",
+      "profile_not_found": "Aucun compte vérifié ne correspond à ce téléphone ou cet e-mail (la personne doit d'abord se connecter une fois).",
       "invalid_role": "Rôle invalide."
     }
   },
@@ -1641,7 +1643,8 @@
     "refundAmount": "Montant à rembourser (maximum {max} F CFA)",
     "refundReason": "Motif du remboursement",
     "refundError": "Remboursement impossible.",
-    "refundNote": "Le remboursement est enregistré ici après avoir été effectué chez le prestataire de paiement (tableau de bord FedaPay ou KKiaPay)."
+    "refundNote": "Le remboursement est enregistré ici après avoir été effectué chez le prestataire de paiement (tableau de bord FedaPay ou KKiaPay).",
+    "needsRefund": "À rembourser"
   },
   "adminMessages": {
     "title": "Messages et demandes",
@@ -1699,5 +1702,144 @@
     "who": "Auteur",
     "action": "Action",
     "system": "système"
+  },
+  "leagues": {
+    "title": "Ligues",
+    "intro": "Neuf championnats par saison, de septembre à juin : Ligue 1, Ligue 2 et Ligue Amateur, chacune en classique, rapide et blitz.",
+    "seasons": "Saisons",
+    "seasonStatus": {
+      "planned": "en préparation",
+      "active": "en cours",
+      "closed": "terminée"
+    },
+    "plannedNote": "Saison en préparation : calendrier, lieux et montant de la licence seront publiés ici dès qu'ils seront arrêtés.",
+    "division": {
+      "label": "Division",
+      "l1": "Ligue 1",
+      "l2": "Ligue 2",
+      "amateur": "Ligue Amateur"
+    },
+    "cadence": {
+      "classical": "Classique",
+      "rapid": "Rapide",
+      "blitz": "Blitz"
+    },
+    "format": {
+      "round_robin": "Toutes rondes",
+      "double_round_robin": "Aller-retour",
+      "swiss": "Système suisse"
+    },
+    "rounds": "{n} rondes",
+    "leader": "En tête : {name} ({pts} pts)",
+    "members": "{n, plural, =0 {Composition à venir} one {# joueur} other {# joueurs}}",
+    "rulesTitle": "Règlement",
+    "rulePoints": "Victoire 1 point, nulle ½, défaite 0 ; départage au Sonneborn-Berger.",
+    "ruleMoves": "Montées et descentes : {up} montent, {down} descendent ; barrage entre le {upper}e de la division supérieure et le {lower}e de la division inférieure.",
+    "sofiaOn": "Règle de Sofia appliquée (pas de nulle par accord).",
+    "sofiaOff": "Règle de Sofia : non appliquée cette saison.",
+    "rulePostpone": "Report possible avec l'accord des deux joueurs et de l'arbitre, au plus tard {days} jours avant la date prévue ; partie en ligne surveillée à titre exceptionnel.",
+    "ruleForfeits": "{n} forfaits non justifiés entraînent l'exclusion et la relégation.",
+    "ruleFirstSeason": "Première saison : répartition selon la cote, complétée par un tournoi de répartition.",
+    "ruleTitles": "Un titre par ligue et par cadence ; distinction « Triple Couronne » pour qui remporte les trois cadences d'une division.",
+    "licenseTitle": "Licence de ligue",
+    "licenseText": "Licence annuelle obligatoire pour jouer en ligue, valable pour les trois cadences.",
+    "free": "Gratuite",
+    "licenseCta": "Prendre ma licence",
+    "noSeason": "Aucune saison publiée pour le moment.",
+    "standings": "Classement",
+    "player": "Joueur",
+    "pts": "Pts",
+    "games": "Parties",
+    "champion": "Champion",
+    "zone": {
+      "up": "montée",
+      "down": "descente",
+      "playoff": "barrage"
+    },
+    "excluded": "exclu",
+    "noMembers": "Composition à venir.",
+    "matchdays": "Journées",
+    "matchday": "Journée {n}",
+    "roundsRange": "rondes {r}",
+    "calendarTbc": "Calendrier des journées :",
+    "rankingTitle": "Classements des ligues",
+    "rankingIntro": "Les trois premiers de chaque championnat et les titres de la saison.",
+    "tripleCrown": "Triple Couronne",
+    "notStarted": "Pas encore de résultats."
+  },
+  "tour": {
+    "title": "Chesspirit Tour",
+    "intro": "Le circuit national : 8 à 10 étapes par saison dans plusieurs villes du Bénin, dont deux Majeures, et des Masters en fin de saison.",
+    "seasons": "Saisons",
+    "stages": "Étapes",
+    "kind": {
+      "regular": "Étape",
+      "major": "Majeure",
+      "online": "En ligne",
+      "masters": "Masters"
+    },
+    "noStages": "Étapes à venir.",
+    "seeRanking": "Voir le classement du Tour",
+    "rulesTitle": "Comment ça marche",
+    "ruleMajors": "Deux Majeures par saison, au coefficient 1,5.",
+    "ruleOnline": "Étapes en ligne au coefficient 0,5.",
+    "ruleBest": "Seuls vos {n} meilleurs résultats comptent.",
+    "ruleCategories": "Classements : général, moins de 18 ans, moins de 14 ans, féminin, plus de 50 ans, amateur (sous 1600).",
+    "ruleMasters": "Masters de fin de saison : les {q} premiers du général et {i} invités.",
+    "scale": "Barème par place (plus {p} points de participation par étape)",
+    "scaleMore": "Puis un point de moins par place jusqu'à 1.",
+    "rankingTitle": "Classement du Tour",
+    "rankingIntro": "Somme des {n} meilleurs résultats de la saison.",
+    "categories": "Catégories",
+    "category": {
+      "general": "Général",
+      "u18": "Moins de 18 ans",
+      "u14": "Moins de 14 ans",
+      "women": "Féminin",
+      "over50": "Plus de 50 ans",
+      "amateur": "Amateur"
+    },
+    "mastersZone": "qualifié Masters",
+    "stagesCount": "{n, plural, one {# étape} other {# étapes}}",
+    "noPoints": "Pas encore de points pour cette saison."
+  },
+  "myLeagues": {
+    "title": "Ligues",
+    "licenses": "Licences",
+    "feeTbc": "Montant à confirmer",
+    "noSeason": "Aucune saison ouverte.",
+    "licenseStatus": {
+      "active": "Licence active",
+      "exempt": "Exempté",
+      "cancelled": "Annulée",
+      "pending_payment": "En attente de paiement"
+    },
+    "getLicense": "Prendre la licence",
+    "payLicense": "Payer la licence",
+    "error": "Action impossible.",
+    "myLeagues": "Mes ligues",
+    "noLeague": "Vous ne jouez dans aucune ligue pour le moment.",
+    "memberStatus": {
+      "withdrawn": "retiré",
+      "excluded": "exclu"
+    },
+    "postponements": "Parties à jouer et reports",
+    "postponeHelp": "Un report demande l'accord de votre adversaire puis de l'arbitre.",
+    "round": "ronde {n}",
+    "postponeStatus": {
+      "pending": "Report demandé",
+      "approved": "Report accepté",
+      "refused": "Report refusé"
+    },
+    "opponentAgreed": "accord de l'adversaire",
+    "opponentPending": "en attente de l'adversaire",
+    "noOpenGames": "Aucune partie en attente.",
+    "askPostpone": "Demander un report",
+    "reason": "Motif",
+    "proposedDate": "Date proposée",
+    "send": "Envoyer",
+    "agree": "J'accepte le report",
+    "approve": "Accepter",
+    "refuse": "Refuser"
   }
 }

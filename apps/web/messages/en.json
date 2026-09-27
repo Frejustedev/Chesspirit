@@ -329,7 +329,8 @@
     "invalid_answers": "Please check the form fields.",
     "payment_unavailable": "Online payment is temporarily unavailable. Choose payment on site.",
     "invalid_payment_method": "Payment method not available for this tournament.",
-    "ticket_not_found": "Ticket not found."
+    "ticket_not_found": "Ticket not found.",
+    "fide_taken": "This FIDE ID is already linked to another record: contact us to merge the records."
   },
   "profile": {
     "title": "My profile",
@@ -393,7 +394,8 @@
     "stats": "Statistics",
     "lessons": "My lessons",
     "coach": "Coach space",
-    "orders": "Orders"
+    "orders": "Orders",
+    "leagues": "Leagues"
   },
   "family": {
     "title": "Family account",
@@ -1030,7 +1032,7 @@
     "newDate": "Date",
     "duplicate": "Duplicate",
     "err": {
-      "profile_not_found": "No profile matches this phone or e-mail.",
+      "profile_not_found": "No verified account matches this phone or e-mail (the person must sign in once first).",
       "invalid_role": "Invalid role."
     }
   },
@@ -1641,7 +1643,8 @@
     "refundAmount": "Amount to refund (maximum {max} CFA)",
     "refundReason": "Refund reason",
     "refundError": "Refund not possible.",
-    "refundNote": "Record the refund here after issuing it with the payment provider (FedaPay or KKiaPay dashboard)."
+    "refundNote": "Record the refund here after issuing it with the payment provider (FedaPay or KKiaPay dashboard).",
+    "needsRefund": "To refund"
   },
   "adminMessages": {
     "title": "Messages and requests",
@@ -1699,5 +1702,144 @@
     "who": "Author",
     "action": "Action",
     "system": "system"
+  },
+  "leagues": {
+    "title": "Leagues",
+    "intro": "Nine championships per season, September to June: League 1, League 2 and Amateur League, each in classical, rapid and blitz.",
+    "seasons": "Seasons",
+    "seasonStatus": {
+      "planned": "in preparation",
+      "active": "ongoing",
+      "closed": "finished"
+    },
+    "plannedNote": "Season in preparation: schedule, venues and licence fee will be published here once decided.",
+    "division": {
+      "label": "Division",
+      "l1": "League 1",
+      "l2": "League 2",
+      "amateur": "Amateur League"
+    },
+    "cadence": {
+      "classical": "Classical",
+      "rapid": "Rapid",
+      "blitz": "Blitz"
+    },
+    "format": {
+      "round_robin": "Round robin",
+      "double_round_robin": "Double round robin",
+      "swiss": "Swiss system"
+    },
+    "rounds": "{n} rounds",
+    "leader": "Leader: {name} ({pts} pts)",
+    "members": "{n, plural, =0 {Line-up to come} one {# player} other {# players}}",
+    "rulesTitle": "Rules",
+    "rulePoints": "Win 1 point, draw ½, loss 0; Sonneborn-Berger tiebreak.",
+    "ruleMoves": "Promotion and relegation: {up} go up, {down} go down; play-off between #{upper} of the upper division and #{lower} of the lower one.",
+    "sofiaOn": "Sofia rule applies (no draw by agreement).",
+    "sofiaOff": "Sofia rule: not applied this season.",
+    "rulePostpone": "Postponement possible with both players' and the arbiter's agreement, at least {days} days before the scheduled date; supervised online game as an exception.",
+    "ruleForfeits": "{n} unjustified forfeits lead to exclusion and relegation.",
+    "ruleFirstSeason": "First season: allocation by rating, completed by a qualification tournament.",
+    "ruleTitles": "One title per league and time control; “Triple Crown” for winning all three time controls of a division.",
+    "licenseTitle": "League licence",
+    "licenseText": "Annual licence required to play in the leagues, valid for all three time controls.",
+    "free": "Free",
+    "licenseCta": "Get my licence",
+    "noSeason": "No season published yet.",
+    "standings": "Standings",
+    "player": "Player",
+    "pts": "Pts",
+    "games": "Games",
+    "champion": "Champion",
+    "zone": {
+      "up": "promotion",
+      "down": "relegation",
+      "playoff": "play-off"
+    },
+    "excluded": "excluded",
+    "noMembers": "Line-up to come.",
+    "matchdays": "Matchdays",
+    "matchday": "Matchday {n}",
+    "roundsRange": "rounds {r}",
+    "calendarTbc": "Matchday calendar:",
+    "rankingTitle": "League standings",
+    "rankingIntro": "The top three of each championship and the season's titles.",
+    "tripleCrown": "Triple Crown",
+    "notStarted": "No results yet."
+  },
+  "tour": {
+    "title": "Chesspirit Tour",
+    "intro": "The national circuit: 8 to 10 stages per season in several cities of Benin, including two Majors, and season-ending Masters.",
+    "seasons": "Seasons",
+    "stages": "Stages",
+    "kind": {
+      "regular": "Stage",
+      "major": "Major",
+      "online": "Online",
+      "masters": "Masters"
+    },
+    "noStages": "Stages to come.",
+    "seeRanking": "See the Tour ranking",
+    "rulesTitle": "How it works",
+    "ruleMajors": "Two Majors per season, coefficient 1.5.",
+    "ruleOnline": "Online stages, coefficient 0.5.",
+    "ruleBest": "Only your best {n} results count.",
+    "ruleCategories": "Rankings: overall, under 18, under 14, women, over 50, amateur (under 1600).",
+    "ruleMasters": "Season-ending Masters: the top {q} overall and {i} invited players.",
+    "scale": "Points per place (plus {p} participation points per stage)",
+    "scaleMore": "Then one point less per place down to 1.",
+    "rankingTitle": "Tour ranking",
+    "rankingIntro": "Sum of the best {n} results of the season.",
+    "categories": "Categories",
+    "category": {
+      "general": "Overall",
+      "u18": "Under 18",
+      "u14": "Under 14",
+      "women": "Women",
+      "over50": "Over 50",
+      "amateur": "Amateur"
+    },
+    "mastersZone": "Masters qualified",
+    "stagesCount": "{n, plural, one {# stage} other {# stages}}",
+    "noPoints": "No points yet this season."
+  },
+  "myLeagues": {
+    "title": "Leagues",
+    "licenses": "Licences",
+    "feeTbc": "Fee to be confirmed",
+    "noSeason": "No open season.",
+    "licenseStatus": {
+      "active": "Active licence",
+      "exempt": "Exempt",
+      "cancelled": "Cancelled",
+      "pending_payment": "Awaiting payment"
+    },
+    "getLicense": "Get the licence",
+    "payLicense": "Pay the licence",
+    "error": "Action not possible.",
+    "myLeagues": "My leagues",
+    "noLeague": "You are not playing in any league yet.",
+    "memberStatus": {
+      "withdrawn": "withdrawn",
+      "excluded": "excluded"
+    },
+    "postponements": "Games to play and postponements",
+    "postponeHelp": "A postponement needs your opponent's agreement, then the arbiter's.",
+    "round": "round {n}",
+    "postponeStatus": {
+      "pending": "Postponement requested",
+      "approved": "Postponement accepted",
+      "refused": "Postponement refused"
+    },
+    "opponentAgreed": "opponent agreed",
+    "opponentPending": "waiting for the opponent",
+    "noOpenGames": "No pending games.",
+    "askPostpone": "Request a postponement",
+    "reason": "Reason",
+    "proposedDate": "Proposed date",
+    "send": "Send",
+    "agree": "I accept the postponement",
+    "approve": "Accept",
+    "refuse": "Refuse"
   }
 }
