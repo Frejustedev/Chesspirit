@@ -1,0 +1,116 @@
+{
+  "input": {
+    "startRating": 1200,
+    "players": {
+      "a": {
+        "fide": {
+          "rapid": 1850
+        },
+        "birthDate": "1990-01-01"
+      },
+      "b": {
+        "fide": {
+          "rapid": 1700
+        },
+        "birthDate": "2012-05-05"
+      },
+      "c": {
+        "fide": null,
+        "birthDate": "1985-03-03"
+      },
+      "d": {
+        "fide": {
+          "rapid": 2410
+        },
+        "birthDate": "1970-07-07"
+      }
+    },
+    "tournaments": [
+      {
+        "id": "t2",
+        "date": "2026-07-01",
+        "cadence": "rapid",
+        "games": [
+          {
+            "white": "a",
+            "black": "c",
+            "score": 1
+          },
+          {
+            "white": "c",
+            "black": "b",
+            "score": 0.5
+          },
+          {
+            "white": "d",
+            "black": "a",
+            "score": 0.5
+          }
+        ]
+      },
+      {
+        "id": "t1",
+        "date": "2026-06-01",
+        "cadence": "rapid",
+        "games": [
+          {
+            "white": "a",
+            "black": "b",
+            "score": 1
+          },
+          {
+            "white": "b",
+            "black": "c",
+            "score": 1
+          },
+          {
+            "white": "c",
+            "black": "a",
+            "score": 0
+          },
+          {
+            "white": "c",
+            "black": "d",
+            "score": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "ratings": {
+      "rapid": {
+        "a": {
+          "rating": 1882,
+          "games": 4,
+          "provisional": false,
+          "peak": 1882
+        },
+        "b": {
+          "rating": 1672,
+          "games": 3,
+          "provisional": false,
+          "peak": 1700
+        },
+        "c": {
+          "rating": 1662,
+          "games": 5,
+          "provisional": false,
+          "peak": 1662
+        },
+        "d": {
+          "rating": 2400,
+          "games": 2,
+          "provisional": false,
+          "peak": 2410
+        }
+      }
+    },
+    "history_t1": {
+      "a": [1850, 1863],
+      "b": [1700, 1690],
+      "c": [1200, 1200],
+      "d": [2410, 2405]
+    }
+  }
+}

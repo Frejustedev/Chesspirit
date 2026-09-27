@@ -89,3 +89,24 @@ def test_swiss_with_bbp(monkeypatch):
         headers={"x-engine-key": "k"},
     ).json()
     assert all(7 not in (p["white"], p["black"]) for p in r2) and len(r2) == 3
+
+
+def test_replay_matches_shared_fixture(monkeypatch):
+    import json
+    import pathlib
+
+    from app.rating import replay_ratings
+
+    fx = json.loads(
+        (pathlib.Path(__file__).parents[3] / "packages/shared/fixtures/rating-replay.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    out = replay_ratings(fx["input"])
+    assert out["ratings"]["rapid"] == fx["expected"]["ratings"]["rapid"]
+    for pid, (before, after) in fx["expected"]["history_t1"].items():
+        h = next(x for x in out["history"] if x["tournamentId"] == "t1" and x["playerId"] == pid)
+        assert (h["before"], h["after"]) == (before, after)
+    monkeypatch.setenv("CHESS_ENGINE_KEY", "k")
+    api = client.post("/ratings/replay-tournaments", json=fx["input"], headers={"x-engine-key": "k"}).json()
+    assert api["ratings"]["rapid"] == fx["expected"]["ratings"]["rapid"]

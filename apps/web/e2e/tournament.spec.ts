@@ -17,6 +17,7 @@ test("tournoi suisse complet : génération, résultats, publication, direct, cl
       status: "registration_open",
       rounds_count: 3,
       cadence: "rapid",
+      rated: true,
       is_demo: true,
     })
     .select("id")
@@ -95,6 +96,19 @@ test("tournoi suisse complet : génération, résultats, publication, direct, cl
   expect(standings).toHaveLength(8);
   expect(standings!.every((s) => s.is_final)).toBe(true);
   expect(standings!.reduce((a, s) => a + Number(s.points), 0)).toBe(12); // 3 rondes × 4 parties
+
+  // Tournoi homologué : cotes recalculées, variations enregistrées au classement et dans l'historique.
+  const { data: hist } = await db
+    .from("rating_history")
+    .select("profile_id, rating_before, rating_after")
+    .eq("tournament_id", t!.id);
+  expect(hist).toHaveLength(8);
+  const { data: withDelta } = await db
+    .from("standings")
+    .select("rating_delta")
+    .eq("tournament_id", t!.id)
+    .not("rating_delta", "is", null);
+  expect(withDelta!.length).toBeGreaterThan(0);
 
   // Aucun rematch sur les 3 rondes.
   const { data: pairings } = await db

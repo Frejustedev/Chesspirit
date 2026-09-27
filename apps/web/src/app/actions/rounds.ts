@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { generateNextRound, recomputeStandings } from "@/lib/tournament-engine";
+import { recomputeAllRatings } from "@/lib/ratings";
 
 type Result<T = undefined> = { ok: true; data?: T } | { ok: false; error: string };
 const uuid = z.string().uuid();
@@ -241,12 +242,16 @@ export async function closeTournamentAction(tournamentId: string): Promise<Resul
   if (open?.length) return { ok: false, error: "results_missing" };
   try {
     const n = await recomputeStandings(supabase, tournamentId, true);
-    const { error } = await supabase
+    const { data: t, error } = await supabase
       .from("tournaments")
       .update({ status: "finished", results_published: true })
-      .eq("id", tournamentId);
+      .eq("id", tournamentId)
+      .select("rated")
+      .single();
     if (error) return { ok: false, error: error.message };
     await audit(supabase, tournamentId, "close_tournament", { players: n });
+    // Tournoi homologué : recalcul des cotes (la mise à jour ci-dessus prouve le droit de gestion).
+    if (t.rated) await recomputeAllRatings();
     done(tournamentId);
     return { ok: true, data: n };
   } catch (e) {

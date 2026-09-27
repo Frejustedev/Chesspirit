@@ -12,7 +12,7 @@ import os
 from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field
 
-from .rating import RatingState, apply_game
+from .rating import RatingState, apply_game, replay_ratings
 from .roundrobin import berger_tables
 from .swiss import Pair, SwissRequest, bbp_binary, pair_round
 
@@ -76,3 +76,12 @@ def replay(req: RatingRequest) -> dict[str, dict[str, int | bool]]:
     return {
         pid: {"rating": s.rating, "games": s.games, "provisional": s.provisional} for pid, s in states.items()
     }
+
+
+@app.post("/ratings/replay-tournaments", dependencies=[Depends(require_key)])
+def replay_tournaments(data: dict) -> dict:
+    """Rejoue tous les tournois homologués (idempotent) et renvoie cotes et historique."""
+    try:
+        return replay_ratings(data)
+    except (KeyError, TypeError, ValueError) as e:
+        raise HTTPException(status_code=422, detail=f"invalid input: {e}") from e

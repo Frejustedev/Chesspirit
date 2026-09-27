@@ -275,3 +275,16 @@ export async function saveTournamentAction(
   revalidatePath("/", "layout");
   return { ok: true, data: { id: tid! } };
 }
+
+/** Recalcul complet des cotes (administrateur compétitions). */
+export async function recomputeRatingsAction(): Promise<
+  Result<{ engine: string; tournaments: number; players: number }>
+> {
+  const supabase = await createClient();
+  const { data: ok } = await supabase.rpc("admin_overview").maybeSingle();
+  if (!ok) return { ok: false, error: "forbidden" };
+  const { recomputeAllRatings } = await import("@/lib/ratings");
+  const r = await recomputeAllRatings();
+  revalidatePath("/", "layout");
+  return { ok: true, data: r };
+}

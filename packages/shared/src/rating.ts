@@ -116,3 +116,163 @@ export function applyGame(state: RatingState, game: RatedGame, age: number | nul
   );
   return { ...state, rating, games: state.games + 1, peak: Math.max(state.peak, rating) };
 }
+
+// ---------------------------------------------------------------------------
+// Rejeu complet (idempotent) : tournois homologués dans l'ordre chronologique.
+// Même algorithme que services/chess-engine/app/rating.py (fixture partagée).
+// ---------------------------------------------------------------------------
+export type OtbCadence = "blitz" | "rapid" | "classical";
+
+export interface ReplayInput {
+  startRating?: number;
+  players: Record<
+    string,
+    { fide?: Partial<Record<OtbCadence, number | null>> | null; birthDate?: string | null }
+  >;
+  tournaments: {
+    id: string;
+    date: string;
+    cadence: OtbCadence;
+    games: { white: string; black: string; score: Score }[];
+  }[];
+}
+
+export interface ReplayState {
+  rating: number;
+  games: number;
+  provisional: boolean;
+  peak: number;
+  pending: [number, number][]; // parties provisoires (cote adverse, score)
+}
+
+export interface ReplayOutput {
+  ratings: Record<OtbCadence, Record<string, Omit<ReplayState, "pending">>>;
+  history: {
+    tournamentId: string;
+    playerId: string;
+    cadence: OtbCadence;
+    before: number;
+    after: number;
+    games: number;
+  }[];
+}
+
+function ageAt(birth: string | null | undefined, date: string): number | null {
+  if (!birth) return null;
+  const b = new Date(`${birth}T00:00:00Z`);
+  const d = new Date(`${date.slice(0, 10)}T00:00:00Z`);
+  let a = d.getUTCFullYear() - b.getUTCFullYear();
+  if (
+    d.getUTCMonth() < b.getUTCMonth() ||
+    (d.getUTCMonth() === b.getUTCMonth() && d.getUTCDate() < b.getUTCDate())
+  )
+    a--;
+  return a;
+}
+
+export function replayRatings(input: ReplayInput): ReplayOutput {
+  const start = input.startRating ?? DEFAULT_START_RATING;
+  const states: Record<OtbCadence, Map<string, ReplayState>> = {
+    blitz: new Map(),
+    rapid: new Map(),
+    classical: new Map(),
+  };
+  const history: ReplayOutput["history"] = [];
+  const tournaments = [...input.tournaments].sort(
+    (a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id),
+  );
+
+  for (const t of tournaments) {
+    const st = states[t.cadence];
+    const ids = new Set(t.games.flatMap((g) => [g.white, g.black]));
+    for (const id of ids) {
+      if (!st.has(id)) {
+        const fide = input.players[id]?.fide?.[t.cadence] ?? null;
+        st.set(
+          id,
+          fide && fide > 0
+            ? { rating: fide, games: 0, provisional: false, peak: fide, pending: [] }
+            : { rating: start, games: 0, provisional: true, peak: start, pending: [] },
+        );
+      }
+    }
+    const before = new Map(
+      [...ids].map((id) => [id, { ...st.get(id)!, pending: [...st.get(id)!.pending] }]),
+    );
+    const delta = new Map<string, number>();
+    const played = new Map<string, number>();
+    const pending = new Map<string, [number, number][]>();
+    for (const g of t.games) {
+      for (const [me, opp, s] of [
+        [g.white, g.black, g.score],
+        [g.black, g.white, (1 - g.score) as Score],
+      ] as const) {
+        const b = before.get(me)!;
+        const o = before.get(opp)!;
+        played.set(me, (played.get(me) ?? 0) + 1);
+        if (b.provisional) {
+          pending.set(me, [...(pending.get(me) ?? []), [o.rating, s]]);
+        } else {
+          const k = kFactor({
+            gamesPlayed: b.games,
+            age: ageAt(input.players[me]?.birthDate, t.date),
+            rating: b.rating,
+            peakRating: b.peak,
+          });
+          delta.set(me, (delta.get(me) ?? 0) + ratingChange(b.rating, o.rating, s, k));
+        }
+      }
+    }
+    for (const id of ids) {
+      const b = before.get(id)!;
+      const n = played.get(id) ?? 0;
+      let next: ReplayState;
+      if (b.provisional) {
+        const all = [...b.pending, ...(pending.get(id) ?? [])];
+        if (all.length >= PROVISIONAL_GAMES) {
+          const perf = performanceRating(
+            all.map((x) => x[0]),
+            all.reduce((a, x) => a + x[1], 0),
+          )!;
+          next = {
+            rating: perf,
+            games: b.games + n,
+            provisional: false,
+            peak: Math.max(b.peak, perf),
+            pending: [],
+          };
+        } else {
+          next = { ...b, games: b.games + n, pending: all };
+        }
+      } else {
+        const r = Math.round(b.rating + (delta.get(id) ?? 0));
+        next = {
+          rating: r,
+          games: b.games + n,
+          provisional: false,
+          peak: Math.max(b.peak, r),
+          pending: [],
+        };
+      }
+      st.set(id, next);
+      history.push({
+        tournamentId: t.id,
+        playerId: id,
+        cadence: t.cadence,
+        before: b.rating,
+        after: next.rating,
+        games: n,
+      });
+    }
+  }
+  const strip = (m: Map<string, ReplayState>) =>
+    Object.fromEntries([...m].map(([id, { pending: _p, ...s }]) => [id, s]));
+  return {
+    ratings: {
+      blitz: strip(states.blitz),
+      rapid: strip(states.rapid),
+      classical: strip(states.classical),
+    },
+    history,
+  };
+}

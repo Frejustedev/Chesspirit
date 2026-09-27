@@ -74,3 +74,96 @@ def apply_game(state: RatingState, opponent: float, score: float, age: int | Non
     k = k_factor(state.games, age, state.rating, state.peak)
     new = js_round(state.rating + k * (score - expected_score(state.rating, opponent)))
     return RatingState(new, state.games + 1, False, max(state.peak, new), [])
+
+
+# ---------------------------------------------------------------------------
+# Rejeu complet (idempotent), identique à replayRatings (packages/shared/src/rating.ts).
+# ---------------------------------------------------------------------------
+def _age_at(birth: str | None, date: str) -> int | None:
+    if not birth:
+        return None
+    by, bm, bd = (int(x) for x in birth[:10].split("-"))
+    dy, dm, dd = (int(x) for x in date[:10].split("-"))
+    age = dy - by
+    if (dm, dd) < (bm, bd):
+        age -= 1
+    return age
+
+
+def replay_ratings(data: dict) -> dict:
+    start = data.get("startRating") or DEFAULT_START_RATING
+    players = data.get("players", {})
+    states: dict[str, dict[str, RatingState]] = {"blitz": {}, "rapid": {}, "classical": {}}
+    history: list[dict] = []
+    tournaments = sorted(data.get("tournaments", []), key=lambda t: (t["date"], t["id"]))
+    for t in tournaments:
+        cad = t["cadence"]
+        st = states[cad]
+        ids: list[str] = []
+        for g in t["games"]:
+            for pid in (g["white"], g["black"]):
+                if pid not in ids:
+                    ids.append(pid)
+        for pid in ids:
+            if pid not in st:
+                fide = ((players.get(pid) or {}).get("fide") or {}).get(cad)
+                st[pid] = RatingState.initial(fide if fide and fide > 0 else None, start)
+        before = {
+            pid: RatingState(
+                st[pid].rating,
+                st[pid].games,
+                st[pid].provisional,
+                st[pid].peak,
+                list(st[pid].provisional_games),
+            )
+            for pid in ids
+        }
+        delta: dict[str, float] = {}
+        played: dict[str, int] = {}
+        pending: dict[str, list[tuple[float, float]]] = {}
+        for g in t["games"]:
+            for me, opp, s in (
+                (g["white"], g["black"], g["score"]),
+                (g["black"], g["white"], 1 - g["score"]),
+            ):
+                b, o = before[me], before[opp]
+                played[me] = played.get(me, 0) + 1
+                if b.provisional:
+                    pending.setdefault(me, []).append((o.rating, s))
+                else:
+                    age = _age_at((players.get(me) or {}).get("birthDate"), t["date"])
+                    k = k_factor(b.games, age, b.rating, b.peak)
+                    delta[me] = delta.get(me, 0.0) + k * (s - expected_score(b.rating, o.rating))
+        for pid in ids:
+            b = before[pid]
+            n = played.get(pid, 0)
+            if b.provisional:
+                allg = b.provisional_games + pending.get(pid, [])
+                if len(allg) >= PROVISIONAL_GAMES:
+                    perf = performance_rating([x[0] for x in allg], sum(x[1] for x in allg))
+                    assert perf is not None
+                    nxt = RatingState(perf, b.games + n, False, max(b.peak, perf), [])
+                else:
+                    nxt = RatingState(b.rating, b.games + n, True, b.peak, allg)
+            else:
+                r = js_round(b.rating + delta.get(pid, 0.0))
+                nxt = RatingState(r, b.games + n, False, max(b.peak, r), [])
+            st[pid] = nxt
+            history.append(
+                {
+                    "tournamentId": t["id"],
+                    "playerId": pid,
+                    "cadence": cad,
+                    "before": b.rating,
+                    "after": nxt.rating,
+                    "games": n,
+                }
+            )
+
+    def strip(m: dict[str, RatingState]) -> dict:
+        return {
+            pid: {"rating": s.rating, "games": s.games, "provisional": s.provisional, "peak": s.peak}
+            for pid, s in m.items()
+        }
+
+    return {"ratings": {c: strip(m) for c, m in states.items()}, "history": history}
