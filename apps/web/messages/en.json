@@ -628,12 +628,7 @@
     "exportsTitle": "Exports",
     "exportTrf": "Export the tournament as TRF (FIDE, Swiss Manager)",
     "exportPgn": "Download all games (PGN)",
-    "exportReport": "Arbiter report (PDF)",
-    "sections": "Sections",
-    "sectionLinks": {
-      "shop": "Shop",
-      "coaching": "Coaching"
-    }
+    "exportReport": "Arbiter report (PDF)"
   },
   "viewer": {
     "board": "Game position",
@@ -1515,5 +1510,194 @@
     "stockLabel": "Stock",
     "addVariant": "Add an option",
     "save": "Save"
+  },
+  "adminNav": {
+    "label": "Administration",
+    "home": "Tournaments",
+    "users": "Users",
+    "payments": "Payments",
+    "shop": "Shop",
+    "coaching": "Coaching",
+    "messages": "Messages",
+    "settings": "Settings",
+    "audit": "Audit log"
+  },
+  "adminUsers": {
+    "title": "Users",
+    "search": "Name, city, club or phone",
+    "filter": "Filter",
+    "apply": "Search",
+    "count": "{n, plural, one {# person} other {# people}}",
+    "filters": {
+      "all": "Everyone",
+      "comptes": "With account",
+      "sans-compte": "Without account",
+      "mineurs": "Minors",
+      "suspendus": "Suspended",
+      "demo": "Demo"
+    },
+    "badges": {
+      "account": "account",
+      "minor": "minor",
+      "suspended": "suspended"
+    },
+    "prev": "Previous",
+    "next": "Next",
+    "mergedInto": "Profile merged into",
+    "suspendedSince": "Suspended since {date}",
+    "fields": {
+      "phone": "Phone",
+      "email": "E-mail",
+      "birth": "Birth date",
+      "city": "City",
+      "club": "Club",
+      "fide": "FIDE ID",
+      "account": "Login account",
+      "public": "Public profile",
+      "source": "Source",
+      "created": "Created",
+      "guardian": "Legal guardian",
+      "children": "Managed children"
+    },
+    "yes": "yes",
+    "no": "no",
+    "seeGuardian": "See guardian",
+    "activity": "Activity",
+    "registrations": "Registrations",
+    "orders": "Orders",
+    "payments": "Payments",
+    "audit": "Log",
+    "roles": "Roles",
+    "rolesSuperOnly": "Only a super administrator can change roles.",
+    "roleNames": {
+      "player": "Player",
+      "parent": "Parent",
+      "coach": "Coach",
+      "arbiter": "Arbiter",
+      "organizer": "Organiser",
+      "editor": "Editor",
+      "partner": "Partner",
+      "moderator": "Moderator",
+      "admin_competitions": "Competitions admin",
+      "admin_shop": "Shop admin",
+      "admin": "Administrator",
+      "super_admin": "Super administrator"
+    },
+    "suspension": "Suspension",
+    "suspensionHelp": "Blocks sign-in; data and results stay in place.",
+    "suspend": "Suspend account",
+    "reactivate": "Reactivate account",
+    "suspendConfirm": "Suspend this account?",
+    "duplicates": "Duplicates",
+    "mergeHelp": "The duplicate is merged into this record: registrations, games, ratings and orders move here, then ratings are recomputed.",
+    "reasons": {
+      "phone": "same phone",
+      "fide": "same FIDE",
+      "name": "same name"
+    },
+    "mergeHere": "Merge here",
+    "noDuplicates": "No likely duplicates.",
+    "mergeId": "ID of the profile to merge",
+    "merge": "Merge",
+    "mergeConfirm": "Merge this profile into the displayed record? This cannot be undone.",
+    "erase": "Data erasure",
+    "eraseHelp": "Anonymises the record and deletes the login account. Results remain under “Anonymous player”.",
+    "eraseButton": "Anonymise",
+    "eraseConfirm": "Permanently anonymise this person?",
+    "errors": {
+      "generic": "Action not possible.",
+      "forbidden": "Action not allowed.",
+      "self": "Not possible on your own account.",
+      "two_accounts": "Both records have an account: merge not possible.",
+      "already_merged": "Record already merged.",
+      "auth_update_failed": "The account could not be blocked."
+    }
+  },
+  "adminPayments": {
+    "title": "Payments",
+    "export": "Export (CSV)",
+    "status": "Status",
+    "type": "Object",
+    "allStatuses": "All statuses",
+    "allTypes": "All objects",
+    "apply": "Filter",
+    "statuses": {
+      "pending": "Pending",
+      "succeeded": "Succeeded",
+      "failed": "Failed",
+      "cancelled": "Cancelled",
+      "refunded": "Refunded"
+    },
+    "types": {
+      "registration": "Registration",
+      "order": "Order",
+      "booking": "Lesson",
+      "membership": "Membership",
+      "league_license": "Licence",
+      "gift_card": "Gift card"
+    },
+    "summary": "{n} payments · {total} collected",
+    "refund": "Refund",
+    "refundAmount": "Amount to refund (maximum {max} CFA)",
+    "refundReason": "Refund reason",
+    "refundError": "Refund not possible.",
+    "refundNote": "Record the refund here after issuing it with the payment provider (FedaPay or KKiaPay dashboard)."
+  },
+  "adminMessages": {
+    "title": "Messages and requests",
+    "tabs": {
+      "contact": "Contact",
+      "donnees": "Personal data",
+      "devis": "Quotes"
+    },
+    "status": "Status",
+    "empty": "Nothing yet.",
+    "statuses": {
+      "new": "New",
+      "answered": "Answered",
+      "archived": "Archived",
+      "pending": "To do",
+      "processing": "In progress",
+      "done": "Done",
+      "refused": "Refused",
+      "in_progress": "In progress",
+      "sent": "Quote sent",
+      "won": "Accepted",
+      "lost": "Lost"
+    },
+    "requestTypes": {
+      "export": "Export",
+      "delete": "Erasure",
+      "rectify": "Rectification"
+    },
+    "requestHelp": {
+      "export": "The person downloads the export from their account; confirm, then mark as done.",
+      "delete": "Open the record and use “Anonymise” (legal deadline: one month).",
+      "rectify": "Correct the record with the person, then mark as done."
+    }
+  },
+  "adminSettings": {
+    "title": "Settings",
+    "superOnly": "Read only: only super administrators can change settings.",
+    "flags": "Features",
+    "settings": "Parameters",
+    "settingsHelp": "JSON values (number, true/false, text in quotes).",
+    "public": "public",
+    "on": "On",
+    "off": "Off",
+    "save": "Save",
+    "saved": "Saved.",
+    "invalidJson": "Invalid JSON value.",
+    "error": "Could not save."
+  },
+  "adminAudit": {
+    "title": "Audit log",
+    "intro": "Writes by administrators and arbiters, personal data views, merges and erasures.",
+    "object": "Object type (e.g. profiles)",
+    "apply": "Filter",
+    "when": "Date",
+    "who": "Author",
+    "action": "Action",
+    "system": "system"
   }
 }

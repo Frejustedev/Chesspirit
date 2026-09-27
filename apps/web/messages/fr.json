@@ -628,12 +628,7 @@
     "exportsTitle": "Exports",
     "exportTrf": "Exporter le tournoi au format TRF (FIDE, Swiss Manager)",
     "exportPgn": "Télécharger toutes les parties (PGN)",
-    "exportReport": "Rapport d'arbitrage (PDF)",
-    "sections": "Rubriques",
-    "sectionLinks": {
-      "shop": "Boutique",
-      "coaching": "Coaching"
-    }
+    "exportReport": "Rapport d'arbitrage (PDF)"
   },
   "viewer": {
     "board": "Position de la partie",
@@ -1515,5 +1510,194 @@
     "stockLabel": "Stock",
     "addVariant": "Ajouter une variante",
     "save": "Enregistrer"
+  },
+  "adminNav": {
+    "label": "Administration",
+    "home": "Tournois",
+    "users": "Utilisateurs",
+    "payments": "Paiements",
+    "shop": "Boutique",
+    "coaching": "Coaching",
+    "messages": "Messages",
+    "settings": "Réglages",
+    "audit": "Journal"
+  },
+  "adminUsers": {
+    "title": "Utilisateurs",
+    "search": "Nom, ville, club ou téléphone",
+    "filter": "Filtre",
+    "apply": "Rechercher",
+    "count": "{n, plural, one {# personne} other {# personnes}}",
+    "filters": {
+      "all": "Toutes les personnes",
+      "comptes": "Avec compte",
+      "sans-compte": "Sans compte",
+      "mineurs": "Mineurs",
+      "suspendus": "Suspendus",
+      "demo": "Démonstration"
+    },
+    "badges": {
+      "account": "compte",
+      "minor": "mineur",
+      "suspended": "suspendu"
+    },
+    "prev": "Précédents",
+    "next": "Suivants",
+    "mergedInto": "Profil fusionné dans",
+    "suspendedSince": "Suspendu depuis le {date}",
+    "fields": {
+      "phone": "Téléphone",
+      "email": "E-mail",
+      "birth": "Naissance",
+      "city": "Ville",
+      "club": "Club",
+      "fide": "Identifiant FIDE",
+      "account": "Compte de connexion",
+      "public": "Profil public",
+      "source": "Origine",
+      "created": "Créé le",
+      "guardian": "Responsable légal",
+      "children": "Enfants gérés"
+    },
+    "yes": "oui",
+    "no": "non",
+    "seeGuardian": "Voir le responsable",
+    "activity": "Activité",
+    "registrations": "Inscriptions",
+    "orders": "Commandes",
+    "payments": "Paiements",
+    "audit": "Journal",
+    "roles": "Rôles",
+    "rolesSuperOnly": "Seul un super-administrateur modifie les rôles.",
+    "roleNames": {
+      "player": "Joueur",
+      "parent": "Parent",
+      "coach": "Coach",
+      "arbiter": "Arbitre",
+      "organizer": "Organisateur",
+      "editor": "Rédacteur",
+      "partner": "Partenaire",
+      "moderator": "Modérateur",
+      "admin_competitions": "Admin compétitions",
+      "admin_shop": "Admin boutique",
+      "admin": "Administrateur",
+      "super_admin": "Super-administrateur"
+    },
+    "suspension": "Suspension",
+    "suspensionHelp": "Bloque la connexion ; les données et résultats restent en place.",
+    "suspend": "Suspendre le compte",
+    "reactivate": "Réactiver le compte",
+    "suspendConfirm": "Suspendre ce compte ?",
+    "duplicates": "Doublons",
+    "mergeHelp": "Le doublon est fusionné dans cette fiche : inscriptions, parties, cotes et commandes y sont rattachées, puis les cotes sont recalculées.",
+    "reasons": {
+      "phone": "même téléphone",
+      "fide": "même FIDE",
+      "name": "même nom"
+    },
+    "mergeHere": "Fusionner ici",
+    "noDuplicates": "Aucun doublon probable.",
+    "mergeId": "Identifiant du profil à fusionner",
+    "merge": "Fusionner",
+    "mergeConfirm": "Fusionner ce profil dans la fiche affichée ? Cette opération ne s'annule pas.",
+    "erase": "Effacement des données",
+    "eraseHelp": "Anonymise la fiche et supprime le compte de connexion. Les résultats sportifs restent sous « Joueur anonyme ».",
+    "eraseButton": "Anonymiser",
+    "eraseConfirm": "Anonymiser définitivement cette personne ?",
+    "errors": {
+      "generic": "Action impossible.",
+      "forbidden": "Action non autorisée.",
+      "self": "Action impossible sur votre propre compte.",
+      "two_accounts": "Les deux fiches ont un compte : fusion impossible.",
+      "already_merged": "Fiche déjà fusionnée.",
+      "auth_update_failed": "Le compte n'a pas pu être bloqué."
+    }
+  },
+  "adminPayments": {
+    "title": "Paiements",
+    "export": "Exporter (CSV)",
+    "status": "Statut",
+    "type": "Objet",
+    "allStatuses": "Tous les statuts",
+    "allTypes": "Tous les objets",
+    "apply": "Filtrer",
+    "statuses": {
+      "pending": "En attente",
+      "succeeded": "Réussi",
+      "failed": "Échoué",
+      "cancelled": "Annulé",
+      "refunded": "Remboursé"
+    },
+    "types": {
+      "registration": "Inscription",
+      "order": "Commande",
+      "booking": "Cours",
+      "membership": "Adhésion",
+      "league_license": "Licence",
+      "gift_card": "Carte cadeau"
+    },
+    "summary": "{n} paiements · {total} encaissés",
+    "refund": "Rembourser",
+    "refundAmount": "Montant à rembourser (maximum {max} F CFA)",
+    "refundReason": "Motif du remboursement",
+    "refundError": "Remboursement impossible.",
+    "refundNote": "Le remboursement est enregistré ici après avoir été effectué chez le prestataire de paiement (tableau de bord FedaPay ou KKiaPay)."
+  },
+  "adminMessages": {
+    "title": "Messages et demandes",
+    "tabs": {
+      "contact": "Contact",
+      "donnees": "Données personnelles",
+      "devis": "Devis"
+    },
+    "status": "Statut",
+    "empty": "Rien pour le moment.",
+    "statuses": {
+      "new": "Nouveau",
+      "answered": "Répondu",
+      "archived": "Archivé",
+      "pending": "À traiter",
+      "processing": "En cours",
+      "done": "Traitée",
+      "refused": "Refusée",
+      "in_progress": "En cours",
+      "sent": "Devis envoyé",
+      "won": "Accepté",
+      "lost": "Perdu"
+    },
+    "requestTypes": {
+      "export": "Export",
+      "delete": "Effacement",
+      "rectify": "Rectification"
+    },
+    "requestHelp": {
+      "export": "La personne télécharge elle-même son export depuis son espace ; confirmez puis marquez « Traitée ».",
+      "delete": "Ouvrez la fiche et utilisez « Anonymiser » (délai légal d'un mois).",
+      "rectify": "Corrigez la fiche avec la personne puis marquez « Traitée »."
+    }
+  },
+  "adminSettings": {
+    "title": "Réglages",
+    "superOnly": "Lecture seule : seuls les super-administrateurs modifient les réglages.",
+    "flags": "Fonctionnalités",
+    "settings": "Paramètres",
+    "settingsHelp": "Valeurs au format JSON (nombre, true/false, texte entre guillemets).",
+    "public": "public",
+    "on": "Activée",
+    "off": "Désactivée",
+    "save": "Enregistrer",
+    "saved": "Enregistré.",
+    "invalidJson": "Valeur JSON invalide.",
+    "error": "Enregistrement impossible."
+  },
+  "adminAudit": {
+    "title": "Journal d'audit",
+    "intro": "Écritures des administrateurs et arbitres, consultations de données personnelles, fusions et effacements.",
+    "object": "Type d'objet (ex. profiles)",
+    "apply": "Filtrer",
+    "when": "Date",
+    "who": "Auteur",
+    "action": "Action",
+    "system": "système"
   }
 }

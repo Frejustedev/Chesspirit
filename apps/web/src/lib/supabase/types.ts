@@ -2662,7 +2662,11 @@ export type Database = {
     Functions: {
       add_child: { Args: { p_profile: Json; p_image_rights?: boolean }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
       add_tournament_staff: { Args: { p_tournament_id: string; p_identifier: string; p_role: string }; Returns: Database["public"]["Tables"]["tournament_staff"]["Row"] };
+      admin_anonymize_profile: { Args: { p_profile: string }; Returns: string };
+      admin_find_duplicates: { Args: { p_profile: string }; Returns: { id: string; first_name: string; last_name: string; birth_date: string; phone: string; fide_id: string; user_id: string; reason: string }[] };
+      admin_merge_profiles: { Args: { p_keep: string; p_merge: string }; Returns: number };
       admin_overview: { Args: Record<PropertyKey, never>; Returns: { users: number; profiles: number; registrations: number; payments_succeeded: number; revenue_xof: number; pending_data_requests: number; contact_new: number }[] };
+      admin_record_refund: { Args: { p_payment: string; p_amount: number; p_reason: string }; Returns: Database["public"]["Tables"]["refunds"]["Row"] };
       approve_coach_application: { Args: { p_application_id: string }; Returns: Database["public"]["Tables"]["coach_profiles"]["Row"] };
       assign_start_numbers: { Args: { p_tournament_id: string; p_only_checked_in?: boolean }; Returns: number };
       book_slot: { Args: { p_slot_id: string; p_offer_id: string; p_student_id: string; p_notes?: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };

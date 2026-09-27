@@ -43,24 +43,6 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
           ))}
         </dl>
       ) : null}
-      {admin ? (
-        <nav aria-label={t("sections")} className="mt-6 flex flex-wrap gap-2">
-          {(
-            [
-              ["/admin/boutique", "shop"],
-              ["/admin/coaching", "coaching"],
-            ] as const
-          ).map(([href, k]) => (
-            <Link
-              key={href}
-              href={href}
-              className="inline-flex min-h-11 items-center rounded-full border border-line px-4 font-semibold hover:bg-cream"
-            >
-              {t(`sectionLinks.${k}`)}
-            </Link>
-          ))}
-        </nav>
-      ) : null}
       <section className="mt-10">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="font-display text-2xl font-semibold">{t("tournaments")}</h2>

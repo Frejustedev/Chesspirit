@@ -31,6 +31,8 @@ export const getSession = cache(async (): Promise<SessionInfo | null> => {
     supabase.from("user_roles").select("role").eq("user_id", user.id),
     supabase.auth.mfa.getAuthenticatorAssuranceLevel(),
   ]);
+  // Compte suspendu : traité comme déconnecté (le compte est aussi bloqué côté authentification).
+  if (profile?.suspended_at) return null;
   return {
     userId: user.id,
     email: user.email ?? null,

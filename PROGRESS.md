@@ -1,8 +1,8 @@
 # Avancement
 
 - **Phase en cours** : 1 — le socle
-- **Dernière tâche terminée** : phase 1 — boutique
-- **Prochaine tâche** : phase 1 — administration v1 (utilisateurs, paiements, messages, demandes RGPD, réglages), revue de sécurité, tag v0.2.0
+- **Dernière tâche terminée** : phase 1 — administration v1
+- **Prochaine tâche** : revue de sécurité de fin de phase 1, corrections, tag v0.2.0
 
 ## Phase 0 — lancement (v0.1.0) ✔
 
@@ -23,9 +23,10 @@
 4. Affiches et documents PDF (attestations, rapport, fiches) ✔
 5. Coaching : offres, coachs, réservation payée, test de niveau, devis, candidatures, espaces élève et coach ✔
 6. Boutique : catalogue, variantes et stock, avis, liste de souhaits, panier, codes promo, cartes cadeaux, points de fidélité, précommandes, livraison / retrait / sous-région, suivi, administration ✔
-7. Administration v1 et revue de sécurité — en cours
-8. Pages légales (brouillons à faire valider) ✔
+7. Administration v1 : utilisateurs (recherche, fiche, rôles, suspension, doublons et fusion, effacement), paiements (filtres, export, remboursements enregistrés), messages, demandes RGPD, devis, réglages, journal d'audit ✔
+8. Revue de sécurité de fin de phase 1 — en cours
+9. Pages légales (brouillons à faire valider) ✔
 
 ## À reprendre
 
-(rien pour l'instant)
+- Remboursements par API des prestataires (FedaPay, KKiaPay) : enregistrement manuel seulement.
