@@ -849,7 +849,250 @@ async function seedCoachingDemo() {
   );
 }
 
+const CATEGORIES = [
+  { slug: "echiquiers", fr: "Échiquiers et pièces", en: "Boards and pieces", position: 1 },
+  { slug: "pendules-livres", fr: "Pendules et livres", en: "Clocks and books", position: 2 },
+  { slug: "accessoires", fr: "Accessoires", en: "Accessories", position: 3 },
+  { slug: "packs", fr: "Packs", en: "Bundles", position: 4 },
+  { slug: "cartes-cadeaux", fr: "Cartes cadeaux", en: "Gift cards", position: 5 },
+];
+
+/** Catégories (structure réelle du site) et catalogue de démonstration. */
+async function seedShop(demo: boolean) {
+  must(
+    await db.from("product_categories").upsert(
+      CATEGORIES.map((c) => ({
+        slug: c.slug,
+        name: { fr: c.fr, en: c.en },
+        position: c.position,
+      })),
+      { onConflict: "slug" },
+    ),
+    "catégories boutique",
+  );
+  if (!demo) return;
+  const existing = must(
+    await db.from("products").select("id").eq("slug", "echiquier-club-demo").maybeSingle(),
+    "lecture produits",
+  );
+  if (existing) {
+    console.log("• Boutique de démonstration déjà présente");
+    return;
+  }
+  const cats = must(await db.from("product_categories").select("id, slug"), "catégories");
+  const cat = (slug: string) => cats.find((c) => c.slug === slug)!.id;
+  type P = {
+    slug: string;
+    cat: string;
+    fr: string;
+    en: string;
+    dfr: string;
+    den: string;
+    price: number;
+    compare?: number;
+    art: string;
+    kind?: "physical" | "gift_card";
+    featured?: boolean;
+    preorder?: string;
+    variants: { fr: string; en: string; stock: number; price?: number }[];
+  };
+  const catalog: P[] = [
+    {
+      slug: "echiquier-club-demo",
+      cat: "echiquiers",
+      fr: "Échiquier de club roulable",
+      en: "Roll-up club board",
+      dfr: "Échiquier vinyle roulable, cases de 55 mm, idéal pour les clubs et tournois. Produit de démonstration.",
+      den: "Roll-up vinyl board, 55 mm squares, for clubs and tournaments. Demo product.",
+      price: 6500,
+      art: "board",
+      featured: true,
+      variants: [
+        { fr: "Vert", en: "Green", stock: 25 },
+        { fr: "Bordeaux", en: "Burgundy", stock: 12 },
+      ],
+    },
+    {
+      slug: "pieces-staunton-demo",
+      cat: "echiquiers",
+      fr: "Pièces Staunton lestées",
+      en: "Weighted Staunton pieces",
+      dfr: "Jeu de pièces en plastique lesté, roi de 95 mm, avec deux dames supplémentaires. Produit de démonstration.",
+      den: "Weighted plastic set, 95 mm king, two extra queens. Demo product.",
+      price: 9000,
+      art: "pieces",
+      variants: [{ fr: "Standard", en: "Standard", stock: 18 }],
+    },
+    {
+      slug: "echiquier-bois-demo",
+      cat: "echiquiers",
+      fr: "Échiquier en bois artisanal",
+      en: "Handcrafted wooden board",
+      dfr: "Plateau en bois fabriqué à Cotonou, finition vernie. Produit de démonstration.",
+      den: "Wooden board crafted in Cotonou, varnished finish. Demo product.",
+      price: 35000,
+      compare: 40000,
+      art: "board-wood",
+      featured: true,
+      variants: [
+        { fr: "45 cm", en: "45 cm", stock: 4 },
+        { fr: "50 cm", en: "50 cm", stock: 2, price: 42000 },
+      ],
+    },
+    {
+      slug: "pendule-numerique-demo",
+      cat: "pendules-livres",
+      fr: "Pendule numérique avec incrément",
+      en: "Digital clock with increment",
+      dfr: "Pendule homologable pour cadences Fischer et Bronstein. Produit de démonstration.",
+      den: "Digital clock for Fischer and Bronstein time controls. Demo product.",
+      price: 22000,
+      art: "clock",
+      featured: true,
+      variants: [{ fr: "Noire", en: "Black", stock: 9 }],
+    },
+    {
+      slug: "livre-initiation-demo",
+      cat: "pendules-livres",
+      fr: "Mes premiers pas aux échecs",
+      en: "My first steps in chess",
+      dfr: "Manuel d'initiation illustré pour les 7-12 ans. Produit de démonstration.",
+      den: "Illustrated beginner's handbook for ages 7-12. Demo product.",
+      price: 7500,
+      art: "book",
+      variants: [
+        { fr: "Français", en: "French", stock: 30 },
+        { fr: "Anglais", en: "English", stock: 0 },
+      ],
+    },
+    {
+      slug: "livre-tactique-demo",
+      cat: "pendules-livres",
+      fr: "Cahier de tactique, niveau 2",
+      en: "Tactics workbook, level 2",
+      dfr: "Trois cents exercices corrigés. Précommande : parution prévue, date à confirmer. Produit de démonstration.",
+      den: "Three hundred solved exercises. Pre-order: release date to be confirmed. Demo product.",
+      price: 9500,
+      art: "book",
+      preorder: "2026-12-01",
+      variants: [{ fr: "Français", en: "French", stock: 0 }],
+    },
+    {
+      slug: "sac-echecs-demo",
+      cat: "accessoires",
+      fr: "Sac de transport Chesspirit",
+      en: "Chesspirit carry bag",
+      dfr: "Sac pour échiquier roulable, pièces et pendule. Produit de démonstration.",
+      den: "Bag for roll-up board, pieces and clock. Demo product.",
+      price: 8000,
+      art: "bag",
+      variants: [{ fr: "Unique", en: "One size", stock: 15 }],
+    },
+    {
+      slug: "t-shirt-demo",
+      cat: "accessoires",
+      fr: "T-shirt « Échec et mat »",
+      en: "“Checkmate” T-shirt",
+      dfr: "Coton, impression locale. Produit de démonstration.",
+      den: "Cotton, printed locally. Demo product.",
+      price: 6000,
+      art: "shirt",
+      variants: [
+        { fr: "S", en: "S", stock: 6 },
+        { fr: "M", en: "M", stock: 10 },
+        { fr: "L", en: "L", stock: 3 },
+        { fr: "XL", en: "XL", stock: 0 },
+      ],
+    },
+    {
+      slug: "pack-club-demo",
+      cat: "packs",
+      fr: "Pack club : 5 jeux complets",
+      en: "Club bundle: 5 complete sets",
+      dfr: "Cinq échiquiers roulables, cinq jeux de pièces et un sac. Produit de démonstration.",
+      den: "Five roll-up boards, five piece sets and a bag. Demo product.",
+      price: 70000,
+      compare: 85000,
+      art: "pack",
+      featured: true,
+      variants: [{ fr: "Standard", en: "Standard", stock: 5 }],
+    },
+    {
+      slug: "carte-cadeau-demo",
+      cat: "cartes-cadeaux",
+      kind: "gift_card",
+      fr: "Carte cadeau Chesspirit",
+      en: "Chesspirit gift card",
+      dfr: "Valable un an sur la boutique. Le code est envoyé après paiement. Produit de démonstration.",
+      den: "Valid for one year in the shop. The code is sent after payment. Demo product.",
+      price: 10000,
+      art: "gift",
+      variants: [
+        { fr: "10 000 F CFA", en: "10,000 CFA", stock: 0, price: 10000 },
+        { fr: "25 000 F CFA", en: "25,000 CFA", stock: 0, price: 25000 },
+      ],
+    },
+  ];
+  for (const p of catalog) {
+    const row = must(
+      await db
+        .from("products")
+        .insert({
+          slug: p.slug,
+          category_id: cat(p.cat),
+          kind: p.kind ?? "physical",
+          name: { fr: p.fr, en: p.en },
+          description: { fr: p.dfr, en: p.den },
+          price_xof: p.price,
+          compare_at_xof: p.compare ?? null,
+          art: p.art,
+          is_featured: p.featured ?? false,
+          is_preorder: !!p.preorder,
+          preorder_date: p.preorder ?? null,
+          is_demo: true,
+        })
+        .select("id")
+        .single(),
+      "produit",
+    );
+    must(
+      await db.from("product_variants").insert(
+        p.variants.map((v, i) => ({
+          product_id: row.id,
+          name: { fr: v.fr, en: v.en },
+          stock: v.stock,
+          price_xof: v.price ?? null,
+          position: i,
+          sku: `${p.slug}-${i + 1}`.toUpperCase(),
+        })),
+      ),
+      "variantes",
+    );
+  }
+  must(
+    await db.from("promo_codes").insert([
+      { code: "DEMO10", kind: "percent", value: 10, is_demo: true },
+      { code: "LIVRAISON-DEMO", kind: "free_shipping", value: 0, is_demo: true },
+    ]),
+    "codes promo",
+  );
+  must(
+    await db.from("gift_cards").insert({
+      code: "CAD-DEMO-0000-0001",
+      initial_xof: 5000,
+      balance_xof: 5000,
+      status: "active",
+      recipient_name: "Démonstration",
+    }),
+    "carte cadeau démo",
+  );
+  console.log(
+    `✓ Boutique de démonstration : ${catalog.length} produits, codes DEMO10 et LIVRAISON-DEMO, carte CAD-DEMO-0000-0001`,
+  );
+}
+
 const launchId = await seedLaunchTournament();
+await seedShop(withDemo);
 if (withDemo) {
   await seedDemo();
   await seedCoachingDemo();

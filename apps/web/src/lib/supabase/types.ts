@@ -644,6 +644,51 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "games_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "games_round_id_fkey"; columns: ["round_id"]; isOneToOne: false; referencedRelation: "rounds"; referencedColumns: ["id"] }, { foreignKeyName: "games_pairing_id_fkey"; columns: ["pairing_id"]; isOneToOne: false; referencedRelation: "pairings"; referencedColumns: ["id"] }, { foreignKeyName: "games_white_id_fkey"; columns: ["white_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "games_black_id_fkey"; columns: ["black_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      gift_cards: {
+        Row: {
+          id: string;
+          code: string;
+          initial_xof: number;
+          balance_xof: number;
+          status: string;
+          purchase_order_id: string | null;
+          recipient_name: string | null;
+          recipient_contact: string | null;
+          message: string | null;
+          expires_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          code: string;
+          initial_xof: number;
+          balance_xof: number;
+          status?: string;
+          purchase_order_id?: string | null;
+          recipient_name?: string | null;
+          recipient_contact?: string | null;
+          message?: string | null;
+          expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          code?: string;
+          initial_xof?: number;
+          balance_xof?: number;
+          status?: string;
+          purchase_order_id?: string | null;
+          recipient_name?: string | null;
+          recipient_contact?: string | null;
+          message?: string | null;
+          expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "gift_cards_purchase_order_id_fkey"; columns: ["purchase_order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }];
+      };
       homework: {
         Row: {
           id: string;
@@ -721,6 +766,33 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [{ foreignKeyName: "invoices_payment_id_fkey"; columns: ["payment_id"]; isOneToOne: false; referencedRelation: "payments"; referencedColumns: ["id"] }, { foreignKeyName: "invoices_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      loyalty_ledger: {
+        Row: {
+          id: string;
+          profile_id: string;
+          points: number;
+          reason: string;
+          order_id: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          points: number;
+          reason: string;
+          order_id?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          points?: number;
+          reason?: string;
+          order_id?: string | null;
+          created_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "loyalty_ledger_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "loyalty_ledger_order_id_fkey"; columns: ["order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }];
       };
       newsletter_subscribers: {
         Row: {
@@ -859,6 +931,162 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [{ foreignKeyName: "offers_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }];
+      };
+      order_events: {
+        Row: {
+          id: string;
+          order_id: string;
+          status: Database["public"]["Enums"]["order_status"];
+          note: string | null;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          order_id: string;
+          status: Database["public"]["Enums"]["order_status"];
+          note?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          order_id?: string;
+          status?: Database["public"]["Enums"]["order_status"];
+          note?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "order_events_order_id_fkey"; columns: ["order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }];
+      };
+      order_items: {
+        Row: {
+          id: string;
+          order_id: string;
+          product_id: string | null;
+          variant_id: string | null;
+          name: string;
+          variant_name: string | null;
+          unit_price_xof: number;
+          quantity: number;
+          total_xof: number;
+          is_preorder: boolean;
+          gift: Json | null;
+        };
+        Insert: {
+          id?: string;
+          order_id: string;
+          product_id?: string | null;
+          variant_id?: string | null;
+          name: string;
+          variant_name?: string | null;
+          unit_price_xof: number;
+          quantity: number;
+          total_xof: number;
+          is_preorder?: boolean;
+          gift?: Json | null;
+        };
+        Update: {
+          id?: string;
+          order_id?: string;
+          product_id?: string | null;
+          variant_id?: string | null;
+          name?: string;
+          variant_name?: string | null;
+          unit_price_xof?: number;
+          quantity?: number;
+          total_xof?: number;
+          is_preorder?: boolean;
+          gift?: Json | null;
+        };
+        Relationships: [{ foreignKeyName: "order_items_order_id_fkey"; columns: ["order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }, { foreignKeyName: "order_items_product_id_fkey"; columns: ["product_id"]; isOneToOne: false; referencedRelation: "products"; referencedColumns: ["id"] }, { foreignKeyName: "order_items_variant_id_fkey"; columns: ["variant_id"]; isOneToOne: false; referencedRelation: "product_variants"; referencedColumns: ["id"] }];
+      };
+      orders: {
+        Row: {
+          id: string;
+          number: string;
+          user_id: string | null;
+          profile_id: string | null;
+          status: Database["public"]["Enums"]["order_status"];
+          delivery_method: string;
+          delivery_address: Json;
+          contact_name: string;
+          contact_phone: string;
+          contact_email: string | null;
+          subtotal_xof: number;
+          discount_xof: number;
+          shipping_xof: number;
+          gift_card_xof: number;
+          loyalty_xof: number;
+          total_xof: number;
+          promo_code_id: string | null;
+          gift_card_id: string | null;
+          loyalty_points_used: number;
+          loyalty_points_earned: number;
+          has_preorder: boolean;
+          notes: string | null;
+          tracking_note: string | null;
+          paid_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          number?: string;
+          user_id?: string | null;
+          profile_id?: string | null;
+          status?: Database["public"]["Enums"]["order_status"];
+          delivery_method: string;
+          delivery_address?: Json;
+          contact_name: string;
+          contact_phone: string;
+          contact_email?: string | null;
+          subtotal_xof: number;
+          discount_xof?: number;
+          shipping_xof?: number;
+          gift_card_xof?: number;
+          loyalty_xof?: number;
+          total_xof: number;
+          promo_code_id?: string | null;
+          gift_card_id?: string | null;
+          loyalty_points_used?: number;
+          loyalty_points_earned?: number;
+          has_preorder?: boolean;
+          notes?: string | null;
+          tracking_note?: string | null;
+          paid_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          number?: string;
+          user_id?: string | null;
+          profile_id?: string | null;
+          status?: Database["public"]["Enums"]["order_status"];
+          delivery_method?: string;
+          delivery_address?: Json;
+          contact_name?: string;
+          contact_phone?: string;
+          contact_email?: string | null;
+          subtotal_xof?: number;
+          discount_xof?: number;
+          shipping_xof?: number;
+          gift_card_xof?: number;
+          loyalty_xof?: number;
+          total_xof?: number;
+          promo_code_id?: string | null;
+          gift_card_id?: string | null;
+          loyalty_points_used?: number;
+          loyalty_points_earned?: number;
+          has_preorder?: boolean;
+          notes?: string | null;
+          tracking_note?: string | null;
+          paid_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "orders_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "orders_promo_code_id_fkey"; columns: ["promo_code_id"]; isOneToOne: false; referencedRelation: "promo_codes"; referencedColumns: ["id"] }, { foreignKeyName: "orders_gift_card_fk"; columns: ["gift_card_id"]; isOneToOne: false; referencedRelation: "gift_cards"; referencedColumns: ["id"] }];
       };
       organization_members: {
         Row: {
@@ -1265,6 +1493,171 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "prizes_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "prizes_awarded_profile_id_fkey"; columns: ["awarded_profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      product_categories: {
+        Row: {
+          id: string;
+          slug: string;
+          name: Json;
+          description: Json;
+          position: number;
+          is_active: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          name: Json;
+          description?: Json;
+          position?: number;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          name?: Json;
+          description?: Json;
+          position?: number;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      product_reviews: {
+        Row: {
+          id: string;
+          product_id: string;
+          profile_id: string;
+          rating: number;
+          body: string | null;
+          status: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          product_id: string;
+          profile_id: string;
+          rating: number;
+          body?: string | null;
+          status?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          product_id?: string;
+          profile_id?: string;
+          rating?: number;
+          body?: string | null;
+          status?: string;
+          created_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "product_reviews_product_id_fkey"; columns: ["product_id"]; isOneToOne: false; referencedRelation: "products"; referencedColumns: ["id"] }, { foreignKeyName: "product_reviews_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      product_variants: {
+        Row: {
+          id: string;
+          product_id: string;
+          name: Json;
+          sku: string | null;
+          price_xof: number | null;
+          stock: number;
+          position: number;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          product_id: string;
+          name?: Json;
+          sku?: string | null;
+          price_xof?: number | null;
+          stock?: number;
+          position?: number;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          product_id?: string;
+          name?: Json;
+          sku?: string | null;
+          price_xof?: number | null;
+          stock?: number;
+          position?: number;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "product_variants_product_id_fkey"; columns: ["product_id"]; isOneToOne: false; referencedRelation: "products"; referencedColumns: ["id"] }];
+      };
+      products: {
+        Row: {
+          id: string;
+          category_id: string | null;
+          slug: string;
+          kind: string;
+          name: Json;
+          description: Json;
+          price_xof: number;
+          compare_at_xof: number | null;
+          art: string;
+          image_url: string | null;
+          is_active: boolean;
+          is_featured: boolean;
+          is_preorder: boolean;
+          preorder_date: string | null;
+          rating_avg: number | null;
+          reviews_count: number;
+          is_demo: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          category_id?: string | null;
+          slug: string;
+          kind?: string;
+          name: Json;
+          description?: Json;
+          price_xof: number;
+          compare_at_xof?: number | null;
+          art?: string;
+          image_url?: string | null;
+          is_active?: boolean;
+          is_featured?: boolean;
+          is_preorder?: boolean;
+          preorder_date?: string | null;
+          rating_avg?: number | null;
+          reviews_count?: number;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          category_id?: string | null;
+          slug?: string;
+          kind?: string;
+          name?: Json;
+          description?: Json;
+          price_xof?: number;
+          compare_at_xof?: number | null;
+          art?: string;
+          image_url?: string | null;
+          is_active?: boolean;
+          is_featured?: boolean;
+          is_preorder?: boolean;
+          preorder_date?: string | null;
+          rating_avg?: number | null;
+          reviews_count?: number;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "products_category_id_fkey"; columns: ["category_id"]; isOneToOne: false; referencedRelation: "product_categories"; referencedColumns: ["id"] }];
+      };
       profiles: {
         Row: {
           id: string;
@@ -1406,6 +1799,51 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [{ foreignKeyName: "progress_notes_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "progress_notes_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "progress_notes_booking_id_fkey"; columns: ["booking_id"]; isOneToOne: false; referencedRelation: "bookings"; referencedColumns: ["id"] }];
+      };
+      promo_codes: {
+        Row: {
+          id: string;
+          code: string;
+          kind: string;
+          value: number;
+          min_subtotal_xof: number;
+          starts_at: string | null;
+          ends_at: string | null;
+          max_uses: number | null;
+          uses: number;
+          is_active: boolean;
+          is_demo: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          code: string;
+          kind: string;
+          value?: number;
+          min_subtotal_xof?: number;
+          starts_at?: string | null;
+          ends_at?: string | null;
+          max_uses?: number | null;
+          uses?: number;
+          is_active?: boolean;
+          is_demo?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          code?: string;
+          kind?: string;
+          value?: number;
+          min_subtotal_xof?: number;
+          starts_at?: string | null;
+          ends_at?: string | null;
+          max_uses?: number | null;
+          uses?: number;
+          is_active?: boolean;
+          is_demo?: boolean;
+          created_at?: string;
+        };
+        Relationships: [];
       };
       quote_requests: {
         Row: {
@@ -2075,6 +2513,24 @@ export type Database = {
         };
         Relationships: [];
       };
+      wishlists: {
+        Row: {
+          profile_id: string;
+          product_id: string;
+          created_at: string;
+        };
+        Insert: {
+          profile_id: string;
+          product_id: string;
+          created_at?: string;
+        };
+        Update: {
+          profile_id?: string;
+          product_id?: string;
+          created_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "wishlists_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "wishlists_product_id_fkey"; columns: ["product_id"]; isOneToOne: false; referencedRelation: "products"; referencedColumns: ["id"] }];
+      };
     };
     Views: {
       public_coaches: {
@@ -2211,26 +2667,35 @@ export type Database = {
       assign_start_numbers: { Args: { p_tournament_id: string; p_only_checked_in?: boolean }; Returns: number };
       book_slot: { Args: { p_slot_id: string; p_offer_id: string; p_student_id: string; p_notes?: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };
       cancel_booking: { Args: { p_booking_id: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };
+      cancel_order: { Args: { p_order_id: string; p_note?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
       cancel_registration: { Args: { p_registration_id: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
       check_in: { Args: { p_ticket_code: string; p_mark_paid?: boolean }; Returns: { registration_id: string; tournament_id: string; display_name: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in_at: string; already: boolean }[] };
+      check_promo: { Args: { p_code: string; p_subtotal: number }; Returns: { valid: boolean; kind: string; discount_xof: number }[] };
       complete_onboarding: { Args: { p_profile: Json; p_consents: Json; p_version?: string }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
       confirm_payment: { Args: { p_payment_id: string; p_status: string; p_provider_ref: string; p_reason?: string }; Returns: Database["public"]["Tables"]["payments"]["Row"] };
       duplicate_tournament: { Args: { p_tournament_id: string; p_slug: string; p_starts_at: string }; Returns: Database["public"]["Tables"]["tournaments"]["Row"] };
+      gift_card_balance: { Args: { p_code: string }; Returns: number };
       import_standings: { Args: { p_tournament_id: string; p_rows: Json; p_publish?: boolean }; Returns: number };
       log_admin_view: { Args: { p_object_type: string; p_object_id: string; p_context: string }; Returns: undefined };
       log_personal_data_access: { Args: { p_profile_id: string; p_context: string }; Returns: undefined };
+      loyalty_balance: { Args: Record<PropertyKey, never>; Returns: number };
       my_managed_tournaments: { Args: Record<PropertyKey, never>; Returns: Database["public"]["Tables"]["tournaments"]["Row"][] };
+      place_order: { Args: { p_items: Json; p_delivery: string; p_address: Json; p_contact_name: string; p_contact_phone: string; p_contact_email?: string; p_promo?: string; p_gift_code?: string; p_use_points?: number; p_notes?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
       public_stats: { Args: Record<PropertyKey, never>; Returns: { rated_players: number; tournaments: number; games: number; demo: boolean }[] };
       register_for_tournament: { Args: { p_tournament_id: string; p_player_id: string; p_answers?: Json; p_payment_method?: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
+      set_order_status: { Args: { p_order_id: string; p_status: Database["public"]["Enums"]["order_status"]; p_note?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
+      shop_overview: { Args: Record<PropertyKey, never>; Returns: { orders_to_process: number; revenue_xof: number; low_stock: number; pending_payment: number }[] };
       slot_remaining: { Args: { p_slot_id: string }; Returns: number };
       ticket_info: { Args: { p_ticket_code: string }; Returns: { display_name: string; tournament_name: string; tournament_slug: string; starts_at: string; venue: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in: boolean }[] };
       tournament_staff_list: { Args: { p_tournament_id: string }; Returns: { id: string; role: string; profile_id: string; name: string; phone: string; email: string }[] };
+      track_order: { Args: { p_number: string; p_phone: string }; Returns: { number: string; status: Database["public"]["Enums"]["order_status"]; delivery_method: string; created_at: string; events: Json }[] };
     };
     Enums: {
       app_role: "player" | "parent" | "coach" | "arbiter" | "organizer" | "editor" | "partner" | "admin" | "super_admin" | "admin_competitions" | "admin_shop" | "moderator";
       cadence: "blitz" | "rapid" | "classical";
       consent_type: "terms" | "newsletter" | "public_profile" | "image_rights" | "parental";
       game_result: "1-0" | "0-1" | "1/2-1/2" | "+-" | "-+" | "=-=" | "0-0";
+      order_status: "pending_payment" | "paid" | "preparing" | "ready_for_pickup" | "shipped" | "delivered" | "cancelled" | "refunded";
       org_type: "club" | "school" | "organizer" | "association" | "departmental_league" | "federation" | "vendor" | "content_creator" | "media" | "university" | "company";
       payment_status: "not_required" | "pending" | "paid" | "due_on_site" | "refunded" | "failed";
       rating_type: "blitz" | "rapid" | "classical" | "online";

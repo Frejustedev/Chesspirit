@@ -37,6 +37,15 @@ export default async function PaymentReturn({
       .maybeSingle();
     ticket = r?.ticket_code ?? null;
   }
+  let orderNumber: string | null = null;
+  if (pay?.object_type === "order") {
+    const { data: o } = await supabase
+      .from("orders")
+      .select("number")
+      .eq("id", pay.object_id)
+      .maybeSingle();
+    orderNumber = o?.number ?? null;
+  }
   const status = pay?.status ?? "unknown";
   return (
     <div className="mx-auto max-w-lg px-4 py-14 text-center">
@@ -53,6 +62,22 @@ export default async function PaymentReturn({
             className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-ink"
           >
             {t("seeTicket")}
+          </Link>
+        ) : null}
+        {orderNumber ? (
+          <Link
+            href={`/compte/commandes/${orderNumber}`}
+            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-ink"
+          >
+            {t("seeOrder")}
+          </Link>
+        ) : null}
+        {pay?.object_type === "booking" ? (
+          <Link
+            href="/compte/cours"
+            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-ink"
+          >
+            {t("seeLessons")}
           </Link>
         ) : null}
         <Link

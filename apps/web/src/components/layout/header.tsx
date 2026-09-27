@@ -1,12 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/logo";
-import { IconAccount, IconBag, IconSearch, IconChevronDown } from "@/components/icons";
+import { IconAccount, IconSearch, IconChevronDown } from "@/components/icons";
 import { NAV } from "@/lib/nav";
 import { getSession } from "@/lib/auth";
 import { getNextEvent } from "@/lib/data/tournaments";
 import { MobileMenu } from "./mobile-menu";
 import { LocaleSwitch } from "./locale-switch";
+import { CartLink } from "@/components/shop/cart-link";
 
 export async function Header() {
   const t = await getTranslations("nav");
@@ -88,13 +89,7 @@ export async function Header() {
           >
             <IconSearch className="size-[22px]" />
           </Link>
-          <Link
-            href="/boutique/panier"
-            className="grid size-11 place-items-center rounded-full text-ink/80 hover:bg-cream hover:text-bordeaux"
-            aria-label={t("cart")}
-          >
-            <IconBag className="size-[22px]" />
-          </Link>
+          <CartLink label={t("cart")} />
           <Link
             href={session ? "/compte" : "/connexion"}
             className="flex min-h-11 items-center gap-2 rounded-full px-2.5 text-ink/80 hover:bg-cream hover:text-bordeaux"

@@ -144,15 +144,13 @@ export async function placementAction(
   const session = await getSession();
   if (session?.profile) {
     const supabase = await createClient();
-    await supabase
-      .from("placement_results")
-      .insert({
-        profile_id: session.profile.id,
-        score,
-        total,
-        level,
-        answers: answers.slice(0, 50),
-      });
+    await supabase.from("placement_results").insert({
+      profile_id: session.profile.id,
+      score,
+      total,
+      level,
+      answers: answers.slice(0, 50),
+    });
   }
   return { ok: true, data: { level } };
 }

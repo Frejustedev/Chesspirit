@@ -19,6 +19,7 @@ async function shoot(page: Page, name: string, url: string) {
 }
 
 test("pages publiques", async ({ page }) => {
+  test.setTimeout(240_000);
   const { data: g } = await serviceDb().from("games").select("id").limit(1).single();
   await shoot(page, "01-accueil", "/");
   await shoot(page, "02-calendrier", "/competitions");
@@ -27,7 +28,10 @@ test("pages publiques", async ({ page }) => {
   await shoot(page, "05-partie", `/parties/${g!.id}`);
   await shoot(page, "06-connexion", "/connexion");
   await shoot(page, "07-reglement", "/legal/reglement-tournois");
-  await shoot(page, "08-en-preparation", "/boutique");
+  await shoot(page, "08-en-preparation", "/media");
+  await shoot(page, "12-coaching", "/coaching");
+  await shoot(page, "13-boutique", "/boutique");
+  await shoot(page, "14-produit", "/boutique/produit/echiquier-bois-demo");
 });
 
 test("espace joueur", async ({ page }) => {
@@ -48,4 +52,5 @@ test("administration", async ({ page }) => {
   await shoot(page, "21-admin-inscrits", `/admin/tournois/${t!.id}`);
   await shoot(page, "22-admin-pointage", `/admin/tournois/${t!.id}?onglet=pointage`);
   await shoot(page, "23-admin-reglages", `/admin/tournois/${t!.id}?onglet=reglages`);
+  await shoot(page, "24-admin-boutique", "/admin/boutique?filtre=all");
 });
