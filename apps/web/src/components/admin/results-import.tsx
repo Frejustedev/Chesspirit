@@ -8,11 +8,28 @@ import { Button } from "@/components/ui/form";
 import { importPgnAction, importStandingsAction } from "@/app/actions/admin";
 
 const HEADER_ALIASES: Record<string, string> = {
-  rang: "rank", rank: "rank", rg: "rank", "#": "rank", pos: "rank",
-  nom: "name", name: "name", joueur: "name", player: "name",
-  points: "points", pts: "points", score: "points",
-  cote: "rating", elo: "rating", rating: "rating",
-  club: "club", fide: "fide_id", fide_id: "fide_id", "id fide": "fide_id", telephone: "phone", téléphone: "phone", phone: "phone",
+  rang: "rank",
+  rank: "rank",
+  rg: "rank",
+  "#": "rank",
+  pos: "rank",
+  nom: "name",
+  name: "name",
+  joueur: "name",
+  player: "name",
+  points: "points",
+  pts: "points",
+  score: "points",
+  cote: "rating",
+  elo: "rating",
+  rating: "rating",
+  club: "club",
+  fide: "fide_id",
+  fide_id: "fide_id",
+  "id fide": "fide_id",
+  telephone: "phone",
+  téléphone: "phone",
+  phone: "phone",
 };
 
 /** Import du classement final (CSV ou collage depuis un tableur) et des parties PGN. */
@@ -53,7 +70,14 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
         <label htmlFor="csv" className="mt-3 block text-sm font-semibold">
           {t("csvPaste")}
         </label>
-        <textarea id="csv" value={csv} onChange={(e) => parse(e.target.value)} rows={8} className="mt-1 w-full rounded-md border border-line bg-white p-3 font-mono text-sm" placeholder={"rang;nom;points;cote;club\n1;Nom Prénom;6;1850;Club"} />
+        <textarea
+          id="csv"
+          value={csv}
+          onChange={(e) => parse(e.target.value)}
+          rows={8}
+          className="mt-1 w-full rounded-md border border-line bg-white p-3 font-mono text-sm"
+          placeholder={"rang;nom;points;cote;club\n1;Nom Prénom;6;1850;Club"}
+        />
         {rows.length ? (
           <>
             <p className="mt-3 text-sm font-semibold">{t("preview", { n: rows.length })}</p>
@@ -72,7 +96,9 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
               onClick={() =>
                 start(async () => {
                   const r = await importStandingsAction(tournamentId, rows);
-                  setMsg(r.ok ? t("imported", { n: r.data ?? 0 }) : `${t("importError")} (${r.error})`);
+                  setMsg(
+                    r.ok ? t("imported", { n: r.data ?? 0 }) : `${t("importError")} (${r.error})`,
+                  );
                 })
               }
             >

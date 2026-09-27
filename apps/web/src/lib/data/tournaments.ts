@@ -79,7 +79,9 @@ export async function getLatestResults(limit = 6) {
     .limit(limit);
   return (ts ?? []).map((t) => ({
     tournament: t,
-    podium: data.filter((d) => d.tournament_id === t.id).sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0)),
+    podium: data
+      .filter((d) => d.tournament_id === t.id)
+      .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0)),
   }));
 }
 

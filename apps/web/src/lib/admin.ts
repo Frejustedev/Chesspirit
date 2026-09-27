@@ -11,7 +11,8 @@ export async function requireStaff(locale: string, path: string) {
   const admin = isAdminRole(session.roles);
   const staff = admin || session.roles.some((r) => ["arbiter", "organizer"].includes(r));
   if (!staff) redirect({ href: "/compte", locale });
-  if (admin && session.aal !== "aal2") redirect({ href: `/admin/securite?next=${encodeURIComponent(path)}`, locale });
+  if (admin && session.aal !== "aal2")
+    redirect({ href: `/admin/securite?next=${encodeURIComponent(path)}`, locale });
   return { session, admin };
 }
 

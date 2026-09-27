@@ -8,7 +8,10 @@ import { signFake } from "@/lib/payments/fake";
  * Simule le prestataire factice : envoie au webhook une notification signée,
  * exactement comme le ferait FedaPay. Indisponible si le fournisseur factice est désactivé.
  */
-export async function simulateFakePayment(paymentId: string, outcome: "succeeded" | "failed" | "pending") {
+export async function simulateFakePayment(
+  paymentId: string,
+  outcome: "succeeded" | "failed" | "pending",
+) {
   if (!getProvider("fake")) return { ok: false as const };
   const secret = process.env.FAKE_PAYMENT_SECRET!;
   const body = JSON.stringify({ payment_id: paymentId, status: outcome });

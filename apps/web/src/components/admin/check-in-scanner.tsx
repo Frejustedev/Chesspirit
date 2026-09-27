@@ -7,7 +7,9 @@ import { checkInAction } from "@/app/actions/admin";
 import { Button, Checkbox, Field, Input } from "@/components/ui/form";
 import { IconCamera } from "@/components/icons";
 
-type Entry = { name: string; already: boolean; payment: string; status: string; at: string } | { error: string; at: string };
+type Entry =
+  | { name: string; already: boolean; payment: string; status: string; at: string }
+  | { error: string; at: string };
 
 /** Pointage par QR code : caméra (BarcodeDetector natif, sinon jsQR) ou saisie du code. */
 export function CheckInScanner() {
@@ -33,7 +35,12 @@ export function CheckInScanner() {
     last.current = { code: v, at: now };
     const r = await checkInAction(v, markPaidRef.current);
     const at = new Date().toLocaleTimeString();
-    setLog((l) => [r.ok ? { ...r.data!, at } : { error: te.has(r.error) ? te(r.error) : r.error, at }, ...l].slice(0, 30));
+    setLog((l) =>
+      [
+        r.ok ? { ...r.data!, at } : { error: te.has(r.error) ? te(r.error) : r.error, at },
+        ...l,
+      ].slice(0, 30),
+    );
     if ("vibrate" in navigator) navigator.vibrate(r.ok ? 80 : [60, 60, 60]);
   }
 
@@ -42,11 +49,19 @@ export function CheckInScanner() {
     let stream: MediaStream | null = null;
     let raf = 0;
     let stopped = false;
-    const Detector = (globalThis as unknown as { BarcodeDetector?: new (o: { formats: string[] }) => { detect: (v: HTMLVideoElement) => Promise<{ rawValue: string }[]> } }).BarcodeDetector;
+    const Detector = (
+      globalThis as unknown as {
+        BarcodeDetector?: new (o: { formats: string[] }) => {
+          detect: (v: HTMLVideoElement) => Promise<{ rawValue: string }[]>;
+        };
+      }
+    ).BarcodeDetector;
     const detector = Detector ? new Detector({ formats: ["qr_code"] }) : null;
     (async () => {
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "environment" },
+        });
       } catch {
         setScanning(false);
         return;
@@ -67,7 +82,8 @@ export function CheckInScanner() {
             c.height = v.videoHeight;
             const ctx = c.getContext("2d", { willReadFrequently: true })!;
             ctx.drawImage(v, 0, 0);
-            value = jsQR(ctx.getImageData(0, 0, c.width, c.height).data, c.width, c.height)?.data ?? null;
+            value =
+              jsQR(ctx.getImageData(0, 0, c.width, c.height).data, c.width, c.height)?.data ?? null;
           }
           if (value) await submit(value);
         }
@@ -87,7 +103,13 @@ export function CheckInScanner() {
     <div className="grid gap-8 lg:grid-cols-2">
       <div>
         <div className="relative aspect-square overflow-hidden rounded-lg bg-ink">
-          <video ref={video} className="size-full object-cover" muted playsInline aria-label={t("camera")} />
+          <video
+            ref={video}
+            className="size-full object-cover"
+            muted
+            playsInline
+            aria-label={t("camera")}
+          />
           <canvas ref={canvas} className="hidden" />
           {!scanning ? (
             <div className="absolute inset-0 grid place-items-center">
@@ -100,7 +122,12 @@ export function CheckInScanner() {
           )}
         </div>
         {scanning ? (
-          <Button type="button" variant="secondary" className="mt-3" onClick={() => setScanning(false)}>
+          <Button
+            type="button"
+            variant="secondary"
+            className="mt-3"
+            onClick={() => setScanning(false)}
+          >
             {t("stopCamera")}
           </Button>
         ) : null}
@@ -114,24 +141,42 @@ export function CheckInScanner() {
         >
           <div className="flex-1">
             <Field id="ticket" label={t("ticketCode")}>
-              <Input id="ticket" value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} autoComplete="off" className="font-mono uppercase" />
+              <Input
+                id="ticket"
+                value={code}
+                onChange={(e) => setCode(e.target.value.toUpperCase())}
+                autoComplete="off"
+                className="font-mono uppercase"
+              />
             </Field>
           </div>
           <Button type="submit">{t("checkIn")}</Button>
         </form>
-        <Checkbox id="mark-paid" checked={markPaid} onChange={(e) => setMarkPaid(e.target.checked)} label={t("markPaidOnCheckIn")} />
+        <Checkbox
+          id="mark-paid"
+          checked={markPaid}
+          onChange={(e) => setMarkPaid(e.target.checked)}
+          label={t("markPaidOnCheckIn")}
+        />
       </div>
       <div>
         <h2 className="font-display text-2xl font-semibold">{t("checkInLog")}</h2>
         <ul className="mt-3 space-y-2" aria-live="polite">
           {log.map((e, i) =>
             "error" in e ? (
-              <li key={i} className="rounded-md bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux">
+              <li
+                key={i}
+                className="rounded-md bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux"
+              >
                 {e.at} — {e.error}
               </li>
             ) : (
-              <li key={i} className={`rounded-md px-3 py-2 text-sm ${e.already ? "bg-gold-soft/60" : "bg-success/15"}`}>
-                <strong>{e.name}</strong> — {e.already ? t("alreadyChecked") : t("checkedIn")} · {t(`pay.${e.payment}`)}
+              <li
+                key={i}
+                className={`rounded-md px-3 py-2 text-sm ${e.already ? "bg-gold-soft/60" : "bg-success/15"}`}
+              >
+                <strong>{e.name}</strong> — {e.already ? t("alreadyChecked") : t("checkedIn")} ·{" "}
+                {t(`pay.${e.payment}`)}
                 {e.status !== "confirmed" ? ` · ${t(`reg.${e.status}`)}` : ""}
                 <span className="float-right text-stone">{e.at}</span>
               </li>

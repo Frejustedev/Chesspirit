@@ -34,10 +34,19 @@ export async function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 lg:h-[72px] lg:px-6">
         <MobileMenu
           sections={sections}
-          labels={{ open: tc("openMenu"), close: tc("closeMenu"), account: t("account"), cta: cta.label }}
+          labels={{
+            open: tc("openMenu"),
+            close: tc("closeMenu"),
+            account: t("account"),
+            cta: cta.label,
+          }}
           ctaHref={cta.href}
         />
-        <Link href="/" className="shrink-0 text-[1.65rem] leading-none lg:text-[1.8rem]" aria-label={tc("home")}>
+        <Link
+          href="/"
+          className="shrink-0 text-[1.65rem] leading-none lg:text-[1.8rem]"
+          aria-label={tc("home")}
+        >
           <Logo />
         </Link>
 

@@ -23,15 +23,15 @@ Plateforme des échecs au Bénin (chesspirit.com). Brief complet : `docs/BRIEF.m
 
 ## Commandes
 
-| Commande | Rôle |
-| --- | --- |
-| `pnpm install` | Dépendances |
-| `pnpm dev` | Pile locale + application web |
-| `pnpm seed` | Données de démonstration |
-| `pnpm lint` / `pnpm typecheck` / `pnpm test` | Qualité |
-| `pnpm test:rls` | Tests des politiques RLS (Postgres local) |
-| `pnpm e2e` | Playwright (parcours et captures) |
-| `pnpm --filter chess-engine test` ou `cd services/chess-engine && uv run pytest` | Service Python |
+| Commande                                                                         | Rôle                                      |
+| -------------------------------------------------------------------------------- | ----------------------------------------- |
+| `pnpm install`                                                                   | Dépendances                               |
+| `pnpm dev`                                                                       | Pile locale + application web             |
+| `pnpm seed`                                                                      | Données de démonstration                  |
+| `pnpm lint` / `pnpm typecheck` / `pnpm test`                                     | Qualité                                   |
+| `pnpm test:rls`                                                                  | Tests des politiques RLS (Postgres local) |
+| `pnpm e2e`                                                                       | Playwright (parcours et captures)         |
+| `pnpm --filter chess-engine test` ou `cd services/chess-engine && uv run pytest` | Service Python                            |
 
 ## Conventions
 

@@ -8,9 +8,10 @@ const intl = createMiddleware(routing);
 
 /** Rafraîchit la session Supabase puis applique le routage par langue. */
 export default async function proxy(request: NextRequest) {
-  const response = request.nextUrl.pathname.startsWith("/api") || request.nextUrl.pathname.startsWith("/auth")
-    ? NextResponse.next({ request })
-    : intl(request);
+  const response =
+    request.nextUrl.pathname.startsWith("/api") || request.nextUrl.pathname.startsWith("/auth")
+      ? NextResponse.next({ request })
+      : intl(request);
 
   const supabase = createServerClient(env.supabaseUrl, env.supabaseAnonKey, {
     cookies: {

@@ -195,7 +195,12 @@ export const IconBoard = (p: IconProps) => (
   <Icon {...p}>
     <rect x="3.5" y="3.5" width="17" height="17" rx="1" />
     <path d="M3.5 12h17M12 3.5v17" />
-    <path d="M3.5 3.5h8.5v8.5H3.5zM12 12h8.5v8.5H12z" fill="currentColor" stroke="none" opacity={0.25} />
+    <path
+      d="M3.5 3.5h8.5v8.5H3.5zM12 12h8.5v8.5H12z"
+      fill="currentColor"
+      stroke="none"
+      opacity={0.25}
+    />
   </Icon>
 );
 

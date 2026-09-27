@@ -12,7 +12,10 @@ export function LocaleSwitch() {
   const params = useParams();
   const [pending, start] = useTransition();
   return (
-    <div className="flex items-center rounded-full border border-line p-0.5 text-sm font-semibold" aria-busy={pending}>
+    <div
+      className="flex items-center rounded-full border border-line p-0.5 text-sm font-semibold"
+      aria-busy={pending}
+    >
       {(["fr", "en"] as const).map((l) => (
         <button
           key={l}

@@ -40,18 +40,31 @@ export function Field({
   );
 }
 
-export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function Input(props, ref) {
-  return <input ref={ref} {...props} className={`${inputClass} ${props.className ?? ""}`} />;
-});
+export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
+  function Input(props, ref) {
+    return <input ref={ref} {...props} className={`${inputClass} ${props.className ?? ""}`} />;
+  },
+);
 
-export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(function Select(props, ref) {
-  return <select ref={ref} {...props} className={`${inputClass} ${props.className ?? ""}`} />;
-});
+export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(
+  function Select(props, ref) {
+    return <select ref={ref} {...props} className={`${inputClass} ${props.className ?? ""}`} />;
+  },
+);
 
-export function Checkbox({ id, label, ...props }: InputHTMLAttributes<HTMLInputElement> & { id: string; label: ReactNode }) {
+export function Checkbox({
+  id,
+  label,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement> & { id: string; label: ReactNode }) {
   return (
     <label htmlFor={id} className="flex min-h-11 cursor-pointer items-start gap-3 py-1.5">
-      <input id={id} type="checkbox" {...props} className="mt-0.5 size-5 shrink-0 accent-[var(--color-bordeaux)]" />
+      <input
+        id={id}
+        type="checkbox"
+        {...props}
+        className="mt-0.5 size-5 shrink-0 accent-[var(--color-bordeaux)]"
+      />
       <span className="text-[0.98rem]">{label}</span>
     </label>
   );
@@ -62,14 +75,19 @@ export function Button({
   variant = "primary",
   className = "",
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "secondary" | "ghost" }) {
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "secondary" | "ghost";
+}) {
   const styles = {
     primary: "bg-bordeaux text-cream hover:bg-ink",
     secondary: "border border-ink/25 bg-paper hover:bg-cream",
     ghost: "text-bordeaux hover:underline",
   }[variant];
   return (
-    <button {...props} className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-semibold disabled:opacity-60 ${styles} ${className}`}>
+    <button
+      {...props}
+      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-semibold disabled:opacity-60 ${styles} ${className}`}
+    >
       {children}
     </button>
   );

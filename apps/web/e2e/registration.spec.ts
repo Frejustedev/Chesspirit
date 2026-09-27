@@ -3,10 +3,15 @@ import { loginWithPhone, randomPhone, serviceDb } from "./helpers";
 
 test.beforeAll(async () => {
   // Le tournoi de démonstration payant doit être ouvert aux inscriptions.
-  await serviceDb().from("tournaments").update({ status: "registration_open", results_published: false }).eq("slug", "blitz-demo-porto-novo");
+  await serviceDb()
+    .from("tournaments")
+    .update({ status: "registration_open", results_published: false })
+    .eq("slug", "blitz-demo-porto-novo");
 });
 
-test("nouveau joueur : connexion SMS, profil, inscription payante, paiement test, billet", async ({ page }) => {
+test("nouveau joueur : connexion SMS, profil, inscription payante, paiement test, billet", async ({
+  page,
+}) => {
   const phone = randomPhone();
   const last = `Parcours${phone.slice(-4)}`;
   await loginWithPhone(page, phone, "/competitions/blitz-demo-porto-novo/inscription");
@@ -41,7 +46,9 @@ test("nouveau joueur : connexion SMS, profil, inscription payante, paiement test
   await expect(page.getByRole("cell", { name: `Test ${last}` })).toBeVisible();
 });
 
-test("tournoi du 3 octobre : frais à confirmer, inscription avec paiement sur place", async ({ page }) => {
+test("tournoi du 3 octobre : frais à confirmer, inscription avec paiement sur place", async ({
+  page,
+}) => {
   await loginWithPhone(page, randomPhone(), "/competitions/tournoi-chesspirit-2026/inscription");
   await page.getByLabel("Prénom").fill("Sur");
   await page.getByLabel("Nom", { exact: true }).fill("Place");
@@ -57,5 +64,10 @@ test("tournoi du 3 octobre : frais à confirmer, inscription avec paiement sur p
   await page.getByLabel(/J'accepte le/).check();
   await page.getByRole("button", { name: "Confirmer l'inscription" }).click();
   await expect(page.getByText("À régler sur place")).toBeVisible();
-  await expect(page.locator("svg").filter({ has: page.locator("path") }).first()).toBeVisible();
+  await expect(
+    page
+      .locator("svg")
+      .filter({ has: page.locator("path") })
+      .first(),
+  ).toBeVisible();
 });

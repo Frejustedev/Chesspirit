@@ -22,7 +22,12 @@ export const getSession = cache(async (): Promise<SessionInfo | null> => {
   } = await supabase.auth.getUser();
   if (!user) return null;
   const [{ data: profile }, { data: roles }, { data: aal }] = await Promise.all([
-    supabase.from("profiles").select("*").eq("user_id", user.id).is("merged_into", null).maybeSingle(),
+    supabase
+      .from("profiles")
+      .select("*")
+      .eq("user_id", user.id)
+      .is("merged_into", null)
+      .maybeSingle(),
     supabase.from("user_roles").select("role").eq("user_id", user.id),
     supabase.auth.mfa.getAuthenticatorAssuranceLevel(),
   ]);
@@ -41,7 +46,11 @@ export function isAdminRole(roles: string[]) {
 }
 
 /** Exige une session (et un profil complété si `onboarded`) ; sinon redirige. */
-export async function requireSession(locale: string, next: string, opts: { onboarded?: boolean } = { onboarded: true }) {
+export async function requireSession(
+  locale: string,
+  next: string,
+  opts: { onboarded?: boolean } = { onboarded: true },
+) {
   const { redirect } = await import("@/i18n/navigation");
   const session = await getSession();
   if (!session) redirect({ href: `/connexion?next=${encodeURIComponent(next)}`, locale });

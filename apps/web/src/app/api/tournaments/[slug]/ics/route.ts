@@ -11,12 +11,19 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
   const { data: t } = await supabase.from("tournaments").select("*").eq("slug", slug).maybeSingle();
   if (!t) return new Response("Introuvable", { status: 404 });
   const allDay = t.unconfirmed_fields.includes("schedule");
-  const localDay = new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Porto-Novo" }).format(new Date(t.starts_at)).replace(/-/g, "");
-  const next = new Date(Date.parse(`${localDay.slice(0, 4)}-${localDay.slice(4, 6)}-${localDay.slice(6)}T00:00:00Z`) + 86400000)
+  const localDay = new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Porto-Novo" })
+    .format(new Date(t.starts_at))
+    .replace(/-/g, "");
+  const next = new Date(
+    Date.parse(`${localDay.slice(0, 4)}-${localDay.slice(4, 6)}-${localDay.slice(6)}T00:00:00Z`) +
+      86400000,
+  )
     .toISOString()
     .slice(0, 10)
     .replace(/-/g, "");
-  const start = allDay ? `DTSTART;VALUE=DATE:${localDay}` : `DTSTART:${icsDate(new Date(t.starts_at).toISOString())}`;
+  const start = allDay
+    ? `DTSTART;VALUE=DATE:${localDay}`
+    : `DTSTART:${icsDate(new Date(t.starts_at).toISOString())}`;
   const end = allDay
     ? `DTEND;VALUE=DATE:${next}`
     : `DTEND:${icsDate(new Date(t.ends_at ?? Date.parse(t.starts_at) + 8 * 3600000).toISOString())}`;
@@ -37,6 +44,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
     "",
   ].join("\r\n");
   return new Response(body, {
-    headers: { "content-type": "text/calendar; charset=utf-8", "content-disposition": `attachment; filename="${t.slug}.ics"` },
+    headers: {
+      "content-type": "text/calendar; charset=utf-8",
+      "content-disposition": `attachment; filename="${t.slug}.ics"`,
+    },
   });
 }

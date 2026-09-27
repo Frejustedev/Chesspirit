@@ -19,7 +19,9 @@ const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? (isLocal ? LOCAL_SERVICE_KE
 if (!key) throw new Error("SUPABASE_SERVICE_ROLE_KEY requis hors environnement local");
 const withDemo = !process.argv.includes("--no-demo");
 if (withDemo && !isLocal && !process.argv.includes("--force-demo")) {
-  throw new Error("Refus : données de démonstration sur une base distante. Utilisez --no-demo (ou --force-demo).");
+  throw new Error(
+    "Refus : données de démonstration sur une base distante. Utilisez --no-demo (ou --force-demo).",
+  );
 }
 
 const db = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
@@ -48,7 +50,10 @@ const pick = <T>(xs: T[]) => xs[Math.floor(rand() * xs.length)]!;
 // ---------------------------------------------------------------------------
 async function seedLaunchTournament() {
   const slug = "tournoi-chesspirit-2026";
-  const existing = must(await db.from("tournaments").select("id").eq("slug", slug).maybeSingle(), "lecture tournoi");
+  const existing = must(
+    await db.from("tournaments").select("id").eq("slug", slug).maybeSingle(),
+    "lecture tournoi",
+  );
   if (existing) {
     console.log("• Tournoi du 3 octobre déjà présent (non modifié)");
     return existing.id as string;
@@ -79,7 +84,16 @@ async function seedLaunchTournament() {
         allow_online_payment: true,
         allow_on_site_payment: true,
         rated: false,
-        unconfirmed_fields: ["schedule", "time_control", "rounds", "pairing_system", "fee", "prizes", "capacity", "rated"],
+        unconfirmed_fields: [
+          "schedule",
+          "time_control",
+          "rounds",
+          "pairing_system",
+          "fee",
+          "prizes",
+          "capacity",
+          "rated",
+        ],
       })
       .select("id")
       .single(),
@@ -92,7 +106,10 @@ async function seedLaunchTournament() {
     ]),
     "partenaires",
   );
-  must(await db.from("registration_forms").insert({ tournament_id: t.id, fields: [] }), "formulaire");
+  must(
+    await db.from("registration_forms").insert({ tournament_id: t.id, fields: [] }),
+    "formulaire",
+  );
   console.log("✓ Tournoi du 3 octobre 2026 créé (faits connus uniquement)");
   return t.id as string;
 }
@@ -100,9 +117,64 @@ async function seedLaunchTournament() {
 // ---------------------------------------------------------------------------
 // 2. Démonstration
 // ---------------------------------------------------------------------------
-const FIRST_M = ["Koffi", "Sèdjro", "Rodrigue", "Ulrich", "Gildas", "Arnaud", "Fiacre", "Hervé", "Romaric", "Mahougnon", "Brice", "Landry", "Elvis", "Codjo", "Serge", "Aurel", "Parfait", "Crépin", "Jonas", "Ismaël"];
-const FIRST_F = ["Aïcha", "Nadège", "Sênami", "Grâce", "Mireille", "Rachida", "Ornella", "Fifamè", "Carine", "Estelle", "Mariam", "Prudence"];
-const LAST = ["Adjovi", "Houngbédji", "Dossou", "Agossou", "Tossou", "Zinsou", "Akpovi", "Gbaguidi", "Hounkpatin", "Kiki", "Sossa", "Amoussou", "Ahouandjinou", "Fagla", "Lokossou", "Dansou", "Quenum", "Yessoufou", "Bio", "Sanni"];
+const FIRST_M = [
+  "Koffi",
+  "Sèdjro",
+  "Rodrigue",
+  "Ulrich",
+  "Gildas",
+  "Arnaud",
+  "Fiacre",
+  "Hervé",
+  "Romaric",
+  "Mahougnon",
+  "Brice",
+  "Landry",
+  "Elvis",
+  "Codjo",
+  "Serge",
+  "Aurel",
+  "Parfait",
+  "Crépin",
+  "Jonas",
+  "Ismaël",
+];
+const FIRST_F = [
+  "Aïcha",
+  "Nadège",
+  "Sênami",
+  "Grâce",
+  "Mireille",
+  "Rachida",
+  "Ornella",
+  "Fifamè",
+  "Carine",
+  "Estelle",
+  "Mariam",
+  "Prudence",
+];
+const LAST = [
+  "Adjovi",
+  "Houngbédji",
+  "Dossou",
+  "Agossou",
+  "Tossou",
+  "Zinsou",
+  "Akpovi",
+  "Gbaguidi",
+  "Hounkpatin",
+  "Kiki",
+  "Sossa",
+  "Amoussou",
+  "Ahouandjinou",
+  "Fagla",
+  "Lokossou",
+  "Dansou",
+  "Quenum",
+  "Yessoufou",
+  "Bio",
+  "Sanni",
+];
 const CITIES: [string, string][] = [
   ["Cotonou", "Littoral"],
   ["Porto-Novo", "Ouémé"],
@@ -130,7 +202,11 @@ function randomGame(maxPlies: number) {
     const moves = g.moves({ verbose: true });
     const scored = moves.map((m) => ({
       m,
-      s: (m.captured ? values[m.captured]! * 3 - values[m.piece]! : 0) + (m.san.includes("+") ? 2 : 0) + (i < 8 && "pn".includes(m.piece) ? 1.5 : 0) + rand() * 3,
+      s:
+        (m.captured ? values[m.captured]! * 3 - values[m.piece]! : 0) +
+        (m.san.includes("+") ? 2 : 0) +
+        (i < 8 && "pn".includes(m.piece) ? 1.5 : 0) +
+        rand() * 3,
     }));
     scored.sort((a, b) => b.s - a.s);
     g.move(scored[Math.floor(rand() * Math.min(3, scored.length))]!.m);
@@ -139,7 +215,10 @@ function randomGame(maxPlies: number) {
 }
 
 async function seedDemo() {
-  const existing = must(await db.from("tournaments").select("id").eq("slug", "open-demo-cotonou").maybeSingle(), "lecture démo");
+  const existing = must(
+    await db.from("tournaments").select("id").eq("slug", "open-demo-cotonou").maybeSingle(),
+    "lecture démo",
+  );
   if (existing) {
     console.log("• Données de démonstration déjà présentes");
     return;
@@ -150,9 +229,39 @@ async function seedDemo() {
     await db
       .from("organizations")
       .insert([
-        { type: "club", name: "Club démo de Cotonou", slug: "club-demo-cotonou", city: "Cotonou", department: "Littoral", lat: 6.3654, lng: 2.4183, is_demo: true, verified: true },
-        { type: "club", name: "Échiquier démo de Porto-Novo", slug: "echiquier-demo-porto-novo", city: "Porto-Novo", department: "Ouémé", lat: 6.4969, lng: 2.6289, is_demo: true, verified: false },
-        { type: "school", name: "École d'échecs démo de Parakou", slug: "ecole-demo-parakou", city: "Parakou", department: "Borgou", lat: 9.3372, lng: 2.6303, is_demo: true, verified: false },
+        {
+          type: "club",
+          name: "Club démo de Cotonou",
+          slug: "club-demo-cotonou",
+          city: "Cotonou",
+          department: "Littoral",
+          lat: 6.3654,
+          lng: 2.4183,
+          is_demo: true,
+          verified: true,
+        },
+        {
+          type: "club",
+          name: "Échiquier démo de Porto-Novo",
+          slug: "echiquier-demo-porto-novo",
+          city: "Porto-Novo",
+          department: "Ouémé",
+          lat: 6.4969,
+          lng: 2.6289,
+          is_demo: true,
+          verified: false,
+        },
+        {
+          type: "school",
+          name: "École d'échecs démo de Parakou",
+          slug: "ecole-demo-parakou",
+          city: "Parakou",
+          department: "Borgou",
+          lat: 9.3372,
+          lng: 2.6303,
+          is_demo: true,
+          verified: false,
+        },
       ])
       .select("id, name, city"),
     "structures",
@@ -184,19 +293,48 @@ async function seedDemo() {
       titles: i === 0 ? ["FM"] : i === 1 ? ["CM"] : [],
     });
   }
-  const inserted = must(await db.from("profiles").insert(rows).select("id, first_name, last_name, sex, is_minor"), "joueurs");
+  const inserted = must(
+    await db.from("profiles").insert(rows).select("id, first_name, last_name, sex, is_minor"),
+    "joueurs",
+  );
   // Les mineurs de démonstration restent en profil réduit ; on rend public uniquement les adultes.
   inserted.forEach((p, i) => {
     const rating = Math.round(2150 - i * 26 + (rand() - 0.5) * 60);
-    players.push({ id: p.id, name: `${p.first_name} ${p.last_name}`, rating, sex: p.sex as "M" | "F" });
+    players.push({
+      id: p.id,
+      name: `${p.first_name} ${p.last_name}`,
+      rating,
+      sex: p.sex as "M" | "F",
+    });
   });
 
   must(
     await db.from("ratings").insert(
       players.flatMap((p) => [
-        { profile_id: p.id, type: "rapid", rating: p.rating, games: 30 + Math.floor(rand() * 40), provisional: false, peak: p.rating + 20 },
-        { profile_id: p.id, type: "blitz", rating: p.rating - 40 + Math.round(rand() * 80), games: 40, provisional: false, peak: p.rating + 30 },
-        { profile_id: p.id, type: "classical", rating: p.rating + 15, games: 12, provisional: rand() < 0.2, peak: p.rating + 15 },
+        {
+          profile_id: p.id,
+          type: "rapid",
+          rating: p.rating,
+          games: 30 + Math.floor(rand() * 40),
+          provisional: false,
+          peak: p.rating + 20,
+        },
+        {
+          profile_id: p.id,
+          type: "blitz",
+          rating: p.rating - 40 + Math.round(rand() * 80),
+          games: 40,
+          provisional: false,
+          peak: p.rating + 30,
+        },
+        {
+          profile_id: p.id,
+          type: "classical",
+          rating: p.rating + 15,
+          games: 12,
+          provisional: rand() < 0.2,
+          peak: p.rating + 15,
+        },
       ]),
     ),
     "cotes",
@@ -206,11 +344,46 @@ async function seedDemo() {
   const playerUser = await ensureUser("joueur@demo.chesspirit.local", "+22990000001");
   const adminUser = await ensureUser("admin@demo.chesspirit.local", "+22990000009");
   const arbiterUser = await ensureUser("arbitre@demo.chesspirit.local", "+22990000005");
-  must(await db.from("profiles").update({ user_id: playerUser, phone: "+22990000001", email: "joueur@demo.chesspirit.local", claimed: true }).eq("id", players[7]!.id), "compte joueur");
+  must(
+    await db
+      .from("profiles")
+      .update({
+        user_id: playerUser,
+        phone: "+22990000001",
+        email: "joueur@demo.chesspirit.local",
+        claimed: true,
+      })
+      .eq("id", players[7]!.id),
+    "compte joueur",
+  );
   must(
     await db.from("profiles").insert([
-      { user_id: adminUser, first_name: "Admin", last_name: "Démo", birth_date: "1988-04-12", sex: "F", city: "Cotonou", department: "Littoral", source: "demo", is_demo: true, onboarded: true, phone: "+22990000009" },
-      { user_id: arbiterUser, first_name: "Arbitre", last_name: "Démo", birth_date: "1979-09-30", sex: "M", city: "Cotonou", department: "Littoral", source: "demo", is_demo: true, onboarded: true, phone: "+22990000005" },
+      {
+        user_id: adminUser,
+        first_name: "Admin",
+        last_name: "Démo",
+        birth_date: "1988-04-12",
+        sex: "F",
+        city: "Cotonou",
+        department: "Littoral",
+        source: "demo",
+        is_demo: true,
+        onboarded: true,
+        phone: "+22990000009",
+      },
+      {
+        user_id: arbiterUser,
+        first_name: "Arbitre",
+        last_name: "Démo",
+        birth_date: "1979-09-30",
+        sex: "M",
+        city: "Cotonou",
+        department: "Littoral",
+        source: "demo",
+        is_demo: true,
+        onboarded: true,
+        phone: "+22990000005",
+      },
     ]),
     "profils admin/arbitre",
   );
@@ -231,8 +404,14 @@ async function seedDemo() {
       .insert({
         slug: "open-demo-cotonou",
         name: "Open de démonstration de Cotonou",
-        summary: { fr: "Tournoi fictif servant à la démonstration.", en: "Fictitious tournament used for demonstration." },
-        description: { fr: "Tournoi fictif : joueurs, résultats et parties sont générés automatiquement.", en: "Fictitious tournament: players, results and games are generated." },
+        summary: {
+          fr: "Tournoi fictif servant à la démonstration.",
+          en: "Fictitious tournament used for demonstration.",
+        },
+        description: {
+          fr: "Tournoi fictif : joueurs, résultats et parties sont générés automatiquement.",
+          en: "Fictitious tournament: players, results and games are generated.",
+        },
         venue: "Salle démo",
         city: "Cotonou",
         starts_at: "2026-06-13T08:00:00Z",
@@ -254,7 +433,17 @@ async function seedDemo() {
   );
   must(
     await db.from("registrations").insert(
-      field.map((p) => ({ tournament_id: t.id, player_id: p.id, status: "confirmed", payment_status: "paid", payment_method: "on_site", amount_xof: 2000, seed_rating: p.rating, checked_in_at: "2026-06-13T07:45:00Z", source: "admin" })),
+      field.map((p) => ({
+        tournament_id: t.id,
+        player_id: p.id,
+        status: "confirmed",
+        payment_status: "paid",
+        payment_method: "on_site",
+        amount_xof: 2000,
+        seed_rating: p.rating,
+        checked_in_at: "2026-06-13T07:45:00Z",
+        source: "admin",
+      })),
     ),
     "inscriptions démo",
   );
@@ -264,9 +453,23 @@ async function seedDemo() {
   const pairings: PairingInput[] = [];
   const games: Record<string, unknown>[] = [];
   for (let r = 1; r <= 5; r++) {
-    const round = must(await db.from("rounds").insert({ tournament_id: t.id, number: r, status: "finished", published_at: "2026-06-13T08:00:00Z" }).select("id").single(), "ronde");
-    const order = [...field].sort((a, b) => score.get(b.id)! - score.get(a.id)! || b.rating - a.rating);
-    const board: [typeof field[number], typeof field[number]][] = [];
+    const round = must(
+      await db
+        .from("rounds")
+        .insert({
+          tournament_id: t.id,
+          number: r,
+          status: "finished",
+          published_at: "2026-06-13T08:00:00Z",
+        })
+        .select("id")
+        .single(),
+      "ronde",
+    );
+    const order = [...field].sort(
+      (a, b) => score.get(b.id)! - score.get(a.id)! || b.rating - a.rating,
+    );
+    const board: [(typeof field)[number], (typeof field)[number]][] = [];
     const left = [...order];
     while (left.length > 1) {
       const a = left.shift()!;
@@ -284,9 +487,20 @@ async function seedDemo() {
       score.set(w.id, score.get(w.id)! + (result === "1-0" ? 1 : result === "0-1" ? 0 : 0.5));
       score.set(b.id, score.get(b.id)! + (result === "0-1" ? 1 : result === "1-0" ? 0 : 0.5));
       pairings.push({ round: r, white: w.id, black: b.id, result });
-      prs.push({ tournament_id: t.id, round_id: round.id, board: i + 1, white_id: w.id, black_id: b.id, result });
+      prs.push({
+        tournament_id: t.id,
+        round_id: round.id,
+        board: i + 1,
+        white_id: w.id,
+        black_id: b.id,
+        result,
+      });
       const g = randomGame(40 + Math.floor(rand() * 50));
-      const moves = g.pgn().replace(/\[.*\]\s*/g, "").replace(/\s*\*\s*$/, "").trim();
+      const moves = g
+        .pgn()
+        .replace(/\[.*\]\s*/g, "")
+        .replace(/\s*\*\s*$/, "")
+        .trim();
       const gameResult = g.isCheckmate() ? (g.turn() === "w" ? "0-1" : "1-0") : result;
       games.push({
         tournament_id: t.id,
@@ -301,7 +515,18 @@ async function seedDemo() {
         black_rating: b.rating,
         result: gameResult,
         pgn: buildPgn(
-          { Event: "Open de démonstration de Cotonou", Site: "Cotonou BEN", Date: "2026.06.13", Round: String(r), White: w.name, Black: b.name, Result: gameResult, WhiteElo: String(w.rating), BlackElo: String(b.rating), Annotator: "Chesspirit (démonstration)" },
+          {
+            Event: "Open de démonstration de Cotonou",
+            Site: "Cotonou BEN",
+            Date: "2026.06.13",
+            Round: String(r),
+            White: w.name,
+            Black: b.name,
+            Result: gameResult,
+            WhiteElo: String(w.rating),
+            BlackElo: String(b.rating),
+            Annotator: "Chesspirit (démonstration)",
+          },
           `${moves} ${gameResult}`,
         ),
         moves_count: Math.ceil(g.history().length / 2),
@@ -320,7 +545,17 @@ async function seedDemo() {
   );
   must(
     await db.from("standings").insert(
-      standings.map((s) => ({ tournament_id: t.id, player_id: s.playerId, rank: s.rank, points: s.points, games: s.games, tiebreaks: s.tiebreaks, performance: s.tiebreaks.performance, rating_before: s.rating, is_final: true })),
+      standings.map((s) => ({
+        tournament_id: t.id,
+        player_id: s.playerId,
+        rank: s.rank,
+        points: s.points,
+        games: s.games,
+        tiebreaks: s.tiebreaks,
+        performance: s.tiebreaks.performance,
+        rating_before: s.rating,
+        is_final: true,
+      })),
     ),
     "classement",
   );
@@ -332,7 +567,10 @@ async function seedDemo() {
       .insert({
         slug: "blitz-demo-porto-novo",
         name: "Blitz de démonstration de Porto-Novo",
-        summary: { fr: "Tournoi fictif pour tester l'inscription et le paiement.", en: "Fictitious tournament to test registration and payment." },
+        summary: {
+          fr: "Tournoi fictif pour tester l'inscription et le paiement.",
+          en: "Fictitious tournament to test registration and payment.",
+        },
         venue: "Salle démo",
         city: "Porto-Novo",
         starts_at: "2026-11-14T14:00:00Z",
@@ -354,8 +592,19 @@ async function seedDemo() {
     await db.from("registration_forms").insert({
       tournament_id: blitz.id,
       fields: [
-        { key: "tshirt", label: { fr: "Taille de t-shirt", en: "T-shirt size" }, type: "select", required: false, options: ["S", "M", "L", "XL"] },
-        { key: "meal", label: { fr: "Repas sur place", en: "Meal on site" }, type: "checkbox", required: false },
+        {
+          key: "tshirt",
+          label: { fr: "Taille de t-shirt", en: "T-shirt size" },
+          type: "select",
+          required: false,
+          options: ["S", "M", "L", "XL"],
+        },
+        {
+          key: "meal",
+          label: { fr: "Repas sur place", en: "Meal on site" },
+          type: "checkbox",
+          required: false,
+        },
       ],
     }),
     "formulaire blitz",
@@ -363,13 +612,20 @@ async function seedDemo() {
   must(
     await db.from("tournament_staff").insert({
       tournament_id: blitz.id,
-      profile_id: must(await db.from("profiles").select("id").eq("user_id", arbiterUser).single(), "profil arbitre").id,
+      profile_id: must(
+        await db.from("profiles").select("id").eq("user_id", arbiterUser).single(),
+        "profil arbitre",
+      ).id,
       role: "chief_arbiter",
     }),
     "arbitre",
   );
-  console.log(`✓ Démonstration : ${players.length} joueurs, 3 structures, 2 tournois, ${games.length} parties`);
-  console.log("  Comptes : joueur@demo.chesspirit.local (+22990000001), arbitre@demo.chesspirit.local, admin@demo.chesspirit.local (super_admin, 2FA requise)");
+  console.log(
+    `✓ Démonstration : ${players.length} joueurs, 3 structures, 2 tournois, ${games.length} parties`,
+  );
+  console.log(
+    "  Comptes : joueur@demo.chesspirit.local (+22990000001), arbitre@demo.chesspirit.local, admin@demo.chesspirit.local (super_admin, 2FA requise)",
+  );
 }
 
 const launchId = await seedLaunchTournament();

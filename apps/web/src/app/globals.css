@@ -84,7 +84,12 @@
   /* Filet décoratif : damier fin */
   .rule-checker {
     height: 6px;
-    background-image: conic-gradient(var(--color-ink) 25%, transparent 0 50%, var(--color-ink) 0 75%, transparent 0);
+    background-image: conic-gradient(
+      var(--color-ink) 25%,
+      transparent 0 50%,
+      var(--color-ink) 0 75%,
+      transparent 0
+    );
     background-size: 6px 6px;
     opacity: 0.85;
   }

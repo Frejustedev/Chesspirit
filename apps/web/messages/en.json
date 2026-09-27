@@ -613,5 +613,78 @@
     "saving": "Saving…",
     "saved": "Changes saved.",
     "saveError": "Save failed"
+  },
+  "viewer": {
+    "board": "Game position",
+    "first": "Start",
+    "prev": "Previous move",
+    "next": "Next move",
+    "last": "End",
+    "flip": "Flip board",
+    "moves": "Game moves",
+    "invalid": "This game cannot be read (invalid PGN).",
+    "round": "Round {n}",
+    "download": "Download PGN"
+  },
+  "legal": {
+    "frenchReference": "This text is currently available in French only; the French version is the reference.",
+    "version": "Version of 27 September 2026."
+  },
+  "about": {
+    "title": "About",
+    "visionTitle": "Vision",
+    "vision": "To become the digital infrastructure of chess in Benin, then in the sub-region.",
+    "missionTitle": "Mission",
+    "mission": "Training players, running quality competitions, following everyone's progress and showcasing Beninese talent.",
+    "p1": "Chesspirit brings coaching, competitions, ratings, directory, shop and media for chess in Benin together in one ecosystem, with a single account per player.",
+    "p2": "The Chesspirit rating acts as a de facto national ranking in blitz, rapid and classical until a federal ranking exists, with FIDE Elo shown alongside.",
+    "p3": "The tournament manager is free for every organiser in the country: each tournament run on Chesspirit enriches the national database of players and games. The first Chesspirit tournament takes place on Saturday 3 October 2026 at the FSS in Cotonou, with the FSS and Ayelade Chess as partners."
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "q": {
+      "account": "How do I create an account?",
+      "register": "How do I enter a tournament?",
+      "payment": "Which payment methods are accepted?",
+      "onsite": "Can I pay on site?",
+      "rating": "What is the Chesspirit rating?",
+      "minors": "How do I register my child?",
+      "data": "How do I exercise my data rights?",
+      "organizers": "I am an organiser: how much does the tool cost?"
+    },
+    "a": {
+      "account": "Click “Sign in”, enter your phone number (or e-mail) and the code you receive. The account is created on first sign-in; you then complete a short profile.",
+      "register": "On the tournament page, click “Register”. After signing in, your registration is pre-filled; you choose how to pay and receive a ticket with a QR code.",
+      "payment": "Mobile Money (MTN MoMo, Moov Money, Celtiis Cash) and bank cards, through a secure payment provider. Chesspirit never sees your card number.",
+      "onsite": "Yes, when the organiser allows it. Your place is reserved and you pay at the desk on tournament day.",
+      "rating": "An internal rating computed with the Elo method after each rated tournament, in each time control. It does not replace FIDE Elo, shown alongside when you have one.",
+      "minors": "Add your child under “My account › Family”, then register them from the tournament page. Their public profile stays limited and without photo.",
+      "data": "Under “My account › My data” you can change your consents, export your data and request deletion.",
+      "organizers": "The tournament manager is free for every organiser in Benin. Contact us to use it."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "A question about a tournament, a lesson, an order or a partnership? Write to us, we reply quickly.",
+    "whatsapp": "Message us on WhatsApp",
+    "tbc": "To be confirmed",
+    "name": "Name",
+    "email": "E-mail",
+    "phone": "Phone",
+    "optional": "optional",
+    "topic": "Topic",
+    "topics": {
+      "general": "General question",
+      "tournament": "Tournament",
+      "organizer": "Organise a tournament",
+      "coaching": "Lessons",
+      "shop": "Shop",
+      "partnership": "Partnership",
+      "data": "Personal data"
+    },
+    "message": "Message",
+    "send": "Send",
+    "thanks": "Thank you, your message has been sent.",
+    "error": "Please check the fields and try again."
   }
 }

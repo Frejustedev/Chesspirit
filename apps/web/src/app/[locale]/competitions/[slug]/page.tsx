@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { formatDate, formatTimeControl, formatXof } from "@chesspirit/shared";
 import { Link } from "@/i18n/navigation";
-import { getTournamentBySlug, getTournamentExtras, isTbc, isUpcoming } from "@/lib/data/tournaments";
+import {
+  getTournamentBySlug,
+  getTournamentExtras,
+  isTbc,
+  isUpcoming,
+} from "@/lib/data/tournaments";
 import { getSession } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { tr } from "@/lib/i18n-json";
@@ -42,16 +47,34 @@ export default async function TournamentPage({ params }: Props) {
   }
   const open = t.status === "registration_open";
   const upcoming = isUpcoming(t.starts_at);
-  const confirmed = extras.registrants.filter((r) => r.status === "confirmed" || r.status === "pending_validation" || r.status === "pending_payment");
+  const confirmed = extras.registrants.filter(
+    (r) =>
+      r.status === "confirmed" ||
+      r.status === "pending_validation" ||
+      r.status === "pending_payment",
+  );
 
   const facts: { label: string; value: React.ReactNode }[] = [
     {
       label: tt("date"),
-      value: <span className="first-letter:uppercase">{formatDate(t.starts_at, locale, { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</span>,
+      value: (
+        <span className="first-letter:uppercase">
+          {formatDate(t.starts_at, locale, {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        </span>
+      ),
     },
     {
       label: tt("schedule"),
-      value: isTbc(t, "schedule", t.starts_at) ? <Tbc /> : formatDate(t.starts_at, locale, { hour: "2-digit", minute: "2-digit" }),
+      value: isTbc(t, "schedule", t.starts_at) ? (
+        <Tbc />
+      ) : (
+        formatDate(t.starts_at, locale, { hour: "2-digit", minute: "2-digit" })
+      ),
     },
     { label: tt("venue"), value: [t.venue, t.city].filter(Boolean).join(", ") || <Tbc /> },
     {
@@ -60,7 +83,10 @@ export default async function TournamentPage({ params }: Props) {
         <>
           {t.cadence ? tt(`cadence.${t.cadence}`) : null}
           {isTbc(t, "time_control", t.base_minutes) ? (
-            <> · <Tbc /></>
+            <>
+              {" "}
+              · <Tbc />
+            </>
           ) : (
             ` · ${formatTimeControl({ baseMinutes: t.base_minutes!, incrementSeconds: t.increment_seconds ?? 0 })}`
           )}
@@ -68,10 +94,23 @@ export default async function TournamentPage({ params }: Props) {
       ),
     },
     { label: tt("rounds"), value: isTbc(t, "rounds", t.rounds_count) ? <Tbc /> : t.rounds_count },
-    { label: tt("pairingSystem"), value: isTbc(t, "pairing_system", t.pairing_system) ? <Tbc /> : tt(`system.${t.pairing_system}`) },
+    {
+      label: tt("pairingSystem"),
+      value: isTbc(t, "pairing_system", t.pairing_system) ? (
+        <Tbc />
+      ) : (
+        tt(`system.${t.pairing_system}`)
+      ),
+    },
     {
       label: tt("fee"),
-      value: isTbc(t, "fee", t.entry_fee_xof) ? <Tbc /> : t.entry_fee_xof === 0 ? tt("free") : formatXof(t.entry_fee_xof!, locale),
+      value: isTbc(t, "fee", t.entry_fee_xof) ? (
+        <Tbc />
+      ) : t.entry_fee_xof === 0 ? (
+        tt("free")
+      ) : (
+        formatXof(t.entry_fee_xof!, locale)
+      ),
     },
     {
       label: tt("prizes"),
@@ -89,8 +128,20 @@ export default async function TournamentPage({ params }: Props) {
           <Tbc />
         ),
     },
-    { label: tt("capacity"), value: isTbc(t, "capacity", t.capacity) ? <Tbc /> : `${confirmed.length} / ${t.capacity}` },
-    { label: tt("rated"), value: t.unconfirmed_fields.includes("rated") ? <Tbc /> : t.rated ? tt("ratedYes") : tt("ratedNo") },
+    {
+      label: tt("capacity"),
+      value: isTbc(t, "capacity", t.capacity) ? <Tbc /> : `${confirmed.length} / ${t.capacity}`,
+    },
+    {
+      label: tt("rated"),
+      value: t.unconfirmed_fields.includes("rated") ? (
+        <Tbc />
+      ) : t.rated ? (
+        tt("ratedYes")
+      ) : (
+        tt("ratedNo")
+      ),
+    },
   ];
   if (extras.partners.length) {
     facts.push({ label: tt("partners"), value: extras.partners.map((p) => p.name).join(" · ") });
@@ -106,19 +157,33 @@ export default async function TournamentPage({ params }: Props) {
             </Link>
           </nav>
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-ink px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-cream">{tt(`status.${t.status}`)}</span>
-            {t.edition ? <span className="text-sm font-semibold text-gold-deep">{t.edition}</span> : null}
+            <span className="rounded-full bg-ink px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-cream">
+              {tt(`status.${t.status}`)}
+            </span>
+            {t.edition ? (
+              <span className="text-sm font-semibold text-gold-deep">{t.edition}</span>
+            ) : null}
             {t.is_demo ? <DemoBadge /> : null}
           </div>
-          <h1 className="mt-3 max-w-4xl font-display text-4xl font-semibold sm:text-5xl lg:text-6xl">{t.name}</h1>
+          <h1 className="mt-3 max-w-4xl font-display text-4xl font-semibold sm:text-5xl lg:text-6xl">
+            {t.name}
+          </h1>
           <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[1.02rem]">
             <li className="flex items-center gap-2">
               <IconCalendar className="size-5 text-gold-deep" />
-              <span className="first-letter:uppercase">{formatDate(t.starts_at, locale, { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</span>
+              <span className="first-letter:uppercase">
+                {formatDate(t.starts_at, locale, {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </span>
             </li>
             {t.venue ? (
               <li className="flex items-center gap-2">
-                <IconPin className="size-5 text-gold-deep" /> {[t.venue, t.city].filter(Boolean).join(", ")}
+                <IconPin className="size-5 text-gold-deep" />{" "}
+                {[t.venue, t.city].filter(Boolean).join(", ")}
               </li>
             ) : null}
             {t.cadence ? (
@@ -132,7 +197,9 @@ export default async function TournamentPage({ params }: Props) {
 
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 lg:grid-cols-[1fr_22rem] lg:px-6">
         <div className="min-w-0 space-y-12">
-          {tr(t.description, locale) ? <p className="prose-cs max-w-3xl">{tr(t.description, locale)}</p> : null}
+          {tr(t.description, locale) ? (
+            <p className="prose-cs max-w-3xl">{tr(t.description, locale)}</p>
+          ) : null}
 
           <section aria-labelledby="facts">
             <h2 id="facts" className="font-display text-3xl font-semibold">
@@ -141,14 +208,21 @@ export default async function TournamentPage({ params }: Props) {
             <dl className="mt-4 divide-y divide-line border-y border-line">
               {facts.map((f) => (
                 <div key={f.label} className="grid gap-1 py-3 sm:grid-cols-[12rem_1fr] sm:gap-4">
-                  <dt className="text-sm font-semibold uppercase tracking-[0.08em] text-stone">{f.label}</dt>
+                  <dt className="text-sm font-semibold uppercase tracking-[0.08em] text-stone">
+                    {f.label}
+                  </dt>
                   <dd className="text-[1.02rem]">{f.value}</dd>
                 </div>
               ))}
             </dl>
-            {t.unconfirmed_fields.length ? <p className="mt-3 text-sm text-stone">{tt("tbcNote")}</p> : null}
+            {t.unconfirmed_fields.length ? (
+              <p className="mt-3 text-sm text-stone">{tt("tbcNote")}</p>
+            ) : null}
             <p className="mt-2 text-sm">
-              <Link href="/legal/reglement-tournois" className="font-semibold text-bordeaux hover:underline">
+              <Link
+                href="/legal/reglement-tournois"
+                className="font-semibold text-bordeaux hover:underline"
+              >
                 {tt("rulesLink")}
               </Link>
             </p>
@@ -160,14 +234,19 @@ export default async function TournamentPage({ params }: Props) {
                 <h2 id="results" className="font-display text-3xl font-semibold">
                   {tt("results")}
                 </h2>
-                <Link href={`/competitions/${t.slug}/resultats`} className="text-sm font-semibold text-bordeaux hover:underline">
+                <Link
+                  href={`/competitions/${t.slug}/resultats`}
+                  className="text-sm font-semibold text-bordeaux hover:underline"
+                >
                   {tt("fullResults")}
                 </Link>
               </div>
               <ol className="mt-4 divide-y divide-line border-y border-line">
                 {extras.standings.slice(0, 5).map((s) => (
                   <li key={s.player_id} className="flex items-center gap-4 py-2.5">
-                    <span className="tabular w-7 text-right font-display text-xl text-gold-deep">{s.rank}</span>
+                    <span className="tabular w-7 text-right font-display text-xl text-gold-deep">
+                      {s.rank}
+                    </span>
                     <span className="flex-1 font-medium">{s.display_name}</span>
                     <span className="tabular font-semibold">{s.points}</span>
                   </li>
@@ -199,12 +278,20 @@ export default async function TournamentPage({ params }: Props) {
                       <tr key={r.registration_id}>
                         <td className="tabular px-3 py-2 text-stone">{i + 1}</td>
                         <td className="px-3 py-2 font-medium">
-                          {r.titles?.length ? <span className="mr-1.5 text-xs font-bold text-bordeaux">{r.titles.join(" ")}</span> : null}
+                          {r.titles?.length ? (
+                            <span className="mr-1.5 text-xs font-bold text-bordeaux">
+                              {r.titles.join(" ")}
+                            </span>
+                          ) : null}
                           {r.display_name}
-                          {r.status === "waitlisted" ? <span className="ml-2 text-xs text-stone">({tt("waitlisted")})</span> : null}
+                          {r.status === "waitlisted" ? (
+                            <span className="ml-2 text-xs text-stone">({tt("waitlisted")})</span>
+                          ) : null}
                         </td>
                         <td className="px-3 py-2 text-stone">{r.club ?? ""}</td>
-                        <td className="tabular px-3 py-2 text-right">{r.seed_rating ?? tt("noRating")}</td>
+                        <td className="tabular px-3 py-2 text-right">
+                          {r.seed_rating ?? tt("noRating")}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -224,7 +311,10 @@ export default async function TournamentPage({ params }: Props) {
             {myRegistration ? (
               <>
                 <p className="font-display text-2xl text-gold">{tt("registered")}</p>
-                <Link href={`/billet/${myRegistration.ticket_code}`} className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold font-semibold text-ink hover:bg-cream">
+                <Link
+                  href={`/billet/${myRegistration.ticket_code}`}
+                  className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold font-semibold text-ink hover:bg-cream"
+                >
                   {tt("seeTicket")} <IconArrow className="size-5" />
                 </Link>
               </>
@@ -239,12 +329,18 @@ export default async function TournamentPage({ params }: Props) {
               <p className="text-cream/80">{tt("registrationClosed")}</p>
             )}
             {upcoming ? (
-              <a href={`/api/tournaments/${t.slug}/ics`} className="mt-3 flex min-h-11 items-center justify-center gap-2 text-sm font-semibold text-cream/85 hover:text-gold">
+              <a
+                href={`/api/tournaments/${t.slug}/ics`}
+                className="mt-3 flex min-h-11 items-center justify-center gap-2 text-sm font-semibold text-cream/85 hover:text-gold"
+              >
                 <IconCalendar className="size-4" /> {tt("addToCalendar")}
               </a>
             ) : null}
             {extras.standings.length ? (
-              <a href={`/api/tournaments/${t.slug}/pgn`} className="mt-3 flex min-h-11 items-center justify-center gap-2 text-sm font-semibold text-cream/85 hover:text-gold">
+              <a
+                href={`/api/tournaments/${t.slug}/pgn`}
+                className="mt-3 flex min-h-11 items-center justify-center gap-2 text-sm font-semibold text-cream/85 hover:text-gold"
+              >
                 <IconDownload className="size-4" /> {tt("downloadPgn")}
               </a>
             ) : null}

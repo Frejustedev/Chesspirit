@@ -20,16 +20,31 @@ export function MfaForm({ next }: { next: string }) {
 
   useEffect(() => {
     const supabase = createClient();
+    let cancelled = false;
     (async () => {
       const { data } = await supabase.auth.mfa.listFactors();
       const verified = data?.totp.find((f) => f.status === "verified");
+      if (cancelled) return;
       if (verified) return setState({ step: "verify", factorId: verified.id });
       // Nettoie les facteurs non vérifiés d'une tentative précédente.
-      for (const f of data?.all ?? []) if (f.status !== "verified") await supabase.auth.mfa.unenroll({ factorId: f.id });
-      const { data: enrolled, error } = await supabase.auth.mfa.enroll({ factorType: "totp", friendlyName: `Chesspirit ${Date.now()}` });
+      for (const f of data?.all ?? [])
+        if (f.status !== "verified") await supabase.auth.mfa.unenroll({ factorId: f.id });
+      const { data: enrolled, error } = await supabase.auth.mfa.enroll({
+        factorType: "totp",
+        friendlyName: `Chesspirit ${Date.now()}`,
+      });
+      if (cancelled) return;
       if (error || !enrolled) return setError(t("mfaError"));
-      setState({ step: "enroll", factorId: enrolled.id, qr: enrolled.totp.qr_code, secret: enrolled.totp.secret });
+      setState({
+        step: "enroll",
+        factorId: enrolled.id,
+        qr: enrolled.totp.qr_code,
+        secret: enrolled.totp.secret,
+      });
     })();
+    return () => {
+      cancelled = true;
+    };
   }, [t]);
 
   async function submit(e: React.FormEvent) {
@@ -38,7 +53,10 @@ export function MfaForm({ next }: { next: string }) {
     setBusy(true);
     setError(null);
     const supabase = createClient();
-    const { error } = await supabase.auth.mfa.challengeAndVerify({ factorId: state.factorId, code: code.trim() });
+    const { error } = await supabase.auth.mfa.challengeAndVerify({
+      factorId: state.factorId,
+      code: code.trim(),
+    });
     if (error) {
       setBusy(false);
       return setError(t("mfaInvalid"));
@@ -62,7 +80,14 @@ export function MfaForm({ next }: { next: string }) {
         <p>{t("mfaVerify")}</p>
       )}
       <Field id="totp" label={t("mfaCode")} error={error ?? undefined}>
-        <Input id="totp" inputMode="numeric" autoComplete="one-time-code" value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))} className="tabular text-center text-2xl tracking-[0.4em]" />
+        <Input
+          id="totp"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          value={code}
+          onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+          className="tabular text-center text-2xl tracking-[0.4em]"
+        />
       </Field>
       <Button type="submit" disabled={busy || code.length !== 6} className="w-full">
         {t("mfaSubmit")}

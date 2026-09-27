@@ -52,10 +52,12 @@ export async function resetMfa(phone: string) {
   const u = data.users.find((x) => x.phone === phone.replace(/^\+/, ""));
   if (!u) throw new Error("utilisateur introuvable");
   const { data: f } = await db.auth.admin.mfa.listFactors({ userId: u.id });
-  for (const factor of f?.factors ?? []) await db.auth.admin.mfa.deleteFactor({ id: factor.id, userId: u.id });
+  for (const factor of f?.factors ?? [])
+    await db.auth.admin.mfa.deleteFactor({ id: factor.id, userId: u.id });
 }
 
-export const totp = (secret: string) => new TOTP({ secret, digits: 6, period: 30, algorithm: "SHA1" }).generate();
+export const totp = (secret: string) =>
+  new TOTP({ secret, digits: 6, period: 30, algorithm: "SHA1" }).generate();
 
 /** Connexion administrateur complète : SMS puis enrôlement TOTP. */
 export async function loginAsAdmin(page: Page) {

@@ -22,7 +22,9 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
   const o = overview.data;
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <p className="font-sans text-sm font-semibold uppercase tracking-[0.16em] text-gold-deep">{t("kicker")}</p>
+      <p className="font-sans text-sm font-semibold uppercase tracking-[0.16em] text-gold-deep">
+        {t("kicker")}
+      </p>
       <h1 className="mt-2 font-display text-4xl font-semibold">{t("title")}</h1>
       {o ? (
         <dl className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -45,7 +47,10 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="font-display text-2xl font-semibold">{t("tournaments")}</h2>
           {admin ? (
-            <Link href="/admin/tournois/nouveau" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-ink">
+            <Link
+              href="/admin/tournois/nouveau"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-ink"
+            >
               <IconPlus className="size-5" /> {t("newTournament")}
             </Link>
           ) : null}
@@ -53,7 +58,10 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
         <ul className="mt-4 divide-y divide-line border-y border-line">
           {(tournaments ?? []).map((tn) => (
             <li key={tn.id}>
-              <Link href={`/admin/tournois/${tn.id}`} className="group flex items-center gap-4 py-3">
+              <Link
+                href={`/admin/tournois/${tn.id}`}
+                className="group flex items-center gap-4 py-3"
+              >
                 <span className="min-w-0 flex-1">
                   <span className="block font-semibold group-hover:text-bordeaux">{tn.name}</span>
                   <span className="block text-sm text-stone">

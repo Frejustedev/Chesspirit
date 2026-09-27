@@ -8,11 +8,19 @@ import { env } from "@/lib/env";
 export const metadata: Metadata = { robots: { index: false } };
 
 /** Paiement via le widget KKiaPay (alternative à FedaPay). */
-export default async function KkiapayPage({ params }: { params: Promise<{ locale: string; id: string }> }) {
+export default async function KkiapayPage({
+  params,
+}: {
+  params: Promise<{ locale: string; id: string }>;
+}) {
   const { locale, id } = await params;
   setRequestLocale(locale);
   if (!getProvider("kkiapay") || !/^[0-9a-f-]{36}$/.test(id)) notFound();
-  const { data: pay } = await createAdminClient().from("payments").select("id, amount_xof, status").eq("id", id).maybeSingle();
+  const { data: pay } = await createAdminClient()
+    .from("payments")
+    .select("id, amount_xof, status")
+    .eq("id", id)
+    .maybeSingle();
   if (!pay || pay.status !== "pending") notFound();
   return (
     <div className="mx-auto max-w-md px-4 py-14 text-center">

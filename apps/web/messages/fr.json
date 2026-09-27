@@ -613,5 +613,78 @@
     "saving": "Enregistrement…",
     "saved": "Modifications enregistrées.",
     "saveError": "Échec de l'enregistrement"
+  },
+  "viewer": {
+    "board": "Position de la partie",
+    "first": "Début",
+    "prev": "Coup précédent",
+    "next": "Coup suivant",
+    "last": "Fin",
+    "flip": "Retourner l'échiquier",
+    "moves": "Coups de la partie",
+    "invalid": "Cette partie ne peut pas être lue (PGN invalide).",
+    "round": "Ronde {n}",
+    "download": "Télécharger le PGN"
+  },
+  "legal": {
+    "frenchReference": "",
+    "version": "Version du 27 septembre 2026."
+  },
+  "about": {
+    "title": "À propos",
+    "visionTitle": "Vision",
+    "vision": "Devenir l'infrastructure numérique des échecs au Bénin, puis dans la sous-région.",
+    "missionTitle": "Mission",
+    "mission": "Former les joueurs, organiser des compétitions de qualité, suivre la progression de chacun et faire connaître les talents béninois.",
+    "p1": "Chesspirit réunit dans un seul écosystème le coaching, les compétitions, le classement, l'annuaire, la boutique et les médias des échecs au Bénin, avec un compte unique par joueur.",
+    "p2": "La cote Chesspirit sert de classement national de fait en blitz, rapide et classique, en attendant le classement fédéral, avec l'Elo FIDE affiché à côté.",
+    "p3": "Le module de gestion de tournois est offert à tous les organisateurs du pays : chaque tournoi géré sur Chesspirit enrichit la base nationale des joueurs et des parties. Le premier tournoi Chesspirit se tient le samedi 3 octobre 2026 à la FSS de Cotonou, avec la FSS et Ayelade Chess comme partenaires."
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "q": {
+      "account": "Comment créer un compte ?",
+      "register": "Comment s'inscrire à un tournoi ?",
+      "payment": "Quels moyens de paiement sont acceptés ?",
+      "onsite": "Puis-je payer sur place ?",
+      "rating": "Qu'est-ce que la cote Chesspirit ?",
+      "minors": "Comment inscrire mon enfant ?",
+      "data": "Comment exercer mes droits sur mes données ?",
+      "organizers": "Je suis organisateur : combien coûte l'outil ?"
+    },
+    "a": {
+      "account": "Cliquez sur « Connexion », saisissez votre numéro de téléphone (ou votre e-mail) et le code reçu. Le compte est créé à la première connexion ; il reste à compléter un profil minimal.",
+      "register": "Depuis la page du tournoi, cliquez sur « S'inscrire ». Après connexion, votre inscription est pré-remplie ; vous choisissez le mode de paiement et recevez un billet avec QR code.",
+      "payment": "Mobile Money (MTN MoMo, Moov Money, Celtiis Cash) et carte bancaire, via un prestataire de paiement sécurisé. Chesspirit ne voit jamais votre numéro de carte.",
+      "onsite": "Oui, lorsque l'organisateur l'accepte. Votre place est réservée et vous réglez à l'accueil le jour du tournoi.",
+      "rating": "Un classement interne calculé selon la méthode Elo après chaque tournoi homologué, dans chaque cadence. Il ne remplace pas l'Elo FIDE, affiché à côté quand vous en avez un.",
+      "minors": "Ajoutez votre enfant dans « Mon compte › Famille », puis inscrivez-le depuis la page du tournoi. Son profil public reste réduit et sans photo.",
+      "data": "Depuis « Mon compte › Mes données », vous pouvez modifier vos consentements, exporter vos données et demander leur suppression.",
+      "organizers": "Le module de gestion de tournois est gratuit pour tous les organisateurs du Bénin. Contactez-nous pour l'utiliser."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "Une question sur un tournoi, un cours, une commande ou un partenariat ? Écrivez-nous, nous répondons rapidement.",
+    "whatsapp": "Nous écrire sur WhatsApp",
+    "tbc": "À confirmer",
+    "name": "Nom",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "optional": "facultatif",
+    "topic": "Sujet",
+    "topics": {
+      "general": "Question générale",
+      "tournament": "Tournoi",
+      "organizer": "Organiser un tournoi",
+      "coaching": "Cours",
+      "shop": "Boutique",
+      "partnership": "Partenariat",
+      "data": "Données personnelles"
+    },
+    "message": "Message",
+    "send": "Envoyer",
+    "thanks": "Merci, votre message a bien été envoyé.",
+    "error": "Vérifiez les champs et réessayez."
   }
 }

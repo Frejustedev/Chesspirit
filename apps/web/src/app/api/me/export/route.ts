@@ -12,7 +12,9 @@ export async function GET() {
   const [consents, registrations, payments, ratings, notifications] = await Promise.all([
     supabase.from("consents").select("*").in("profile_id", ids),
     supabase.from("registrations").select("*").in("player_id", ids),
-    supabase.from("payments").select("id, provider, amount_xof, status, object_type, created_at, confirmed_at"),
+    supabase
+      .from("payments")
+      .select("id, provider, amount_xof, status, object_type, created_at, confirmed_at"),
     supabase.from("ratings").select("*").in("profile_id", ids),
     supabase.from("notifications").select("*").in("profile_id", ids),
   ]);

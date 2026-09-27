@@ -10,8 +10,26 @@ import { saveTournamentAction } from "@/app/actions/admin";
 
 type T = Tables<"tournaments"> & { description_fr: string; description_en: string };
 
-const TBC_FIELDS = ["schedule", "time_control", "rounds", "pairing_system", "fee", "prizes", "capacity", "rated"] as const;
-const STATUSES = ["draft", "published", "registration_open", "registration_closed", "ongoing", "finished", "archived", "cancelled"] as const;
+const TBC_FIELDS = [
+  "schedule",
+  "time_control",
+  "rounds",
+  "pairing_system",
+  "fee",
+  "prizes",
+  "capacity",
+  "rated",
+] as const;
+const STATUSES = [
+  "draft",
+  "published",
+  "registration_open",
+  "registration_closed",
+  "ongoing",
+  "finished",
+  "archived",
+  "cancelled",
+] as const;
 
 function localParts(iso: string | undefined) {
   if (!iso) return { date: "", time: "" };
@@ -20,7 +38,15 @@ function localParts(iso: string | undefined) {
 }
 
 /** Réglages du tournoi : tout fait « À confirmer » se complète ici. */
-export function TournamentSettings({ tournament, prizesText, partnersText }: { tournament: T | null; prizesText: string; partnersText: string }) {
+export function TournamentSettings({
+  tournament,
+  prizesText,
+  partnersText,
+}: {
+  tournament: T | null;
+  prizesText: string;
+  partnersText: string;
+}) {
   const t = useTranslations("admin");
   const tt = useTranslations("tournament");
   const router = useRouter();
@@ -111,7 +137,12 @@ export function TournamentSettings({ tournament, prizesText, partnersText }: { t
         </Field>
         <div>
           <Field id="starts_time" label={t("f.time")} hint={t("f.timeHint")}>
-            <Input id="starts_time" name="starts_time" type="time" defaultValue={scheduleTbc ? "" : time} />
+            <Input
+              id="starts_time"
+              name="starts_time"
+              type="time"
+              defaultValue={scheduleTbc ? "" : time}
+            />
           </Field>
         </div>
       </section>
@@ -129,22 +160,44 @@ export function TournamentSettings({ tournament, prizesText, partnersText }: { t
         </Field>
         <div className="grid grid-cols-2 gap-3">
           <Field id="base_minutes" label={t("f.base")}>
-            <Input id="base_minutes" name="base_minutes" type="number" min={1} defaultValue={tn?.base_minutes ?? ""} />
+            <Input
+              id="base_minutes"
+              name="base_minutes"
+              type="number"
+              min={1}
+              defaultValue={tn?.base_minutes ?? ""}
+            />
           </Field>
           <Field id="increment_seconds" label={t("f.increment")}>
-            <Input id="increment_seconds" name="increment_seconds" type="number" min={0} defaultValue={tn?.increment_seconds ?? ""} />
+            <Input
+              id="increment_seconds"
+              name="increment_seconds"
+              type="number"
+              min={0}
+              defaultValue={tn?.increment_seconds ?? ""}
+            />
           </Field>
           <div className="col-span-2">{tbcBox("time_control")}</div>
         </div>
         <div>
           <Field id="rounds_count" label={t("f.rounds")}>
-            <Input id="rounds_count" name="rounds_count" type="number" min={1} defaultValue={tn?.rounds_count ?? ""} />
+            <Input
+              id="rounds_count"
+              name="rounds_count"
+              type="number"
+              min={1}
+              defaultValue={tn?.rounds_count ?? ""}
+            />
           </Field>
           {tbcBox("rounds")}
         </div>
         <div>
           <Field id="pairing_system" label={t("f.system")}>
-            <Select id="pairing_system" name="pairing_system" defaultValue={tn?.pairing_system ?? "swiss_dutch"}>
+            <Select
+              id="pairing_system"
+              name="pairing_system"
+              defaultValue={tn?.pairing_system ?? "swiss_dutch"}
+            >
               {PAIRING_SYSTEMS.map((s) => (
                 <option key={s} value={s}>
                   {tt(`system.${s}`)}
@@ -156,22 +209,55 @@ export function TournamentSettings({ tournament, prizesText, partnersText }: { t
         </div>
         <div>
           <Field id="entry_fee_xof" label={t("f.fee")} hint={t("f.feeHint")}>
-            <Input id="entry_fee_xof" name="entry_fee_xof" type="number" min={0} step={100} defaultValue={tn?.entry_fee_xof ?? ""} />
+            <Input
+              id="entry_fee_xof"
+              name="entry_fee_xof"
+              type="number"
+              min={0}
+              step={100}
+              defaultValue={tn?.entry_fee_xof ?? ""}
+            />
           </Field>
           {tbcBox("fee")}
         </div>
         <div>
           <Field id="capacity" label={t("f.capacity")}>
-            <Input id="capacity" name="capacity" type="number" min={1} defaultValue={tn?.capacity ?? ""} />
+            <Input
+              id="capacity"
+              name="capacity"
+              type="number"
+              min={1}
+              defaultValue={tn?.capacity ?? ""}
+            />
           </Field>
           {tbcBox("capacity")}
         </div>
         <div className="sm:col-span-2">
-          <Checkbox id="rated" name="rated" defaultChecked={tn?.rated ?? false} label={t("f.rated")} />
+          <Checkbox
+            id="rated"
+            name="rated"
+            defaultChecked={tn?.rated ?? false}
+            label={t("f.rated")}
+          />
           {tbcBox("rated")}
-          <Checkbox id="is_online" name="is_online" defaultChecked={tn?.is_online ?? false} label={t("f.online")} />
-          <Checkbox id="allow_online_payment" name="allow_online_payment" defaultChecked={tn?.allow_online_payment ?? true} label={t("f.onlinePayment")} />
-          <Checkbox id="allow_on_site_payment" name="allow_on_site_payment" defaultChecked={tn?.allow_on_site_payment ?? true} label={t("f.onSitePayment")} />
+          <Checkbox
+            id="is_online"
+            name="is_online"
+            defaultChecked={tn?.is_online ?? false}
+            label={t("f.online")}
+          />
+          <Checkbox
+            id="allow_online_payment"
+            name="allow_online_payment"
+            defaultChecked={tn?.allow_online_payment ?? true}
+            label={t("f.onlinePayment")}
+          />
+          <Checkbox
+            id="allow_on_site_payment"
+            name="allow_on_site_payment"
+            defaultChecked={tn?.allow_on_site_payment ?? true}
+            label={t("f.onSitePayment")}
+          />
           {tbcBox("schedule")}
         </div>
       </section>
@@ -181,27 +267,52 @@ export function TournamentSettings({ tournament, prizesText, partnersText }: { t
           <label htmlFor="prizes_text" className="text-sm font-semibold">
             {t("f.prizes")}
           </label>
-          <textarea id="prizes_text" name="prizes_text" rows={4} defaultValue={prizesText} className="mt-1 w-full rounded-md border border-line bg-white p-3" placeholder={t("f.prizesPlaceholder")} />
+          <textarea
+            id="prizes_text"
+            name="prizes_text"
+            rows={4}
+            defaultValue={prizesText}
+            className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            placeholder={t("f.prizesPlaceholder")}
+          />
           {tbcBox("prizes")}
         </div>
         <div>
           <label htmlFor="partners_text" className="text-sm font-semibold">
             {t("f.partners")}
           </label>
-          <textarea id="partners_text" name="partners_text" rows={3} defaultValue={partnersText} className="mt-1 w-full rounded-md border border-line bg-white p-3" />
+          <textarea
+            id="partners_text"
+            name="partners_text"
+            rows={3}
+            defaultValue={partnersText}
+            className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          />
         </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label htmlFor="description_fr" className="text-sm font-semibold">
               {t("f.descriptionFr")}
             </label>
-            <textarea id="description_fr" name="description_fr" rows={6} defaultValue={tn?.description_fr ?? ""} className="mt-1 w-full rounded-md border border-line bg-white p-3" />
+            <textarea
+              id="description_fr"
+              name="description_fr"
+              rows={6}
+              defaultValue={tn?.description_fr ?? ""}
+              className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            />
           </div>
           <div>
             <label htmlFor="description_en" className="text-sm font-semibold">
               {t("f.descriptionEn")}
             </label>
-            <textarea id="description_en" name="description_en" rows={6} defaultValue={tn?.description_en ?? ""} className="mt-1 w-full rounded-md border border-line bg-white p-3" />
+            <textarea
+              id="description_en"
+              name="description_en"
+              rows={6}
+              defaultValue={tn?.description_en ?? ""}
+              className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            />
           </div>
         </div>
       </section>

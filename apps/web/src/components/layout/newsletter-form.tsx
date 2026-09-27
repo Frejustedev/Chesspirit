@@ -7,7 +7,12 @@ import { subscribeNewsletter } from "@/app/actions/newsletter";
 export function NewsletterForm() {
   const t = useTranslations("footer");
   const [state, action, pending] = useActionState(subscribeNewsletter, null);
-  if (state?.ok) return <p className="mt-3 text-sm text-gold" role="status">{t("newsletterThanks")}</p>;
+  if (state?.ok)
+    return (
+      <p className="mt-3 text-sm text-gold" role="status">
+        {t("newsletterThanks")}
+      </p>
+    );
   return (
     <form action={action} className="mt-3 flex gap-2">
       <label htmlFor="nl-email" className="sr-only">

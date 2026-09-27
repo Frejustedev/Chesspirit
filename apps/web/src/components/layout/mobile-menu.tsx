@@ -6,7 +6,12 @@ import { IconClose, IconMenu, IconChevronDown } from "@/components/icons";
 import { Logo } from "@/components/logo";
 import { LocaleSwitch } from "./locale-switch";
 
-type Section = { key: string; href: string; label: string; items: { href: string; label: string }[] };
+type Section = {
+  key: string;
+  href: string;
+  label: string;
+  items: { href: string; label: string }[];
+};
 
 export function MobileMenu({
   sections,
@@ -43,7 +48,12 @@ export function MobileMenu({
         <IconMenu className="size-6" />
       </button>
       {open ? (
-        <div id="menu-mobile" role="dialog" aria-modal="true" className="fixed inset-0 z-50 flex flex-col bg-paper">
+        <div
+          id="menu-mobile"
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex flex-col bg-paper"
+        >
           <div className="flex h-16 items-center justify-between border-b border-line px-4">
             <Logo className="text-[1.65rem]" />
             <button
@@ -66,7 +76,9 @@ export function MobileMenu({
                     onClick={() => setExpanded(expanded === s.key ? null : s.key)}
                   >
                     <span className="flex items-baseline gap-3">
-                      <span className="tabular w-6 font-sans text-xs text-stone">{String(idx + 1).padStart(2, "0")}</span>
+                      <span className="tabular w-6 font-sans text-xs text-stone">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
                       <span className="font-display text-xl">{s.label}</span>
                     </span>
                     <IconChevronDown
@@ -77,7 +89,10 @@ export function MobileMenu({
                     <ul className="pb-3 pl-9">
                       {s.items.map((i) => (
                         <li key={i.href}>
-                          <Link href={i.href} className="flex min-h-11 items-center text-[1.02rem] text-ink/85">
+                          <Link
+                            href={i.href}
+                            className="flex min-h-11 items-center text-[1.02rem] text-ink/85"
+                          >
                             {i.label}
                           </Link>
                         </li>

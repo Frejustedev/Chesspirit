@@ -70,7 +70,9 @@ export function LoginForm({ next, googleEnabled }: { next: string; googleEnabled
     const supabase = createClient();
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+      },
     });
   }
 
@@ -81,7 +83,11 @@ export function LoginForm({ next, googleEnabled }: { next: string; googleEnabled
     <div className="mt-6">
       {!sentTo ? (
         <>
-          <div role="tablist" aria-label={t("method")} className="grid grid-cols-2 gap-1 rounded-full bg-cream p-1">
+          <div
+            role="tablist"
+            aria-label={t("method")}
+            className="grid grid-cols-2 gap-1 rounded-full bg-cream p-1"
+          >
             {(["phone", "email"] as const).map((m) => (
               <button
                 key={m}
@@ -126,16 +132,25 @@ export function LoginForm({ next, googleEnabled }: { next: string; googleEnabled
                 {error}
               </p>
             ) : null}
-            <button type="submit" disabled={busy} className="mt-5 min-h-12 w-full rounded-full bg-bordeaux font-semibold text-cream hover:bg-ink disabled:opacity-60">
+            <button
+              type="submit"
+              disabled={busy}
+              className="mt-5 min-h-12 w-full rounded-full bg-bordeaux font-semibold text-cream hover:bg-ink disabled:opacity-60"
+            >
               {busy ? t("sending") : t("sendCode")}
             </button>
           </form>
           {googleEnabled ? (
             <>
               <div className="my-5 flex items-center gap-3 text-sm text-stone">
-                <span className="h-px flex-1 bg-line" /> {t("or")} <span className="h-px flex-1 bg-line" />
+                <span className="h-px flex-1 bg-line" /> {t("or")}{" "}
+                <span className="h-px flex-1 bg-line" />
               </div>
-              <button type="button" onClick={google} className="flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-ink/25 font-semibold hover:bg-cream">
+              <button
+                type="button"
+                onClick={google}
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-ink/25 font-semibold hover:bg-cream"
+              >
                 <IconGlobe className="size-5" /> {t("google")}
               </button>
             </>
@@ -165,14 +180,30 @@ export function LoginForm({ next, googleEnabled }: { next: string; googleEnabled
               {error}
             </p>
           ) : null}
-          <button type="submit" disabled={busy || code.length < 6} className="mt-5 min-h-12 w-full rounded-full bg-bordeaux font-semibold text-cream hover:bg-ink disabled:opacity-60">
+          <button
+            type="submit"
+            disabled={busy || code.length < 6}
+            className="mt-5 min-h-12 w-full rounded-full bg-bordeaux font-semibold text-cream hover:bg-ink disabled:opacity-60"
+          >
             {busy ? t("verifying") : t("verify")}
           </button>
           <div className="mt-4 flex justify-between text-sm">
-            <button type="button" className="min-h-11 font-semibold text-bordeaux" onClick={() => { setSentTo(null); setCode(""); }}>
+            <button
+              type="button"
+              className="min-h-11 font-semibold text-bordeaux"
+              onClick={() => {
+                setSentTo(null);
+                setCode("");
+              }}
+            >
               {t("change")}
             </button>
-            <button type="button" disabled={cooldown > 0 || busy} onClick={() => send()} className="min-h-11 font-semibold text-bordeaux disabled:text-stone">
+            <button
+              type="button"
+              disabled={cooldown > 0 || busy}
+              onClick={() => send()}
+              className="min-h-11 font-semibold text-bordeaux disabled:text-stone"
+            >
               {cooldown > 0 ? t("resendIn", { s: cooldown }) : t("resend")}
             </button>
           </div>

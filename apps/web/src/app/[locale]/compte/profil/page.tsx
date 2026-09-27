@@ -46,7 +46,10 @@ export default async function ProfilePage({
     );
   }
   return (
-    <AccountShell nav={<AccountNav current="/compte/profil" isAdmin={isAdminRole(session.roles)} />} title={t("title")}>
+    <AccountShell
+      nav={<AccountNav current="/compte/profil" isAdmin={isAdminRole(session.roles)} />}
+      title={t("title")}
+    >
       <ProfileForm mode="edit" defaults={defaults} />
     </AccountShell>
   );

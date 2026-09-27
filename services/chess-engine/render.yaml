@@ -1,0 +1,14 @@
+# Alternative : déploiement sur Render (Blueprint).
+services:
+  - type: web
+    name: chesspirit-engine
+    runtime: docker
+    rootDir: services/chess-engine
+    healthCheckPath: /health
+    envVars:
+      - key: CHESS_ENGINE_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false

@@ -5,7 +5,8 @@
 export type PieceKind = "p" | "n" | "b" | "r" | "q" | "k";
 export type PieceColor = "w" | "b";
 
-const BASE = "M11 40.5h23a1.5 1.5 0 0 0 1.5-1.5v-1.2a2.3 2.3 0 0 0-2.3-2.3H11.8a2.3 2.3 0 0 0-2.3 2.3V39a1.5 1.5 0 0 0 1.5 1.5Z";
+const BASE =
+  "M11 40.5h23a1.5 1.5 0 0 0 1.5-1.5v-1.2a2.3 2.3 0 0 0-2.3-2.3H11.8a2.3 2.3 0 0 0-2.3 2.3V39a1.5 1.5 0 0 0 1.5 1.5Z";
 
 const BODY: Record<PieceKind, string> = {
   p: "M22.5 7.8a5.4 5.4 0 0 1 3.3 9.7c1.4.6 2.4 1.5 2.4 2.6 0 .9-.6 1.6-1.6 2.1 1.6 4.4 3.6 8.8 5.6 13.3H12.8c2-4.5 4-8.9 5.6-13.3-1-.5-1.6-1.2-1.6-2.1 0-1.1 1-2 2.4-2.6a5.4 5.4 0 0 1 3.3-9.7Z",
@@ -42,7 +43,12 @@ export function PieceSvg({
   const stroke = "var(--color-ink)";
   const detail = white ? "var(--color-ink)" : "var(--color-gold)";
   return (
-    <svg viewBox="0 0 45 45" className={className} role={title ? "img" : undefined} aria-hidden={title ? undefined : true}>
+    <svg
+      viewBox="0 0 45 45"
+      className={className}
+      role={title ? "img" : undefined}
+      aria-hidden={title ? undefined : true}
+    >
       {title ? <title>{title}</title> : null}
       <g strokeLinejoin="round" strokeLinecap="round">
         <path d={BODY[kind]} fill={fill} stroke={stroke} strokeWidth={1.5} />

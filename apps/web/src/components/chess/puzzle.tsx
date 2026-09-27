@@ -20,7 +20,9 @@ export function PuzzleBoard({ puzzle, compact = false }: { puzzle: Puzzle; compa
 
   const legalTargets = useCallback(
     (from: string) =>
-      status === "solved" ? [] : game.moves({ square: from as never, verbose: true }).map((m) => m.to),
+      status === "solved"
+        ? []
+        : game.moves({ square: from as never, verbose: true }).map((m) => m.to),
     [game, status],
   );
 
@@ -30,7 +32,11 @@ export function PuzzleBoard({ puzzle, compact = false }: { puzzle: Puzzle; compa
     const g = new Chess(game.fen());
     const mv = g.move({ from, to, promotion: promotion ?? "q" });
     if (!mv) return;
-    if (uci !== expected && !(expected?.startsWith(uci) && !promotion) && !(g.isCheckmate() && step === puzzle.solution.length - 1)) {
+    if (
+      uci !== expected &&
+      !(expected?.startsWith(uci) && !promotion) &&
+      !(g.isCheckmate() && step === puzzle.solution.length - 1)
+    ) {
       setBad(to);
       setStatus("wrong");
       return;
@@ -61,7 +67,8 @@ export function PuzzleBoard({ puzzle, compact = false }: { puzzle: Puzzle; compa
   const checkSquare = useMemo(() => {
     if (!game.inCheck()) return null;
     const turn = game.turn();
-    for (const row of game.board()) for (const p of row) if (p && p.type === "k" && p.color === turn) return p.square;
+    for (const row of game.board())
+      for (const p of row) if (p && p.type === "k" && p.color === turn) return p.square;
     return null;
   }, [game]);
 
@@ -78,7 +85,10 @@ export function PuzzleBoard({ puzzle, compact = false }: { puzzle: Puzzle; compa
         highlight={bad ? { [bad]: "bad" } : undefined}
         label={t("boardLabel")}
       />
-      <div className={`mt-3 flex min-h-11 items-center justify-between gap-3 ${compact ? "text-sm" : ""}`} aria-live="polite">
+      <div
+        className={`mt-3 flex min-h-11 items-center justify-between gap-3 ${compact ? "text-sm" : ""}`}
+        aria-live="polite"
+      >
         <p className="font-sans">
           {status === "solved" ? (
             <span className="font-semibold text-success">{t("solved")}</span>
@@ -86,12 +96,17 @@ export function PuzzleBoard({ puzzle, compact = false }: { puzzle: Puzzle; compa
             <span className="font-semibold text-danger">{t("wrong")}</span>
           ) : (
             <span>
-              {t(side === "w" ? "whiteToPlay" : "blackToPlay")} · {t("mateIn", { n: puzzle.mateIn })}
+              {t(side === "w" ? "whiteToPlay" : "blackToPlay")} ·{" "}
+              {t("mateIn", { n: puzzle.mateIn })}
             </span>
           )}
         </p>
         {status !== "playing" || step > 0 ? (
-          <button type="button" onClick={reset} className="min-h-11 rounded-full border border-current px-4 text-sm font-semibold">
+          <button
+            type="button"
+            onClick={reset}
+            className="min-h-11 rounded-full border border-current px-4 text-sm font-semibold"
+          >
             {t("retry")}
           </button>
         ) : null}

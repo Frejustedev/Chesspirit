@@ -25,8 +25,15 @@ export async function registerAction(raw: unknown): Promise<RegisterResult> {
   const supabase = await createClient();
 
   // Validation des champs personnalisés côté serveur (mêmes schémas que le client).
-  const { data: form } = await supabase.from("registration_forms").select("fields").eq("tournament_id", tournamentId).maybeSingle();
-  const fields = z.array(customFieldSchema).catch([]).parse(form?.fields ?? []);
+  const { data: form } = await supabase
+    .from("registration_forms")
+    .select("fields")
+    .eq("tournament_id", tournamentId)
+    .maybeSingle();
+  const fields = z
+    .array(customFieldSchema)
+    .catch([])
+    .parse(form?.fields ?? []);
   const a = answersSchema(fields).safeParse(answers);
   if (!a.success) return { ok: false, error: "invalid_answers" };
 
@@ -55,7 +62,11 @@ export async function resumePaymentAction(registrationId: string): Promise<Regis
   const session = await getSession();
   if (!session) return { ok: false, error: "auth_required" };
   const supabase = await createClient();
-  const { data: reg } = await supabase.from("registrations").select("id").eq("id", registrationId).maybeSingle();
+  const { data: reg } = await supabase
+    .from("registrations")
+    .select("id")
+    .eq("id", registrationId)
+    .maybeSingle();
   if (!reg) return { ok: false, error: "forbidden" };
   try {
     return { ok: true, redirect: await startRegistrationPayment(reg.id, session.userId) };

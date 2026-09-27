@@ -4,7 +4,11 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(_req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = await createClient();
-  const { data: t } = await supabase.from("tournaments").select("id, slug").eq("slug", slug).maybeSingle();
+  const { data: t } = await supabase
+    .from("tournaments")
+    .select("id, slug")
+    .eq("slug", slug)
+    .maybeSingle();
   if (!t) return new Response("Introuvable", { status: 404 });
   const { data: games } = await supabase
     .from("games")

@@ -14,9 +14,16 @@ export default async function FamilyPage({ params }: { params: Promise<{ locale:
   const session = await requireSession(locale, "/compte/famille");
   const t = await getTranslations("family");
   const supabase = await createClient();
-  const { data: children } = await supabase.from("profiles").select("*").eq("guardian_id", session.profile!.id).order("birth_date");
+  const { data: children } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("guardian_id", session.profile!.id)
+    .order("birth_date");
   return (
-    <AccountShell nav={<AccountNav current="/compte/famille" isAdmin={isAdminRole(session.roles)} />} title={t("title")}>
+    <AccountShell
+      nav={<AccountNav current="/compte/famille" isAdmin={isAdminRole(session.roles)} />}
+      title={t("title")}
+    >
       <p className="max-w-2xl font-serif text-lg text-stone">{t("intro")}</p>
       {children?.length ? (
         <ul className="mt-6 divide-y divide-line border-y border-line">
@@ -25,7 +32,9 @@ export default async function FamilyPage({ params }: { params: Promise<{ locale:
               <span className="font-semibold">
                 {c.first_name} {c.last_name}
               </span>
-              <span className="text-sm text-stone">{c.birth_date ? formatDate(c.birth_date, locale) : ""}</span>
+              <span className="text-sm text-stone">
+                {c.birth_date ? formatDate(c.birth_date, locale) : ""}
+              </span>
             </li>
           ))}
         </ul>
@@ -34,7 +43,13 @@ export default async function FamilyPage({ params }: { params: Promise<{ locale:
       )}
       <h2 className="mt-10 font-display text-2xl font-semibold">{t("add")}</h2>
       <div className="mt-4">
-        <ProfileForm mode="child" defaults={{ city: session.profile!.city ?? undefined, last_name: session.profile!.last_name }} />
+        <ProfileForm
+          mode="child"
+          defaults={{
+            city: session.profile!.city ?? undefined,
+            last_name: session.profile!.last_name,
+          }}
+        />
       </div>
     </AccountShell>
   );

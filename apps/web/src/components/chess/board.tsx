@@ -57,7 +57,10 @@ export function Board({
   const pieces = useMemo(() => parseFenBoard(fen), [fen]);
   const [selected, setSelected] = useState<string | null>(null);
   const [promo, setPromo] = useState<{ from: string; to: string } | null>(null);
-  const targets = useMemo(() => (selected && legalTargets ? legalTargets(selected) : []), [selected, legalTargets]);
+  const targets = useMemo(
+    () => (selected && legalTargets ? legalTargets(selected) : []),
+    [selected, legalTargets],
+  );
   const turn = (fen.split(" ")[1] ?? "w") as PieceColor;
 
   const ranks = orientation === "w" ? [8, 7, 6, 5, 4, 3, 2, 1] : [1, 2, 3, 4, 5, 6, 7, 8];
@@ -80,7 +83,8 @@ export function Board({
     else setSelected(null);
   }
 
-  const pieceName = (p: BoardPiece) => `${t(`pieces.${p.type}`)} ${t(p.color === "w" ? "white" : "black")}`;
+  const pieceName = (p: BoardPiece) =>
+    `${t(`pieces.${p.type}`)} ${t(p.color === "w" ? "white" : "black")}`;
 
   return (
     <div className="relative select-none" role="group" aria-label={label ?? t("board")}>
@@ -101,7 +105,9 @@ export function Board({
                 aria-label={interactive ? `${sq}${p ? `, ${pieceName(p)}` : ""}` : undefined}
                 aria-pressed={interactive ? selected === sq : undefined}
                 className="relative aspect-square outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-bordeaux"
-                style={{ background: dark ? "var(--color-square-dark)" : "var(--color-square-light)" }}
+                style={{
+                  background: dark ? "var(--color-square-dark)" : "var(--color-square-light)",
+                }}
               >
                 {isLast ? <span className="absolute inset-0 bg-gold/35" /> : null}
                 {selected === sq ? <span className="absolute inset-0 bg-bordeaux/30" /> : null}
@@ -109,7 +115,9 @@ export function Board({
                   <span className="absolute inset-0 bg-[radial-gradient(circle,rgb(142_31_47/0.75)_0%,transparent_70%)]" />
                 ) : null}
                 {hl ? (
-                  <span className={`absolute inset-0 ${hl === "good" ? "bg-success/35" : "bg-danger/35"}`} />
+                  <span
+                    className={`absolute inset-0 ${hl === "good" ? "bg-success/35" : "bg-danger/35"}`}
+                  />
                 ) : null}
                 {fi === 0 ? (
                   <span
@@ -126,7 +134,11 @@ export function Board({
                   </span>
                 ) : null}
                 {p ? (
-                  <PieceSvg kind={p.type} color={p.color} className="relative size-full p-[6%] drop-shadow-[0_1px_0_rgb(0_0_0/0.18)]" />
+                  <PieceSvg
+                    kind={p.type}
+                    color={p.color}
+                    className="relative size-full p-[6%] drop-shadow-[0_1px_0_rgb(0_0_0/0.18)]"
+                  />
                 ) : null}
                 {isTarget ? (
                   <span
@@ -139,7 +151,11 @@ export function Board({
         )}
       </div>
       {promo ? (
-        <div className="absolute inset-0 z-20 grid place-items-center bg-ink/60" role="dialog" aria-label={t("promotion")}>
+        <div
+          className="absolute inset-0 z-20 grid place-items-center bg-ink/60"
+          role="dialog"
+          aria-label={t("promotion")}
+        >
           <div className="flex gap-2 rounded bg-paper p-2 shadow-xl">
             {(["q", "r", "b", "n"] as const).map((k) => (
               <button

@@ -17,7 +17,9 @@ export async function Footer() {
             <Logo tone="light" className="text-4xl" />
             <p className="mt-4 font-serif text-lg leading-snug text-cream/80">{tf("tagline")}</p>
             <div className="mt-8">
-              <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.14em] text-gold">{tf("newsletter")}</h2>
+              <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.14em] text-gold">
+                {tf("newsletter")}
+              </h2>
               <p className="mt-2 text-sm text-cream/70">{tf("newsletterText")}</p>
               <NewsletterForm />
             </div>
@@ -31,7 +33,10 @@ export async function Footer() {
                 <ul className="mt-3 space-y-1">
                   {s.items.slice(0, 4).map((i) => (
                     <li key={i.href}>
-                      <Link href={i.href} className="inline-flex min-h-9 items-center text-[0.95rem] text-cream/80 hover:text-cream">
+                      <Link
+                        href={i.href}
+                        className="inline-flex min-h-9 items-center text-[0.95rem] text-cream/80 hover:text-cream"
+                      >
                         {t(`items.${i.key}`)}
                       </Link>
                     </li>
@@ -57,7 +62,8 @@ export async function Footer() {
             MTN MoMo · Moov Money · Celtiis Cash · {tf("card")}
           </p>
           <p className="lg:text-right">
-            {tf("partners")} <span className="text-cream">FSS</span> · <span className="text-cream">Ayelade Chess</span>
+            {tf("partners")} <span className="text-cream">FSS</span> ·{" "}
+            <span className="text-cream">Ayelade Chess</span>
           </p>
         </div>
         <div className="mt-6 flex flex-col gap-4 border-t border-cream/15 pt-6 text-xs text-cream/60 lg:flex-row lg:items-center lg:justify-between">
@@ -74,7 +80,11 @@ export async function Footer() {
             © {year} Chesspirit · Cotonou, Bénin ·{" "}
             {tf.rich("credit", {
               link: (chunks) => (
-                <a href="https://frejusteagboton.info" className="text-gold underline-offset-2 hover:underline" rel="noopener">
+                <a
+                  href="https://frejusteagboton.info"
+                  className="text-gold underline-offset-2 hover:underline"
+                  rel="noopener"
+                >
                   {chunks}
                 </a>
               ),

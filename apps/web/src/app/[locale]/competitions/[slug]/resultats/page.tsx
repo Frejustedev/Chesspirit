@@ -54,10 +54,19 @@ export default async function ResultsPage({ params }: Props) {
       <h1 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">
         {tt("results")} {t.is_demo ? <DemoBadge /> : null}
       </h1>
-      <p className="mt-2 text-stone first-letter:uppercase">{formatDate(t.starts_at, locale, { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</p>
+      <p className="mt-2 text-stone first-letter:uppercase">
+        {formatDate(t.starts_at, locale, {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })}
+      </p>
 
       {!standings?.length ? (
-        <p className="mt-8 rounded-[var(--radius-card)] border border-dashed border-line p-6 font-serif text-lg text-stone">{tt("resultsSoon")}</p>
+        <p className="mt-8 rounded-[var(--radius-card)] border border-dashed border-line p-6 font-serif text-lg text-stone">
+          {tt("resultsSoon")}
+        </p>
       ) : (
         <div className="mt-8 overflow-x-auto rounded-[var(--radius-card)] border border-line">
           <table className="w-full min-w-[34rem] text-left text-[0.95rem]">
@@ -80,11 +89,19 @@ export default async function ResultsPage({ params }: Props) {
                 const tb = (s.tiebreaks ?? {}) as Record<string, number>;
                 return (
                   <tr key={s.player_id} className={s.rank! <= 3 ? "bg-gold-soft/30" : undefined}>
-                    <td className="tabular px-3 py-2 font-display text-lg text-gold-deep">{s.rank}</td>
+                    <td className="tabular px-3 py-2 font-display text-lg text-gold-deep">
+                      {s.rank}
+                    </td>
                     <td className="px-3 py-2 font-medium">
-                      {s.titles?.length ? <span className="mr-1.5 text-xs font-bold text-bordeaux">{s.titles.join(" ")}</span> : null}
+                      {s.titles?.length ? (
+                        <span className="mr-1.5 text-xs font-bold text-bordeaux">
+                          {s.titles.join(" ")}
+                        </span>
+                      ) : null}
                       {s.display_name}
-                      {s.prize ? <span className="ml-2 text-xs text-gold-deep">{s.prize}</span> : null}
+                      {s.prize ? (
+                        <span className="ml-2 text-xs text-gold-deep">{s.prize}</span>
+                      ) : null}
                     </td>
                     <td className="px-3 py-2 text-stone">{s.club ?? ""}</td>
                     <td className="tabular px-3 py-2 text-right">{s.rating_before ?? "—"}</td>
@@ -106,7 +123,10 @@ export default async function ResultsPage({ params }: Props) {
         <section className="mt-12">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <h2 className="font-display text-3xl font-semibold">{tt("games")}</h2>
-            <a href={`/api/tournaments/${t.slug}/pgn`} className="inline-flex min-h-11 items-center gap-2 font-semibold text-bordeaux hover:underline">
+            <a
+              href={`/api/tournaments/${t.slug}/pgn`}
+              className="inline-flex min-h-11 items-center gap-2 font-semibold text-bordeaux hover:underline"
+            >
               <IconDownload className="size-5" /> {tt("downloadPgn")}
             </a>
           </div>
@@ -120,10 +140,15 @@ export default async function ResultsPage({ params }: Props) {
                   .filter((g) => g.round_number === r)
                   .map((g) => (
                     <li key={g.id}>
-                      <Link href={`/parties/${g.id}`} className="grid grid-cols-[2rem_1fr_4.5rem_1fr] items-center gap-2 py-2 text-[0.95rem] hover:bg-cream/60">
+                      <Link
+                        href={`/parties/${g.id}`}
+                        className="grid grid-cols-[2rem_1fr_4.5rem_1fr] items-center gap-2 py-2 text-[0.95rem] hover:bg-cream/60"
+                      >
                         <span className="tabular text-stone">{g.board}</span>
                         <span className="truncate text-right">{g.white_name}</span>
-                        <span className="tabular text-center font-semibold">{g.result.replace("1/2", "½").replace("1/2", "½")}</span>
+                        <span className="tabular text-center font-semibold">
+                          {g.result.replace("1/2", "½").replace("1/2", "½")}
+                        </span>
                         <span className="truncate">{g.black_name}</span>
                       </Link>
                     </li>

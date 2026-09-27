@@ -44,9 +44,19 @@ export function RegistrationForm({
     setError(null);
     if (!accept) return setError(t("acceptRequired"));
     start(async () => {
-      const r = await registerAction({ tournamentId, playerId, paymentMethod: method, answers, acceptRules: true });
+      const r = await registerAction({
+        tournamentId,
+        playerId,
+        paymentMethod: method,
+        answers,
+        acceptRules: true,
+      });
       if (!r.ok) return setError(te.has(r.error) ? te(r.error) : te("server"));
-      window.location.assign(r.redirect.startsWith("http") ? r.redirect : `${locale === "fr" ? "" : `/${locale}`}${r.redirect}`);
+      window.location.assign(
+        r.redirect.startsWith("http")
+          ? r.redirect
+          : `${locale === "fr" ? "" : `/${locale}`}${r.redirect}`,
+      );
     });
   }
 
@@ -57,7 +67,10 @@ export function RegistrationForm({
       {registered.length ? (
         <ul className="space-y-2">
           {registered.map((p) => (
-            <li key={p.id} className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-line bg-cream/50 p-3">
+            <li
+              key={p.id}
+              className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-line bg-cream/50 p-3"
+            >
               <span>
                 <strong>{p.name}</strong> — {t(`status.${p.registration!.status}`)}
               </span>
@@ -77,7 +90,10 @@ export function RegistrationForm({
                   {t("pay")}
                 </Button>
               ) : (
-                <Link href={`/billet/${p.registration!.ticket_code}`} className="font-semibold text-bordeaux hover:underline">
+                <Link
+                  href={`/billet/${p.registration!.ticket_code}`}
+                  className="font-semibold text-bordeaux hover:underline"
+                >
                   {t("ticket")}
                 </Link>
               )}
@@ -92,8 +108,18 @@ export function RegistrationForm({
             <legend className="text-sm font-semibold">{t("who")}</legend>
             <div className="mt-2 space-y-2">
               {available.map((p) => (
-                <label key={p.id} className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-md border px-3 ${playerId === p.id ? "border-bordeaux bg-bordeaux-soft/40" : "border-line"}`}>
-                  <input type="radio" name="player" value={p.id} checked={playerId === p.id} onChange={() => setPlayerId(p.id)} className="size-5 accent-[var(--color-bordeaux)]" />
+                <label
+                  key={p.id}
+                  className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-md border px-3 ${playerId === p.id ? "border-bordeaux bg-bordeaux-soft/40" : "border-line"}`}
+                >
+                  <input
+                    type="radio"
+                    name="player"
+                    value={p.id}
+                    checked={playerId === p.id}
+                    onChange={() => setPlayerId(p.id)}
+                    className="size-5 accent-[var(--color-bordeaux)]"
+                  />
                   <span className="font-medium">{p.name}</span>
                   {p.self ? <span className="text-sm text-stone">({t("me")})</span> : null}
                 </label>
@@ -114,13 +140,28 @@ export function RegistrationForm({
                 if (f.type === "checkbox")
                   return (
                     <div key={f.key} className="sm:col-span-2">
-                      <Checkbox id={id} label={label} checked={!!answers[f.key]} onChange={(e) => setAnswers({ ...answers, [f.key]: e.target.checked })} />
+                      <Checkbox
+                        id={id}
+                        label={label}
+                        checked={!!answers[f.key]}
+                        onChange={(e) => setAnswers({ ...answers, [f.key]: e.target.checked })}
+                      />
                     </div>
                   );
                 return (
-                  <Field key={f.key} id={id} label={label} optional={f.required ? undefined : t("optional")}>
+                  <Field
+                    key={f.key}
+                    id={id}
+                    label={label}
+                    optional={f.required ? undefined : t("optional")}
+                  >
                     {f.type === "select" ? (
-                      <Select id={id} value={String(answers[f.key] ?? "")} onChange={(e) => setAnswers({ ...answers, [f.key]: e.target.value })} required={f.required}>
+                      <Select
+                        id={id}
+                        value={String(answers[f.key] ?? "")}
+                        onChange={(e) => setAnswers({ ...answers, [f.key]: e.target.value })}
+                        required={f.required}
+                      >
                         <option value="">—</option>
                         {f.options?.map((o) => (
                           <option key={o} value={o}>
@@ -129,7 +170,13 @@ export function RegistrationForm({
                         ))}
                       </Select>
                     ) : (
-                      <Input id={id} type={f.type === "number" ? "number" : "text"} value={String(answers[f.key] ?? "")} onChange={(e) => setAnswers({ ...answers, [f.key]: e.target.value })} required={f.required} />
+                      <Input
+                        id={id}
+                        type={f.type === "number" ? "number" : "text"}
+                        value={String(answers[f.key] ?? "")}
+                        onChange={(e) => setAnswers({ ...answers, [f.key]: e.target.value })}
+                        required={f.required}
+                      />
                     )}
                   </Field>
                 );
@@ -141,8 +188,18 @@ export function RegistrationForm({
             <legend className="text-sm font-semibold">{t("payment")}</legend>
             <div className="mt-2 space-y-2">
               {methods.map((m) => (
-                <label key={m} className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-md border p-3 ${method === m ? "border-bordeaux bg-bordeaux-soft/40" : "border-line"}`}>
-                  <input type="radio" name="method" value={m} checked={method === m} onChange={() => setMethod(m)} className="mt-0.5 size-5 accent-[var(--color-bordeaux)]" />
+                <label
+                  key={m}
+                  className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-md border p-3 ${method === m ? "border-bordeaux bg-bordeaux-soft/40" : "border-line"}`}
+                >
+                  <input
+                    type="radio"
+                    name="method"
+                    value={m}
+                    checked={method === m}
+                    onChange={() => setMethod(m)}
+                    className="mt-0.5 size-5 accent-[var(--color-bordeaux)]"
+                  />
                   <span>
                     <span className="block font-medium">{t(`method.${m}`)}</span>
                     <span className="block text-sm text-stone">{t(`methodHelp.${m}`)}</span>
@@ -159,7 +216,11 @@ export function RegistrationForm({
             onChange={(e) => setAccept(e.target.checked)}
             label={t.rich("accept", {
               link: (c) => (
-                <Link href="/legal/reglement-tournois" className="font-semibold text-bordeaux underline" target="_blank">
+                <Link
+                  href="/legal/reglement-tournois"
+                  className="font-semibold text-bordeaux underline"
+                  target="_blank"
+                >
                   {c}
                 </Link>
               ),
@@ -167,7 +228,10 @@ export function RegistrationForm({
           />
 
           {error ? (
-            <p role="alert" className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux">
+            <p
+              role="alert"
+              className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux"
+            >
               {error}
             </p>
           ) : null}

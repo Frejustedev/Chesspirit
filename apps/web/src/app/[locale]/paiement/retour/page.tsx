@@ -20,12 +20,21 @@ export default async function PaymentReturn({
   const { payment } = await searchParams;
   const t = await getTranslations("payment");
   const supabase = await createClient();
-  const { data: pay } = payment && /^[0-9a-f-]{36}$/.test(payment)
-    ? await supabase.from("payments").select("id, status, amount_xof, object_type, object_id").eq("id", payment).maybeSingle()
-    : { data: null };
+  const { data: pay } =
+    payment && /^[0-9a-f-]{36}$/.test(payment)
+      ? await supabase
+          .from("payments")
+          .select("id, status, amount_xof, object_type, object_id")
+          .eq("id", payment)
+          .maybeSingle()
+      : { data: null };
   let ticket: string | null = null;
   if (pay?.object_type === "registration") {
-    const { data: r } = await supabase.from("registrations").select("ticket_code").eq("id", pay.object_id).maybeSingle();
+    const { data: r } = await supabase
+      .from("registrations")
+      .select("ticket_code")
+      .eq("id", pay.object_id)
+      .maybeSingle();
     ticket = r?.ticket_code ?? null;
   }
   const status = pay?.status ?? "unknown";
@@ -34,14 +43,22 @@ export default async function PaymentReturn({
       {status === "pending" ? <AutoRefresh seconds={4} /> : null}
       <h1 className="font-display text-4xl font-semibold">{t(`status.${status}`)}</h1>
       <p className="mt-3 font-serif text-xl text-stone">{t(`statusText.${status}`)}</p>
-      {pay ? <p className="tabular mt-4 text-lg font-semibold">{formatXof(pay.amount_xof, locale)}</p> : null}
+      {pay ? (
+        <p className="tabular mt-4 text-lg font-semibold">{formatXof(pay.amount_xof, locale)}</p>
+      ) : null}
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         {ticket ? (
-          <Link href={`/billet/${ticket}`} className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-ink">
+          <Link
+            href={`/billet/${ticket}`}
+            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-ink"
+          >
             {t("seeTicket")}
           </Link>
         ) : null}
-        <Link href="/compte" className="inline-flex min-h-12 items-center rounded-full border border-ink/25 px-6 font-semibold hover:bg-cream">
+        <Link
+          href="/compte"
+          className="inline-flex min-h-12 items-center rounded-full border border-ink/25 px-6 font-semibold hover:bg-cream"
+        >
           {t("account")}
         </Link>
       </div>

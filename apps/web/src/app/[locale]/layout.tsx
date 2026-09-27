@@ -13,7 +13,11 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
@@ -23,7 +27,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     applicationName: "Chesspirit",
     manifest: "/manifest.webmanifest",
     alternates: { languages: { fr: "/", en: "/en" } },
-    openGraph: { type: "website", siteName: "Chesspirit", locale: locale === "en" ? "en_GB" : "fr_BJ" },
+    openGraph: {
+      type: "website",
+      siteName: "Chesspirit",
+      locale: locale === "en" ? "en_GB" : "fr_BJ",
+    },
     icons: { icon: "/icon.svg" },
   };
 }

@@ -29,7 +29,10 @@ if (!fs.existsSync(envFile)) {
 const useCli = process.env.SUPABASE_CLI === "1";
 const stack = useCli
   ? spawnSync("supabase", ["start"], { cwd: root, stdio: "inherit" })
-  : spawnSync("bash", [path.join(root, "scripts/local-stack.sh"), "start"], { cwd: root, stdio: "inherit" });
+  : spawnSync("bash", [path.join(root, "scripts/local-stack.sh"), "start"], {
+      cwd: root,
+      stdio: "inherit",
+    });
 if (stack.status !== 0) process.exit(stack.status ?? 1);
 
 const web = spawn("pnpm", ["--filter", "web", "dev"], { cwd: root, stdio: "inherit" });

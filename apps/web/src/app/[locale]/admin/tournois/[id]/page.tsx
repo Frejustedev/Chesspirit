@@ -44,14 +44,22 @@ export default async function AdminTournament({
   if (!/^[0-9a-f-]{36}$/.test(id)) notFound();
   const { data: tn } = await supabase.from("tournaments").select("*").eq("id", id).maybeSingle();
   if (!tn) notFound();
-  const tab = (TABS as readonly string[]).includes(onglet ?? "") ? (onglet as (typeof TABS)[number]) : "inscrits";
+  const tab = (TABS as readonly string[]).includes(onglet ?? "")
+    ? (onglet as (typeof TABS)[number])
+    : "inscrits";
 
   let body: React.ReactNode = null;
   if (tab === "inscrits") {
-    await supabase.rpc("log_admin_view", { p_object_type: "tournaments", p_object_id: tn.id, p_context: "registrations_list" });
+    await supabase.rpc("log_admin_view", {
+      p_object_type: "tournaments",
+      p_object_id: tn.id,
+      p_context: "registrations_list",
+    });
     const { data: regs } = await supabase
       .from("registrations")
-      .select("id, status, payment_status, payment_method, amount_xof, seed_rating, checked_in_at, ticket_code, answers, profiles!registrations_player_id_fkey(first_name, last_name, phone, club_name, birth_date, sex)")
+      .select(
+        "id, status, payment_status, payment_method, amount_xof, seed_rating, checked_in_at, ticket_code, answers, profiles!registrations_player_id_fkey(first_name, last_name, phone, club_name, birth_date, sex)",
+      )
       .eq("tournament_id", tn.id)
       .order("created_at");
     const active = (regs ?? []).filter((r) => !["cancelled", "refused"].includes(r.status));
@@ -59,10 +67,16 @@ export default async function AdminTournament({
       <>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-stone">
-            {t("registrantsSummary", { total: active.length, checked: active.filter((r) => r.checked_in_at).length })}
+            {t("registrantsSummary", {
+              total: active.length,
+              checked: active.filter((r) => r.checked_in_at).length,
+            })}
           </p>
-          { }
-          <a href={`/api/admin/tournaments/${tn.id}/registrations`} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream">
+          {}
+          <a
+            href={`/api/admin/tournaments/${tn.id}/registrations`}
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+          >
             <IconDownload className="size-5" /> {t("exportCsv")}
           </a>
         </div>
@@ -82,7 +96,10 @@ export default async function AdminTournament({
             </thead>
             <tbody className="divide-y divide-line">
               {(regs ?? []).map((r) => (
-                <tr key={r.id} className={["cancelled", "refused"].includes(r.status) ? "opacity-50" : undefined}>
+                <tr
+                  key={r.id}
+                  className={["cancelled", "refused"].includes(r.status) ? "opacity-50" : undefined}
+                >
                   <td className="px-3 py-2 font-medium">
                     {r.profiles?.first_name} {r.profiles?.last_name}
                   </td>
@@ -92,7 +109,11 @@ export default async function AdminTournament({
                   <td className="px-3 py-2">{t(`reg.${r.status}`)}</td>
                   <td className="px-3 py-2">
                     {t(`pay.${r.payment_status}`)}
-                    {r.amount_xof ? <span className="block text-xs text-stone">{formatXof(r.amount_xof, locale)}</span> : null}
+                    {r.amount_xof ? (
+                      <span className="block text-xs text-stone">
+                        {formatXof(r.amount_xof, locale)}
+                      </span>
+                    ) : null}
                   </td>
                   <td className="px-3 py-2">{r.checked_in_at ? "✓" : ""}</td>
                   <td className="px-3 py-2">
@@ -116,8 +137,14 @@ export default async function AdminTournament({
     ]);
     body = (
       <TournamentSettings
-        tournament={{ ...tn, description_fr: tr(tn.description, "fr"), description_en: tr(tn.description, "en") }}
-        prizesText={(prizes ?? []).map((p) => `${tr(p.label, "fr")}${p.amount_xof != null ? ` ; ${p.amount_xof}` : ""}`).join("\n")}
+        tournament={{
+          ...tn,
+          description_fr: tr(tn.description, "fr"),
+          description_en: tr(tn.description, "en"),
+        }}
+        prizesText={(prizes ?? [])
+          .map((p) => `${tr(p.label, "fr")}${p.amount_xof != null ? ` ; ${p.amount_xof}` : ""}`)
+          .join("\n")}
         partnersText={(partners ?? []).map((p) => p.name).join("\n")}
       />
     );

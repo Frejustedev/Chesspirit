@@ -7,3 +7,8 @@ docs/BRIEF.md
 supabase/migrations
 services
 apps/web/public/vendor
+apps/web/src/lib/supabase/types.ts
+apps/web/AGENTS.md
+apps/web/CLAUDE.md
+.local
+test-results
