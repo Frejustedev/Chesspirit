@@ -1,7 +1,7 @@
 import "server-only";
 import { formatDate, formatXof } from "@chesspirit/shared";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { getProvider, activeProviderId } from "@/lib/payments";
+import { startPayment } from "@/lib/payments/checkout";
 import { notify, type Message } from "@/lib/notifications";
 import { env } from "@/lib/env";
 
@@ -20,54 +20,20 @@ export async function startRegistrationPayment(
     .single();
   if (error || !reg) throw new Error("registration_not_found");
   if (reg.payment_status !== "pending" || !reg.amount_xof) throw new Error("payment_not_required");
-
-  const provider = getProvider();
-  if (!provider) throw new Error("payment_provider_unavailable");
-
-  // Réutilise un paiement en attente existant plutôt que d'en créer un second.
-  const { data: existing } = await db
-    .from("payments")
-    .select("id, checkout_url")
-    .eq("object_type", "registration")
-    .eq("object_id", reg.id)
-    .eq("status", "pending")
-    .eq("provider", provider.id)
-    .maybeSingle();
-  if (existing?.checkout_url) return existing.checkout_url;
-
-  const { data: pay, error: payErr } = await db
-    .from("payments")
-    .insert({
-      provider: provider.id,
-      amount_xof: reg.amount_xof,
-      object_type: "registration",
-      object_id: reg.id,
-      payer_profile_id: reg.player_id,
-      user_id: userId,
-      description: `Inscription — ${reg.tournaments?.name ?? ""}`,
-    })
-    .select("id")
-    .single();
-  if (payErr || !pay) throw new Error("payment_create_failed");
-
-  const checkout = await provider.createCheckout({
-    paymentId: pay.id,
+  return startPayment({
+    objectType: "registration",
+    objectId: reg.id,
     amountXof: reg.amount_xof,
     description: `Inscription — ${reg.tournaments?.name ?? "tournoi"}`,
-    customer: {
+    userId,
+    payer: {
+      profileId: reg.player_id,
       firstName: reg.profiles?.first_name ?? "",
       lastName: reg.profiles?.last_name ?? "",
       email: reg.profiles?.email,
       phone: reg.profiles?.phone,
     },
-    returnUrl: `${env.siteUrl}/paiement/retour?payment=${pay.id}`,
-    webhookUrl: `${env.siteUrl}/api/webhooks/payments/${activeProviderId()}`,
   });
-  await db
-    .from("payments")
-    .update({ provider_ref: checkout.providerRef, checkout_url: checkout.checkoutUrl })
-    .eq("id", pay.id);
-  return checkout.checkoutUrl;
 }
 
 /** Confirmation d'inscription par SMS, WhatsApp et e-mail (selon les coordonnées disponibles). */

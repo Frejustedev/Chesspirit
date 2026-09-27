@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getProvider, type ProviderId } from "@/lib/payments";
 import { sendRegistrationConfirmation } from "@/lib/registration";
+import { bookingConfirmation } from "@/lib/coaching/notify";
 
 /**
  * Webhook des prestataires de paiement. Seule une notification à la signature vérifiée
@@ -79,6 +80,13 @@ export async function POST(
     payment.object_type === "registration"
   ) {
     await sendRegistrationConfirmation(payment.object_id).catch((e) => console.error(e));
+  }
+  if (
+    event.status === "succeeded" &&
+    payment.status !== "succeeded" &&
+    payment.object_type === "booking"
+  ) {
+    await bookingConfirmation(payment.object_id).catch((e) => console.error(e));
   }
   return NextResponse.json({ ok: true });
 }

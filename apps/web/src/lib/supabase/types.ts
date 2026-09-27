@@ -74,6 +74,273 @@ export type Database = {
         };
         Relationships: [];
       };
+      availability_slots: {
+        Row: {
+          id: string;
+          coach_id: string;
+          offer_id: string | null;
+          starts_at: string;
+          ends_at: string;
+          modality: string;
+          location: string | null;
+          capacity: number;
+          status: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          coach_id: string;
+          offer_id?: string | null;
+          starts_at: string;
+          ends_at: string;
+          modality: string;
+          location?: string | null;
+          capacity?: number;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          coach_id?: string;
+          offer_id?: string | null;
+          starts_at?: string;
+          ends_at?: string;
+          modality?: string;
+          location?: string | null;
+          capacity?: number;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "availability_slots_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "availability_slots_offer_id_fkey"; columns: ["offer_id"]; isOneToOne: false; referencedRelation: "offers"; referencedColumns: ["id"] }];
+      };
+      bookings: {
+        Row: {
+          id: string;
+          offer_id: string;
+          slot_id: string;
+          coach_id: string;
+          student_id: string;
+          booked_by: string | null;
+          status: string;
+          amount_xof: number;
+          commission_xof: number;
+          meeting_url: string | null;
+          student_notes: string | null;
+          reminder_sent_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          offer_id: string;
+          slot_id: string;
+          coach_id: string;
+          student_id: string;
+          booked_by?: string | null;
+          status: string;
+          amount_xof: number;
+          commission_xof?: number;
+          meeting_url?: string | null;
+          student_notes?: string | null;
+          reminder_sent_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          offer_id?: string;
+          slot_id?: string;
+          coach_id?: string;
+          student_id?: string;
+          booked_by?: string | null;
+          status?: string;
+          amount_xof?: number;
+          commission_xof?: number;
+          meeting_url?: string | null;
+          student_notes?: string | null;
+          reminder_sent_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "bookings_offer_id_fkey"; columns: ["offer_id"]; isOneToOne: false; referencedRelation: "offers"; referencedColumns: ["id"] }, { foreignKeyName: "bookings_slot_id_fkey"; columns: ["slot_id"]; isOneToOne: false; referencedRelation: "availability_slots"; referencedColumns: ["id"] }, { foreignKeyName: "bookings_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "bookings_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      coach_applications: {
+        Row: {
+          id: string;
+          profile_id: string;
+          experience: string;
+          languages: string[];
+          modalities: string[];
+          city: string | null;
+          credentials_note: string | null;
+          status: string;
+          reviewed_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          experience: string;
+          languages?: string[];
+          modalities?: string[];
+          city?: string | null;
+          credentials_note?: string | null;
+          status?: string;
+          reviewed_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          experience?: string;
+          languages?: string[];
+          modalities?: string[];
+          city?: string | null;
+          credentials_note?: string | null;
+          status?: string;
+          reviewed_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "coach_applications_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      coach_payout_details: {
+        Row: {
+          id: string;
+          coach_id: string;
+          method: string;
+          account: string;
+          holder_name: string | null;
+          ifu: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          coach_id: string;
+          method?: string;
+          account: string;
+          holder_name?: string | null;
+          ifu?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          coach_id?: string;
+          method?: string;
+          account?: string;
+          holder_name?: string | null;
+          ifu?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "coach_payout_details_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: true; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }];
+      };
+      coach_profiles: {
+        Row: {
+          id: string;
+          profile_id: string;
+          slug: string;
+          headline: Json;
+          bio: Json;
+          languages: string[];
+          modalities: string[];
+          levels: string[];
+          specialties: string[];
+          city: string | null;
+          zone: string | null;
+          status: string;
+          is_chesspirit: boolean;
+          rating_avg: number | null;
+          reviews_count: number;
+          is_demo: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          slug: string;
+          headline?: Json;
+          bio?: Json;
+          languages?: string[];
+          modalities?: string[];
+          levels?: string[];
+          specialties?: string[];
+          city?: string | null;
+          zone?: string | null;
+          status?: string;
+          is_chesspirit?: boolean;
+          rating_avg?: number | null;
+          reviews_count?: number;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          slug?: string;
+          headline?: Json;
+          bio?: Json;
+          languages?: string[];
+          modalities?: string[];
+          levels?: string[];
+          specialties?: string[];
+          city?: string | null;
+          zone?: string | null;
+          status?: string;
+          is_chesspirit?: boolean;
+          rating_avg?: number | null;
+          reviews_count?: number;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "coach_profiles_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: true; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      coach_reviews: {
+        Row: {
+          id: string;
+          booking_id: string;
+          coach_id: string;
+          student_id: string;
+          stars: number;
+          comment: string | null;
+          status: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          booking_id: string;
+          coach_id: string;
+          student_id: string;
+          stars: number;
+          comment?: string | null;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          booking_id?: string;
+          coach_id?: string;
+          student_id?: string;
+          stars?: number;
+          comment?: string | null;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "coach_reviews_booking_id_fkey"; columns: ["booking_id"]; isOneToOne: true; referencedRelation: "bookings"; referencedColumns: ["id"] }, { foreignKeyName: "coach_reviews_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "coach_reviews_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
       consents: {
         Row: {
           id: string;
@@ -377,6 +644,45 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "games_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "games_round_id_fkey"; columns: ["round_id"]; isOneToOne: false; referencedRelation: "rounds"; referencedColumns: ["id"] }, { foreignKeyName: "games_pairing_id_fkey"; columns: ["pairing_id"]; isOneToOne: false; referencedRelation: "pairings"; referencedColumns: ["id"] }, { foreignKeyName: "games_white_id_fkey"; columns: ["white_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "games_black_id_fkey"; columns: ["black_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      homework: {
+        Row: {
+          id: string;
+          coach_id: string;
+          student_id: string;
+          booking_id: string | null;
+          title: string;
+          details: string | null;
+          due_on: string | null;
+          done_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          coach_id: string;
+          student_id: string;
+          booking_id?: string | null;
+          title: string;
+          details?: string | null;
+          due_on?: string | null;
+          done_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          coach_id?: string;
+          student_id?: string;
+          booking_id?: string | null;
+          title?: string;
+          details?: string | null;
+          due_on?: string | null;
+          done_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "homework_booking_id_fkey"; columns: ["booking_id"]; isOneToOne: false; referencedRelation: "bookings"; referencedColumns: ["id"] }, { foreignKeyName: "homework_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "homework_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
       invoices: {
         Row: {
           id: string;
@@ -496,6 +802,63 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [{ foreignKeyName: "notifications_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      offers: {
+        Row: {
+          id: string;
+          coach_id: string;
+          title: Json;
+          description: Json;
+          language: string;
+          modality: string;
+          level: string;
+          format: string;
+          duration_min: number;
+          price_xof: number;
+          capacity: number;
+          pack_sessions: number | null;
+          pack_price_xof: number | null;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          coach_id: string;
+          title: Json;
+          description?: Json;
+          language: string;
+          modality: string;
+          level: string;
+          format: string;
+          duration_min?: number;
+          price_xof: number;
+          capacity?: number;
+          pack_sessions?: number | null;
+          pack_price_xof?: number | null;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          coach_id?: string;
+          title?: Json;
+          description?: Json;
+          language?: string;
+          modality?: string;
+          level?: string;
+          format?: string;
+          duration_min?: number;
+          price_xof?: number;
+          capacity?: number;
+          pack_sessions?: number | null;
+          pack_price_xof?: number | null;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "offers_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }];
       };
       organization_members: {
         Row: {
@@ -752,6 +1115,84 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "payments_payer_profile_id_fkey"; columns: ["payer_profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      payouts: {
+        Row: {
+          id: string;
+          coach_id: string;
+          period_start: string;
+          period_end: string;
+          gross_xof: number;
+          commission_xof: number;
+          net_xof: number;
+          status: string;
+          paid_at: string | null;
+          reference: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          coach_id: string;
+          period_start: string;
+          period_end: string;
+          gross_xof: number;
+          commission_xof: number;
+          net_xof: number;
+          status?: string;
+          paid_at?: string | null;
+          reference?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          coach_id?: string;
+          period_start?: string;
+          period_end?: string;
+          gross_xof?: number;
+          commission_xof?: number;
+          net_xof?: number;
+          status?: string;
+          paid_at?: string | null;
+          reference?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "payouts_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }];
+      };
+      placement_results: {
+        Row: {
+          id: string;
+          profile_id: string | null;
+          score: number;
+          total: number;
+          level: string;
+          answers: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id?: string | null;
+          score: number;
+          total: number;
+          level: string;
+          answers?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string | null;
+          score?: number;
+          total?: number;
+          level?: string;
+          answers?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "placement_results_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
       posters: {
         Row: {
           id: string;
@@ -929,6 +1370,87 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [{ foreignKeyName: "profiles_guardian_id_fkey"; columns: ["guardian_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "profiles_merged_into_fkey"; columns: ["merged_into"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "profiles_club_fk"; columns: ["club_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }];
+      };
+      progress_notes: {
+        Row: {
+          id: string;
+          coach_id: string;
+          student_id: string;
+          booking_id: string | null;
+          note: string;
+          level: string | null;
+          replay_url: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          coach_id: string;
+          student_id: string;
+          booking_id?: string | null;
+          note: string;
+          level?: string | null;
+          replay_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          coach_id?: string;
+          student_id?: string;
+          booking_id?: string | null;
+          note?: string;
+          level?: string | null;
+          replay_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "progress_notes_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "progress_notes_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "progress_notes_booking_id_fkey"; columns: ["booking_id"]; isOneToOne: false; referencedRelation: "bookings"; referencedColumns: ["id"] }];
+      };
+      quote_requests: {
+        Row: {
+          id: string;
+          kind: string;
+          organization: string;
+          contact_name: string;
+          phone: string | null;
+          email: string | null;
+          city: string | null;
+          participants: number | null;
+          message: string | null;
+          status: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          kind: string;
+          organization: string;
+          contact_name: string;
+          phone?: string | null;
+          email?: string | null;
+          city?: string | null;
+          participants?: number | null;
+          message?: string | null;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          kind?: string;
+          organization?: string;
+          contact_name?: string;
+          phone?: string | null;
+          email?: string | null;
+          city?: string | null;
+          participants?: number | null;
+          message?: string | null;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
       rating_history: {
         Row: {
@@ -1555,6 +2077,28 @@ export type Database = {
       };
     };
     Views: {
+      public_coaches: {
+        Row: {
+          id: string | null;
+          slug: string | null;
+          headline: Json | null;
+          bio: Json | null;
+          languages: string[] | null;
+          modalities: string[] | null;
+          levels: string[] | null;
+          specialties: string[] | null;
+          city: string | null;
+          zone: string | null;
+          is_chesspirit: boolean | null;
+          rating_avg: number | null;
+          reviews_count: number | null;
+          is_demo: boolean | null;
+          display_name: string | null;
+          titles: string[] | null;
+          price_from: number | null;
+        };
+        Relationships: [];
+      };
       public_pairings: {
         Row: {
           id: string | null;
@@ -1663,7 +2207,10 @@ export type Database = {
       add_child: { Args: { p_profile: Json; p_image_rights?: boolean }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
       add_tournament_staff: { Args: { p_tournament_id: string; p_identifier: string; p_role: string }; Returns: Database["public"]["Tables"]["tournament_staff"]["Row"] };
       admin_overview: { Args: Record<PropertyKey, never>; Returns: { users: number; profiles: number; registrations: number; payments_succeeded: number; revenue_xof: number; pending_data_requests: number; contact_new: number }[] };
+      approve_coach_application: { Args: { p_application_id: string }; Returns: Database["public"]["Tables"]["coach_profiles"]["Row"] };
       assign_start_numbers: { Args: { p_tournament_id: string; p_only_checked_in?: boolean }; Returns: number };
+      book_slot: { Args: { p_slot_id: string; p_offer_id: string; p_student_id: string; p_notes?: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };
+      cancel_booking: { Args: { p_booking_id: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };
       cancel_registration: { Args: { p_registration_id: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
       check_in: { Args: { p_ticket_code: string; p_mark_paid?: boolean }; Returns: { registration_id: string; tournament_id: string; display_name: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in_at: string; already: boolean }[] };
       complete_onboarding: { Args: { p_profile: Json; p_consents: Json; p_version?: string }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
@@ -1675,6 +2222,7 @@ export type Database = {
       my_managed_tournaments: { Args: Record<PropertyKey, never>; Returns: Database["public"]["Tables"]["tournaments"]["Row"][] };
       public_stats: { Args: Record<PropertyKey, never>; Returns: { rated_players: number; tournaments: number; games: number; demo: boolean }[] };
       register_for_tournament: { Args: { p_tournament_id: string; p_player_id: string; p_answers?: Json; p_payment_method?: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
+      slot_remaining: { Args: { p_slot_id: string }; Returns: number };
       ticket_info: { Args: { p_ticket_code: string }; Returns: { display_name: string; tournament_name: string; tournament_slug: string; starts_at: string; venue: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in: boolean }[] };
       tournament_staff_list: { Args: { p_tournament_id: string }; Returns: { id: string; role: string; profile_id: string; name: string; phone: string; email: string }[] };
     };

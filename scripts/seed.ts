@@ -628,9 +628,231 @@ async function seedDemo() {
   );
 }
 
+async function seedCoachingDemo() {
+  const existing = must(
+    await db.from("coach_profiles").select("id").eq("slug", "coach-demo-cotonou").maybeSingle(),
+    "lecture coachs",
+  );
+  if (existing) {
+    console.log("• Coaching de démonstration déjà présent");
+    return;
+  }
+  const coachUser = await ensureUser("coach@demo.chesspirit.local", "+22990000003");
+  const people = must(
+    await db
+      .from("profiles")
+      .insert([
+        {
+          user_id: coachUser,
+          first_name: "Coach",
+          last_name: "Démo",
+          birth_date: "1984-02-11",
+          sex: "M",
+          city: "Cotonou",
+          department: "Littoral",
+          source: "demo",
+          is_demo: true,
+          onboarded: true,
+          phone: "+22990000003",
+          is_public: true,
+          titles: ["FM"],
+        },
+        {
+          user_id: null,
+          first_name: "Afi",
+          last_name: "Démo",
+          birth_date: "1992-06-20",
+          sex: "F",
+          city: "Porto-Novo",
+          department: "Ouémé",
+          source: "demo",
+          is_demo: true,
+          onboarded: true,
+          phone: null,
+          is_public: true,
+          titles: [],
+        },
+        {
+          user_id: null,
+          first_name: "Kossi",
+          last_name: "Démo",
+          birth_date: "1979-10-03",
+          sex: "M",
+          city: "Parakou",
+          department: "Borgou",
+          source: "demo",
+          is_demo: true,
+          onboarded: true,
+          phone: null,
+          is_public: true,
+          titles: ["CM"],
+        },
+      ])
+      .select("id"),
+    "profils coachs",
+  );
+  must(await db.from("user_roles").insert({ user_id: coachUser, role: "coach" }), "rôle coach");
+  const coaches = must(
+    await db
+      .from("coach_profiles")
+      .insert([
+        {
+          profile_id: people[0]!.id,
+          slug: "coach-demo-cotonou",
+          status: "approved",
+          is_chesspirit: true,
+          is_demo: true,
+          languages: ["fr", "en"],
+          modalities: ["in_person", "online"],
+          levels: ["intermediate", "advanced", "competition"],
+          city: "Cotonou",
+          headline: {
+            fr: "Préparation aux tournois et analyse de parties (démonstration)",
+            en: "Tournament preparation and game analysis (demo)",
+          },
+          bio: { fr: "Profil fictif de démonstration.", en: "Fictitious demo profile." },
+          specialties: ["Ouvertures", "Finales"],
+        },
+        {
+          profile_id: people[1]!.id,
+          slug: "afi-demo-porto-novo",
+          status: "approved",
+          is_chesspirit: false,
+          is_demo: true,
+          languages: ["fr", "fon"],
+          modalities: ["in_person"],
+          levels: ["discovery", "beginner"],
+          city: "Porto-Novo",
+          headline: {
+            fr: "Initiation des enfants, en français et en fon (démonstration)",
+            en: "Kids' introduction, in French and Fon (demo)",
+          },
+          bio: { fr: "Profil fictif de démonstration.", en: "Fictitious demo profile." },
+          specialties: ["Enfants", "Écoles"],
+        },
+        {
+          profile_id: people[2]!.id,
+          slug: "kossi-demo-parakou",
+          status: "approved",
+          is_chesspirit: false,
+          is_demo: true,
+          languages: ["fr"],
+          modalities: ["online"],
+          levels: ["beginner", "intermediate"],
+          city: "Parakou",
+          headline: {
+            fr: "Cours en ligne pour adultes (démonstration)",
+            en: "Online lessons for adults (demo)",
+          },
+          bio: { fr: "Profil fictif de démonstration.", en: "Fictitious demo profile." },
+          specialties: ["Tactique"],
+        },
+      ])
+      .select("id, slug"),
+    "coachs",
+  );
+  const [c1, c2, c3] = coaches;
+  const offers = must(
+    await db
+      .from("offers")
+      .insert([
+        {
+          coach_id: c1!.id,
+          title: { fr: "Préparation de tournoi", en: "Tournament preparation" },
+          language: "fr",
+          modality: "online",
+          level: "advanced",
+          format: "individual",
+          duration_min: 90,
+          price_xof: 15000,
+          capacity: 1,
+        },
+        {
+          coach_id: c1!.id,
+          title: { fr: "Analyse de vos parties", en: "Analysis of your games" },
+          language: "en",
+          modality: "in_person",
+          level: "intermediate",
+          format: "individual",
+          duration_min: 60,
+          price_xof: 10000,
+          capacity: 1,
+        },
+        {
+          coach_id: c2!.id,
+          title: { fr: "Atelier découverte pour enfants", en: "Kids' discovery workshop" },
+          language: "fon",
+          modality: "in_person",
+          level: "discovery",
+          format: "group",
+          duration_min: 60,
+          price_xof: 2000,
+          capacity: 8,
+        },
+        {
+          coach_id: c2!.id,
+          title: { fr: "Premiers pas (adultes)", en: "First steps (adults)" },
+          language: "fr",
+          modality: "in_person",
+          level: "beginner",
+          format: "group",
+          duration_min: 90,
+          price_xof: 3000,
+          capacity: 6,
+        },
+        {
+          coach_id: c3!.id,
+          title: { fr: "Tactique en ligne", en: "Tactics online" },
+          language: "fr",
+          modality: "online",
+          level: "intermediate",
+          format: "individual",
+          duration_min: 60,
+          price_xof: 8000,
+          capacity: 1,
+        },
+      ])
+      .select("id, coach_id, modality"),
+    "offres",
+  );
+  const slots = [];
+  for (const [coach, modality, location] of [
+    [c1!.id, "online", null],
+    [c1!.id, "in_person", "Club démo de Cotonou"],
+    [c2!.id, "in_person", "Échiquier démo de Porto-Novo"],
+    [c3!.id, "online", null],
+  ] as const) {
+    for (let d = 1; d <= 18; d += 3) {
+      const start = new Date(
+        Date.UTC(
+          new Date().getUTCFullYear(),
+          new Date().getUTCMonth(),
+          new Date().getUTCDate() + d,
+          15,
+          0,
+        ),
+      );
+      slots.push({
+        coach_id: coach,
+        starts_at: start.toISOString(),
+        ends_at: new Date(start.getTime() + 90 * 60000).toISOString(),
+        modality,
+        location,
+        capacity: modality === "in_person" && coach === c2!.id ? 8 : 1,
+      });
+    }
+  }
+  must(await db.from("availability_slots").insert(slots), "créneaux");
+  void offers;
+  console.log(
+    `✓ Coaching de démonstration : 3 coachs, 5 offres, ${slots.length} créneaux (coach@demo.chesspirit.local, +22990000003)`,
+  );
+}
+
 const launchId = await seedLaunchTournament();
 if (withDemo) {
   await seedDemo();
+  await seedCoachingDemo();
   // Une partie des joueurs de démonstration inscrits au tournoi du 3 octobre ? Non : on ne mélange pas
   // données fictives et événement réel.
   void launchId;

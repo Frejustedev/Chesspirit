@@ -8,7 +8,15 @@ import type { Puzzle } from "@/lib/puzzles";
 
 type Status = "playing" | "wrong" | "solved";
 
-export function PuzzleBoard({ puzzle, compact = false }: { puzzle: Puzzle; compact?: boolean }) {
+export function PuzzleBoard({
+  puzzle,
+  compact = false,
+  onDone,
+}: {
+  puzzle: Puzzle;
+  compact?: boolean;
+  onDone?: (solved: boolean) => void;
+}) {
   const t = useTranslations("puzzle");
   const [game, setGame] = useState(() => new Chess(puzzle.fen));
   const [step, setStep] = useState(0);
@@ -39,6 +47,7 @@ export function PuzzleBoard({ puzzle, compact = false }: { puzzle: Puzzle; compa
     ) {
       setBad(to);
       setStatus("wrong");
+      onDone?.(false);
       return;
     }
     setBad(null);
@@ -47,6 +56,7 @@ export function PuzzleBoard({ puzzle, compact = false }: { puzzle: Puzzle; compa
     if (!reply || g.isCheckmate()) {
       setGame(g);
       setStatus("solved");
+      onDone?.(true);
       return;
     }
     g.move({ from: reply.slice(0, 2), to: reply.slice(2, 4), promotion: reply[4] });

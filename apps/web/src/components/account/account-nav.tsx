@@ -1,14 +1,19 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { IconLogout } from "@/components/icons";
+import { getSession } from "@/lib/auth";
 
 export async function AccountNav({ current, isAdmin }: { current: string; isAdmin: boolean }) {
   const t = await getTranslations("account");
+  const session = await getSession();
+  const isCoach = !!session?.roles.includes("coach");
   const items = [
     { href: "/compte", key: "dashboard" },
     { href: "/compte/tournois", key: "tournaments" },
     { href: "/compte/parties", key: "games" },
     { href: "/compte/statistiques", key: "stats" },
+    { href: "/compte/cours", key: "lessons" },
+    ...(isCoach ? [{ href: "/compte/coach", key: "coach" }] : []),
     { href: "/compte/profil", key: "profile" },
     { href: "/compte/famille", key: "family" },
     { href: "/compte/donnees", key: "data" },

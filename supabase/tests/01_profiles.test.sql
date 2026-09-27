@@ -47,6 +47,7 @@ select tests.eq((select count(*)::int from public.profiles), 0, 'admin sans 2FA 
 select tests.login_as((select admin from ids), 'aal2');
 select tests.eq((select count(*)::int from public.profiles where last_name = 'Test'), 2, 'admin avec 2FA : voit tout');
 select public.log_personal_data_access((select id from public.profiles where first_name = 'Alice'), 'test');
-select tests.eq((select count(*)::int from public.audit_logs where action = 'view_personal_data'), 1, 'consultation journalisée');
+select tests.eq((select count(*)::int from public.audit_logs where action = 'view_personal_data'
+  and object_id = (select id::text from public.profiles where first_name = 'Alice' and last_name = 'Test')), 1, 'consultation journalisée');
 update public.profiles set verified = true where first_name = 'Alice';
 select tests.eq((select verified from public.profiles where first_name = 'Alice'), true, 'admin peut vérifier un profil');

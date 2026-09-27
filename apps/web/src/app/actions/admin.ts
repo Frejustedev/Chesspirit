@@ -390,3 +390,28 @@ export async function recomputeRatingsAction(): Promise<
   revalidatePath("/", "layout");
   return { ok: true, data: r };
 }
+
+const SETTINGS = [
+  "coaching_commission_enabled",
+  "coaching_commission_rate",
+  "require_admin_mfa",
+  "default_start_rating",
+  "contact_whatsapp",
+] as const;
+
+/** Paramètre système (super-administrateur uniquement, via la RLS). */
+export async function saveSettingAction(
+  key: (typeof SETTINGS)[number],
+  value: boolean | number | string | null,
+): Promise<Result> {
+  if (!(SETTINGS as readonly string[]).includes(key)) return { ok: false, error: "invalid" };
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("app_settings")
+    .update({ value: value as never })
+    .eq("key", key)
+    .select("key");
+  if (error || !data?.length) return { ok: false, error: error?.message ?? "forbidden" };
+  revalidatePath("/", "layout");
+  return { ok: true };
+}
