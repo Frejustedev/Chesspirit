@@ -1,8 +1,8 @@
 # Avancement
 
-- **Phase en cours** : 1 — le socle
-- **Dernière tâche terminée** : phase 1 — administration v1
-- **Prochaine tâche** : revue de sécurité de fin de phase 1, corrections, tag v0.2.0
+- **Phase en cours** : 2 — compétitions et contenus
+- **Dernière tâche terminée** : phase 1 complète (tag v0.2.0) ; phase 2 : ligues et Tour (pages publiques, espace joueur)
+- **Prochaine tâche** : administration des ligues et du Tour, puis en ligne (Lichess) et équipes
 
 ## Phase 0 — lancement (v0.1.0) ✔
 
@@ -24,8 +24,16 @@
 5. Coaching : offres, coachs, réservation payée, test de niveau, devis, candidatures, espaces élève et coach ✔
 6. Boutique : catalogue, variantes et stock, avis, liste de souhaits, panier, codes promo, cartes cadeaux, points de fidélité, précommandes, livraison / retrait / sous-région, suivi, administration ✔
 7. Administration v1 : utilisateurs (recherche, fiche, rôles, suspension, doublons et fusion, effacement), paiements (filtres, export, remboursements enregistrés), messages, demandes RGPD, devis, réglages, journal d'audit ✔
-8. Revue de sécurité de fin de phase 1 — en cours
+8. Revue de sécurité de fin de phase 1 et correctifs (docs/SECURITE.md) ✔ — tag v0.2.0
 9. Pages légales (brouillons à faire valider) ✔
+
+## Phase 2 — compétitions et contenus (v0.3.0)
+
+1. Ligues et Chesspirit Tour — en cours
+2. En ligne (Lichess) et équipes, autres formats
+3. Annuaire complet, fiches revendicables, carte, emplois
+4. Média et académie
+5. Statistiques, WhatsApp, mode hors ligne, import FIDE, tâches planifiées
 
 ## À reprendre
 
