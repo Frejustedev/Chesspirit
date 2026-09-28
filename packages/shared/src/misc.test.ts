@@ -2,7 +2,7 @@ import { profileSchema as ps } from "./schemas";
 import { describe, expect, it } from "vitest";
 import { classifyCadence } from "./cadence";
 import { formatXof, assertXof } from "./money";
-import { ageOn, countdownParts, formatDate, isMinor } from "./time";
+import { ageOn, countdownParts, formatDate, isMinor, localDate } from "./time";
 import { stagePoints, tourCategories, tourTotal, DEFAULT_TOUR_SCALE } from "./tour";
 import { buildPgn, normalizeName, parsePgn } from "./pgn";
 import { exportTrf, parseTrfPlayers } from "./trf";
@@ -25,6 +25,12 @@ describe("monnaie et dates", () => {
   });
   it("affiche en heure de Porto-Novo", () => {
     expect(formatDate("2026-10-03T07:30:00Z", "fr", { timeStyle: "short" })).toBe("08:30");
+  });
+  it("date locale et non UTC", () => {
+    // Minuit à Porto-Novo le 3 octobre = 23 h UTC le 2 octobre.
+    expect(localDate("2026-10-02T23:00:00Z")).toBe("2026-10-03");
+    expect(localDate("2026-10-03T22:59:00Z")).toBe("2026-10-03");
+    expect(localDate(new Date("2026-10-03T23:00:00Z"))).toBe("2026-10-04");
   });
   it("âge et mineurs", () => {
     expect(ageOn("2010-10-04", new Date("2026-10-03T00:00:00Z"))).toBe(15);

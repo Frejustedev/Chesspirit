@@ -6,6 +6,7 @@ import { indexGames } from "@/lib/positions";
 import { Chess } from "chess.js";
 import {
   customFieldSchema,
+  localDate,
   normalizeName,
   parsePgn,
   standingImportRowSchema,
@@ -145,7 +146,7 @@ export async function importPgnAction(
       moves_count: Math.ceil(chess.history().length / 2),
       played_on: /^\d{4}\.\d{2}\.\d{2}$/.test(h.Date ?? "")
         ? h.Date!.replace(/\./g, "-")
-        : t.starts_at.slice(0, 10),
+        : localDate(t.starts_at),
       cadence: t.cadence,
       source: "upload" as const,
       validated_by: session?.userId ?? null,

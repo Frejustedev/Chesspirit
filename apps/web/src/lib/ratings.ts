@@ -1,5 +1,6 @@
 import "server-only";
 import {
+  localDate,
   replayRatings,
   type OtbCadence,
   type ReplayInput,
@@ -108,7 +109,7 @@ export async function recomputeAllRatings(): Promise<{
 
   // Écriture : historique lié aux tournois recréé, cotes des joueurs concernés mises à jour.
   if (ids.length) await db.from("rating_history").delete().in("tournament_id", ids);
-  const dates = new Map(tournaments.map((t) => [t.id, t.starts_at.slice(0, 10)]));
+  const dates = new Map(tournaments.map((t) => [t.id, localDate(t.starts_at)]));
   if (out.history.length) {
     for (let i = 0; i < out.history.length; i += 500) {
       await db.from("rating_history").insert(
@@ -195,7 +196,7 @@ async function recomputeOnlineRatings(
     })),
   });
   await db.from("rating_history").delete().in("tournament_id", ids);
-  const dates = new Map(tournaments.map((t) => [t.id, t.starts_at.slice(0, 10)]));
+  const dates = new Map(tournaments.map((t) => [t.id, localDate(t.starts_at)]));
   if (out.history.length)
     await db.from("rating_history").insert(
       out.history.map((h) => ({

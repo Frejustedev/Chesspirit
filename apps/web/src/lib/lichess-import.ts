@@ -1,5 +1,5 @@
 import "server-only";
-import { parsePgn } from "@chesspirit/shared";
+import { localDate, parsePgn } from "@chesspirit/shared";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { indexGames } from "@/lib/positions";
 import type { createClient } from "@/lib/supabase/server";
@@ -138,7 +138,7 @@ export async function importLichessTournament(supabase: Db, tournamentId: string
       pgn: g.pgn.slice(0, 199_000),
       eco: /^[A-E]\d\d$/.test(g.headers.ECO ?? "") ? g.headers.ECO! : null,
       opening: g.headers.Opening ?? null,
-      played_on: t.starts_at.slice(0, 10),
+      played_on: localDate(t.starts_at),
       source: "lichess" as const,
     }));
     const inserted: string[] = [];

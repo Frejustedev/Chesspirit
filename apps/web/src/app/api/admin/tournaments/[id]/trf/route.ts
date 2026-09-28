@@ -1,4 +1,4 @@
-import { exportTrf, type TrfRound } from "@chesspirit/shared";
+import { exportTrf, localDate, type TrfRound } from "@chesspirit/shared";
 import { createClient } from "@/lib/supabase/server";
 import { loadState } from "@/lib/tournament-engine";
 
@@ -36,7 +36,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   const start = new Map(st.participants.map((p) => [p.playerId, p.startNo]));
   const roundNo = new Map(st.rounds.map((r) => [r.id, r.number]));
   const t = st.tournament;
-  const d = (iso: string) => iso.slice(0, 10).replace(/-/g, "/");
+  const d = (iso: string) => localDate(iso).replace(/-/g, "/");
 
   const players = st.participants.map((p) => {
     const rounds: TrfRound[] = st.rounds.map((r) => {

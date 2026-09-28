@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { Chess } from "chess.js";
+import { localDate } from "@chesspirit/shared";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
@@ -104,7 +105,7 @@ export async function saveScoresheetGameAction(raw: unknown): Promise<Result<{ g
       result,
       pgn: chess.pgn(),
       moves_count: Math.ceil(chess.history().length / 2),
-      played_on: pr.tournaments?.starts_at.slice(0, 10) ?? null,
+      played_on: pr.tournaments ? localDate(pr.tournaments.starts_at) : null,
       cadence: pr.tournaments?.cadence ?? null,
       source: "ocr",
       validated_by: session?.userId ?? null,

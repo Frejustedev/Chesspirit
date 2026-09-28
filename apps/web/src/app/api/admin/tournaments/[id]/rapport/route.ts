@@ -1,5 +1,5 @@
 import { renderToBuffer } from "@react-pdf/renderer";
-import { formatDate, formatTimeControl } from "@chesspirit/shared";
+import { formatDate, formatTimeControl, localDate } from "@chesspirit/shared";
 import { createClient } from "@/lib/supabase/server";
 import { loadState } from "@/lib/tournament-engine";
 import { ArbiterReport } from "@/lib/pdf/report";
@@ -49,7 +49,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
         tournament: t.name,
         dates:
           formatDate(t.starts_at, "fr") +
-          (t.ends_at && t.ends_at.slice(0, 10) !== t.starts_at.slice(0, 10)
+          (t.ends_at && localDate(t.ends_at) !== localDate(t.starts_at)
             ? ` – ${formatDate(t.ends_at, "fr")}`
             : ""),
         venue: [t.venue, t.city].filter(Boolean).join(", "),
