@@ -300,7 +300,7 @@
   },
   "auth": {
     "title": "Connexion",
-    "intro": "Un seul compte pour vous inscrire aux tournois, réserver un cours, acheter et suivre votre progression.",
+    "intro": "Connectez-vous pour vous inscrire aux tournois, réserver un cours, commander à la boutique et suivre votre progression.",
     "method": "Méthode de connexion",
     "phone": "Téléphone",
     "email": "E-mail",

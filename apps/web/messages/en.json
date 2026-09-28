@@ -300,7 +300,7 @@
   },
   "auth": {
     "title": "Sign in",
-    "intro": "One account to enter tournaments, book lessons, shop and follow your progress.",
+    "intro": "Sign in to enter tournaments, book lessons, shop and follow your progress.",
     "method": "Sign-in method",
     "phone": "Phone",
     "email": "E-mail",
