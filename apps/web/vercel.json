@@ -7,6 +7,8 @@
     { "path": "/api/cron/admin-digest", "schedule": "30 6 * * *" },
     { "path": "/api/cron/rating-lists", "schedule": "0 2 1 * *" },
     { "path": "/api/cron/fide-import", "schedule": "0 4 3 * *" },
-    { "path": "/api/cron/monthly-report", "schedule": "0 7 1 * *" }
+    { "path": "/api/cron/monthly-report", "schedule": "0 7 1 * *" },
+    { "path": "/api/cron/index-positions", "schedule": "20 * * * *" },
+    { "path": "/api/cron/purge-whatsapp", "schedule": "45 3 * * *" }
   ]
 }

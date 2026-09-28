@@ -3,6 +3,7 @@ import { formatDateTime, formatXof } from "@chesspirit/shared";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { notify, notifyProfile } from "@/lib/notifications";
 import { recomputeAllRatings } from "@/lib/ratings";
+import { indexPendingGames } from "@/lib/positions";
 
 type Db = ReturnType<typeof createAdminClient>;
 export const JOBS = [
@@ -13,6 +14,8 @@ export const JOBS = [
   "fide-import",
   "admin-digest",
   "monthly-report",
+  "index-positions",
+  "purge-whatsapp",
 ] as const;
 export type JobName = (typeof JOBS)[number];
 
@@ -215,7 +218,12 @@ export async function runJob(job: JobName) {
     else if (job === "reminders") details = await reminders(db);
     else if (job === "fide-import") details = await fideImport(db);
     else if (job === "admin-digest") details = await adminDigest(db);
-    else details = await monthlyReport(db);
+    else if (job === "index-positions") details = await indexPendingGames();
+    else if (job === "purge-whatsapp") {
+      const { data, error } = await db.rpc("purge_whatsapp_inbound");
+      if (error) throw new Error(error.message);
+      details = { purged: data };
+    } else details = await monthlyReport(db);
     await db
       .from("job_runs")
       .update({

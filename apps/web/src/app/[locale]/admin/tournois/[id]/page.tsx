@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { teamsBody, onlineBody } from "./extra-tabs";
+import { teamsBody, onlineBody, scoresheetBody } from "./extra-tabs";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { formatXof } from "@chesspirit/shared";
 import { Link } from "@/i18n/navigation";
@@ -27,6 +27,7 @@ const TABS = [
   "equipes",
   "en-ligne",
   "resultats",
+  "feuilles",
   "affiches",
   "reglages",
 ] as const;
@@ -61,8 +62,14 @@ export default async function AdminTournament({
   if (!tn) notFound();
   // Onglets selon le format : équipes pour les tournois par équipes, « en ligne » pour Lichess.
   const isTeam = tn.pairing_system === "team_swiss";
+  const { data: ocrFlag } = await supabase
+    .from("feature_flags")
+    .select("enabled")
+    .eq("key", "scoresheet_ocr")
+    .maybeSingle();
   const tabs = TABS.filter(
     (k) =>
+      (k !== "feuilles" || (!!ocrFlag?.enabled && !isTeam)) &&
       (k !== "equipes" || isTeam) &&
       (k !== "rondes" || !isTeam) &&
       (k !== "en-ligne" || tn.is_online),
@@ -215,6 +222,8 @@ export default async function AdminTournament({
       .select("id", { count: "exact", head: true })
       .eq("tournament_id", tn.id);
     body = <PostersPanel slug={tn.slug} hasResults={(count ?? 0) > 0} />;
+  } else if (tab === "feuilles") {
+    body = await scoresheetBody(supabase, tn.id);
   } else if (tab === "resultats") {
     body = <ResultsImport tournamentId={tn.id} slug={tn.slug} />;
   } else {

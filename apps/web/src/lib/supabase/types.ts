@@ -1061,6 +1061,35 @@ export type Database = {
           },
         ];
       };
+      game_positions: {
+        Row: {
+          game_id: string;
+          ply: number;
+          fen_key: string;
+          next_san: string | null;
+        };
+        Insert: {
+          game_id: string;
+          ply: number;
+          fen_key: string;
+          next_san?: string | null;
+        };
+        Update: {
+          game_id?: string;
+          ply?: number;
+          fen_key?: string;
+          next_san?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "game_positions_game_id_fkey";
+            columns: ["game_id"];
+            isOneToOne: false;
+            referencedRelation: "games";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       games: {
         Row: {
           id: string;
@@ -1089,6 +1118,7 @@ export type Database = {
           created_by: string | null;
           created_at: string;
           updated_at: string;
+          positions_indexed_at: string | null;
         };
         Insert: {
           id?: string;
@@ -1117,6 +1147,7 @@ export type Database = {
           created_by?: string | null;
           created_at?: string;
           updated_at?: string;
+          positions_indexed_at?: string | null;
         };
         Update: {
           id?: string;
@@ -1145,6 +1176,7 @@ export type Database = {
           created_by?: string | null;
           created_at?: string;
           updated_at?: string;
+          positions_indexed_at?: string | null;
         };
         Relationships: [
           {
@@ -5111,6 +5143,33 @@ export type Database = {
         };
         Relationships: [];
       };
+      whatsapp_inbound: {
+        Row: {
+          id: string;
+          message_id: string;
+          wa_from: string;
+          body: string | null;
+          intent: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          message_id: string;
+          wa_from: string;
+          body?: string | null;
+          intent?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          message_id?: string;
+          wa_from?: string;
+          body?: string | null;
+          intent?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       wishlists: {
         Row: {
           profile_id: string;
@@ -5559,12 +5618,23 @@ export type Database = {
         };
         Returns: Database["public"]["Tables"]["orders"]["Row"];
       };
+      position_explorer: {
+        Args: { p_fen_key: string };
+        Returns: {
+          next_san: string;
+          games: number;
+          white_wins: number;
+          draws: number;
+          black_wins: number;
+        }[];
+      };
       predict: { Args: { p_pairing: string; p_result: string }; Returns: undefined };
       propose_organization: { Args: { p_org: Json }; Returns: string };
       public_stats: {
         Args: Record<PropertyKey, never>;
         Returns: { rated_players: number; tournaments: number; games: number; demo: boolean }[];
       };
+      purge_whatsapp_inbound: { Args: Record<PropertyKey, never>; Returns: number };
       pvm_tally: { Args: { p_game: string }; Returns: { move: string; votes: number }[] };
       pvm_vote: { Args: { p_game: string; p_move: string }; Returns: undefined };
       refresh_badges: { Args: { p_profile: string }; Returns: number };

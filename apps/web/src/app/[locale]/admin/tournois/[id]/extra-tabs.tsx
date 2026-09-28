@@ -6,6 +6,7 @@ import { loadTeamState } from "@/lib/teams";
 import { lichessCanCreate } from "@/lib/lichess";
 import { TeamsManager } from "@/components/admin/teams-manager";
 import { OnlinePanel } from "@/components/admin/online-panel";
+import { ScoresheetPanel } from "@/components/admin/scoresheet-panel";
 
 type Db = Awaited<ReturnType<typeof createClient>>;
 
@@ -154,4 +155,26 @@ export async function onlineBody(
       }))}
     />
   );
+}
+
+/** Onglet « Feuilles de notation » : parties appariées sans partie saisie. */
+export async function scoresheetBody(supabase: Db, tournamentId: string) {
+  const [{ data: pairings }, { data: games }] = await Promise.all([
+    supabase
+      .from("public_pairings")
+      .select("id, round_number, board, white_name, black_name, black_id")
+      .eq("tournament_id", tournamentId)
+      .not("black_id", "is", null)
+      .order("round_number")
+      .order("board"),
+    supabase.from("games").select("pairing_id").eq("tournament_id", tournamentId),
+  ]);
+  const done = new Set((games ?? []).map((g) => g.pairing_id));
+  const list = (pairings ?? [])
+    .filter((p) => !done.has(p.id))
+    .map((p) => ({
+      id: p.id!,
+      label: `R${p.round_number} · ${p.board} · ${p.white_name} – ${p.black_name}`,
+    }));
+  return <ScoresheetPanel tournamentId={tournamentId} pairings={list} />;
 }

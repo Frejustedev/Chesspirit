@@ -55,6 +55,8 @@ test("communauté", async ({ page }) => {
   await shoot(page, "42-awards", "/communaute/awards");
   await shoot(page, "43-public-contre-maitre", "/communaute/public-contre-le-maitre/partie-demo");
   await shoot(page, "44-premium", "/academie/premium");
+  await shoot(page, "50-archives", "/competitions/archives");
+  await shoot(page, "51-explorateur", "/competitions/archives/position?coups=e4");
   await loginWithPhone(page, "+22990000001", "/communaute/badges");
   await page.waitForURL(/communaute\/badges/);
   await shoot(page, "45-badges", "/communaute/badges");

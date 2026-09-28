@@ -34,3 +34,6 @@ Points vérifiés sans anomalie : RLS activée partout, fonctions `SECURITY DEFI
 | Votes et pronostics forgés | Écriture uniquement par fonctions (`cast_award_vote`, `predict`, `pvm_vote`) ; points calculés par déclencheur ; pas d'auto-pronostic sur sa propre partie. Tests SQL. |
 | Pilotage de la partie public/maître | Écriture réservée à l'administration et au maître rattaché (RLS) ; coups validés par chess.js ; mise à jour conditionnelle. |
 | Parrainage abusif | Une fois par profil, 30 jours après la création, jamais pour soi ; cookie `httpOnly`, code validé par motif. |
+| Positions des parties privées | `game_positions` lisible seulement si la partie l'est ; écriture par le service. Test SQL 09. |
+| Webhook WhatsApp forgé ou rejoué | Signature HMAC-SHA256 à temps constant, secret obligatoire, corps limité à 256 Ko, déduplication, limite par numéro. Tests unitaires et e2e. |
+| Fichier déposé (feuille de notation) | Signature d'image vérifiée, 5 Mo max, non conservé ; lecture réservée au staff, enregistrement contrôlé par RLS. |

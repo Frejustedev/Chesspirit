@@ -1,6 +1,7 @@
 import "server-only";
 import { parsePgn } from "@chesspirit/shared";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { indexPendingGames } from "@/lib/positions";
 import type { createClient } from "@/lib/supabase/server";
 import { fetchGamesPgn, fetchResults, lichessFake, type LichessResult } from "@/lib/lichess";
 
@@ -142,6 +143,7 @@ export async function importLichessTournament(supabase: Db, tournamentId: string
     }));
     for (let i = 0; i < gameRows.length; i += 200)
       await supabase.from("games").insert(gameRows.slice(i, i + 200));
+    await indexPendingGames().catch(() => null);
   }
   return { players: matched.length, unknown, games: known.length };
 }

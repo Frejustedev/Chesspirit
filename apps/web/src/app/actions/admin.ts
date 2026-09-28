@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { indexPendingGames } from "@/lib/positions";
 import { Chess } from "chess.js";
 import {
   customFieldSchema,
@@ -154,6 +155,7 @@ export async function importPgnAction(
   if (rows.length) {
     const { error } = await supabase.from("games").insert(rows);
     if (error) return { ok: false, error: error.message };
+    await indexPendingGames().catch(() => null);
   }
   revalidatePath("/", "layout");
   return { ok: true, data: { imported: rows.length, rejected, linked } };

@@ -39,10 +39,15 @@
 
 1. Communauté : adhésion gratuite ou premium (carte de membre à QR code vérifiable, paiement confirmé par webhook), cours et ressources premium protégés en base, niveaux du Pion au Roi, badges et passeport du Tour, parrainage, ambassadeurs, Chesspirit Awards, pronostics gratuits, « le public contre le maître » ✔
 
+2. Archives : recherche de parties, explorateur de positions (index `game_positions`, tâche planifiée et indexation après import) ✔
+3. Feuilles de notation photographiées : parcours complet derrière l'indicateur `scoresheet_ocr`, lecture simulée (aucun service de reconnaissance branché) ✔
+4. Assistant WhatsApp : webhook vérifié (jeton + signature X-Hub-Signature-256), réponses sur informations publiques, déduplication, limite par numéro, « stop », indicateur `whatsapp_assistant` ✔
+
 ## À reprendre
 
 - Formats Scheveningen, poules puis phase finale et simultanée : sélectionnables mais sans moteur d'appariement dédié.
 - Galerie photo des tournois : non faite (stockage de fichiers à brancher).
+- Lecture des feuilles de notation : aucun service de reconnaissance réel branché (mode simulé seulement ; interface prête dans `lib/ocr.ts`).
 - Import FIDE réel : non testé contre le site FIDE (réseau fermé ici) ; validé sur un fichier d'exemple au même format.
 
 - Remboursements par API des prestataires (FedaPay, KKiaPay) : enregistrement manuel seulement.
