@@ -41,7 +41,7 @@ export function ContentEditor({
   const [pending, start] = useTransition();
   const set = (k: string, val: unknown) => setV({ ...v, [k]: val });
   const i18nVal = (k: string) => (v[k] as { fr: string; en: string }) ?? { fr: "", en: "" };
-  const area = "mt-1 w-full rounded-md border border-line bg-white p-3";
+  const area = "mt-1 w-full rounded-md border border-line bg-field p-3";
   return (
     <form
       className="grid gap-4 sm:grid-cols-2"
@@ -154,7 +154,7 @@ export function ContentEditor({
           <button
             type="button"
             disabled={pending}
-            className="min-h-11 px-3 font-semibold text-bordeaux"
+            className="min-h-11 px-3 font-semibold text-accent"
             onClick={() => {
               if (!confirm(t("deleteConfirm"))) return;
               start(async () => {
@@ -233,7 +233,7 @@ export function RowButton({
     <button
       type="button"
       disabled={pending}
-      className="min-h-10 rounded-full border border-line px-3 text-sm font-semibold hover:bg-cream"
+      className="min-h-10 rounded-full border border-line px-3 text-sm font-semibold hover:bg-surface"
       onClick={() =>
         start(async () => {
           if (kind === "puzzle") await togglePuzzleAction(id, !value);

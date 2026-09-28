@@ -32,14 +32,11 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
           <details key={k} className="group py-2">
             <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 font-display text-xl font-semibold">
               {t(`q.${k}`)}
-              <span
-                aria-hidden
-                className="text-gold-deep transition-transform group-open:rotate-45"
-              >
+              <span aria-hidden className="text-accent transition-transform group-open:rotate-45">
                 +
               </span>
             </summary>
-            <p className="pb-3 font-serif text-lg text-ink/85">
+            <p className="pb-3 font-serif text-lg text-fg/85">
               {k === "payment" && !online ? t("a.paymentOnSite") : t(`a.${k}`)}
             </p>
           </details>

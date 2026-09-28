@@ -30,7 +30,7 @@ export async function EpisodeListPage({
   if (sp.niveau && (LEVELS as readonly string[]).includes(sp.niveau)) q = q.eq("level", sp.niveau);
   if (sp.theme && /^[a-z]{3,20}$/.test(sp.theme)) q = q.eq("theme", sp.theme);
   const { data } = await q;
-  const sel = "min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none";
+  const sel = "min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none";
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t(titleKey)}</h1>
@@ -76,7 +76,7 @@ export async function EpisodeListPage({
         </select>
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("apply")}
         </button>

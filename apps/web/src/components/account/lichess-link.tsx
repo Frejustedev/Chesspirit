@@ -74,7 +74,7 @@ export function LichessLink({
         <form action="/api/lichess/connect" method="get" className="mt-3">
           <button
             type="submit"
-            className="inline-flex min-h-11 items-center rounded-full bg-ink px-5 font-semibold text-cream hover:bg-bordeaux"
+            className="inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-bordeaux"
           >
             {t("link")}
           </button>

@@ -19,7 +19,7 @@ export type OfferView = {
 
 export async function OfferCard({ o, locale }: { o: OfferView; locale: string }) {
   const t = await getTranslations("coaching");
-  const chip = "rounded-full bg-cream px-2.5 py-0.5 text-xs font-semibold";
+  const chip = "rounded-full bg-surface px-2.5 py-0.5 text-xs font-semibold";
   return (
     <li className="flex flex-col rounded-lg border border-line bg-paper p-4">
       <p className="font-display text-xl font-semibold">{tr(o.title, locale)}</p>
@@ -28,7 +28,7 @@ export async function OfferCard({ o, locale }: { o: OfferView; locale: string })
           {t("with")}{" "}
           <Link
             href={`/coaching/coachs/${o.coach.slug}`}
-            className="font-semibold text-ink hover:text-bordeaux"
+            className="font-semibold text-fg hover:text-accent"
           >
             {o.coach.display_name}
           </Link>{" "}
@@ -50,7 +50,7 @@ export async function OfferCard({ o, locale }: { o: OfferView; locale: string })
         </p>
         <Link
           href={`/coaching/reserver/${o.id}`}
-          className="inline-flex min-h-11 items-center rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-ink"
+          className="inline-flex min-h-11 items-center rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-bordeaux-bright"
         >
           {t("book")}
         </Link>
@@ -67,7 +67,7 @@ export async function OfferFiltersBar({
   f: Record<string, string | undefined>;
 }) {
   const t = await getTranslations("coaching");
-  const sel = "min-h-11 rounded-md border border-line bg-white px-3";
+  const sel = "min-h-11 rounded-md border border-line bg-field px-3";
   const groups: [string, string, readonly string[], string][] = [
     ["langue", t("filters.language"), ["fr", "en", "fon"], "lang"],
     ["modalite", t("filters.modality"), ["in_person", "online"], "modality"],
@@ -101,7 +101,10 @@ export async function OfferFiltersBar({
           </select>
         </div>
       ))}
-      <button type="submit" className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream">
+      <button
+        type="submit"
+        className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
+      >
         {t("filters.apply")}
       </button>
     </form>

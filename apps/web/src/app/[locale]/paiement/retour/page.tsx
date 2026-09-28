@@ -59,7 +59,7 @@ export default async function PaymentReturn({
         {ticket ? (
           <Link
             href={`/billet/${ticket}`}
-            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-ink"
+            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-bordeaux-bright"
           >
             {t("seeTicket")}
           </Link>
@@ -67,7 +67,7 @@ export default async function PaymentReturn({
         {orderNumber ? (
           <Link
             href={`/compte/commandes/${orderNumber}`}
-            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-ink"
+            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-bordeaux-bright"
           >
             {t("seeOrder")}
           </Link>
@@ -75,14 +75,14 @@ export default async function PaymentReturn({
         {pay?.object_type === "booking" ? (
           <Link
             href="/compte/cours"
-            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-ink"
+            className="inline-flex min-h-12 items-center rounded-full bg-bordeaux px-6 font-semibold text-cream hover:bg-bordeaux-bright"
           >
             {t("seeLessons")}
           </Link>
         ) : null}
         <Link
           href="/compte"
-          className="inline-flex min-h-12 items-center rounded-full border border-ink/25 px-6 font-semibold hover:bg-cream"
+          className="inline-flex min-h-12 items-center rounded-full border border-fg/25 px-6 font-semibold hover:bg-surface"
         >
           {t("account")}
         </Link>

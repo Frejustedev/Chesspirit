@@ -86,7 +86,7 @@ export function LoginForm({ next, methods }: { next: string; methods: AuthMethod
   }
 
   const input =
-    "mt-1 block min-h-12 w-full rounded-md border border-line bg-white px-3 text-[1.05rem] focus:border-bordeaux focus:outline-none";
+    "mt-1 block min-h-12 w-full rounded-md border border-line bg-field px-3 text-[1.05rem] focus:border-accent focus:outline-none";
 
   return (
     <div className="mt-6">
@@ -96,7 +96,7 @@ export function LoginForm({ next, methods }: { next: string; methods: AuthMethod
             <div
               role="tablist"
               aria-label={t("method")}
-              className="grid grid-cols-2 gap-1 rounded-full bg-cream p-1"
+              className="grid grid-cols-2 gap-1 rounded-full bg-surface p-1"
             >
               {modes.map((m) => (
                 <button
@@ -109,7 +109,7 @@ export function LoginForm({ next, methods }: { next: string; methods: AuthMethod
                     setIdentifier("");
                     setError(null);
                   }}
-                  className={`flex min-h-11 items-center justify-center gap-2 rounded-full text-sm font-semibold ${mode === m ? "bg-ink text-cream" : "text-ink/75"}`}
+                  className={`flex min-h-11 items-center justify-center gap-2 rounded-full text-sm font-semibold ${mode === m ? "bg-gold text-onaccent" : "text-fg/75"}`}
                 >
                   {m === "phone" ? (
                     <IconPhone className="size-4" />
@@ -150,7 +150,7 @@ export function LoginForm({ next, methods }: { next: string; methods: AuthMethod
             <button
               type="submit"
               disabled={busy}
-              className="mt-5 min-h-12 w-full rounded-full bg-bordeaux font-semibold text-cream hover:bg-ink disabled:opacity-60"
+              className="mt-5 min-h-12 w-full rounded-full bg-bordeaux font-semibold text-cream hover:bg-bordeaux-bright disabled:opacity-60"
             >
               {busy ? t("sending") : t("sendCode")}
             </button>
@@ -164,7 +164,7 @@ export function LoginForm({ next, methods }: { next: string; methods: AuthMethod
               <button
                 type="button"
                 onClick={google}
-                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-ink/25 font-semibold hover:bg-cream"
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-fg/25 font-semibold hover:bg-surface"
               >
                 <IconGlobe className="size-5" /> {t("google")}
               </button>
@@ -198,14 +198,14 @@ export function LoginForm({ next, methods }: { next: string; methods: AuthMethod
           <button
             type="submit"
             disabled={busy || code.length < 6}
-            className="mt-5 min-h-12 w-full rounded-full bg-bordeaux font-semibold text-cream hover:bg-ink disabled:opacity-60"
+            className="mt-5 min-h-12 w-full rounded-full bg-bordeaux font-semibold text-cream hover:bg-bordeaux-bright disabled:opacity-60"
           >
             {busy ? t("verifying") : t("verify")}
           </button>
           <div className="mt-4 flex justify-between text-sm">
             <button
               type="button"
-              className="min-h-11 font-semibold text-bordeaux"
+              className="min-h-11 font-semibold text-accent"
               onClick={() => {
                 setSentTo(null);
                 setCode("");
@@ -217,7 +217,7 @@ export function LoginForm({ next, methods }: { next: string; methods: AuthMethod
               type="button"
               disabled={cooldown > 0 || busy}
               onClick={() => send()}
-              className="min-h-11 font-semibold text-bordeaux disabled:text-stone"
+              className="min-h-11 font-semibold text-accent disabled:text-stone"
             >
               {cooldown > 0 ? t("resendIn", { s: cooldown }) : t("resend")}
             </button>

@@ -31,7 +31,7 @@ export default async function LoginPage({
       <div className="hidden lg:block">
         <div className="flex gap-3">
           <PieceSvg kind="k" color="w" className="size-20" />
-          <PieceSvg kind="n" color="b" className="size-20" />
+          <PieceSvg kind="n" color="w" className="size-20" />
         </div>
         <h1 className="mt-6 font-display text-5xl font-semibold">{t("title")}</h1>
         <p className="mt-4 max-w-md font-serif text-xl text-stone">{t("intro")}</p>
@@ -40,7 +40,7 @@ export default async function LoginPage({
         <h1 className="font-display text-3xl font-semibold lg:hidden">{t("title")}</h1>
         <p className="mt-2 text-stone lg:hidden">{t("intro")}</p>
         {error ? (
-          <p role="alert" className="mt-4 rounded bg-bordeaux-soft px-3 py-2 text-sm text-bordeaux">
+          <p role="alert" className="mt-4 rounded bg-bordeaux-soft px-3 py-2 text-sm text-rose">
             {t("oauthError")}
           </p>
         ) : null}

@@ -71,7 +71,7 @@ export default async function LeagueRankings({
             return (
               <section key={l.id} className="rounded-[var(--radius-card)] border border-line p-4">
                 <h2 className="font-display text-xl font-semibold">
-                  <Link href={`/competitions/ligues/${l.slug}`} className="hover:text-bordeaux">
+                  <Link href={`/competitions/ligues/${l.slug}`} className="hover:text-accent">
                     {t(`division.${d}`)} · {t(`cadence.${c}`)}
                   </Link>
                 </h2>

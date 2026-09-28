@@ -61,7 +61,7 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           type="file"
           accept=".csv,text/csv,text/plain"
           aria-label={t("csvFile")}
-          className="mt-3 block w-full text-sm file:mr-3 file:min-h-11 file:rounded-full file:border-0 file:bg-cream file:px-4 file:font-semibold"
+          className="mt-3 block w-full text-sm file:mr-3 file:min-h-11 file:rounded-full file:border-0 file:bg-surface file:px-4 file:font-semibold"
           onChange={async (e) => {
             const f = e.target.files?.[0];
             if (f) parse(await f.text());
@@ -75,7 +75,7 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           value={csv}
           onChange={(e) => parse(e.target.value)}
           rows={8}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3 font-mono text-sm"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3 font-mono text-sm"
           placeholder={"rang;nom;points;cote;club\n1;Nom Prénom;6;1850;Club"}
         />
         {rows.length ? (
@@ -107,9 +107,9 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           </>
         ) : null}
         {msg ? (
-          <p role="status" className="mt-3 rounded bg-cream px-3 py-2 text-sm font-semibold">
+          <p role="status" className="mt-3 rounded bg-surface px-3 py-2 text-sm font-semibold">
             {msg}{" "}
-            <Link href={`/competitions/${slug}/resultats`} className="text-bordeaux underline">
+            <Link href={`/competitions/${slug}/resultats`} className="text-accent underline">
               {t("seeResults")}
             </Link>
           </p>
@@ -123,7 +123,7 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           multiple
           accept=".pgn,application/x-chess-pgn,text/plain"
           aria-label={t("pgnFile")}
-          className="mt-3 block w-full text-sm file:mr-3 file:min-h-11 file:rounded-full file:border-0 file:bg-cream file:px-4 file:font-semibold"
+          className="mt-3 block w-full text-sm file:mr-3 file:min-h-11 file:rounded-full file:border-0 file:bg-surface file:px-4 file:font-semibold"
           onChange={(e) => {
             const files = [...(e.target.files ?? [])];
             if (!files.length) return;
@@ -140,7 +140,7 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           <li>
             <a
               href={`/api/admin/tournaments/${tournamentId}/trf`}
-              className="font-semibold text-bordeaux hover:underline"
+              className="font-semibold text-accent hover:underline"
             >
               {t("exportTrf")}
             </a>
@@ -148,7 +148,7 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           <li>
             <a
               href={`/api/admin/tournaments/${tournamentId}/rapport`}
-              className="font-semibold text-bordeaux hover:underline"
+              className="font-semibold text-accent hover:underline"
             >
               {t("exportReport")}
             </a>
@@ -156,14 +156,14 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           <li>
             <a
               href={`/api/tournaments/${slug}/pgn`}
-              className="font-semibold text-bordeaux hover:underline"
+              className="font-semibold text-accent hover:underline"
             >
               {t("exportPgn")}
             </a>
           </li>
         </ul>
         {pgnMsg ? (
-          <p role="status" className="mt-3 rounded bg-cream px-3 py-2 text-sm font-semibold">
+          <p role="status" className="mt-3 rounded bg-surface px-3 py-2 text-sm font-semibold">
             {pgnMsg}
           </p>
         ) : null}

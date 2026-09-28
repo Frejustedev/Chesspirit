@@ -125,7 +125,7 @@ export function ProductArt({
         <g>
           <path
             d="M70 36 l-34 20 12 26 16-8 v76 h72 v-76 l16 8 12-26 -34-20 q-30 18-60 0Z"
-            fill="var(--color-paper)"
+            fill="#fbf8f1"
             stroke="var(--color-ink)"
             strokeWidth={3}
           />

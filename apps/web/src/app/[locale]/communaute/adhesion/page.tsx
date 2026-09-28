@@ -85,7 +85,7 @@ export default async function MembershipPage({ params }: { params: Promise<{ loc
                   ) : !me ? (
                     <Link
                       href={`/connexion?next=${encodeURIComponent("/communaute/adhesion")}`}
-                      className="inline-flex min-h-11 items-center rounded-full bg-ink px-5 font-semibold text-cream"
+                      className="inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent"
                     >
                       {t("signIn")}
                     </Link>

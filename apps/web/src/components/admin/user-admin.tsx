@@ -44,7 +44,7 @@ function Err({ code }: { code: string | null }) {
   const t = useTranslations("adminUsers");
   if (!code) return null;
   return (
-    <p role="alert" className="text-sm font-semibold text-bordeaux">
+    <p role="alert" className="text-sm font-semibold text-accent">
       {t.has(`errors.${code}`) ? t(`errors.${code}`) : t("errors.generic")}
     </p>
   );
@@ -180,8 +180,8 @@ export function AnonymizeButton({
   const t = useTranslations("adminUsers");
   const { pending, error, run } = useAction();
   return (
-    <div className="rounded-lg border border-bordeaux/40 p-4">
-      <p className="font-semibold text-bordeaux">{t("erase")}</p>
+    <div className="rounded-lg border border-accent/40 p-4">
+      <p className="font-semibold text-accent">{t("erase")}</p>
       <p className="mt-1 text-sm text-stone">{t("eraseHelp")}</p>
       <Button
         variant="secondary"

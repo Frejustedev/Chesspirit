@@ -70,7 +70,7 @@ export default async function PlayerPage({ params }: Props) {
         <div>
           <h1 className="font-display text-4xl font-semibold">
             {p.titles?.length ? (
-              <span className="mr-2 text-2xl text-bordeaux">{p.titles.join(" ")}</span>
+              <span className="mr-2 text-2xl text-accent">{p.titles.join(" ")}</span>
             ) : null}
             {p.display_name} {p.is_demo ? <DemoBadge /> : null}
           </h1>
@@ -120,7 +120,7 @@ export default async function PlayerPage({ params }: Props) {
                 <li key={r.tournament_id} className="flex items-center gap-3 py-2">
                   <Link
                     href={`/competitions/${r.t?.slug}/resultats`}
-                    className="min-w-0 flex-1 truncate font-medium hover:text-bordeaux"
+                    className="min-w-0 flex-1 truncate font-medium hover:text-accent"
                   >
                     {r.t?.name}
                   </Link>
@@ -146,7 +146,7 @@ export default async function PlayerPage({ params }: Props) {
               <li key={g.id}>
                 <Link
                   href={`/parties/${g.id}`}
-                  className="flex gap-2 py-2 text-[0.95rem] hover:text-bordeaux"
+                  className="flex gap-2 py-2 text-[0.95rem] hover:text-accent"
                 >
                   <span className="min-w-0 flex-1 truncate">
                     {g.white_name} – {g.black_name}

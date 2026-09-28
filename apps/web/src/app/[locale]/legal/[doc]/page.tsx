@@ -39,7 +39,7 @@ export default async function LegalPage({
         {t(`nav.items.${DOCS[doc]}`)}
       </h1>
       {locale !== "fr" ? (
-        <p className="mt-4 rounded bg-cream p-3 text-sm">{t("legal.frenchReference")}</p>
+        <p className="mt-4 rounded bg-surface p-3 text-sm">{t("legal.frenchReference")}</p>
       ) : null}
       <p className="mt-2 text-sm text-stone">{t("legal.version")}</p>
       <div className="mt-6">

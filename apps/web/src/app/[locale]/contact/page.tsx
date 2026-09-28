@@ -31,7 +31,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         {whatsapp ? (
           <a
             href={`https://wa.me/${whatsapp}`}
-            className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-success px-5 font-semibold text-cream"
+            className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-success px-5 font-semibold text-onaccent"
             rel="noopener"
           >
             <IconChat className="size-5" /> {t("whatsapp")}

@@ -60,7 +60,7 @@ export default async function BookOffer({
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 lg:px-6">
       <nav className="text-sm text-stone">
-        <Link href={`/coaching/coachs/${coach?.slug}`} className="hover:text-bordeaux">
+        <Link href={`/coaching/coachs/${coach?.slug}`} className="hover:text-accent">
           {coach?.display_name}
         </Link>
       </nav>

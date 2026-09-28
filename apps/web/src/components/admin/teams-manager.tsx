@@ -75,7 +75,7 @@ export function TeamsManager({
   return (
     <div className="space-y-10">
       {msg ? (
-        <p role="alert" className="rounded bg-bordeaux-soft px-3 py-2 font-semibold text-bordeaux">
+        <p role="alert" className="rounded bg-bordeaux-soft px-3 py-2 font-semibold text-rose">
           {msg}
         </p>
       ) : null}
@@ -100,7 +100,7 @@ export function TeamsManager({
             value={newTeam}
             placeholder={t("teamName")}
             onChange={(e) => setNewTeam(e.target.value)}
-            className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3"
+            className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3"
           />
           <Button type="submit" disabled={pending || newTeam.trim().length < 2}>
             {t("addTeam")}
@@ -125,13 +125,13 @@ export function TeamsManager({
                   onClick={() => {
                     if (confirm(t("deleteConfirm"))) run(() => deleteTeamAction(team.id));
                   }}
-                  className="min-h-10 px-2 text-sm font-semibold text-bordeaux"
+                  className="min-h-10 px-2 text-sm font-semibold text-accent"
                 >
                   {t("delete")}
                 </button>
               </div>
               {team.warnings.length ? (
-                <p className="mt-1 text-sm font-semibold text-bordeaux">
+                <p className="mt-1 text-sm font-semibold text-accent">
                   {team.warnings.map((w) => t(`warnings.${w}`)).join(" · ")}
                 </p>
               ) : null}
@@ -146,7 +146,7 @@ export function TeamsManager({
                         type="button"
                         disabled={pending}
                         onClick={() => run(() => removeTeamMemberAction(m.id))}
-                        className="min-h-10 px-2 text-bordeaux"
+                        className="min-h-10 px-2 text-accent"
                         aria-label={t("removeMember", { name: m.name })}
                       >
                         ×
@@ -218,7 +218,7 @@ export function TeamsManager({
                                     setBoardPlayerAction(b.id, side, e.target.value || null),
                                   )
                                 }
-                                className="min-h-10 w-full max-w-48 rounded-md border border-line bg-white px-1"
+                                className="min-h-10 w-full max-w-48 rounded-md border border-line bg-field px-1"
                               >
                                 <option value="">—</option>
                                 {teamMembers(team).map((x) => (
@@ -241,7 +241,7 @@ export function TeamsManager({
                                     onChange={(e) =>
                                       run(() => setBoardResultAction(b.id, e.target.value || null))
                                     }
-                                    className="min-h-10 rounded-md border border-line bg-white px-1"
+                                    className="min-h-10 rounded-md border border-line bg-field px-1"
                                   >
                                     <option value="">…</option>
                                     {RESULTS.map((x) => (
@@ -315,7 +315,7 @@ function AddMember({
         id={`am-${teamId}`}
         value={pid}
         onChange={(e) => setPid(e.target.value)}
-        className="min-h-10 min-w-0 flex-1 rounded-md border border-line bg-white px-2 text-sm"
+        className="min-h-10 min-w-0 flex-1 rounded-md border border-line bg-field px-2 text-sm"
       >
         <option value="">{t("choosePlayer")}</option>
         {available.map((p) => (

@@ -142,7 +142,7 @@ export function Board({
                 ) : null}
                 {isTarget ? (
                   <span
-                    className={`pointer-events-none absolute inset-0 m-auto rounded-full ${p ? "size-[92%] border-[5px] border-ink/35" : "size-[28%] bg-ink/30"}`}
+                    className={`pointer-events-none absolute inset-0 m-auto rounded-full ${p ? "size-[92%] border-[5px] border-fg/35" : "size-[28%] bg-ink/30"}`}
                   />
                 ) : null}
               </Tag>
@@ -161,7 +161,7 @@ export function Board({
               <button
                 key={k}
                 type="button"
-                className="size-14 rounded hover:bg-cream"
+                className="size-14 rounded hover:bg-surface"
                 aria-label={t(`pieces.${k}`)}
                 onClick={() => {
                   onMove?.(promo.from, promo.to, k);

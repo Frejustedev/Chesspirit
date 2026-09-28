@@ -21,7 +21,7 @@ export default async function OfflineArbitragePage({
     <div className="mx-auto max-w-3xl px-4 py-8">
       <Link
         href={`/admin/tournois/${id}?onglet=rondes`}
-        className="text-sm font-semibold text-bordeaux hover:underline"
+        className="text-sm font-semibold text-accent hover:underline"
       >
         ← {t("back")}
       </Link>

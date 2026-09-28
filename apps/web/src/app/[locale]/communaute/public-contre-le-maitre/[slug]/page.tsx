@@ -68,7 +68,7 @@ export default async function PvmGame({
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <Link
         href="/communaute/public-contre-le-maitre"
-        className="text-sm font-semibold text-bordeaux hover:underline"
+        className="text-sm font-semibold text-accent hover:underline"
       >
         ← {t("title")}
       </Link>
@@ -91,7 +91,7 @@ export default async function PvmGame({
           />
         </div>
         <div className="space-y-6">
-          <p className="rounded-lg bg-cream p-4 font-semibold" aria-live="polite">
+          <p className="rounded-lg bg-surface p-4 font-semibold" aria-live="polite">
             {g.status === "finished"
               ? t("finished", { result: g.result ?? "—" })
               : publicToMove
@@ -110,7 +110,7 @@ export default async function PvmGame({
           {!me && voteOpen ? (
             <Link
               href={`/connexion?next=${encodeURIComponent(`/communaute/public-contre-le-maitre/${g.slug}`)}`}
-              className="inline-flex min-h-11 items-center rounded-full bg-ink px-5 font-semibold text-cream"
+              className="inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent"
             >
               {t("signIn")}
             </Link>
@@ -130,7 +130,7 @@ export default async function PvmGame({
                             {t("votes", { n: Number(x.votes) })} · {pct} %
                           </span>
                         </div>
-                        <div className="mt-1 h-2 overflow-hidden rounded-full bg-cream">
+                        <div className="mt-1 h-2 overflow-hidden rounded-full bg-surface">
                           <div className="h-full bg-bordeaux" style={{ width: `${pct}%` }} />
                         </div>
                       </li>

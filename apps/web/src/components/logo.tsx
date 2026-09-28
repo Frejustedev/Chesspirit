@@ -11,12 +11,12 @@ export function Logo({
 }) {
   return (
     <span
-      className={`font-display font-semibold tracking-[-0.02em] ${tone === "dark" ? "text-ink" : "text-cream"} ${className}`}
+      className={`font-display font-semibold tracking-[-0.02em] ${tone === "dark" ? "text-fg" : "text-cream"} ${className}`}
       style={{ fontVariationSettings: '"opsz" 72, "SOFT" 30' }}
     >
       Ches
       <span
-        className={tone === "dark" ? "text-gold-deep" : "text-gold"}
+        className={tone === "dark" ? "text-accent" : "text-gold"}
         style={{ fontStyle: "italic" }}
       >
         s

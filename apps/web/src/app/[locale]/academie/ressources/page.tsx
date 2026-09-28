@@ -44,13 +44,13 @@ export default async function ResourcesPage({ params }: { params: Promise<{ loca
                   {...(r.url.startsWith("https://")
                     ? { rel: "noopener noreferrer", target: "_blank" }
                     : {})}
-                  className="font-semibold hover:text-bordeaux"
+                  className="font-semibold hover:text-accent"
                 >
                   {tr(r.title, locale)}
                   {r.url.startsWith("https://") ? " ↗" : ""}
                 </a>
               ) : (
-                <Link href="/academie/premium" className="font-semibold hover:text-bordeaux">
+                <Link href="/academie/premium" className="font-semibold hover:text-accent">
                   {tr(r.title, locale)} · {t("premiumLockedShort")}
                 </Link>
               )}

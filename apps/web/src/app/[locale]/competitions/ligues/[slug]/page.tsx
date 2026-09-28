@@ -70,7 +70,7 @@ export default async function LeaguePage({
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
       <Link
         href={`/competitions/ligues?saison=${l.seasons.slug}`}
-        className="text-sm font-semibold text-bordeaux hover:underline"
+        className="text-sm font-semibold text-accent hover:underline"
       >
         ← {t("title")} · {l.seasons.name}
       </Link>
@@ -109,22 +109,22 @@ export default async function LeaguePage({
                       <td className="py-2 pr-2">
                         <Link
                           href={`/joueurs/${s.player_id}`}
-                          className="font-semibold hover:text-bordeaux"
+                          className="font-semibold hover:text-accent"
                         >
                           {s.display_name}
                         </Link>
                         {l.champion_id === s.player_id ? (
-                          <span className="ml-2 rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-ink">
+                          <span className="ml-2 rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-onaccent">
                             {t("champion")}
                           </span>
                         ) : null}
                         {z ? (
-                          <span className="ml-2 rounded-full bg-cream px-2 py-0.5 text-xs font-semibold">
+                          <span className="ml-2 rounded-full bg-surface px-2 py-0.5 text-xs font-semibold">
                             {t(`zone.${z}`)}
                           </span>
                         ) : null}
                         {excluded.has(s.player_id!) ? (
-                          <span className="ml-2 text-xs font-semibold text-bordeaux">
+                          <span className="ml-2 text-xs font-semibold text-accent">
                             {t("excluded")}
                           </span>
                         ) : null}
@@ -170,7 +170,7 @@ export default async function LeaguePage({
                 {d.tournaments ? (
                   <Link
                     href={`/competitions/${d.tournaments.slug}`}
-                    className="ml-auto font-semibold text-bordeaux hover:underline"
+                    className="ml-auto font-semibold text-accent hover:underline"
                   >
                     {d.tournaments.name} →
                   </Link>

@@ -111,7 +111,7 @@ export function BookingForm({
             id="student"
             value={student}
             onChange={(e) => setStudent(e.target.value)}
-            className="mt-1 block min-h-12 w-full rounded-md border border-line bg-white px-3"
+            className="mt-1 block min-h-12 w-full rounded-md border border-line bg-field px-3"
           >
             {people.map((p) => (
               <option key={p.id} value={p.id}>
@@ -128,19 +128,19 @@ export function BookingForm({
           onChange={(e) => setNotes(e.target.value)}
           maxLength={1000}
           rows={3}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3"
         />
       </Field>
       {error ? (
         <p
           role="alert"
-          className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux"
+          className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-rose"
         >
           {error}
         </p>
       ) : null}
       {paid && !online ? (
-        <p className="text-sm font-semibold text-bordeaux">{t("onlinePaymentSoon")}</p>
+        <p className="text-sm font-semibold text-accent">{t("onlinePaymentSoon")}</p>
       ) : null}
       <Button type="submit" disabled={pending || (paid && !online)}>
         {paid ? t("bookAndPay") : t("bookFree")}

@@ -67,7 +67,7 @@ export default async function AwardsPage({
               key={e.id}
               href={`/communaute/awards?edition=${e.slug}`}
               aria-current={e.id === edition?.id ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-semibold ${e.id === edition?.id ? "bg-ink text-cream" : "border border-line"}`}
+              className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-semibold ${e.id === edition?.id ? "bg-gold text-onaccent" : "border border-line"}`}
             >
               {tr(e.title, locale)}
             </Link>
@@ -79,7 +79,7 @@ export default async function AwardsPage({
       ) : (
         <section className="mt-8">
           <h2 className="font-display text-3xl font-semibold">{tr(edition.title, locale)}</h2>
-          {edition.is_demo ? <p className="mt-1 font-semibold text-bordeaux">{t("demo")}</p> : null}
+          {edition.is_demo ? <p className="mt-1 font-semibold text-accent">{t("demo")}</p> : null}
           <p className="mt-1 text-stone">
             {voting
               ? edition.voting_ends_at
@@ -92,7 +92,7 @@ export default async function AwardsPage({
           {voting && !me ? (
             <Link
               href={`/connexion?next=${encodeURIComponent("/communaute/awards")}`}
-              className="mt-3 inline-flex min-h-11 items-center rounded-full bg-ink px-5 font-semibold text-cream"
+              className="mt-3 inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent"
             >
               {t("signIn")}
             </Link>

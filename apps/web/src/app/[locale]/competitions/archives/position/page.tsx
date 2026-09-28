@@ -81,14 +81,14 @@ export default async function ExplorerPage({
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <Link
         href="/competitions/archives"
-        className="text-sm font-semibold text-bordeaux hover:underline"
+        className="text-sm font-semibold text-accent hover:underline"
       >
         ← {t("title")}
       </Link>
       <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">{t("explorerTitle")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("explorerIntro")}</p>
       {error ? (
-        <p role="alert" className="mt-4 font-semibold text-bordeaux">
+        <p role="alert" className="mt-4 font-semibold text-accent">
           {t("invalidPosition")}
         </p>
       ) : null}
@@ -107,11 +107,11 @@ export default async function ExplorerPage({
                 id="x-fen"
                 name="fen"
                 defaultValue={base ?? ""}
-                className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 font-mono text-sm"
+                className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 font-mono text-sm"
               />
               <button
                 type="submit"
-                className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+                className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
               >
                 {t("search")}
               </button>
@@ -140,7 +140,7 @@ export default async function ExplorerPage({
                         <td className="py-2">
                           <Link
                             href={withMove(s.next_san)}
-                            className="font-mono font-semibold text-bordeaux hover:underline"
+                            className="font-mono font-semibold text-accent hover:underline"
                           >
                             {s.next_san}
                           </Link>
@@ -175,7 +175,7 @@ export default async function ExplorerPage({
                 <li key={g.id}>
                   <Link
                     href={`/parties/${g.id}`}
-                    className="flex flex-wrap gap-x-3 py-2 hover:text-bordeaux"
+                    className="flex flex-wrap gap-x-3 py-2 hover:text-accent"
                   >
                     <span className="min-w-0 flex-1 font-semibold">
                       {g.white_name} – {g.black_name}

@@ -59,7 +59,7 @@ export default async function MyLessons({ params }: { params: Promise<{ locale: 
                     {b.meeting_url && b.status === "confirmed" && upcoming ? (
                       <a
                         href={b.meeting_url}
-                        className="text-sm font-semibold text-bordeaux underline"
+                        className="text-sm font-semibold text-accent underline"
                         rel="noopener"
                       >
                         {t("join")}
@@ -78,7 +78,7 @@ export default async function MyLessons({ params }: { params: Promise<{ locale: 
         ) : (
           <p className="mt-3 text-stone">
             {t("none")}{" "}
-            <Link href="/coaching" className="font-semibold text-bordeaux hover:underline">
+            <Link href="/coaching" className="font-semibold text-accent hover:underline">
               {t("browse")}
             </Link>
           </p>
@@ -108,7 +108,7 @@ export default async function MyLessons({ params }: { params: Promise<{ locale: 
                 {n.replay_url ? (
                   <a
                     href={n.replay_url}
-                    className="text-sm font-semibold text-bordeaux underline"
+                    className="text-sm font-semibold text-accent underline"
                     rel="noopener"
                   >
                     {t("replay")}

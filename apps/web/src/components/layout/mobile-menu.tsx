@@ -40,7 +40,7 @@ export function MobileMenu({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="-ml-2 grid size-11 place-items-center rounded-full hover:bg-cream"
+        className="-ml-2 grid size-11 place-items-center rounded-full hover:bg-surface"
         aria-label={labels.open}
         aria-expanded={open}
         aria-controls="menu-mobile"
@@ -59,7 +59,7 @@ export function MobileMenu({
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="grid size-11 place-items-center rounded-full hover:bg-cream"
+              className="grid size-11 place-items-center rounded-full hover:bg-surface"
               aria-label={labels.close}
             >
               <IconClose className="size-6" />
@@ -91,7 +91,7 @@ export function MobileMenu({
                         <li key={i.href}>
                           <Link
                             href={i.href}
-                            className="flex min-h-11 items-center text-[1.02rem] text-ink/85"
+                            className="flex min-h-11 items-center text-[1.02rem] text-fg/85"
                           >
                             {i.label}
                           </Link>

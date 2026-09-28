@@ -32,7 +32,7 @@ export default async function LessonsPage({
   if (sp.niveau && (LEVELS as readonly string[]).includes(sp.niveau)) q = q.eq("level", sp.niveau);
   if (sp.theme && (THEMES as readonly string[]).includes(sp.theme)) q = q.eq("theme", sp.theme);
   const { data: lessons } = await q;
-  const sel = "min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none";
+  const sel = "min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none";
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("nav.lessons")}</h1>
@@ -65,7 +65,7 @@ export default async function LessonsPage({
         </select>
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {tm("apply")}
         </button>
@@ -75,9 +75,9 @@ export default async function LessonsPage({
           <li key={l.slug}>
             <Link
               href={`/academie/lecons/${l.slug}`}
-              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-bordeaux"
+              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-accent"
             >
-              <span className="text-xs font-semibold uppercase tracking-wide text-gold-deep">
+              <span className="text-xs font-semibold uppercase tracking-wide text-accent">
                 {tc(`level.${l.level}`)} · {tm(`themes.${l.theme}`)}
                 {l.is_premium ? ` · ${t("premiumBadge")}` : ""}
               </span>

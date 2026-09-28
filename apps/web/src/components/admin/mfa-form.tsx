@@ -71,7 +71,7 @@ export function MfaForm({ next }: { next: string }) {
         <div className="rounded-md border border-line p-4">
           <p className="text-sm">{t("mfaEnroll")}</p>
           {/* eslint-disable-next-line @next/next/no-img-element -- QR SVG fourni par Supabase Auth */}
-          <img src={state.qr} alt={t("mfaQrAlt")} className="mx-auto mt-3 size-48 bg-white p-2" />
+          <img src={state.qr} alt={t("mfaQrAlt")} className="mx-auto mt-3 size-48 bg-field p-2" />
           <p className="mt-2 break-all text-center font-mono text-sm" data-testid="totp-secret">
             {state.secret}
           </p>

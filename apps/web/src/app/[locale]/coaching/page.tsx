@@ -32,13 +32,13 @@ export default async function CoachingPage({
         <div className="flex flex-wrap gap-2 lg:justify-end">
           <Link
             href="/coaching/test-de-niveau"
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
           >
             <PieceSvg kind="p" color="w" className="size-6" /> {t("placementCta")}
           </Link>
           <Link
             href="/coaching/coachs"
-            className="inline-flex min-h-11 items-center rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+            className="inline-flex min-h-11 items-center rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
           >
             {t("coachesCta")}
           </Link>

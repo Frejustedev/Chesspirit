@@ -149,19 +149,19 @@ export default async function TournamentPage({ params }: Props) {
 
   return (
     <article>
-      <header className="border-b border-line bg-cream/70">
+      <header className="border-b border-line bg-surface/70">
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-8 lg:px-6 lg:pt-12">
           <nav aria-label="Fil d'Ariane" className="text-sm text-stone">
-            <Link href="/competitions" className="hover:text-bordeaux">
+            <Link href="/competitions" className="hover:text-accent">
               {tt("calendarTitle")}
             </Link>
           </nav>
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-ink px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-cream">
+            <span className="rounded-full bg-gold px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-onaccent">
               {tt(`status.${t.status}`)}
             </span>
             {t.edition ? (
-              <span className="text-sm font-semibold text-gold-deep">{t.edition}</span>
+              <span className="text-sm font-semibold text-accent">{t.edition}</span>
             ) : null}
             {t.is_demo ? <DemoBadge /> : null}
           </div>
@@ -170,7 +170,7 @@ export default async function TournamentPage({ params }: Props) {
           </h1>
           <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[1.02rem]">
             <li className="flex items-center gap-2">
-              <IconCalendar className="size-5 text-gold-deep" />
+              <IconCalendar className="size-5 text-accent" />
               <span className="first-letter:uppercase">
                 {formatDate(t.starts_at, locale, {
                   weekday: "long",
@@ -182,13 +182,13 @@ export default async function TournamentPage({ params }: Props) {
             </li>
             {t.venue ? (
               <li className="flex items-center gap-2">
-                <IconPin className="size-5 text-gold-deep" />{" "}
+                <IconPin className="size-5 text-accent" />{" "}
                 {[t.venue, t.city].filter(Boolean).join(", ")}
               </li>
             ) : null}
             {t.cadence ? (
               <li className="flex items-center gap-2">
-                <IconClock className="size-5 text-gold-deep" /> {tt(`cadence.${t.cadence}`)}
+                <IconClock className="size-5 text-accent" /> {tt(`cadence.${t.cadence}`)}
               </li>
             ) : null}
           </ul>
@@ -221,7 +221,7 @@ export default async function TournamentPage({ params }: Props) {
             <p className="mt-2 text-sm">
               <Link
                 href="/legal/reglement-tournois"
-                className="font-semibold text-bordeaux hover:underline"
+                className="font-semibold text-accent hover:underline"
               >
                 {tt("rulesLink")}
               </Link>
@@ -234,7 +234,7 @@ export default async function TournamentPage({ params }: Props) {
               <p className="mt-1 text-stone">{tt("teamsText")}</p>
               <Link
                 href={`/competitions/${t.slug}/equipes`}
-                className="mt-3 inline-flex min-h-11 items-center font-semibold text-bordeaux hover:underline"
+                className="mt-3 inline-flex min-h-11 items-center font-semibold text-accent hover:underline"
               >
                 {tt("teamsLink")} →
               </Link>
@@ -249,7 +249,7 @@ export default async function TournamentPage({ params }: Props) {
                   href={`https://lichess.org/${t.lichess_kind === "swiss" ? "swiss" : "tournament"}/${t.lichess_id}`}
                   rel="noopener noreferrer"
                   target="_blank"
-                  className="mt-3 inline-flex min-h-11 items-center font-semibold text-bordeaux hover:underline"
+                  className="mt-3 inline-flex min-h-11 items-center font-semibold text-accent hover:underline"
                 >
                   {tt("onlineLink")} ↗
                 </a>
@@ -270,7 +270,7 @@ export default async function TournamentPage({ params }: Props) {
                 </h2>
                 <Link
                   href={`/competitions/${t.slug}/resultats`}
-                  className="text-sm font-semibold text-bordeaux hover:underline"
+                  className="text-sm font-semibold text-accent hover:underline"
                 >
                   {tt("fullResults")}
                 </Link>
@@ -278,7 +278,7 @@ export default async function TournamentPage({ params }: Props) {
               <ol className="mt-4 divide-y divide-line border-y border-line">
                 {extras.standings.slice(0, 5).map((s) => (
                   <li key={s.player_id} className="flex items-center gap-4 py-2.5">
-                    <span className="tabular w-7 text-right font-display text-xl text-gold-deep">
+                    <span className="tabular w-7 text-right font-display text-xl text-accent">
                       {s.rank}
                     </span>
                     <span className="flex-1 font-medium">{s.display_name}</span>
@@ -299,7 +299,7 @@ export default async function TournamentPage({ params }: Props) {
             {extras.registrants.length ? (
               <div className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-line">
                 <table className="w-full min-w-[28rem] text-left text-[0.95rem]">
-                  <thead className="bg-cream/70 text-xs uppercase tracking-[0.08em] text-stone">
+                  <thead className="bg-surface/70 text-xs uppercase tracking-[0.08em] text-stone">
                     <tr>
                       <th className="px-3 py-2 font-semibold">#</th>
                       <th className="px-3 py-2 font-semibold">{tt("player")}</th>
@@ -313,7 +313,7 @@ export default async function TournamentPage({ params }: Props) {
                         <td className="tabular px-3 py-2 text-stone">{i + 1}</td>
                         <td className="px-3 py-2 font-medium">
                           {r.titles?.length ? (
-                            <span className="mr-1.5 text-xs font-bold text-bordeaux">
+                            <span className="mr-1.5 text-xs font-bold text-accent">
                               {r.titles.join(" ")}
                             </span>
                           ) : null}
@@ -351,7 +351,7 @@ export default async function TournamentPage({ params }: Props) {
                 <p className="font-display text-2xl text-gold">{tt("registered")}</p>
                 <Link
                   href={`/billet/${myRegistration.ticket_code}`}
-                  className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold font-semibold text-ink hover:bg-cream"
+                  className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold font-semibold text-onaccent hover:bg-accent"
                 >
                   {tt("seeTicket")} <IconArrow className="size-5" />
                 </Link>
@@ -359,7 +359,7 @@ export default async function TournamentPage({ params }: Props) {
             ) : open ? (
               <Link
                 href={`/competitions/${t.slug}/inscription`}
-                className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold text-[1.05rem] font-semibold text-ink hover:bg-cream"
+                className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold text-[1.05rem] font-semibold text-onaccent hover:bg-accent"
               >
                 {tt("register")} <IconArrow className="size-5" />
               </Link>

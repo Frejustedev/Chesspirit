@@ -83,7 +83,7 @@ export default async function MyLeagues({ params }: { params: Promise<{ locale: 
                           {p.first_name} {p.last_name}
                         </span>
                         {lic && lic.status !== "pending_payment" ? (
-                          <span className="rounded-full bg-cream px-2.5 py-0.5 text-sm font-semibold">
+                          <span className="rounded-full bg-surface px-2.5 py-0.5 text-sm font-semibold">
                             {t(`licenseStatus.${lic.status}`)}
                           </span>
                         ) : s.license_fee_xof === null ? (
@@ -111,7 +111,7 @@ export default async function MyLeagues({ params }: { params: Promise<{ locale: 
                 <li key={`${m.profile_id}-${m.leagues.id}`} className="flex flex-wrap gap-3 py-3">
                   <Link
                     href={`/competitions/ligues/${m.leagues.slug}`}
-                    className="font-semibold hover:text-bordeaux"
+                    className="font-semibold hover:text-accent"
                   >
                     {tl(`division.${m.leagues.division}`)} · {tl(`cadence.${m.leagues.cadence}`)}
                   </Link>
@@ -119,7 +119,7 @@ export default async function MyLeagues({ params }: { params: Promise<{ locale: 
                     {m.leagues.seasons?.name} · {nameOf(m.profile_id)}
                   </span>
                   {m.status !== "active" ? (
-                    <span className="text-sm font-semibold text-bordeaux">
+                    <span className="text-sm font-semibold text-accent">
                       {t(`memberStatus.${m.status}`)}
                     </span>
                   ) : null}

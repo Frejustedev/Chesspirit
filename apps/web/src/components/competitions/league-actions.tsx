@@ -41,7 +41,7 @@ export function LicenseButton({
         {pending ? t("payLicense") : t("getLicense")}
       </Button>
       {error ? (
-        <span role="alert" className="ml-2 text-sm font-semibold text-bordeaux">
+        <span role="alert" className="ml-2 text-sm font-semibold text-accent">
           {t("error")}
         </span>
       ) : null}
@@ -62,7 +62,7 @@ export function PostponeForm({ pairingId, profileId }: { pairingId: string; prof
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="mt-2 min-h-11 text-sm font-semibold text-bordeaux hover:underline"
+        className="mt-2 min-h-11 text-sm font-semibold text-accent hover:underline"
       >
         {t("askPostpone")}
       </button>
@@ -106,7 +106,7 @@ export function PostponeForm({ pairingId, profileId }: { pairingId: string; prof
         {t("send")}
       </Button>
       {msg ? (
-        <p role="alert" className="text-sm font-semibold text-bordeaux">
+        <p role="alert" className="text-sm font-semibold text-accent">
           {msg}
         </p>
       ) : null}

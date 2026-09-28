@@ -61,7 +61,7 @@ export default async function TourRanking({
               <Link
                 href={`/classements/tour?${new URLSearchParams({ ...(season ? { saison: season.slug } : {}), categorie: c })}`}
                 aria-current={c === cat ? "page" : undefined}
-                className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold ${c === cat ? "bg-ink text-cream" : "border border-line hover:bg-cream"}`}
+                className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold ${c === cat ? "bg-gold text-onaccent" : "border border-line hover:bg-surface"}`}
               >
                 {t(`category.${c}`)}
               </Link>
@@ -82,14 +82,11 @@ export default async function TourRanking({
                 {cat === "general" ? r.rank : i + 1}
               </span>
               <span className="min-w-0 flex-1">
-                <Link
-                  href={`/joueurs/${r.profile_id}`}
-                  className="font-semibold hover:text-bordeaux"
-                >
+                <Link href={`/joueurs/${r.profile_id}`} className="font-semibold hover:text-accent">
                   {r.display_name}
                 </Link>
                 {cat === "general" && Number(r.rank) <= qualified ? (
-                  <span className="ml-2 rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-ink">
+                  <span className="ml-2 rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-onaccent">
                     {t("mastersZone")}
                   </span>
                 ) : null}

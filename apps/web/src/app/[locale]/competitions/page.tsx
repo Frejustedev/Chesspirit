@@ -38,7 +38,7 @@ export default async function CalendarPage({ params }: { params: Promise<{ local
             </span>
           </span>
           <span className="min-w-0">
-            <span className="block font-display text-xl font-semibold group-hover:text-bordeaux sm:text-2xl">
+            <span className="block font-display text-xl font-semibold group-hover:text-accent sm:text-2xl">
               {t.name} {t.is_demo ? <DemoBadge /> : null}
             </span>
             <span className="mt-0.5 block text-sm text-stone">
@@ -55,7 +55,7 @@ export default async function CalendarPage({ params }: { params: Promise<{ local
               )}
             </span>
           </span>
-          <IconArrow className="size-5 text-stone group-hover:text-bordeaux" />
+          <IconArrow className="size-5 text-stone group-hover:text-accent" />
         </Link>
       </li>
     );
@@ -65,7 +65,7 @@ export default async function CalendarPage({ params }: { params: Promise<{ local
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
       <h1 className="font-display text-4xl font-semibold sm:text-5xl">{tt("calendarTitle")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{tt("calendarIntro")}</p>
-      <h2 className="mt-10 font-sans text-sm font-semibold uppercase tracking-[0.14em] text-gold-deep">
+      <h2 className="mt-10 font-sans text-sm font-semibold uppercase tracking-[0.14em] text-accent">
         {tt("upcoming")}
       </h2>
       {upcoming.length ? (
@@ -79,7 +79,7 @@ export default async function CalendarPage({ params }: { params: Promise<{ local
       )}
       {past.length ? (
         <>
-          <h2 className="mt-12 font-sans text-sm font-semibold uppercase tracking-[0.14em] text-gold-deep">
+          <h2 className="mt-12 font-sans text-sm font-semibold uppercase tracking-[0.14em] text-accent">
             {tt("past")}
           </h2>
           <ul className="mt-2 divide-y divide-line border-y border-line">

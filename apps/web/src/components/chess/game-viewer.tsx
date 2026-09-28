@@ -57,9 +57,9 @@ export function GameViewer({
     return null;
   }, [fen]);
 
-  if (error) return <p className="rounded bg-bordeaux-soft p-4 text-bordeaux">{t("invalid")}</p>;
+  if (error) return <p className="rounded bg-bordeaux-soft p-4 text-rose">{t("invalid")}</p>;
   const btn =
-    "grid size-11 place-items-center rounded-full border border-line hover:bg-cream disabled:opacity-40";
+    "grid size-11 place-items-center rounded-full border border-line hover:bg-surface disabled:opacity-40";
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,34rem)_1fr]">
@@ -127,7 +127,7 @@ export function GameViewer({
         >
           {Array.from({ length: Math.ceil(moves.length / 2) }, (_, i) => (
             <li key={i} className="contents">
-              <span className="tabular border-b border-line bg-cream/50 px-2 py-1.5 text-right text-stone">
+              <span className="tabular border-b border-line bg-surface/50 px-2 py-1.5 text-right text-stone">
                 {i + 1}.
               </span>
               {[2 * i, 2 * i + 1].map((k) =>
@@ -137,7 +137,7 @@ export function GameViewer({
                     type="button"
                     onClick={() => setPly(k + 1)}
                     aria-current={ply === k + 1 ? "step" : undefined}
-                    className={`border-b border-line px-2 py-1.5 text-left font-medium ${ply === k + 1 ? "bg-bordeaux text-cream" : "hover:bg-cream"}`}
+                    className={`border-b border-line px-2 py-1.5 text-left font-medium ${ply === k + 1 ? "bg-bordeaux text-cream" : "hover:bg-surface"}`}
                   >
                     {moves[k]!.san}
                   </button>

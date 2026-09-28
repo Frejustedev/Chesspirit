@@ -74,7 +74,7 @@ export default async function MediaHome({ params }: { params: Promise<{ locale: 
               <li key={a.slug} className="py-3">
                 <Link
                   href={`/media/articles/${a.slug}`}
-                  className="font-semibold hover:text-bordeaux"
+                  className="font-semibold hover:text-accent"
                 >
                   {tr(a.title, locale)}
                 </Link>

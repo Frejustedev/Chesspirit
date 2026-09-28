@@ -60,7 +60,7 @@ export async function ShopPage({
           name="q"
           defaultValue={q}
           placeholder={t("search")}
-          className="min-h-11 min-w-0 basis-full rounded-md sm:flex-1 sm:basis-auto border border-line bg-white px-3"
+          className="min-h-11 min-w-0 basis-full rounded-md sm:flex-1 sm:basis-auto border border-line bg-field px-3"
         />
         <label htmlFor="shop-sort" className="sr-only">
           {t("sort")}
@@ -69,7 +69,7 @@ export async function ShopPage({
           id="shop-sort"
           name="tri"
           defaultValue={sort ?? ""}
-          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none"
+          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none"
         >
           <option value="">{t("sortFeatured")}</option>
           <option value="price_asc">{t("sortPriceAsc")}</option>
@@ -78,7 +78,7 @@ export async function ShopPage({
         </select>
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("apply")}
         </button>

@@ -64,7 +64,7 @@ export default async function PrintPage({
 
       {kind === "appariements" ? (
         <section>
-          <header className="flex items-baseline justify-between border-b-2 border-ink pb-2">
+          <header className="flex items-baseline justify-between border-b-2 border-fg pb-2">
             <div>
               <h1 className="font-display text-3xl font-semibold">{tn.name}</h1>
               <p>
@@ -75,7 +75,7 @@ export default async function PrintPage({
           </header>
           <table className="mt-4 w-full text-[1.05rem]">
             <thead>
-              <tr className="border-b border-ink text-left">
+              <tr className="border-b border-fg text-left">
                 <th className="py-1">{t("board")}</th>
                 <th className="py-1">{t("white")}</th>
                 <th className="py-1 text-center">{t("result")}</th>
@@ -113,7 +113,7 @@ export default async function PrintPage({
             .map((b) => (
               <div
                 key={b.id}
-                className="break-inside-avoid border-2 border-dashed border-ink p-5 text-center"
+                className="break-inside-avoid border-2 border-dashed border-fg p-5 text-center"
               >
                 <p className="text-sm uppercase tracking-[0.2em]">{tn.name}</p>
                 <p className="font-display text-[5rem] font-semibold leading-none">{b.board}</p>
@@ -126,14 +126,14 @@ export default async function PrintPage({
           {boards
             .filter((b) => b.black_id)
             .map((b) => (
-              <div key={b.id} className="mb-8 break-after-page border border-ink p-4 text-sm">
-                <div className="flex justify-between border-b border-ink pb-2">
+              <div key={b.id} className="mb-8 break-after-page border border-fg p-4 text-sm">
+                <div className="flex justify-between border-b border-fg pb-2">
                   <span className="font-semibold">{tn.name}</span>
                   <span>
                     {t("round", { n: round.number })} · {t("board")} {b.board} {tc ? `· ${tc}` : ""}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-4 border-b border-ink py-2">
+                <div className="grid grid-cols-2 gap-4 border-b border-fg py-2">
                   <p>
                     {t("white")} : <strong>{name(b.white_id)}</strong>
                   </p>

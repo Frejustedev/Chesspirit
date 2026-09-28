@@ -119,7 +119,7 @@ export function OfflineArbiter({ tournamentId }: { tournamentId: string }) {
     <div>
       <p
         role="status"
-        className={`rounded-lg px-4 py-3 font-semibold ${online ? "bg-cream" : "bg-bordeaux text-cream"}`}
+        className={`rounded-lg px-4 py-3 font-semibold ${online ? "bg-surface" : "bg-bordeaux text-cream"}`}
       >
         {online ? t("online") : t("offline")} · {t("pending", { n: queue.length })}
         {syncing ? ` · ${t("syncing")}` : ""}
@@ -140,7 +140,7 @@ export function OfflineArbiter({ tournamentId }: { tournamentId: string }) {
                     <span className="min-w-0 flex-1">
                       {p.white} – {p.black ?? t("bye")}
                       {pending.has(p.id) ? (
-                        <span className="ml-2 text-xs font-semibold text-bordeaux">
+                        <span className="ml-2 text-xs font-semibold text-accent">
                           {t("notSent")}
                         </span>
                       ) : null}
@@ -154,7 +154,7 @@ export function OfflineArbiter({ tournamentId }: { tournamentId: string }) {
                             aria-pressed={p.result === res}
                             aria-label={t("setResult", { board: p.board, result: res })}
                             onClick={() => void enter(p.id, p.result === res ? "none" : res)}
-                            className={`min-h-11 min-w-11 rounded-md border px-2 font-semibold ${p.result === res ? "border-ink bg-ink text-cream" : "border-line"}`}
+                            className={`min-h-11 min-w-11 rounded-md border px-2 font-semibold ${p.result === res ? "border-gold bg-gold text-onaccent" : "border-line"}`}
                           >
                             {res === "1/2-1/2" ? "½" : res}
                           </button>

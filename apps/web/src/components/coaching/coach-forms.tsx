@@ -166,7 +166,7 @@ export function OfferForm({ offer }: { offer: Offer | null }) {
               name="description_fr"
               rows={3}
               defaultValue={offer?.description_fr}
-              className="mt-1 w-full rounded-md border border-line bg-white p-3"
+              className="mt-1 w-full rounded-md border border-line bg-field p-3"
             />
           </Field>
         </div>
@@ -252,7 +252,7 @@ export function SlotClose({ id }: { id: string }) {
       type="button"
       disabled={pending}
       aria-label={t("closeSlot")}
-      className="grid size-8 place-items-center rounded-full hover:bg-cream"
+      className="grid size-8 place-items-center rounded-full hover:bg-surface"
       onClick={() => run(() => closeSlotAction(id), "")}
     >
       ×
@@ -335,7 +335,7 @@ export function FollowUpForm({ students }: { students: { id: string; name: strin
             name="text"
             required
             rows={3}
-            className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            className="mt-1 w-full rounded-md border border-line bg-field p-3"
           />
         </Field>
       </div>
@@ -413,7 +413,7 @@ export function CoachProfileForm({
           name="bio_fr"
           rows={5}
           defaultValue={c.bio_fr}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3"
         />
       </Field>
       <div className="grid gap-4 sm:grid-cols-2">

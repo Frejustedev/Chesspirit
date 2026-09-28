@@ -70,7 +70,7 @@ export function GameWithNotes({
             key={n.id}
             className={`flex items-start gap-2 rounded px-2 py-1 text-sm ${n.ply === ply ? "bg-gold-soft/50" : ""}`}
           >
-            <span className="tabular shrink-0 font-semibold text-gold-deep">
+            <span className="tabular shrink-0 font-semibold text-accent">
               {n.ply
                 ? t("ply", { n: Math.ceil(n.ply / 2), side: n.ply % 2 ? "" : "…" })
                 : t("start")}
@@ -79,7 +79,7 @@ export function GameWithNotes({
             <button
               type="button"
               onClick={() => remove(n.id)}
-              className="text-xs text-stone hover:text-bordeaux"
+              className="text-xs text-stone hover:text-accent"
               aria-label={t("delete")}
             >
               ×
@@ -97,7 +97,7 @@ export function GameWithNotes({
           onChange={(e) => setText(e.target.value)}
           maxLength={2000}
           placeholder={san ? t("placeholderMove", { san }) : t("placeholder")}
-          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3"
+          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3"
         />
         <Button type="submit" disabled={busy || !text.trim()} className="min-h-11 px-4 text-sm">
           {t("add")}

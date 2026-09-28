@@ -51,7 +51,7 @@ export function QuoteForm({ defaultKind = "school" }: { defaultKind?: string }) 
           name="message"
           rows={5}
           maxLength={4000}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3"
         />
       </Field>
       <input

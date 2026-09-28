@@ -69,7 +69,7 @@ export function RegistrationForm({
           {registered.map((p) => (
             <li
               key={p.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-line bg-cream/50 p-3"
+              className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-line bg-surface/50 p-3"
             >
               <span>
                 <strong>{p.name}</strong> — {t(`status.${p.registration!.status}`)}
@@ -92,7 +92,7 @@ export function RegistrationForm({
               ) : (
                 <Link
                   href={`/billet/${p.registration!.ticket_code}`}
-                  className="font-semibold text-bordeaux hover:underline"
+                  className="font-semibold text-accent hover:underline"
                 >
                   {t("ticket")}
                 </Link>
@@ -110,7 +110,7 @@ export function RegistrationForm({
               {available.map((p) => (
                 <label
                   key={p.id}
-                  className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-md border px-3 ${playerId === p.id ? "border-bordeaux bg-bordeaux-soft/40" : "border-line"}`}
+                  className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-md border px-3 ${playerId === p.id ? "border-accent bg-bordeaux-soft/40" : "border-line"}`}
                 >
                   <input
                     type="radio"
@@ -126,7 +126,7 @@ export function RegistrationForm({
               ))}
             </div>
             <p className="mt-2 text-sm">
-              <Link href="/compte/famille" className="font-semibold text-bordeaux hover:underline">
+              <Link href="/compte/famille" className="font-semibold text-accent hover:underline">
                 {t("addChild")}
               </Link>
             </p>
@@ -190,7 +190,7 @@ export function RegistrationForm({
               {methods.map((m) => (
                 <label
                   key={m}
-                  className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-md border p-3 ${method === m ? "border-bordeaux bg-bordeaux-soft/40" : "border-line"}`}
+                  className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-md border p-3 ${method === m ? "border-accent bg-bordeaux-soft/40" : "border-line"}`}
                 >
                   <input
                     type="radio"
@@ -218,7 +218,7 @@ export function RegistrationForm({
               link: (c) => (
                 <Link
                   href="/legal/reglement-tournois"
-                  className="font-semibold text-bordeaux underline"
+                  className="font-semibold text-accent underline"
                   target="_blank"
                 >
                   {c}
@@ -230,7 +230,7 @@ export function RegistrationForm({
           {error ? (
             <p
               role="alert"
-              className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux"
+              className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-rose"
             >
               {error}
             </p>

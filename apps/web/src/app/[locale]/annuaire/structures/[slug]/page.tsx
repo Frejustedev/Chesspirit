@@ -60,7 +60,7 @@ export default async function StructurePage({
   ]);
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 lg:px-6">
-      <Link href="/annuaire/clubs" className="text-sm font-semibold text-bordeaux hover:underline">
+      <Link href="/annuaire/clubs" className="text-sm font-semibold text-accent hover:underline">
         ← {t("structuresTitle")}
       </Link>
       <h1 className="mt-2 font-display text-4xl font-semibold">
@@ -69,12 +69,12 @@ export default async function StructurePage({
       <p className="mt-2 flex flex-wrap items-center gap-2 text-stone">
         {t(`orgType.${o.type}`)} · {[o.city, o.department].filter(Boolean).join(", ")}
         {o.verified ? (
-          <span className="rounded-full bg-ink px-2 py-0.5 text-xs font-semibold text-cream">
+          <span className="rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-onaccent">
             {t("verified")}
           </span>
         ) : null}
         {!o.is_public ? (
-          <span className="text-sm font-semibold text-bordeaux">{t("pendingReview")}</span>
+          <span className="text-sm font-semibold text-accent">{t("pendingReview")}</span>
         ) : null}
       </p>
       {o.description ? (
@@ -127,7 +127,7 @@ export default async function StructurePage({
         <p className="mt-4">
           <Link
             href={`/annuaire/carte?focus=${o.slug}`}
-            className="font-semibold text-bordeaux hover:underline"
+            className="font-semibold text-accent hover:underline"
           >
             {t("seeOnMap")} →
           </Link>
@@ -139,10 +139,7 @@ export default async function StructurePage({
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {tournaments.map((x) => (
               <li key={x.slug} className="flex justify-between gap-3 py-2">
-                <Link
-                  href={`/competitions/${x.slug}`}
-                  className="font-semibold hover:text-bordeaux"
-                >
+                <Link href={`/competitions/${x.slug}`} className="font-semibold hover:text-accent">
                   {x.name}
                 </Link>
                 <span className="text-sm text-stone">{formatDate(x.starts_at, locale)}</span>
@@ -176,7 +173,7 @@ export default async function StructurePage({
           ) : (
             <Link
               href={`/connexion?next=${encodeURIComponent(`/annuaire/structures/${o.slug}`)}`}
-              className="mt-3 inline-flex min-h-11 items-center font-semibold text-bordeaux hover:underline"
+              className="mt-3 inline-flex min-h-11 items-center font-semibold text-accent hover:underline"
             >
               {t("signInToClaim")} →
             </Link>

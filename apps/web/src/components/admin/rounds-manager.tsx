@@ -116,7 +116,7 @@ export function RoundsManager({
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end gap-3 rounded-lg border border-line bg-cream/50 p-4">
+      <div className="flex flex-wrap items-end gap-3 rounded-lg border border-line bg-surface/50 p-4">
         <div className="mr-auto">
           <p className="font-display text-xl font-semibold">{ts(`system.${system}`)}</p>
           <p className="text-sm text-stone">
@@ -162,7 +162,7 @@ export function RoundsManager({
       {msg ? (
         <p
           role={msg.kind === "err" ? "alert" : "status"}
-          className={`rounded px-3 py-2 text-sm font-semibold ${msg.kind === "err" ? "bg-bordeaux-soft text-bordeaux" : "bg-success/15 text-success"}`}
+          className={`rounded px-3 py-2 text-sm font-semibold ${msg.kind === "err" ? "bg-bordeaux-soft text-rose" : "bg-success/15 text-success"}`}
         >
           {msg.text}
         </p>
@@ -177,7 +177,7 @@ export function RoundsManager({
                   type="button"
                   onClick={() => setSelected(r.id)}
                   aria-current={round?.id === r.id ? "true" : undefined}
-                  className={`min-h-11 min-w-11 rounded-full border px-4 font-semibold ${round?.id === r.id ? "border-bordeaux bg-bordeaux text-cream" : "border-line hover:border-bordeaux"}`}
+                  className={`min-h-11 min-w-11 rounded-full border px-4 font-semibold ${round?.id === r.id ? "border-bordeaux bg-bordeaux text-cream" : "border-line hover:border-accent"}`}
                 >
                   R{r.number}
                   {r.status === "finished" ? " ✓" : ""}
@@ -196,7 +196,7 @@ export function RoundsManager({
             <h2 id="round-title" className="mr-auto font-display text-2xl font-semibold">
               {t("round", { n: round.number })}{" "}
               <span
-                className={`ml-2 align-middle text-xs font-semibold uppercase tracking-wide ${round.engine === "fallback" ? "text-bordeaux" : "text-stone"}`}
+                className={`ml-2 align-middle text-xs font-semibold uppercase tracking-wide ${round.engine === "fallback" ? "text-accent" : "text-stone"}`}
               >
                 {round.engine ? t(`engine.${round.engine}`) : ""}
               </span>
@@ -214,7 +214,7 @@ export function RoundsManager({
             </Button>
             <Link
               href={`/admin/tournois/${tournamentId}/imprimer?ronde=${round.number}&type=appariements`}
-              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-3 text-sm font-semibold hover:bg-cream"
+              className="inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-3 text-sm font-semibold hover:bg-surface"
               target="_blank"
             >
               <IconPrint className="size-4" /> {t("print")}
@@ -227,19 +227,19 @@ export function RoundsManager({
                 className={`rounded-lg border p-3 ${b.result || !b.black ? "border-line bg-paper" : "border-gold bg-gold-soft/20"}`}
               >
                 <div className="flex items-start gap-3">
-                  <span className="tabular mt-0.5 w-8 shrink-0 text-center font-display text-xl text-gold-deep">
+                  <span className="tabular mt-0.5 w-8 shrink-0 text-center font-display text-xl text-accent">
                     {b.board || "—"}
                   </span>
                   <div className="min-w-0 flex-1">
                     {b.stage !== "main" ? (
-                      <p className="text-xs font-semibold uppercase text-bordeaux">
+                      <p className="text-xs font-semibold uppercase text-accent">
                         {t(`stage.${b.stage}`)}
                       </p>
                     ) : null}
                     <p className="truncate font-semibold">
                       <span
                         aria-hidden
-                        className="mr-1 inline-block size-3 rounded-sm border border-ink bg-paper align-middle"
+                        className="mr-1 inline-block size-3 rounded-sm border border-fg bg-paper align-middle"
                       />{" "}
                       {label(b.white)}
                       <span className="tabular ml-1 text-xs text-stone">
@@ -261,7 +261,7 @@ export function RoundsManager({
                   {b.black ? (
                     <button
                       type="button"
-                      className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-cream"
+                      className="grid size-11 shrink-0 place-items-center rounded-full hover:bg-surface"
                       aria-label={t("edit")}
                       onClick={() => setEditing(editing === b.id ? null : b.id)}
                     >
@@ -284,7 +284,7 @@ export function RoundsManager({
                         onClick={() =>
                           run(() => setResultAction(b.id, b.result === q.r ? null : q.r))
                         }
-                        className={`tabular min-h-11 min-w-16 flex-1 rounded-md border text-lg font-semibold sm:flex-none ${b.result === q.r ? "border-ink bg-ink text-cream" : "border-line bg-paper hover:border-ink"}`}
+                        className={`tabular min-h-11 min-w-16 flex-1 rounded-md border text-lg font-semibold sm:flex-none ${b.result === q.r ? "border-gold bg-gold text-onaccent" : "border-line bg-paper hover:border-fg"}`}
                       >
                         {q.label}
                       </button>
@@ -334,7 +334,7 @@ export function RoundsManager({
           {round.id === rounds.at(-1)?.id ? (
             <button
               type="button"
-              className="mt-4 min-h-11 text-sm font-semibold text-bordeaux hover:underline"
+              className="mt-4 min-h-11 text-sm font-semibold text-accent hover:underline"
               onClick={() =>
                 confirm(t("deleteConfirm")) && run(() => deleteLastRoundAction(round.id))
               }
@@ -402,14 +402,14 @@ export function RoundsManager({
       <div className="flex flex-wrap gap-3">
         <Link
           href={`/competitions/${slug}/direct`}
-          className="inline-flex min-h-12 items-center rounded-full border border-ink/25 px-5 font-semibold hover:bg-cream"
+          className="inline-flex min-h-12 items-center rounded-full border border-fg/25 px-5 font-semibold hover:bg-surface"
           target="_blank"
         >
           {t("live")}
         </Link>
         <Link
           href={`/competitions/${slug}/direct?projection=1`}
-          className="inline-flex min-h-12 items-center rounded-full border border-ink/25 px-5 font-semibold hover:bg-cream"
+          className="inline-flex min-h-12 items-center rounded-full border border-fg/25 px-5 font-semibold hover:bg-surface"
           target="_blank"
         >
           {t("projection")}

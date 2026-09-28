@@ -39,9 +39,10 @@ export function PieceSvg({
   title?: string;
 }) {
   const white = color === "w";
-  const fill = white ? "var(--color-paper)" : "var(--color-ink)";
-  const stroke = "var(--color-ink)";
-  const detail = white ? "var(--color-ink)" : "var(--color-gold)";
+  // Couleurs fixes : les pièces gardent leur aspect quel que soit le fond du site.
+  const fill = white ? "#fbf8f1" : "#1c1815";
+  const stroke = "#1c1815";
+  const detail = white ? "#1c1815" : "var(--color-gold)";
   return (
     <svg
       viewBox="0 0 45 45"

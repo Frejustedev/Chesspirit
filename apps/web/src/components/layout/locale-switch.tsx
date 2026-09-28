@@ -29,7 +29,7 @@ export function LocaleSwitch() {
             )
           }
           className={`min-h-9 min-w-10 rounded-full px-2.5 uppercase transition-colors ${
-            locale === l ? "bg-ink text-cream" : "text-ink/70 hover:text-bordeaux"
+            locale === l ? "bg-gold text-onaccent" : "text-fg/70 hover:text-accent"
           }`}
         >
           {l}

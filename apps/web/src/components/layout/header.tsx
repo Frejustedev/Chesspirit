@@ -57,7 +57,7 @@ export async function Header() {
               <li key={s.key} className="group relative">
                 <Link
                   href={s.href}
-                  className="flex min-h-11 items-center gap-1 whitespace-nowrap rounded px-2 text-[0.95rem] font-medium text-ink/85 transition-colors hover:text-bordeaux"
+                  className="flex min-h-11 items-center gap-1 whitespace-nowrap rounded px-2 text-[0.95rem] font-medium text-fg/85 transition-colors hover:text-accent"
                 >
                   {s.label}
                   <IconChevronDown className="size-3.5 opacity-60 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />
@@ -68,7 +68,7 @@ export async function Header() {
                       <li key={i.href}>
                         <Link
                           href={i.href}
-                          className="flex min-h-11 items-center rounded px-3 text-[0.95rem] text-ink/85 hover:bg-cream hover:text-bordeaux"
+                          className="flex min-h-11 items-center rounded px-3 text-[0.95rem] text-fg/85 hover:bg-surface hover:text-accent"
                         >
                           {i.label}
                         </Link>
@@ -84,7 +84,7 @@ export async function Header() {
         <div className="ml-auto flex items-center gap-1">
           <Link
             href="/recherche"
-            className="grid size-11 place-items-center rounded-full text-ink/80 hover:bg-cream hover:text-bordeaux"
+            className="grid size-11 place-items-center rounded-full text-fg/80 hover:bg-surface hover:text-accent"
             aria-label={t("search")}
           >
             <IconSearch className="size-[22px]" />
@@ -92,7 +92,7 @@ export async function Header() {
           <CartLink label={t("cart")} />
           <Link
             href={session ? "/compte" : "/connexion"}
-            className="flex min-h-11 items-center gap-2 rounded-full px-2.5 text-ink/80 hover:bg-cream hover:text-bordeaux"
+            className="flex min-h-11 items-center gap-2 rounded-full px-2.5 text-fg/80 hover:bg-surface hover:text-accent"
           >
             <IconAccount className="size-[22px]" />
             <span className="hidden whitespace-nowrap text-[0.95rem] font-medium sm:inline xl:hidden 2xl:inline">
@@ -104,7 +104,7 @@ export async function Header() {
           </div>
           <Link
             href={cta.href}
-            className="ml-1 hidden min-h-11 items-center whitespace-nowrap rounded-full bg-bordeaux px-4 text-[0.95rem] font-semibold text-cream transition-colors hover:bg-ink md:flex xl:hidden 2xl:flex"
+            className="ml-1 hidden min-h-11 items-center whitespace-nowrap rounded-full bg-bordeaux px-4 text-[0.95rem] font-semibold text-cream transition-colors hover:bg-bordeaux-bright md:flex xl:hidden 2xl:flex"
           >
             {cta.label}
           </Link>

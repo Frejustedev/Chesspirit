@@ -9,14 +9,14 @@ export function AdminNavLinks({ items, label }: { items: [string, string][]; lab
       ? path === "/admin" || path.startsWith("/admin/tournois")
       : path.startsWith(href);
   return (
-    <nav aria-label={label} className="border-b border-line bg-cream/60">
+    <nav aria-label={label} className="border-b border-line bg-surface/60">
       <ul className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 lg:px-6">
         {items.map(([href, text]) => (
           <li key={href}>
             <Link
               href={href}
               aria-current={active(href) ? "page" : undefined}
-              className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 text-[0.95rem] ${active(href) ? "border-bordeaux font-semibold text-bordeaux" : "border-transparent text-ink/80 hover:text-bordeaux"}`}
+              className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 text-[0.95rem] ${active(href) ? "border-accent font-semibold text-accent" : "border-transparent text-fg/80 hover:text-accent"}`}
             >
               {text}
             </Link>

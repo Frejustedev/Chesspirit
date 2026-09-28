@@ -74,7 +74,7 @@ export default async function AdminUsers({
           name="q"
           defaultValue={q}
           placeholder={t("search")}
-          className="min-h-11 min-w-0 basis-full rounded-md border border-line bg-white px-3 sm:flex-1 sm:basis-auto"
+          className="min-h-11 min-w-0 basis-full rounded-md border border-line bg-field px-3 sm:flex-1 sm:basis-auto"
         />
         <label htmlFor="u-f" className="sr-only">
           {t("filter")}
@@ -83,7 +83,7 @@ export default async function AdminUsers({
           id="u-f"
           name="filtre"
           defaultValue={filtre}
-          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none"
+          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none"
         >
           <option value="">{t("filters.all")}</option>
           {(["comptes", "sans-compte", "mineurs", "suspendus", "demo"] as const).map((f) => (
@@ -94,7 +94,7 @@ export default async function AdminUsers({
         </select>
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("apply")}
         </button>
@@ -107,17 +107,17 @@ export default async function AdminUsers({
               href={`/admin/utilisateurs/${p.id}`}
               className="group flex flex-wrap items-center gap-x-4 gap-y-1 py-3"
             >
-              <span className="min-w-0 flex-1 font-semibold group-hover:text-bordeaux">
+              <span className="min-w-0 flex-1 font-semibold group-hover:text-accent">
                 {p.first_name} {p.last_name} {p.is_demo ? <DemoBadge /> : null}
               </span>
               <span className="tabular text-sm">{p.phone ?? p.email ?? "—"}</span>
               <span className="text-sm text-stone">{p.city ?? ""}</span>
               <span className="flex gap-1 text-xs font-semibold">
                 {p.user_id ? (
-                  <span className="rounded-full bg-cream px-2 py-0.5">{t("badges.account")}</span>
+                  <span className="rounded-full bg-surface px-2 py-0.5">{t("badges.account")}</span>
                 ) : null}
                 {p.is_minor ? (
-                  <span className="rounded-full bg-cream px-2 py-0.5">{t("badges.minor")}</span>
+                  <span className="rounded-full bg-surface px-2 py-0.5">{t("badges.minor")}</span>
                 ) : null}
                 {p.suspended_at ? (
                   <span className="rounded-full bg-bordeaux px-2 py-0.5 text-cream">
@@ -132,12 +132,12 @@ export default async function AdminUsers({
       </ul>
       <div className="mt-4 flex gap-3">
         {page > 0 ? (
-          <Link href={qs(page - 1)} className="font-semibold text-bordeaux hover:underline">
+          <Link href={qs(page - 1)} className="font-semibold text-accent hover:underline">
             ← {t("prev")}
           </Link>
         ) : null}
         {(count ?? 0) > (page + 1) * PAGE ? (
-          <Link href={qs(page + 1)} className="font-semibold text-bordeaux hover:underline">
+          <Link href={qs(page + 1)} className="font-semibold text-accent hover:underline">
             {t("next")} →
           </Link>
         ) : null}

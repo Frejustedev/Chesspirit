@@ -42,7 +42,7 @@ export default async function ShowPage({
   const seasons = [...new Set((episodes ?? []).map((e) => e.season))];
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <Link href="/media/emissions" className="text-sm font-semibold text-bordeaux hover:underline">
+      <Link href="/media/emissions" className="text-sm font-semibold text-accent hover:underline">
         ← {t("shows")}
       </Link>
       <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">

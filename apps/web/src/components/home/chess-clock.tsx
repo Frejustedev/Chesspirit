@@ -58,7 +58,7 @@ export function ChessClock({
     >
       {/* Poussoirs de la pendule */}
       <div className="absolute -top-3 left-0 flex w-full justify-between px-[18%]" aria-hidden>
-        <span className="h-3 w-10 rounded-t-md bg-cream/25" />
+        <span className="h-3 w-10 rounded-t-md bg-surface/25" />
         <span
           className={`h-3 w-10 rounded-t-md transition-transform duration-300 ${c.seconds % 2 ? "bg-gold translate-y-0.5" : "bg-gold/80"}`}
         />
@@ -67,20 +67,20 @@ export function ChessClock({
         <Face big={ready ? pad(dateOnly ? daysLeft : c.days) : "––"} label={t("days")} />
         {dateOnly ? (
           <div
-            className="flex max-w-40 items-center rounded-md bg-cream px-3 py-2 font-sans text-sm font-semibold leading-snug text-ink sm:px-4"
+            className="flex max-w-40 items-center rounded-md bg-surface px-3 py-2 font-sans text-sm font-semibold leading-snug text-fg sm:px-4"
             aria-hidden
           >
             {t("timeTbc")}
           </div>
         ) : (
           <div
-            className="flex items-center gap-1 rounded-md bg-cream px-3 py-2 text-ink sm:px-4"
+            className="flex items-center gap-1 rounded-md bg-surface px-3 py-2 text-fg sm:px-4"
             aria-hidden
           >
             <Face light big={ready ? pad(c.hours) : "––"} label={t("hours")} />
-            <span className="pb-5 font-display text-3xl text-ink/40 sm:text-4xl">:</span>
+            <span className="pb-5 font-display text-3xl text-fg/40 sm:text-4xl">:</span>
             <Face light big={ready ? pad(c.minutes) : "––"} label={t("minutes")} />
-            <span className="pb-5 font-display text-3xl text-ink/40 sm:text-4xl">:</span>
+            <span className="pb-5 font-display text-3xl text-fg/40 sm:text-4xl">:</span>
             <Face light big={ready ? pad(c.seconds) : "––"} label={t("seconds")} tick />
           </div>
         )}
@@ -113,7 +113,7 @@ function Face({
         {big}
       </span>
       <span
-        className={`mt-1 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.16em] ${light ? "text-ink/60" : "text-cream/60"}`}
+        className={`mt-1 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.16em] ${light ? "text-fg/60" : "text-cream/60"}`}
       >
         {label}
       </span>

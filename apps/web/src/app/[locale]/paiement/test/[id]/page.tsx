@@ -29,7 +29,7 @@ export default async function FakeCheckoutPage({
   return (
     <div className="mx-auto max-w-md px-4 py-12">
       <div className="rounded-lg border-2 border-dashed border-gold bg-paper p-6">
-        <p className="font-sans text-xs font-semibold uppercase tracking-[0.16em] text-gold-deep">
+        <p className="font-sans text-xs font-semibold uppercase tracking-[0.16em] text-accent">
           {t("fakeKicker")}
         </p>
         <h1 className="mt-2 font-display text-3xl font-semibold">{t("fakeTitle")}</h1>

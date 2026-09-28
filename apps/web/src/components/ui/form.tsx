@@ -2,7 +2,7 @@ import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react
 import { forwardRef } from "react";
 
 export const inputClass =
-  "mt-1 block min-h-12 w-full rounded-md border border-line bg-white px-3 text-[1.02rem] focus:border-bordeaux focus:outline-none aria-[invalid=true]:border-danger";
+  "mt-1 block min-h-12 w-full rounded-md border border-line bg-field px-3 text-[1.02rem] focus:border-accent focus:outline-none aria-[invalid=true]:border-danger";
 
 export function Field({
   id,
@@ -79,9 +79,9 @@ export function Button({
   variant?: "primary" | "secondary" | "ghost";
 }) {
   const styles = {
-    primary: "bg-bordeaux text-cream hover:bg-ink",
-    secondary: "border border-ink/25 bg-paper hover:bg-cream",
-    ghost: "text-bordeaux hover:underline",
+    primary: "bg-bordeaux text-cream hover:bg-bordeaux-bright",
+    secondary: "border border-fg/25 bg-paper hover:bg-surface",
+    ghost: "text-accent hover:underline",
   }[variant];
   return (
     <button

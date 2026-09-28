@@ -49,7 +49,7 @@ export function CartView() {
         <p className="font-serif text-xl text-stone">{t("cartEmpty")}</p>
         <Link
           href="/boutique"
-          className="mt-4 inline-flex min-h-11 items-center rounded-full bg-bordeaux px-5 font-semibold text-cream hover:bg-ink"
+          className="mt-4 inline-flex min-h-11 items-center rounded-full bg-bordeaux px-5 font-semibold text-cream hover:bg-bordeaux-bright"
         >
           {t("continue")}
         </Link>
@@ -79,10 +79,7 @@ export function CartView() {
               <div className="min-w-0 flex-1">
                 <p className="font-semibold">
                   {d ? (
-                    <Link
-                      href={`/boutique/produit/${d.productSlug}`}
-                      className="hover:text-bordeaux"
-                    >
+                    <Link href={`/boutique/produit/${d.productSlug}`} className="hover:text-accent">
                       {name}
                     </Link>
                   ) : (
@@ -97,7 +94,7 @@ export function CartView() {
                 ) : null}
                 {d?.isPreorder ? <p className="text-sm font-semibold">{t("preorder")}</p> : null}
                 {issue ? (
-                  <p className="text-sm font-semibold text-bordeaux">
+                  <p className="text-sm font-semibold text-accent">
                     {t(`issue.${issue}`, { n: d?.stock ?? 0 })}
                   </p>
                 ) : null}
@@ -112,12 +109,12 @@ export function CartView() {
                     max={50}
                     value={l.quantity}
                     onChange={(e) => cart.setQuantity(i, Number(e.target.value) || 1)}
-                    className="tabular min-h-11 w-20 rounded-md border border-line bg-white px-3"
+                    className="tabular min-h-11 w-20 rounded-md border border-line bg-field px-3"
                   />
                   <button
                     type="button"
                     onClick={() => cart.remove(i)}
-                    className="min-h-11 text-sm font-semibold text-bordeaux hover:underline"
+                    className="min-h-11 text-sm font-semibold text-accent hover:underline"
                   >
                     {t("remove")}
                   </button>
@@ -137,18 +134,18 @@ export function CartView() {
         </p>
         <p className="mt-2 text-sm text-stone">{t("shippingLater")}</p>
         {blocked ? (
-          <p className="mt-4 text-sm font-semibold text-bordeaux">{t("fixCart")}</p>
+          <p className="mt-4 text-sm font-semibold text-accent">{t("fixCart")}</p>
         ) : (
           <Link
             href="/boutique/commande"
-            className="mt-5 flex min-h-12 items-center justify-center rounded-full bg-bordeaux px-5 font-semibold text-cream hover:bg-ink"
+            className="mt-5 flex min-h-12 items-center justify-center rounded-full bg-bordeaux px-5 font-semibold text-cream hover:bg-bordeaux-bright"
           >
             {t("checkout")}
           </Link>
         )}
         <Link
           href="/boutique"
-          className="mt-3 flex min-h-11 items-center justify-center font-semibold text-ink/80 hover:text-bordeaux"
+          className="mt-3 flex min-h-11 items-center justify-center font-semibold text-fg/80 hover:text-accent"
         >
           {t("continue")}
         </Link>

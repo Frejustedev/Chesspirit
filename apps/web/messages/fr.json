@@ -195,7 +195,7 @@
         "text": "Vidéos, podcasts, leçons, puzzles et ressources."
       }
     },
-    "top10": "Top 10 — cote rapide",
+    "top10": "Top 10 — cote Chesspirit (rapide)",
     "fullRanking": "Classement complet",
     "rankingEmpty": "Le premier classement sera publié après les premiers tournois homologués.",
     "figures": "En chiffres",
@@ -208,7 +208,11 @@
     "organizersTitle": "Organisateurs : l'outil est gratuit",
     "organizersText": "Inscriptions, appariements, résultats, affiches et archives : le module de gestion de tournois est offert à tous les organisateurs du Bénin.",
     "organizersCta": "Nous contacter",
-    "partnersTitle": "Avec nos partenaires"
+    "partnersTitle": "Avec nos partenaires",
+    "rankingsTitle": "Classements des joueurs",
+    "top10Fide": "Top 10 — Elo FIDE officiel (standard)",
+    "fullFide": "Elo FIDE complet",
+    "rankingEmptyFide": "Le classement FIDE apparaîtra après le premier import de la liste officielle."
   },
   "tournament": {
     "cadence": {
@@ -859,7 +863,10 @@
     "games": "Parties",
     "empty": "Aucun joueur classé pour ces critères.",
     "note": "« Cote Chesspirit » : classement interne, distinct de l'Elo FIDE.",
-    "methodLink": "Comment est-elle calculée ?"
+    "methodLink": "Comment est-elle calculée ?",
+    "tabs": "Type de classement",
+    "tabChesspirit": "Cote Chesspirit",
+    "tabFide": "Elo FIDE officiel"
   },
   "player": {
     "peak": "Meilleure : {peak}",
@@ -898,14 +905,18 @@
     "newRating": "Nouvelle cote"
   },
   "fide": {
-    "title": "Elo FIDE",
+    "title": "Elo FIDE officiel",
     "intro": "Classement officiel international des joueurs béninois ayant renseigné leur identifiant FIDE, importé chaque mois depuis la liste de la FIDE.",
-    "period": "Liste du {period}",
+    "period": "Liste officielle de {period}",
     "player": "Joueur",
     "standard": "Standard",
     "rapid": "Rapide",
     "blitz": "Blitz",
-    "empty": "La première liste FIDE sera importée au prochain import mensuel."
+    "empty": "La première liste FIDE sera importée au prochain import mensuel.",
+    "rank": "Rang",
+    "titleCol": "Titre",
+    "cadences": "Cadence de l'Elo FIDE",
+    "unrated": "Joueurs sans Elo dans cette cadence : non classés."
   },
   "engine": {
     "start": "Analyser avec Stockfish",

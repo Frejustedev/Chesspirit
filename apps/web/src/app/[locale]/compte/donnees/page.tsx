@@ -44,7 +44,7 @@ export default async function DataPage({ params }: { params: Promise<{ locale: s
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- téléchargement d'un fichier, pas une page */}
         <a
           href="/api/me/export"
-          className="mt-3 inline-flex min-h-12 items-center gap-2 rounded-full border border-ink/25 px-5 font-semibold hover:bg-cream"
+          className="mt-3 inline-flex min-h-12 items-center gap-2 rounded-full border border-fg/25 px-5 font-semibold hover:bg-surface"
         >
           <IconDownload className="size-5" /> {t("exportButton")}
         </a>

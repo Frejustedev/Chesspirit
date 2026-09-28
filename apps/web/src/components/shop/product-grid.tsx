@@ -38,7 +38,7 @@ export async function ProductGrid({
                 />
                 <div className="absolute left-2 top-2 flex flex-wrap gap-1">
                   {p.is_preorder ? (
-                    <span className="rounded-full bg-ink px-2 py-0.5 text-xs font-semibold text-cream">
+                    <span className="rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-onaccent">
                       {t("preorder")}
                     </span>
                   ) : null}
@@ -54,7 +54,7 @@ export async function ProductGrid({
                   ) : null}
                 </div>
               </div>
-              <p className="mt-2 font-semibold leading-snug group-hover:text-bordeaux">{name}</p>
+              <p className="mt-2 font-semibold leading-snug group-hover:text-accent">{name}</p>
               <p className="tabular mt-0.5 text-[0.95rem]">
                 {range.min !== range.max ? `${t("from")} ` : ""}
                 {formatXof(range.min, locale)}
@@ -86,7 +86,7 @@ export async function ShopNav({ current }: { current?: string }) {
       <Link
         href={href}
         aria-current={active ? "page" : undefined}
-        className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-[0.95rem] font-semibold ${active ? "bg-ink text-cream" : "border border-line hover:bg-cream"}`}
+        className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-[0.95rem] font-semibold ${active ? "bg-gold text-onaccent" : "border border-line hover:bg-surface"}`}
       >
         {label}
       </Link>

@@ -31,9 +31,9 @@ export default async function ShowsPage({ params }: { params: Promise<{ locale: 
           <li key={s.slug}>
             <Link
               href={`/media/emissions/${s.slug}`}
-              className="flex h-full flex-col rounded-lg border border-line p-5 hover:border-bordeaux"
+              className="flex h-full flex-col rounded-lg border border-line p-5 hover:border-accent"
             >
-              <span className="text-xs font-semibold uppercase tracking-wide text-gold-deep">
+              <span className="text-xs font-semibold uppercase tracking-wide text-accent">
                 {t(`kind.${s.kind}`)} · {t(`lang.${s.language}`)}
               </span>
               <span className="mt-1 font-display text-2xl font-semibold">

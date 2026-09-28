@@ -23,7 +23,7 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
   const o = overview.data;
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <p className="font-sans text-sm font-semibold uppercase tracking-[0.16em] text-gold-deep">
+      <p className="font-sans text-sm font-semibold uppercase tracking-[0.16em] text-accent">
         {t("kicker")}
       </p>
       <h1 className="mt-2 font-display text-4xl font-semibold">{t("title")}</h1>
@@ -45,8 +45,8 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
         </dl>
       ) : null}
       {alerts?.length ? (
-        <section className="mt-6 rounded-lg border border-bordeaux/40 bg-bordeaux-soft/40 p-4">
-          <h2 className="font-semibold text-bordeaux">{t("alerts.title")}</h2>
+        <section className="mt-6 rounded-lg border border-accent/40 bg-bordeaux-soft/40 p-4">
+          <h2 className="font-semibold text-accent">{t("alerts.title")}</h2>
           <ul className="mt-2 space-y-1 text-sm">
             {alerts.map((a) => (
               <li key={a.kind}>
@@ -63,7 +63,7 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
           {admin ? (
             <Link
               href="/admin/tournois/nouveau"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-ink"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-bordeaux-bright"
             >
               <IconPlus className="size-5" /> {t("newTournament")}
             </Link>
@@ -77,13 +77,13 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
                 className="group flex items-center gap-4 py-3"
               >
                 <span className="min-w-0 flex-1">
-                  <span className="block font-semibold group-hover:text-bordeaux">{tn.name}</span>
+                  <span className="block font-semibold group-hover:text-accent">{tn.name}</span>
                   <span className="block text-sm text-stone">
                     {formatDate(tn.starts_at, locale)} · {tt(`status.${tn.status}`)}
                     {tn.is_demo ? " · démo" : ""}
                   </span>
                 </span>
-                <IconArrow className="size-5 text-stone group-hover:text-bordeaux" />
+                <IconArrow className="size-5 text-stone group-hover:text-accent" />
               </Link>
             </li>
           ))}

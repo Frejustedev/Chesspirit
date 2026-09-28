@@ -47,7 +47,7 @@ export default async function AdminPayments({
         <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
         <a
           href={csv}
-          className="inline-flex min-h-11 items-center rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+          className="inline-flex min-h-11 items-center rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
         >
           {t("export")}
         </a>
@@ -60,7 +60,7 @@ export default async function AdminPayments({
           id="p-status"
           name="statut"
           defaultValue={statut}
-          className="min-h-11 rounded-md border border-line bg-white px-3"
+          className="min-h-11 rounded-md border border-line bg-field px-3"
         >
           <option value="">{t("allStatuses")}</option>
           {STATUSES.map((s) => (
@@ -76,7 +76,7 @@ export default async function AdminPayments({
           id="p-type"
           name="type"
           defaultValue={type}
-          className="min-h-11 rounded-md border border-line bg-white px-3"
+          className="min-h-11 rounded-md border border-line bg-field px-3"
         >
           <option value="">{t("allTypes")}</option>
           {TYPES.map((s) => (
@@ -87,7 +87,7 @@ export default async function AdminPayments({
         </select>
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("apply")}
         </button>
@@ -115,7 +115,7 @@ export default async function AdminPayments({
                 )}
               </span>
               <span>{p.provider}</span>
-              <span className="rounded-full bg-cream px-2 py-0.5 text-xs font-semibold">
+              <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-semibold">
                 {t(`statuses.${p.status}`)}
               </span>
               <span className="tabular font-semibold">{formatXof(p.amount_xof, locale)}</span>
@@ -125,7 +125,7 @@ export default async function AdminPayments({
                 </span>
               ) : null}
               {refunded ? (
-                <span className="tabular text-bordeaux">−{formatXof(refunded, locale)}</span>
+                <span className="tabular text-accent">−{formatXof(refunded, locale)}</span>
               ) : null}
               {p.status === "succeeded" && refunded < p.amount_xof ? (
                 <RefundButton paymentId={p.id} max={p.amount_xof - refunded} />

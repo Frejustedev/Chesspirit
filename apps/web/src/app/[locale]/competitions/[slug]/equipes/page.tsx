@@ -68,7 +68,7 @@ export default async function TeamsPage({
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
       <Link
         href={`/competitions/${t.slug}`}
-        className="text-sm font-semibold text-bordeaux hover:underline"
+        className="text-sm font-semibold text-accent hover:underline"
       >
         ← {t.name}
       </Link>

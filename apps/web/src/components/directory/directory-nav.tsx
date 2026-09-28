@@ -20,7 +20,7 @@ export async function DirectoryNav({ current }: { current: string }) {
             <Link
               href={href}
               aria-current={current === href ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold ${current === href ? "bg-ink text-cream" : "border border-line hover:bg-cream"}`}
+              className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold ${current === href ? "bg-gold text-onaccent" : "border border-line hover:bg-surface"}`}
             >
               {t(`nav.${key}`)}
             </Link>
@@ -55,7 +55,7 @@ export async function DirectoryFilters({
         name="q"
         defaultValue={q}
         placeholder={t("search")}
-        className="min-h-11 min-w-0 basis-full rounded-md border border-line bg-white px-3 sm:flex-1 sm:basis-auto"
+        className="min-h-11 min-w-0 basis-full rounded-md border border-line bg-field px-3 sm:flex-1 sm:basis-auto"
       />
       <label htmlFor="d-dep" className="sr-only">
         {t("department")}
@@ -64,7 +64,7 @@ export async function DirectoryFilters({
         id="d-dep"
         name="dep"
         defaultValue={dep ?? ""}
-        className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none"
+        className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none"
       >
         <option value="">{t("allDepartments")}</option>
         {BENIN_DEPARTMENTS.map((d) => (
@@ -74,7 +74,10 @@ export async function DirectoryFilters({
         ))}
       </select>
       {extra}
-      <button type="submit" className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream">
+      <button
+        type="submit"
+        className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
+      >
         {t("apply")}
       </button>
     </form>

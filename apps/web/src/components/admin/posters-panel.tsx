@@ -58,13 +58,13 @@ export function PostersPanel({ slug, hasResults }: { slug: string; hasResults: b
               src={url(f)}
               alt={t("preview", { format: t(`format.${f}`) })}
               loading="lazy"
-              className="mt-2 max-h-72 w-full rounded bg-cream object-contain"
+              className="mt-2 max-h-72 w-full rounded bg-surface object-contain"
             />
             <div className="mt-2 flex gap-3 text-sm font-semibold">
-              <a href={url(f)} download className="text-bordeaux hover:underline">
+              <a href={url(f)} download className="text-accent hover:underline">
                 PNG
               </a>
-              <a href={url(f, "pdf")} className="text-bordeaux hover:underline">
+              <a href={url(f, "pdf")} className="text-accent hover:underline">
                 PDF
               </a>
             </div>

@@ -106,7 +106,7 @@ export default async function AdminTournament({
           {}
           <a
             href={`/api/admin/tournaments/${tn.id}/registrations`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
           >
             <IconDownload className="size-5" /> {t("exportCsv")}
           </a>
@@ -114,7 +114,7 @@ export default async function AdminTournament({
         <ParticipantsImport tournamentId={tn.id} />
         <div className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-line">
           <table className="w-full min-w-[52rem] text-left text-sm">
-            <thead className="bg-cream/70 text-xs uppercase tracking-[0.08em] text-stone">
+            <thead className="bg-surface/70 text-xs uppercase tracking-[0.08em] text-stone">
               <tr>
                 <th className="px-3 py-2">{t("col.player")}</th>
                 <th className="px-3 py-2">{t("col.phone")}</th>
@@ -163,7 +163,7 @@ export default async function AdminTournament({
   } else if (tab === "rondes") {
     const offlineLink = (
       <p className="mb-4 text-sm">
-        <Link href={`/arbitrage/${tn.id}`} className="font-semibold text-bordeaux hover:underline">
+        <Link href={`/arbitrage/${tn.id}`} className="font-semibold text-accent hover:underline">
           {t("offlineMode")} →
         </Link>
       </p>
@@ -279,11 +279,11 @@ export default async function AdminTournament({
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <nav className="text-sm text-stone">
-        <Link href="/admin" className="hover:text-bordeaux">
+        <Link href="/admin" className="hover:text-accent">
           {t("title")}
         </Link>
         {" · "}
-        <Link href={`/competitions/${tn.slug}`} className="hover:text-bordeaux">
+        <Link href={`/competitions/${tn.slug}`} className="hover:text-accent">
           {t("publicPage")}
         </Link>
       </nav>
@@ -295,7 +295,7 @@ export default async function AdminTournament({
               <Link
                 href={`/admin/tournois/${tn.id}?onglet=${k}`}
                 aria-current={tab === k ? "page" : undefined}
-                className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 font-semibold ${tab === k ? "border-bordeaux text-bordeaux" : "border-transparent text-ink/70 hover:text-bordeaux"}`}
+                className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 font-semibold ${tab === k ? "border-accent text-accent" : "border-transparent text-fg/70 hover:text-accent"}`}
               >
                 {t(`tab.${k}`)}
               </Link>

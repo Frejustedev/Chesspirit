@@ -63,7 +63,7 @@ export default async function AmbassadorsPage({ params }: { params: Promise<{ lo
                 const p = people.find((x) => x.id === a.profile_id);
                 return p ? (
                   <li key={a.profile_id} className="flex justify-between gap-3 py-3">
-                    <Link href={`/joueurs/${p.id}`} className="font-semibold hover:text-bordeaux">
+                    <Link href={`/joueurs/${p.id}`} className="font-semibold hover:text-accent">
                       {p.display_name}
                     </Link>
                     <span className="text-stone">{a.city}</span>
@@ -80,7 +80,7 @@ export default async function AmbassadorsPage({ params }: { params: Promise<{ lo
             {!me ? (
               <Link
                 href={`/connexion?next=${encodeURIComponent("/communaute/ambassadeurs")}`}
-                className="inline-flex min-h-11 items-center rounded-full bg-ink px-5 font-semibold text-cream"
+                className="inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent"
               >
                 {t("signIn")}
               </Link>

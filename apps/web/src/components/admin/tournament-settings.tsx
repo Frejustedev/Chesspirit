@@ -153,7 +153,7 @@ export function TournamentSettings({
   const section = (s: Step) => (wizard && step !== s ? "hidden" : "grid gap-5 sm:grid-cols-2");
   const heading = (s: Step) => (
     <h2 className="font-display text-2xl font-semibold sm:col-span-2">
-      {wizard ? <span className="mr-2 text-gold-deep">{STEPS.indexOf(s) + 1}.</span> : null}
+      {wizard ? <span className="mr-2 text-accent">{STEPS.indexOf(s) + 1}.</span> : null}
       {tw(`step.${s}`)}
     </h2>
   );
@@ -239,7 +239,7 @@ export function TournamentSettings({
             name="partners_text"
             rows={3}
             defaultValue={partnersText}
-            className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            className="mt-1 w-full rounded-md border border-line bg-field p-3"
           />
         </div>
         <div>
@@ -251,7 +251,7 @@ export function TournamentSettings({
             name="description_fr"
             rows={5}
             defaultValue={tn?.description_fr ?? ""}
-            className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            className="mt-1 w-full rounded-md border border-line bg-field p-3"
           />
         </div>
         <div>
@@ -263,7 +263,7 @@ export function TournamentSettings({
             name="description_en"
             rows={5}
             defaultValue={tn?.description_en ?? ""}
-            className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            className="mt-1 w-full rounded-md border border-line bg-field p-3"
           />
         </div>
       </section>
@@ -356,7 +356,7 @@ export function TournamentSettings({
                 <span className="flex-1">{tw(`tb.${k}`)}</span>
                 <button
                   type="button"
-                  className="grid size-10 place-items-center rounded hover:bg-cream"
+                  className="grid size-10 place-items-center rounded hover:bg-surface"
                   aria-label={tw("up")}
                   onClick={() => move(i, -1)}
                 >
@@ -364,7 +364,7 @@ export function TournamentSettings({
                 </button>
                 <button
                   type="button"
-                  className="grid size-10 place-items-center rounded hover:bg-cream"
+                  className="grid size-10 place-items-center rounded hover:bg-surface"
                   aria-label={tw("down")}
                   onClick={() => move(i, 1)}
                 >
@@ -372,7 +372,7 @@ export function TournamentSettings({
                 </button>
                 <button
                   type="button"
-                  className="grid size-10 place-items-center rounded hover:bg-cream"
+                  className="grid size-10 place-items-center rounded hover:bg-surface"
                   aria-label={tw("remove")}
                   onClick={() => setTiebreaks(tiebreaks.filter((x) => x !== k))}
                 >
@@ -432,7 +432,7 @@ export function TournamentSettings({
             name="prizes_text"
             rows={5}
             defaultValue={prizesText}
-            className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            className="mt-1 w-full rounded-md border border-line bg-field p-3"
             placeholder={t("f.prizesPlaceholder")}
           />
           <p className="text-sm text-stone">{tw("specialPrizes")}</p>
@@ -615,7 +615,7 @@ export function TournamentSettings({
                 />
                 <button
                   type="button"
-                  className="grid size-10 place-items-center rounded hover:bg-cream"
+                  className="grid size-10 place-items-center rounded hover:bg-surface"
                   aria-label={tw("remove")}
                   onClick={() => setFields(fields.filter((_, j) => j !== i))}
                 >
@@ -642,7 +642,7 @@ export function TournamentSettings({
       </section>
 
       {msg ? (
-        <p role="status" className="rounded bg-cream px-3 py-2 font-semibold">
+        <p role="status" className="rounded bg-surface px-3 py-2 font-semibold">
           {msg}
         </p>
       ) : null}

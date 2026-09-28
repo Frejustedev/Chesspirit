@@ -30,7 +30,7 @@ export function TrackForm() {
         </Button>
       </form>
       {state && !state.ok ? (
-        <p role="alert" className="rounded bg-bordeaux-soft px-3 py-2 font-semibold text-bordeaux">
+        <p role="alert" className="rounded bg-bordeaux-soft px-3 py-2 font-semibold text-rose">
           {t("trackNotFound")}
         </p>
       ) : null}

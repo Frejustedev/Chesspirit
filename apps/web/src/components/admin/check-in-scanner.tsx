@@ -166,7 +166,7 @@ export function CheckInScanner() {
             "error" in e ? (
               <li
                 key={i}
-                className="rounded-md bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux"
+                className="rounded-md bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-rose"
               >
                 {e.at} — {e.error}
               </li>

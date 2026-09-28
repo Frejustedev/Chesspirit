@@ -65,7 +65,7 @@ export default async function RegistrationPage({
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 lg:px-6">
       <nav className="text-sm text-stone">
-        <Link href={`/competitions/${t.slug}`} className="hover:text-bordeaux">
+        <Link href={`/competitions/${t.slug}`} className="hover:text-accent">
           {t.name}
         </Link>
       </nav>
@@ -86,11 +86,9 @@ export default async function RegistrationPage({
         )}
       </p>
       {t.status !== "registration_open" ? (
-        <p className="mt-8 rounded bg-bordeaux-soft p-4 font-semibold text-bordeaux">
-          {tr("closed")}
-        </p>
+        <p className="mt-8 rounded bg-bordeaux-soft p-4 font-semibold text-rose">{tr("closed")}</p>
       ) : feeKnown && methods.length === 0 ? (
-        <p className="mt-8 rounded bg-bordeaux-soft p-4 font-semibold text-bordeaux">
+        <p className="mt-8 rounded bg-bordeaux-soft p-4 font-semibold text-rose">
           {tr("noMethod")}
         </p>
       ) : (

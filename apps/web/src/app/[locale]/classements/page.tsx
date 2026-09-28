@@ -4,6 +4,7 @@ import { BENIN_DEPARTMENTS } from "@chesspirit/shared";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { DemoBadge } from "@/components/ui/demo-badge";
+import { RankingTabs } from "@/components/rankings/ranking-tabs";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("rankings");
@@ -55,6 +56,7 @@ export default async function RankingsPage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
+      <RankingTabs current="chesspirit" />
       <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
       <nav aria-label={t("cadences")} className="mt-6 flex flex-wrap gap-2">
@@ -63,7 +65,7 @@ export default async function RankingsPage({
             key={c}
             href={href({ cadence: c })}
             aria-current={c === type ? "page" : undefined}
-            className={`inline-flex min-h-11 items-center rounded-full border px-4 font-semibold ${c === type ? "border-bordeaux bg-bordeaux text-cream" : "border-line hover:border-bordeaux"}`}
+            className={`inline-flex min-h-11 items-center rounded-full border px-4 font-semibold ${c === type ? "border-bordeaux bg-bordeaux text-cream" : "border-line hover:border-accent"}`}
           >
             {tt(`cadence.${c}`)}
           </Link>
@@ -79,7 +81,7 @@ export default async function RankingsPage({
           name="q"
           defaultValue={sp.q}
           placeholder={t("search")}
-          className="min-h-11 rounded-md border border-line bg-white px-3"
+          className="min-h-11 rounded-md border border-line bg-field px-3"
         />
         <label className="sr-only" htmlFor="sexe">
           {t("sex")}
@@ -88,7 +90,7 @@ export default async function RankingsPage({
           id="sexe"
           name="sexe"
           defaultValue={sp.sexe ?? ""}
-          className="min-h-11 rounded-md border border-line bg-white px-3"
+          className="min-h-11 rounded-md border border-line bg-field px-3"
         >
           <option value="">{t("allSexes")}</option>
           <option value="F">{t("women")}</option>
@@ -101,7 +103,7 @@ export default async function RankingsPage({
           id="age"
           name="age"
           defaultValue={sp.age ?? "all"}
-          className="min-h-11 rounded-md border border-line bg-white px-3"
+          className="min-h-11 rounded-md border border-line bg-field px-3"
         >
           {AGES.map((a) => (
             <option key={a} value={a}>
@@ -117,7 +119,7 @@ export default async function RankingsPage({
             id="dep"
             name="dep"
             defaultValue={sp.dep ?? ""}
-            className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3"
+            className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3"
           >
             <option value="">{t("allDepartments")}</option>
             {BENIN_DEPARTMENTS.map((d) => (
@@ -128,7 +130,7 @@ export default async function RankingsPage({
           </select>
           <button
             type="submit"
-            className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+            className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
           >
             {t("filter")}
           </button>
@@ -137,7 +139,7 @@ export default async function RankingsPage({
       {data?.length ? (
         <div className="mt-6 overflow-x-auto rounded-[var(--radius-card)] border border-line">
           <table className="w-full min-w-[30rem] text-left text-[0.95rem]">
-            <thead className="bg-cream/70 text-xs uppercase tracking-[0.08em] text-stone">
+            <thead className="bg-surface/70 text-xs uppercase tracking-[0.08em] text-stone">
               <tr>
                 <th className="px-3 py-2">#</th>
                 <th className="px-3 py-2">{t("player")}</th>
@@ -149,16 +151,16 @@ export default async function RankingsPage({
             <tbody className="divide-y divide-line">
               {data.map((r, i) => (
                 <tr key={r.profile_id}>
-                  <td className="tabular px-3 py-2 text-gold-deep">{i + 1}</td>
+                  <td className="tabular px-3 py-2 text-accent">{i + 1}</td>
                   <td className="px-3 py-2 font-medium">
                     {r.titles?.length ? (
-                      <span className="mr-1.5 text-xs font-bold text-bordeaux">
+                      <span className="mr-1.5 text-xs font-bold text-accent">
                         {r.titles.join(" ")}
                       </span>
                     ) : null}
                     <Link
                       href={`/joueurs/${r.profile_id}`}
-                      className="hover:text-bordeaux hover:underline"
+                      className="hover:text-accent hover:underline"
                     >
                       {r.display_name}
                     </Link>{" "}
@@ -179,7 +181,7 @@ export default async function RankingsPage({
       )}
       <p className="mt-4 text-sm text-stone">
         {t("note")}{" "}
-        <Link href="/classements/methode" className="font-semibold text-bordeaux hover:underline">
+        <Link href="/classements/methode" className="font-semibold text-accent hover:underline">
           {t("methodLink")}
         </Link>
       </p>

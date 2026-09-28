@@ -21,7 +21,7 @@ export function SeasonPicker({
             <Link
               href={`${base}?saison=${s.slug}`}
               aria-current={s.slug === current ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 text-sm font-semibold ${s.slug === current ? "bg-ink text-cream" : "border border-line hover:bg-cream"}`}
+              className={`inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 text-sm font-semibold ${s.slug === current ? "bg-gold text-onaccent" : "border border-line hover:bg-surface"}`}
             >
               {s.name} {s.is_demo ? <DemoBadge dark={s.slug === current} /> : null}
             </Link>
