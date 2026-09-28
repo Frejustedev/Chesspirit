@@ -57,7 +57,7 @@ Le paiement en local utilise un **fournisseur factice** : la page de paiement pr
 
 ## Variables d'environnement
 
-Voir [`apps/web/.env.example`](apps/web/.env.example). En local, `pnpm dev` crée `apps/web/.env.local` avec les valeurs de la pile locale. Chaque service externe (paiement, SMS, e-mail, WhatsApp, statistiques) a une implémentation factice active tant que sa clé est absente.
+Voir [`.env.example`](.env.example). En local, `pnpm dev` crée `apps/web/.env.local` avec les valeurs de la pile locale. Chaque service externe (paiement, SMS, e-mail, WhatsApp, statistiques) a une implémentation factice active tant que sa clé est absente.
 
 ## Documents
 

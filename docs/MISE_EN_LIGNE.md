@@ -41,7 +41,7 @@ Ce guide s'adresse à la personne qui met le site en ligne, sans connaissance te
 Toutes ces valeurs se rangent dans un fichier `.env.production` à la racine du projet (jamais envoyé sur GitHub : il est exclu automatiquement).
 
 ```bash
-cp apps/web/.env.example .env.production
+cp .env.example .env.production
 # puis ouvrir .env.production avec un éditeur de texte et le remplir
 ```
 
@@ -106,7 +106,7 @@ La branche de production est `main` : fusionner d'abord la demande de fusion (PR
 
 1. Sur vercel.com : _Add New → Project_, importer le dépôt GitHub `frejustedev/chesspirit`. Réglages :
    - **Root Directory : `apps/web`** ; « Include files outside the Root Directory » : activé (par défaut) ;
-   - Framework : Next.js ; commandes d'installation et de compilation : par défaut ;
+   - Framework (« Application Preset ») : **Next.js** — si Vercel propose « Services » (il détecte aussi `services/chess-engine`), choisir Next.js ; commandes d'installation et de compilation : par défaut ;
    - Node.js : 22.x (fixé par `apps/web/package.json`) ; région des fonctions : Paris `cdg1` (fixée par `apps/web/vercel.json`).
 2. **Avant de cliquer sur « Deploy »**, ouvrir _Environment Variables_ et saisir, pour l'environnement Production (et Preview seulement si vous voulez tester des branches : elles utiliseraient la même base) :
    - `NEXT_PUBLIC_SITE_URL=https://chesspirit.com`
