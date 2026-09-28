@@ -102,7 +102,8 @@
       "privacy": "Privacy",
       "cookies": "Cookies",
       "refunds": "Returns and refunds",
-      "rules": "Standard tournament rules"
+      "rules": "Standard tournament rules",
+      "pvm": "Public vs master"
     }
   },
   "footer": {
@@ -404,7 +405,9 @@
     "coach": "Coach space",
     "orders": "Orders",
     "leagues": "Leagues",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "joinCta": "Join the community",
+    "levelLine": "Level {level} · {xp} points"
   },
   "family": {
     "title": "Family account",
@@ -1546,7 +1549,8 @@
     "leagues": "Leagues & Tour",
     "directory": "Directory",
     "content": "Content",
-    "stats": "Statistics"
+    "stats": "Statistics",
+    "community": "Community"
   },
   "adminUsers": {
     "title": "Users",
@@ -2333,7 +2337,8 @@
     "send": "Send",
     "suggestionThanks": "Thank you, your suggestion will be reviewed.",
     "signInToSuggest": "Sign in to suggest a translation.",
-    "suggestionError": "Could not send."
+    "suggestionError": "Could not send.",
+    "premiumLockedShort": "premium"
   },
   "adminContent": {
     "title": "Content",
@@ -2483,5 +2488,284 @@
     "noRounds": "No paired round.",
     "loading": "Loading…",
     "noCopy": "No local copy: open this page with a connection."
+  },
+  "community": {
+    "title": "Community",
+    "intro": "Membership, levels and badges, ambassadors and referrals, free predictions, public-vs-master games and the Chesspirit Awards.",
+    "nav": {
+      "membership": "Membership",
+      "badges": "Levels and badges",
+      "ambassadors": "Ambassadors",
+      "predictions": "Predictions",
+      "pvm": "The public vs the master",
+      "awards": "Awards"
+    },
+    "cards": {
+      "membership": "Free member card, or premium membership for advanced courses.",
+      "badges": "From Pawn to King: your level grows with your tournaments, games and puzzles.",
+      "ambassadors": "Represent Chesspirit in your city and refer your friends.",
+      "predictions": "Guess the results of ongoing games. Free, no money involved.",
+      "pvm": "Vote on each of the public's moves against a master.",
+      "awards": "Vote for the season's players, clubs and moments."
+    },
+    "levels": {
+      "pawn": "Pawn",
+      "knight": "Knight",
+      "bishop": "Bishop",
+      "rook": "Rook",
+      "queen": "Queen",
+      "king": "King"
+    },
+    "myLevel": "My level",
+    "xp": "{xp} experience points",
+    "toNext": "{n} more points to become {level}",
+    "maxLevel": "Top level reached.",
+    "membership": {
+      "title": "Membership",
+      "intro": "Join the Chesspirit community: basic membership is free, premium membership unlocks advanced courses.",
+      "free": "Free",
+      "price": "{price} for {months} months",
+      "priceTbc": "The price will be announced soon.",
+      "active": "Active membership",
+      "signIn": "Sign in to join",
+      "joinFree": "Join for free",
+      "joinPremium": "Become a premium member",
+      "pay": "Complete payment",
+      "card": "Member card",
+      "cardHelp": "Show this QR code at event entrances.",
+      "validUntil": "Valid until {date}",
+      "noEnd": "No end date",
+      "note": "Premium membership is paid by Mobile Money; it is activated as soon as the payment is confirmed.",
+      "checkTitle": "Card check",
+      "cardValid": "Valid member card",
+      "cardInvalid": "Unknown or expired card",
+      "member": "Member",
+      "premiumMember": "Premium member",
+      "privateName": "Private profile"
+    },
+    "premium": {
+      "title": "Premium courses",
+      "intro": "In-depth courses, exclusive resources and a premium badge, for premium members.",
+      "priceLabel": "Price:",
+      "price": "{price} for {months} months",
+      "cta": "Become a premium member",
+      "youArePremium": "You are a premium member: all courses are open.",
+      "lessons": "Premium lessons",
+      "noLessons": "The first premium lessons are being prepared.",
+      "resources": "Premium resources"
+    },
+    "badges": {
+      "title": "Levels and badges",
+      "intro": "Every tournament, game, puzzle and lesson helps you progress, from Pawn to King. Badges reward milestones.",
+      "signIn": "Sign in to see your level and badges.",
+      "levels": "The six levels",
+      "fromXp": "from {xp} points",
+      "howTo": "How to earn points",
+      "rules": {
+        "tournaments": "Tournament played",
+        "games": "Game played",
+        "puzzles": "Puzzle solved",
+        "lessons": "Lesson taken",
+        "predictions": "Correct prediction",
+        "badges": "Badge earned"
+      },
+      "all": "All badges",
+      "owned": "earned",
+      "passport": "Chesspirit Tour passport",
+      "passportIntro": "A stamp for each Tour stage city where you played.",
+      "passportEmpty": "No stage played yet."
+    },
+    "ambassadors": {
+      "title": "Ambassadors and referrals",
+      "intro": "Ambassadors bring chess to life in their city: they welcome new players and share events.",
+      "list": "Our ambassadors",
+      "none": "The first ambassadors will be announced soon.",
+      "apply": "Become an ambassador",
+      "applyIntro": "Introduce yourself in a few lines; the team will get back to you.",
+      "signIn": "Sign in to apply",
+      "city": "City",
+      "motivation": "Your motivation (at least 20 characters)",
+      "submit": "Send my application",
+      "applied": "Application sent. Thank you!",
+      "status": {
+        "pending": "Application under review.",
+        "approved": "You are a Chesspirit ambassador.",
+        "refused": "Your application was not accepted this time."
+      }
+    },
+    "referral": {
+      "title": "Referrals",
+      "intro": "Invite your friends with your personal link: each referred sign-up counts towards the “Referrer” badge.",
+      "yourLink": "Your referral link",
+      "yourCode": "Your code: {code}",
+      "count": "{n, plural, =0 {No one referred yet} one {# person referred} other {# people referred}}",
+      "copy": "Copy",
+      "copied": "Copied",
+      "haveCode": "Have a referral code?",
+      "code": "Referral code",
+      "claim": "Apply",
+      "claimed": "Referral recorded. Welcome!"
+    },
+    "predictions": {
+      "title": "Predictions",
+      "intro": "Guess the results of games in ongoing tournaments. Free predictions: no money is involved, only points and a ranking.",
+      "open": "Games open for predictions",
+      "rules": "Predictions close 15 minutes after pairings are published. 1 point per correct prediction.",
+      "noneOpen": "No game is open for predictions right now. Come back when the next round is published.",
+      "round": "Round {n}",
+      "board": "Board {n}",
+      "result": {
+        "white": "White wins",
+        "draw": "Draw",
+        "black": "Black wins"
+      },
+      "saved": "Prediction saved.",
+      "signIn": "Sign in to predict",
+      "myScore": "My score: {points} point(s) for {n} prediction(s).",
+      "leaderboard": "Predictors ranking",
+      "points": "{n} pt",
+      "emptyBoard": "The ranking will appear after the first results.",
+      "free": "Free game, no stakes and no money prizes."
+    },
+    "pvm": {
+      "title": "The public vs the master",
+      "intro": "The public plays together against a master: each of the public's moves is chosen by vote.",
+      "none": "No game in progress yet.",
+      "master": "Master: {name}",
+      "moves": "{n, plural, =0 {no moves} one {# move} other {# moves}}",
+      "inProgress": "Game in progress",
+      "finished": "Game over: {result}",
+      "demo": "demo",
+      "publicPlays": "the public plays {color}",
+      "white": "white",
+      "black": "black",
+      "boardLabel": "Game board",
+      "yourTurn": "The public's move: choose your move on the board.",
+      "signInToVote": "The public's move: sign in to vote.",
+      "signIn": "Sign in to vote",
+      "voteClosed": "Voting closed: the public's move will be played.",
+      "masterTurn": "The master's move.",
+      "voteEnds": "Voting ends: {date}",
+      "voteRecorded": "Vote recorded.",
+      "tally": "Votes for this move",
+      "votes": "{n, plural, one {# vote} other {# votes}}",
+      "noVotes": "No votes yet.",
+      "movesTitle": "Moves played",
+      "control": "Control (master or administration)",
+      "playPublic": "Play the most voted move",
+      "masterMove": "Master's move (e.g. e7e5)",
+      "play": "Play",
+      "finish": "Declare the result:",
+      "finishConfirm": "End the game with result {result}?"
+    },
+    "awards": {
+      "title": "Chesspirit Awards",
+      "intro": "Each season, the community elects the players, clubs and highlights of chess in Benin.",
+      "editions": "Editions",
+      "none": "The first Awards edition will be announced soon.",
+      "demo": "Demo edition: fictitious categories and nominees.",
+      "votingUntil": "Voting open until {date}.",
+      "votingOpen": "Voting open.",
+      "votingClosed": "Voting is not open.",
+      "results": "Voting results.",
+      "signIn": "Sign in to vote",
+      "vote": "Vote",
+      "yourVote": "Your vote",
+      "votes": "{n, plural, one {# vote} other {# votes}}",
+      "winner": "Winner"
+    },
+    "errors": {
+      "auth_required": "Please sign in to continue.",
+      "invalid": "Invalid data.",
+      "voting_closed": "Voting is closed.",
+      "prediction_closed": "Predictions are closed for this game.",
+      "vote_closed": "Voting is closed for this move.",
+      "illegal_move": "Illegal move in this position.",
+      "no_votes": "No legal move has received a vote.",
+      "forbidden": "Action not allowed.",
+      "payment_unavailable": "Payment is temporarily unavailable.",
+      "already_applied": "You have already applied.",
+      "invalid_code": "Invalid code.",
+      "referral_refused": "This code cannot be applied (unknown code, your own, or account created more than 30 days ago).",
+      "price_not_set": "The price has not been set yet.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "adminCommunity": {
+    "title": "Community",
+    "tabs": "Sections",
+    "tab": {
+      "adhesions": "Memberships",
+      "ambassadeurs": "Ambassadors",
+      "awards": "Awards",
+      "public-contre-le-maitre": "Public vs master"
+    },
+    "saved": "Saved.",
+    "save": "Save",
+    "price": "Price (FCFA)",
+    "priceHint": "Leave empty until the price is confirmed.",
+    "duration": "Duration (months)",
+    "activePlan": "Plan offered",
+    "referralsCount": "{n, plural, =0 {No referrals} one {# referral recorded} other {# referrals recorded}}",
+    "members": "Recent memberships",
+    "card": "Card",
+    "name": "Name",
+    "plan": "Plan",
+    "status": "Status",
+    "validity": "Valid until",
+    "memberStatus": {
+      "pending_payment": "awaiting payment",
+      "active": "active",
+      "expired": "expired",
+      "cancelled": "cancelled"
+    },
+    "approve": "Approve",
+    "refuse": "Refuse",
+    "ambassadorStatus": {
+      "pending": "pending",
+      "approved": "approved",
+      "refused": "refused"
+    },
+    "noAmbassadors": "No applications.",
+    "newEdition": "New edition",
+    "year": "Year",
+    "slug": "Address (slug)",
+    "titleFr": "Title (FR)",
+    "titleEn": "Title (EN)",
+    "votingEnds": "Voting ends",
+    "createEdition": "Create edition",
+    "editionStatus": {
+      "draft": "Draft",
+      "voting": "Voting open",
+      "closed": "Closed (results published)"
+    },
+    "categoryFr": "Category (FR)",
+    "categoryEn": "Category (EN)",
+    "addCategory": "Add category",
+    "nominee": "Nominee",
+    "nomineeDescription": "Description",
+    "addNominee": "Add",
+    "delete": "Delete",
+    "deleteConfirm": "Delete permanently?",
+    "demo": "demo",
+    "newPvm": "New “public vs master” game",
+    "pvmHelp": "The game is run from its public page: master's move, then closing the public vote.",
+    "masterName": "Master's name",
+    "publicColor": "Public's colour",
+    "white": "White",
+    "black": "Black",
+    "voteMinutes": "Length of each vote (minutes)",
+    "createPvm": "Create game",
+    "pvmStatus": {
+      "draft": "draft",
+      "open": "in progress",
+      "finished": "finished"
+    },
+    "errors": {
+      "invalid": "Invalid data.",
+      "forbidden": "Action not allowed.",
+      "slug_taken": "This address is already used.",
+      "generic": "Something went wrong."
+    }
   }
 }

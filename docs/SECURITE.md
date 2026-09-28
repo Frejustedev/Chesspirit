@@ -23,3 +23,14 @@ Revue complète menée par un sous-agent dédié (lecture du code, requêtes sur
 | L7  | Faible  | Service Python : saut de ligne dans les noms (fichier TRF), taille des requêtes.                                                                          | Motif sur les noms, limite de taille (413/411), identifiants inconnus refusés. Tests.                                                                                                               |
 
 Points vérifiés sans anomalie : RLS activée partout, fonctions `SECURITY DEFINER` avec `search_path` vide et contrôle d'accès, `confirm_payment` réservée au rôle service, montants toujours issus de la base, signatures HMAC à fenêtre temporelle et comparaison à temps constant, en-têtes de sécurité, absence de secret dans l'historique Git.
+
+## Phase 3 — communauté
+
+| Point | Traitement |
+| --- | --- |
+| Accès au contenu premium par l'API | RLS sur `lessons_library` et `resources` (adhésion premium active) ; catalogue par vues sans contenu. Test SQL. |
+| Adhésion auto-attribuée | Aucune politique d'insertion ou de modification pour les membres : création par `request_membership` (montant fixé en base), activation par `confirm_payment` (rôle service). Tests SQL. |
+| Énumération des cartes de membre | La page de vérification n'affiche le nom que pour un profil public. |
+| Votes et pronostics forgés | Écriture uniquement par fonctions (`cast_award_vote`, `predict`, `pvm_vote`) ; points calculés par déclencheur ; pas d'auto-pronostic sur sa propre partie. Tests SQL. |
+| Pilotage de la partie public/maître | Écriture réservée à l'administration et au maître rattaché (RLS) ; coups validés par chess.js ; mise à jour conditionnelle. |
+| Parrainage abusif | Une fois par profil, 30 jours après la création, jamais pour soi ; cookie `httpOnly`, code validé par motif. |

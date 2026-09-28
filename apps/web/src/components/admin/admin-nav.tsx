@@ -22,6 +22,7 @@ export async function AdminNav() {
     if (has("admin_shop")) items.push(["/admin/boutique", t("shop")]);
     items.push(["/admin/coaching", t("coaching")]);
     items.push(["/admin/annuaire", t("directory")]);
+    items.push(["/admin/communaute", t("community")]);
     items.push(["/admin/messages", t("messages")]);
     if (has("moderator")) items.push(["/admin/contenus", t("content")]);
     items.push(["/admin/reglages", t("settings")]);

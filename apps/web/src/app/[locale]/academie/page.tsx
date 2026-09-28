@@ -17,7 +17,7 @@ export default async function AcademyHome({ params }: { params: Promise<{ locale
   const tc = await getTranslations("coaching");
   const supabase = await createClient();
   const { data: lessons } = await supabase
-    .from("lessons_library")
+    .from("lesson_catalog")
     .select("slug, title, summary, level, is_premium")
     .order("position")
     .limit(6);

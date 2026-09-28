@@ -4,6 +4,7 @@ import { consentsSchema, profileSchema, childSchema } from "@chesspirit/shared";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
+import { claimReferralFromCookie } from "./community";
 
 /** Erreur SQL → code d'erreur affichable (identifiant FIDE déjà rattaché à une autre fiche). */
 function dbError(e: { code?: string; message: string }) {
@@ -35,6 +36,7 @@ export async function saveProfile(input: unknown, consents: unknown): Promise<Ac
       p_consents: c.data,
     });
     if (error) return { ok: false, error: dbError(error) };
+    await claimReferralFromCookie();
   } else {
     const { error } = await supabase
       .from("profiles")

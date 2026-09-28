@@ -26,7 +26,7 @@ export default async function LessonsPage({
   const tm = await getTranslations("media");
   const supabase = await createClient();
   let q = supabase
-    .from("lessons_library")
+    .from("lesson_catalog")
     .select("slug, title, summary, level, theme, is_premium")
     .order("position");
   if (sp.niveau && (LEVELS as readonly string[]).includes(sp.niveau)) q = q.eq("level", sp.niveau);

@@ -1946,6 +1946,122 @@ async function seedContent(demo: boolean) {
   );
 }
 
+/** Communauté : une leçon premium (contenu réel) ; en démonstration, des Awards et une partie public/maître fictifs. */
+async function seedCommunity(demo: boolean) {
+  const { data: lucena } = await db
+    .from("lessons_library")
+    .select("id")
+    .eq("slug", "finale-de-lucena")
+    .maybeSingle();
+  if (!lucena)
+    must(
+      await db.from("lessons_library").insert({
+        slug: "finale-de-lucena",
+        level: "advanced",
+        theme: "endgames",
+        position: 50,
+        is_premium: true,
+        status: "published",
+        title: {
+          fr: "La position de Lucena : construire le pont",
+          en: "The Lucena position: building the bridge",
+        },
+        summary: {
+          fr: "La technique gagnante de référence dans les finales tour et pion contre tour.",
+          en: "The reference winning technique in rook and pawn versus rook endgames.",
+        },
+        body: {
+          fr: "## La position\n\nLe pion blanc est sur la septième rangée, protégé par son roi placé devant lui ; le roi noir est coupé d'une colonne.\n\n## La méthode\n\n1. **Tf1+ ou Td1+** : l'échec repousse le roi adverse.\n2. **Td4 !** : la tour monte sur la quatrième rangée pour préparer le « pont ».\n3. Le roi blanc sort de sa prison ; aux échecs sur la colonne, la tour s'interpose sur la quatrième rangée.\n\n## À retenir\n\nLa tour sur la quatrième rangée sert d'abri au roi : c'est le pont.",
+          en: "## The position\n\nWhite's pawn is on the seventh rank, protected by its king standing in front of it; the black king is cut off by one file.\n\n## The method\n\n1. **Rf1+ or Rd1+**: the check pushes the enemy king away.\n2. **Rd4!**: the rook goes to the fourth rank to prepare the \u201cbridge\u201d.\n3. The white king walks out; when the rook checks along the file, the white rook blocks on the fourth rank.\n\n## Remember\n\nThe rook on the fourth rank shelters the king: that is the bridge.",
+        },
+        positions: [
+          {
+            fen: "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 0 1",
+            caption: {
+              fr: "Position de Lucena, les blancs jouent et gagnent",
+              en: "Lucena position, White to play and win",
+            },
+          },
+        ],
+      }),
+      "leçon premium",
+    );
+  if (!demo) return;
+  const { data: edition } = await db
+    .from("award_editions")
+    .select("id")
+    .eq("slug", "awards-demo")
+    .maybeSingle();
+  if (!edition) {
+    const ed = must(
+      await db
+        .from("award_editions")
+        .insert({
+          year: 2026,
+          slug: "awards-demo",
+          title: { fr: "Chesspirit Awards (démonstration)", en: "Chesspirit Awards (demo)" },
+          status: "voting",
+          is_demo: true,
+        })
+        .select("id")
+        .single(),
+      "édition démo",
+    );
+    const cats = must(
+      await db
+        .from("award_categories")
+        .insert([
+          {
+            edition_id: ed.id,
+            position: 1,
+            name: { fr: "Joueur de l'année (fictif)", en: "Player of the year (fictitious)" },
+          },
+          {
+            edition_id: ed.id,
+            position: 2,
+            name: { fr: "Club de l'année (fictif)", en: "Club of the year (fictitious)" },
+          },
+        ])
+        .select("id, position"),
+      "catégories démo",
+    );
+    const [c1, c2] = [cats.find((c) => c.position === 1)!, cats.find((c) => c.position === 2)!];
+    must(
+      await db.from("award_nominees").insert([
+        { category_id: c1.id, name: "Joueur démo A", description: "Nommé fictif (démonstration)" },
+        {
+          category_id: c1.id,
+          name: "Joueuse démo B",
+          description: "Nommée fictive (démonstration)",
+        },
+        { category_id: c1.id, name: "Joueur démo C", description: "Nommé fictif (démonstration)" },
+        { category_id: c2.id, name: "Club démo Alpha", description: "Club fictif (démonstration)" },
+        { category_id: c2.id, name: "Club démo Bêta", description: "Club fictif (démonstration)" },
+      ]),
+      "nommés démo",
+    );
+  }
+  const { data: pvm } = await db
+    .from("pvm_games")
+    .select("id")
+    .eq("slug", "partie-demo")
+    .maybeSingle();
+  if (!pvm)
+    must(
+      await db.from("pvm_games").insert({
+        slug: "partie-demo",
+        title: { fr: "Partie de démonstration", en: "Demo game" },
+        master_name: "Maître fictif (démonstration)",
+        public_color: "w",
+        vote_minutes: 1440,
+        vote_ends_at: new Date(Date.now() + 7 * 86_400_000).toISOString(),
+        is_demo: true,
+      }),
+      "partie démo",
+    );
+  console.log("✓ Communauté : leçon premium" + (demo ? ", Awards et partie de démonstration" : ""));
+}
+
 const launchId = await seedLaunchTournament();
 await seedShop(withDemo);
 
@@ -1959,4 +2075,5 @@ if (withDemo) {
 await seedLeagues(withDemo);
 if (withDemo) await seedDirectory();
 await seedContent(withDemo);
+await seedCommunity(withDemo);
 console.log("✓ Seed terminé");

@@ -6,6 +6,8 @@ import { requireSession, isAdminRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { qrSvg } from "@/lib/qr";
 import { env } from "@/lib/env";
+import { activeMemberships } from "@/lib/membership";
+import { memberStanding } from "@/lib/community";
 import { AccountNav, AccountShell } from "@/components/account/account-nav";
 import { IconArrow } from "@/components/icons";
 
@@ -17,6 +19,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
   const session = await requireSession(locale, "/compte");
   const t = await getTranslations("account");
   const tt = await getTranslations("tournament");
+  const tc = await getTranslations("community");
   const supabase = await createClient();
   const p = session.profile!;
   const [{ data: regs }, { data: ratings }, { data: children }] = await Promise.all([
@@ -34,7 +37,9 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
     [p.id, p.first_name],
     ...(children ?? []).map((c) => [c.id, c.first_name] as [string, string]),
   ]);
-  const card = await qrSvg(`${env.siteUrl}/membre/${p.id}`);
+  const [membership] = await activeMemberships(p.id);
+  const card = membership ? await qrSvg(`${env.siteUrl}/membre/${membership.card_number}`) : null;
+  const standing = await memberStanding(p.id);
 
   return (
     <AccountShell
@@ -117,10 +122,28 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
           <p className="text-sm text-cream/70">
             {[p.club_name, p.city].filter(Boolean).join(" · ")}
           </p>
-          <div
-            className="mx-auto mt-4 w-40 overflow-hidden rounded bg-paper p-2 [&_svg]:h-auto [&_svg]:w-full"
-            dangerouslySetInnerHTML={{ __html: card }}
-          />
+          {membership && card ? (
+            <>
+              <p className="tabular text-sm text-cream/80">{membership.card_number}</p>
+              <div
+                className="mx-auto mt-4 w-40 overflow-hidden rounded bg-paper p-2 [&_svg]:h-auto [&_svg]:w-full"
+                dangerouslySetInnerHTML={{ __html: card }}
+              />
+            </>
+          ) : (
+            <Link
+              href="/communaute/adhesion"
+              className="mt-4 inline-flex min-h-11 items-center font-semibold text-gold hover:text-cream"
+            >
+              {t("joinCta")} →
+            </Link>
+          )}
+          <Link
+            href="/communaute/badges"
+            className="mt-3 block text-sm text-cream/80 hover:text-cream"
+          >
+            {t("levelLine", { level: tc(`levels.${standing.level.code}`), xp: standing.xp })}
+          </Link>
           {p.fide_id ? <p className="mt-2 text-sm text-cream/70">FIDE {p.fide_id}</p> : null}
         </aside>
       </div>

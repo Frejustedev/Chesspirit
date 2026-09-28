@@ -35,6 +35,10 @@
 4. Média et académie ✔ (cours premium : phase 3)
 5. Statistiques, WhatsApp, mode hors ligne, import FIDE, tâches planifiées ✔ — tag v0.3.0
 
+## Phase 3 — communauté et au-delà (v1.0.0)
+
+1. Communauté : adhésion gratuite ou premium (carte de membre à QR code vérifiable, paiement confirmé par webhook), cours et ressources premium protégés en base, niveaux du Pion au Roi, badges et passeport du Tour, parrainage, ambassadeurs, Chesspirit Awards, pronostics gratuits, « le public contre le maître » ✔
+
 ## À reprendre
 
 - Formats Scheveningen, poules puis phase finale et simultanée : sélectionnables mais sans moteur d'appariement dédié.

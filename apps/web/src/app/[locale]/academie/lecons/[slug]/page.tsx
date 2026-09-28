@@ -3,21 +3,26 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getSession } from "@/lib/auth";
 import { tr } from "@/lib/i18n-json";
 import { MiniMarkdown } from "@/lib/mini-markdown";
 import type { ContentPosition } from "@/lib/content";
 import { PositionList } from "@/components/content/positions";
-import { hasPremium } from "@/lib/membership";
 
+/** Fiche du catalogue (toujours publique) puis texte complet, lisible seulement avec l'accès premium si besoin. */
 async function load(slug: string) {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("lessons_library")
+  const { data: entry } = await supabase
+    .from("lesson_catalog")
     .select("*")
     .eq("slug", slug)
     .maybeSingle();
-  return data;
+  if (!entry) return null;
+  const { data: full } = await supabase
+    .from("lessons_library")
+    .select("body, positions")
+    .eq("slug", slug)
+    .maybeSingle();
+  return { ...entry, title: entry.title!, summary: entry.summary!, full };
 }
 
 export async function generateMetadata({
@@ -42,8 +47,7 @@ export default async function LessonPage({
   const t = await getTranslations("academy");
   const tc = await getTranslations("coaching");
   const tm = await getTranslations("media");
-  const session = await getSession();
-  const locked = l.is_premium && !(await hasPremium(session?.profile?.id ?? null));
+  const full = l.full;
   return (
     <article className="mx-auto max-w-4xl px-4 py-10 lg:px-6">
       <Link href="/academie/lecons" className="text-sm font-semibold text-bordeaux hover:underline">
@@ -56,7 +60,7 @@ export default async function LessonPage({
         {tc(`level.${l.level}`)} · {tm(`themes.${l.theme}`)}
       </p>
       <p className="mt-4 font-serif text-xl">{tr(l.summary, locale)}</p>
-      {locked ? (
+      {!full ? (
         <div className="mt-8 rounded-lg bg-ink p-6 text-cream">
           <p className="font-display text-2xl font-semibold">{t("premiumLocked")}</p>
           <Link
@@ -69,11 +73,11 @@ export default async function LessonPage({
       ) : (
         <>
           <div className="mt-6">
-            <MiniMarkdown source={tr(l.body, locale)} />
+            <MiniMarkdown source={tr(full.body, locale)} />
           </div>
-          {(l.positions as ContentPosition[]).length ? (
+          {(full.positions as ContentPosition[]).length ? (
             <div className="mt-8">
-              <PositionList positions={l.positions as ContentPosition[]} />
+              <PositionList positions={full.positions as ContentPosition[]} />
             </div>
           ) : null}
         </>

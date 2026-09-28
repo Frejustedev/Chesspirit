@@ -5,6 +5,41 @@ export type Database = {
   __InternalSupabase: { PostgrestVersion: "12" };
   public: {
     Tables: {
+      ambassadors: {
+        Row: {
+          profile_id: string;
+          city: string | null;
+          motivation: string | null;
+          status: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          profile_id: string;
+          city?: string | null;
+          motivation?: string | null;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          profile_id?: string;
+          city?: string | null;
+          motivation?: string | null;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ambassadors_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       app_settings: {
         Row: {
           key: string;
@@ -72,7 +107,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "arbiter_profiles_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: true; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "arbiter_profiles_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       articles: {
         Row: {
@@ -120,7 +163,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "articles_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "articles_author_id_fkey"; columns: ["author_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "articles_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "articles_author_id_fkey";
+            columns: ["author_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       audit_logs: {
         Row: {
@@ -201,7 +259,202 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "availability_slots_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "availability_slots_offer_id_fkey"; columns: ["offer_id"]; isOneToOne: false; referencedRelation: "offers"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "availability_slots_coach_id_fkey";
+            columns: ["coach_id"];
+            isOneToOne: false;
+            referencedRelation: "coach_profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "availability_slots_offer_id_fkey";
+            columns: ["offer_id"];
+            isOneToOne: false;
+            referencedRelation: "offers";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      award_categories: {
+        Row: {
+          id: string;
+          edition_id: string;
+          name: Json;
+          description: Json;
+          position: number;
+        };
+        Insert: {
+          id?: string;
+          edition_id: string;
+          name: Json;
+          description?: Json;
+          position?: number;
+        };
+        Update: {
+          id?: string;
+          edition_id?: string;
+          name?: Json;
+          description?: Json;
+          position?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "award_categories_edition_id_fkey";
+            columns: ["edition_id"];
+            isOneToOne: false;
+            referencedRelation: "award_editions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      award_editions: {
+        Row: {
+          id: string;
+          year: number;
+          slug: string;
+          title: Json;
+          status: string;
+          voting_ends_at: string | null;
+          is_demo: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          year: number;
+          slug: string;
+          title: Json;
+          status?: string;
+          voting_ends_at?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          year?: number;
+          slug?: string;
+          title?: Json;
+          status?: string;
+          voting_ends_at?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      award_nominees: {
+        Row: {
+          id: string;
+          category_id: string;
+          profile_id: string | null;
+          name: string;
+          description: string | null;
+        };
+        Insert: {
+          id?: string;
+          category_id: string;
+          profile_id?: string | null;
+          name: string;
+          description?: string | null;
+        };
+        Update: {
+          id?: string;
+          category_id?: string;
+          profile_id?: string | null;
+          name?: string;
+          description?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "award_nominees_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "award_categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "award_nominees_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      award_votes: {
+        Row: {
+          category_id: string;
+          voter_id: string;
+          nominee_id: string;
+          created_at: string;
+        };
+        Insert: {
+          category_id: string;
+          voter_id: string;
+          nominee_id: string;
+          created_at?: string;
+        };
+        Update: {
+          category_id?: string;
+          voter_id?: string;
+          nominee_id?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "award_votes_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "award_categories";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "award_votes_voter_id_fkey";
+            columns: ["voter_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "award_votes_nominee_id_fkey";
+            columns: ["nominee_id"];
+            isOneToOne: false;
+            referencedRelation: "award_nominees";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      badges: {
+        Row: {
+          code: string;
+          name: Json;
+          description: Json;
+          category: string;
+          icon: string;
+          position: number;
+          created_at: string;
+        };
+        Insert: {
+          code: string;
+          name: Json;
+          description?: Json;
+          category?: string;
+          icon?: string;
+          position?: number;
+          created_at?: string;
+        };
+        Update: {
+          code?: string;
+          name?: Json;
+          description?: Json;
+          category?: string;
+          icon?: string;
+          position?: number;
+          created_at?: string;
+        };
+        Relationships: [];
       };
       board_results: {
         Row: {
@@ -237,7 +490,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "board_results_team_match_id_fkey"; columns: ["team_match_id"]; isOneToOne: false; referencedRelation: "team_matches"; referencedColumns: ["id"] }, { foreignKeyName: "board_results_white_id_fkey"; columns: ["white_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "board_results_black_id_fkey"; columns: ["black_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "board_results_team_match_id_fkey";
+            columns: ["team_match_id"];
+            isOneToOne: false;
+            referencedRelation: "team_matches";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "board_results_white_id_fkey";
+            columns: ["white_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "board_results_black_id_fkey";
+            columns: ["black_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       bookings: {
         Row: {
@@ -288,7 +563,36 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "bookings_offer_id_fkey"; columns: ["offer_id"]; isOneToOne: false; referencedRelation: "offers"; referencedColumns: ["id"] }, { foreignKeyName: "bookings_slot_id_fkey"; columns: ["slot_id"]; isOneToOne: false; referencedRelation: "availability_slots"; referencedColumns: ["id"] }, { foreignKeyName: "bookings_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "bookings_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "bookings_offer_id_fkey";
+            columns: ["offer_id"];
+            isOneToOne: false;
+            referencedRelation: "offers";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "bookings_slot_id_fkey";
+            columns: ["slot_id"];
+            isOneToOne: false;
+            referencedRelation: "availability_slots";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "bookings_coach_id_fkey";
+            columns: ["coach_id"];
+            isOneToOne: false;
+            referencedRelation: "coach_profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "bookings_student_id_fkey";
+            columns: ["student_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       coach_applications: {
         Row: {
@@ -330,7 +634,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "coach_applications_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "coach_applications_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       coach_payout_details: {
         Row: {
@@ -363,7 +675,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "coach_payout_details_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: true; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "coach_payout_details_coach_id_fkey";
+            columns: ["coach_id"];
+            isOneToOne: true;
+            referencedRelation: "coach_profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       coach_profiles: {
         Row: {
@@ -426,7 +746,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "coach_profiles_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: true; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "coach_profiles_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       coach_reviews: {
         Row: {
@@ -462,7 +790,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "coach_reviews_booking_id_fkey"; columns: ["booking_id"]; isOneToOne: true; referencedRelation: "bookings"; referencedColumns: ["id"] }, { foreignKeyName: "coach_reviews_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "coach_reviews_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "coach_reviews_booking_id_fkey";
+            columns: ["booking_id"];
+            isOneToOne: true;
+            referencedRelation: "bookings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "coach_reviews_coach_id_fkey";
+            columns: ["coach_id"];
+            isOneToOne: false;
+            referencedRelation: "coach_profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "coach_reviews_student_id_fkey";
+            columns: ["student_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       consents: {
         Row: {
@@ -501,7 +851,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "consents_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "consents_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       contact_messages: {
         Row: {
@@ -573,7 +931,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "data_requests_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "data_requests_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       feature_flags: {
         Row: {
@@ -678,7 +1044,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "game_annotations_game_id_fkey"; columns: ["game_id"]; isOneToOne: false; referencedRelation: "games"; referencedColumns: ["id"] }, { foreignKeyName: "game_annotations_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "game_annotations_game_id_fkey";
+            columns: ["game_id"];
+            isOneToOne: false;
+            referencedRelation: "games";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "game_annotations_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       games: {
         Row: {
@@ -765,7 +1146,43 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "games_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "games_round_id_fkey"; columns: ["round_id"]; isOneToOne: false; referencedRelation: "rounds"; referencedColumns: ["id"] }, { foreignKeyName: "games_pairing_id_fkey"; columns: ["pairing_id"]; isOneToOne: false; referencedRelation: "pairings"; referencedColumns: ["id"] }, { foreignKeyName: "games_white_id_fkey"; columns: ["white_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "games_black_id_fkey"; columns: ["black_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "games_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "games_round_id_fkey";
+            columns: ["round_id"];
+            isOneToOne: false;
+            referencedRelation: "rounds";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "games_pairing_id_fkey";
+            columns: ["pairing_id"];
+            isOneToOne: false;
+            referencedRelation: "pairings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "games_white_id_fkey";
+            columns: ["white_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "games_black_id_fkey";
+            columns: ["black_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       gift_cards: {
         Row: {
@@ -810,7 +1227,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "gift_cards_purchase_order_id_fkey"; columns: ["purchase_order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "gift_cards_purchase_order_id_fkey";
+            columns: ["purchase_order_id"];
+            isOneToOne: false;
+            referencedRelation: "orders";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       glossary_suggestions: {
         Row: {
@@ -843,7 +1268,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "glossary_suggestions_term_id_fkey"; columns: ["term_id"]; isOneToOne: false; referencedRelation: "glossary_terms"; referencedColumns: ["id"] }, { foreignKeyName: "glossary_suggestions_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "glossary_suggestions_term_id_fkey";
+            columns: ["term_id"];
+            isOneToOne: false;
+            referencedRelation: "glossary_terms";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "glossary_suggestions_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       glossary_terms: {
         Row: {
@@ -918,7 +1358,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "homework_booking_id_fkey"; columns: ["booking_id"]; isOneToOne: false; referencedRelation: "bookings"; referencedColumns: ["id"] }, { foreignKeyName: "homework_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "homework_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "homework_booking_id_fkey";
+            columns: ["booking_id"];
+            isOneToOne: false;
+            referencedRelation: "bookings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "homework_coach_id_fkey";
+            columns: ["coach_id"];
+            isOneToOne: false;
+            referencedRelation: "coach_profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "homework_student_id_fkey";
+            columns: ["student_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       invoices: {
         Row: {
@@ -957,7 +1419,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "invoices_payment_id_fkey"; columns: ["payment_id"]; isOneToOne: false; referencedRelation: "payments"; referencedColumns: ["id"] }, { foreignKeyName: "invoices_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "invoices_payment_id_fkey";
+            columns: ["payment_id"];
+            isOneToOne: false;
+            referencedRelation: "payments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "invoices_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       job_posts: {
         Row: {
@@ -1014,7 +1491,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "job_posts_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "job_posts_posted_by_fkey"; columns: ["posted_by"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "job_posts_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "job_posts_posted_by_fkey";
+            columns: ["posted_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       job_runs: {
         Row: {
@@ -1077,7 +1569,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "league_licenses_season_id_fkey"; columns: ["season_id"]; isOneToOne: false; referencedRelation: "seasons"; referencedColumns: ["id"] }, { foreignKeyName: "league_licenses_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "league_licenses_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "league_licenses_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       league_matchdays: {
         Row: {
@@ -1110,7 +1617,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "league_matchdays_league_id_fkey"; columns: ["league_id"]; isOneToOne: false; referencedRelation: "leagues"; referencedColumns: ["id"] }, { foreignKeyName: "league_matchdays_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "league_matchdays_league_id_fkey";
+            columns: ["league_id"];
+            isOneToOne: false;
+            referencedRelation: "leagues";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "league_matchdays_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       league_members: {
         Row: {
@@ -1143,7 +1665,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "league_members_league_id_fkey"; columns: ["league_id"]; isOneToOne: false; referencedRelation: "leagues"; referencedColumns: ["id"] }, { foreignKeyName: "league_members_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "league_members_league_id_fkey";
+            columns: ["league_id"];
+            isOneToOne: false;
+            referencedRelation: "leagues";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "league_members_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       league_postponements: {
         Row: {
@@ -1182,7 +1719,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "league_postponements_pairing_id_fkey"; columns: ["pairing_id"]; isOneToOne: true; referencedRelation: "pairings"; referencedColumns: ["id"] }, { foreignKeyName: "league_postponements_requested_by_fkey"; columns: ["requested_by"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "league_postponements_pairing_id_fkey";
+            columns: ["pairing_id"];
+            isOneToOne: true;
+            referencedRelation: "pairings";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "league_postponements_requested_by_fkey";
+            columns: ["requested_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       leagues: {
         Row: {
@@ -1236,7 +1788,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "leagues_season_id_fkey"; columns: ["season_id"]; isOneToOne: false; referencedRelation: "seasons"; referencedColumns: ["id"] }, { foreignKeyName: "leagues_champion_id_fkey"; columns: ["champion_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "leagues_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "leagues_champion_id_fkey";
+            columns: ["champion_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       lessons_library: {
         Row: {
@@ -1311,7 +1878,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "lichess_accounts_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: true; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "lichess_accounts_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       listing_claims: {
         Row: {
@@ -1347,7 +1922,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "listing_claims_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "listing_claims_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "listing_claims_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "listing_claims_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       loyalty_ledger: {
         Row: {
@@ -1374,7 +1964,22 @@ export type Database = {
           order_id?: string | null;
           created_at?: string;
         };
-        Relationships: [{ foreignKeyName: "loyalty_ledger_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "loyalty_ledger_order_id_fkey"; columns: ["order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "loyalty_ledger_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "loyalty_ledger_order_id_fkey";
+            columns: ["order_id"];
+            isOneToOne: false;
+            referencedRelation: "orders";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       masters_invitations: {
         Row: {
@@ -1392,7 +1997,22 @@ export type Database = {
           profile_id?: string;
           created_at?: string;
         };
-        Relationships: [{ foreignKeyName: "masters_invitations_season_id_fkey"; columns: ["season_id"]; isOneToOne: false; referencedRelation: "seasons"; referencedColumns: ["id"] }, { foreignKeyName: "masters_invitations_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "masters_invitations_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "masters_invitations_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       media_episodes: {
         Row: {
@@ -1467,7 +2087,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "media_episodes_series_id_fkey"; columns: ["series_id"]; isOneToOne: false; referencedRelation: "media_series"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "media_episodes_series_id_fkey";
+            columns: ["series_id"];
+            isOneToOne: false;
+            referencedRelation: "media_series";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       media_series: {
         Row: {
@@ -1507,6 +2135,99 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [];
+      };
+      membership_plans: {
+        Row: {
+          code: string;
+          name: Json;
+          description: Json;
+          benefits: Json;
+          price_xof: number | null;
+          duration_months: number | null;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          code: string;
+          name: Json;
+          description?: Json;
+          benefits?: Json;
+          price_xof?: number | null;
+          duration_months?: number | null;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          code?: string;
+          name?: Json;
+          description?: Json;
+          benefits?: Json;
+          price_xof?: number | null;
+          duration_months?: number | null;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      memberships: {
+        Row: {
+          id: string;
+          profile_id: string;
+          plan: string;
+          status: string;
+          card_number: string;
+          amount_xof: number;
+          starts_on: string | null;
+          ends_on: string | null;
+          user_id: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          plan: string;
+          status?: string;
+          card_number?: string;
+          amount_xof?: number;
+          starts_on?: string | null;
+          ends_on?: string | null;
+          user_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          plan?: string;
+          status?: string;
+          card_number?: string;
+          amount_xof?: number;
+          starts_on?: string | null;
+          ends_on?: string | null;
+          user_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "memberships_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "memberships_plan_fkey";
+            columns: ["plan"];
+            isOneToOne: false;
+            referencedRelation: "membership_plans";
+            referencedColumns: ["code"];
+          },
+        ];
       };
       newsletter_subscribers: {
         Row: {
@@ -1587,7 +2308,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "notifications_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "notifications_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       offers: {
         Row: {
@@ -1644,7 +2373,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "offers_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "offers_coach_id_fkey";
+            columns: ["coach_id"];
+            isOneToOne: false;
+            referencedRelation: "coach_profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       order_events: {
         Row: {
@@ -1671,7 +2408,15 @@ export type Database = {
           created_by?: string | null;
           created_at?: string;
         };
-        Relationships: [{ foreignKeyName: "order_events_order_id_fkey"; columns: ["order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "order_events_order_id_fkey";
+            columns: ["order_id"];
+            isOneToOne: false;
+            referencedRelation: "orders";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       order_items: {
         Row: {
@@ -1713,7 +2458,29 @@ export type Database = {
           is_preorder?: boolean;
           gift?: Json | null;
         };
-        Relationships: [{ foreignKeyName: "order_items_order_id_fkey"; columns: ["order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }, { foreignKeyName: "order_items_product_id_fkey"; columns: ["product_id"]; isOneToOne: false; referencedRelation: "products"; referencedColumns: ["id"] }, { foreignKeyName: "order_items_variant_id_fkey"; columns: ["variant_id"]; isOneToOne: false; referencedRelation: "product_variants"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey";
+            columns: ["order_id"];
+            isOneToOne: false;
+            referencedRelation: "orders";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "order_items_variant_id_fkey";
+            columns: ["variant_id"];
+            isOneToOne: false;
+            referencedRelation: "product_variants";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       orders: {
         Row: {
@@ -1800,7 +2567,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "orders_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "orders_promo_code_id_fkey"; columns: ["promo_code_id"]; isOneToOne: false; referencedRelation: "promo_codes"; referencedColumns: ["id"] }, { foreignKeyName: "orders_gift_card_fk"; columns: ["gift_card_id"]; isOneToOne: false; referencedRelation: "gift_cards"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "orders_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_promo_code_id_fkey";
+            columns: ["promo_code_id"];
+            isOneToOne: false;
+            referencedRelation: "promo_codes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "orders_gift_card_fk";
+            columns: ["gift_card_id"];
+            isOneToOne: false;
+            referencedRelation: "gift_cards";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       organization_members: {
         Row: {
@@ -1827,7 +2616,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "organization_members_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "organization_members_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "organization_members_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "organization_members_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       organizations: {
         Row: {
@@ -1902,7 +2706,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "organizations_claimed_by_fkey"; columns: ["claimed_by"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "organizations_claimed_by_fkey";
+            columns: ["claimed_by"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       pairings: {
         Row: {
@@ -1956,7 +2768,36 @@ export type Database = {
           result_entered_by?: string | null;
           result_entered_at?: string | null;
         };
-        Relationships: [{ foreignKeyName: "pairings_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "pairings_round_id_fkey"; columns: ["round_id"]; isOneToOne: false; referencedRelation: "rounds"; referencedColumns: ["id"] }, { foreignKeyName: "pairings_white_id_fkey"; columns: ["white_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "pairings_black_id_fkey"; columns: ["black_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "pairings_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pairings_round_id_fkey";
+            columns: ["round_id"];
+            isOneToOne: false;
+            referencedRelation: "rounds";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pairings_white_id_fkey";
+            columns: ["white_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pairings_black_id_fkey";
+            columns: ["black_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       payment_webhooks: {
         Row: {
@@ -1995,7 +2836,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "payment_webhooks_payment_id_fkey"; columns: ["payment_id"]; isOneToOne: false; referencedRelation: "payments"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "payment_webhooks_payment_id_fkey";
+            columns: ["payment_id"];
+            isOneToOne: false;
+            referencedRelation: "payments";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       payments: {
         Row: {
@@ -2055,7 +2904,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "payments_payer_profile_id_fkey"; columns: ["payer_profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "payments_payer_profile_id_fkey";
+            columns: ["payer_profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       payouts: {
         Row: {
@@ -2100,7 +2957,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "payouts_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "payouts_coach_id_fkey";
+            columns: ["coach_id"];
+            isOneToOne: false;
+            referencedRelation: "coach_profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       placement_results: {
         Row: {
@@ -2133,7 +2998,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "placement_results_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "placement_results_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       posters: {
         Row: {
@@ -2163,7 +3036,57 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "posters_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "posters_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      predictions: {
+        Row: {
+          id: string;
+          profile_id: string;
+          pairing_id: string;
+          predicted: string;
+          points: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          pairing_id: string;
+          predicted: string;
+          points?: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          pairing_id?: string;
+          predicted?: string;
+          points?: number;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "predictions_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "predictions_pairing_id_fkey";
+            columns: ["pairing_id"];
+            isOneToOne: false;
+            referencedRelation: "pairings";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       prizes: {
         Row: {
@@ -2205,7 +3128,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "prizes_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "prizes_awarded_profile_id_fkey"; columns: ["awarded_profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "prizes_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "prizes_awarded_profile_id_fkey";
+            columns: ["awarded_profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       product_categories: {
         Row: {
@@ -2265,7 +3203,22 @@ export type Database = {
           status?: string;
           created_at?: string;
         };
-        Relationships: [{ foreignKeyName: "product_reviews_product_id_fkey"; columns: ["product_id"]; isOneToOne: false; referencedRelation: "products"; referencedColumns: ["id"] }, { foreignKeyName: "product_reviews_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "product_reviews_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_reviews_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       product_variants: {
         Row: {
@@ -2304,7 +3257,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "product_variants_product_id_fkey"; columns: ["product_id"]; isOneToOne: false; referencedRelation: "products"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "product_variants_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       products: {
         Row: {
@@ -2370,7 +3331,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "products_category_id_fkey"; columns: ["category_id"]; isOneToOne: false; referencedRelation: "product_categories"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "product_categories";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       profiles: {
         Row: {
@@ -2476,7 +3445,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "profiles_guardian_id_fkey"; columns: ["guardian_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "profiles_merged_into_fkey"; columns: ["merged_into"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "profiles_club_fk"; columns: ["club_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "profiles_guardian_id_fkey";
+            columns: ["guardian_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "profiles_merged_into_fkey";
+            columns: ["merged_into"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "profiles_club_fk";
+            columns: ["club_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       progress_notes: {
         Row: {
@@ -2512,7 +3503,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "progress_notes_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "progress_notes_student_id_fkey"; columns: ["student_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "progress_notes_booking_id_fkey"; columns: ["booking_id"]; isOneToOne: false; referencedRelation: "bookings"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "progress_notes_coach_id_fkey";
+            columns: ["coach_id"];
+            isOneToOne: false;
+            referencedRelation: "coach_profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "progress_notes_student_id_fkey";
+            columns: ["student_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "progress_notes_booking_id_fkey";
+            columns: ["booking_id"];
+            isOneToOne: false;
+            referencedRelation: "bookings";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       promo_codes: {
         Row: {
@@ -2590,7 +3603,22 @@ export type Database = {
           attempted_on?: string;
           created_at?: string;
         };
-        Relationships: [{ foreignKeyName: "puzzle_attempts_puzzle_id_fkey"; columns: ["puzzle_id"]; isOneToOne: false; referencedRelation: "puzzles"; referencedColumns: ["id"] }, { foreignKeyName: "puzzle_attempts_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "puzzle_attempts_puzzle_id_fkey";
+            columns: ["puzzle_id"];
+            isOneToOne: false;
+            referencedRelation: "puzzles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "puzzle_attempts_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       puzzles: {
         Row: {
@@ -2633,6 +3661,107 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [];
+      };
+      pvm_games: {
+        Row: {
+          id: string;
+          slug: string;
+          title: Json;
+          master_name: string;
+          master_profile_id: string | null;
+          public_color: string;
+          fen: string;
+          moves: string[];
+          status: string;
+          result: string | null;
+          vote_minutes: number;
+          vote_ends_at: string | null;
+          is_demo: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          title: Json;
+          master_name: string;
+          master_profile_id?: string | null;
+          public_color?: string;
+          fen?: string;
+          moves?: string[];
+          status?: string;
+          result?: string | null;
+          vote_minutes?: number;
+          vote_ends_at?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          title?: Json;
+          master_name?: string;
+          master_profile_id?: string | null;
+          public_color?: string;
+          fen?: string;
+          moves?: string[];
+          status?: string;
+          result?: string | null;
+          vote_minutes?: number;
+          vote_ends_at?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pvm_games_master_profile_id_fkey";
+            columns: ["master_profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      pvm_votes: {
+        Row: {
+          game_id: string;
+          ply: number;
+          profile_id: string;
+          move: string;
+          created_at: string;
+        };
+        Insert: {
+          game_id: string;
+          ply: number;
+          profile_id: string;
+          move: string;
+          created_at?: string;
+        };
+        Update: {
+          game_id?: string;
+          ply?: number;
+          profile_id?: string;
+          move?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pvm_votes_game_id_fkey";
+            columns: ["game_id"];
+            isOneToOne: false;
+            referencedRelation: "pvm_games";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pvm_votes_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       quote_requests: {
         Row: {
@@ -2720,7 +3849,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "rating_history_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "rating_history_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "rating_history_game_id_fkey"; columns: ["game_id"]; isOneToOne: false; referencedRelation: "games"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "rating_history_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "rating_history_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "rating_history_game_id_fkey";
+            columns: ["game_id"];
+            isOneToOne: false;
+            referencedRelation: "games";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       rating_lists: {
         Row: {
@@ -2789,7 +3940,77 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "ratings_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "ratings_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      referral_codes: {
+        Row: {
+          profile_id: string;
+          code: string;
+          created_at: string;
+        };
+        Insert: {
+          profile_id: string;
+          code: string;
+          created_at?: string;
+        };
+        Update: {
+          profile_id?: string;
+          code?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "referral_codes_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      referrals: {
+        Row: {
+          id: string;
+          referrer_id: string;
+          referred_id: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          referrer_id: string;
+          referred_id: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          referrer_id?: string;
+          referred_id?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "referrals_referrer_id_fkey";
+            columns: ["referrer_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "referrals_referred_id_fkey";
+            columns: ["referred_id"];
+            isOneToOne: true;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       refunds: {
         Row: {
@@ -2825,7 +4046,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "refunds_payment_id_fkey"; columns: ["payment_id"]; isOneToOne: false; referencedRelation: "payments"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "refunds_payment_id_fkey";
+            columns: ["payment_id"];
+            isOneToOne: false;
+            referencedRelation: "payments";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       registration_forms: {
         Row: {
@@ -2849,7 +4078,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "registration_forms_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: true; referencedRelation: "tournaments"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "registration_forms_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: true;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       registrations: {
         Row: {
@@ -2927,7 +4164,22 @@ export type Database = {
           bye_requests?: Json;
           reminder_sent_at?: string | null;
         };
-        Relationships: [{ foreignKeyName: "registrations_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "registrations_player_id_fkey"; columns: ["player_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "registrations_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "registrations_player_id_fkey";
+            columns: ["player_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       resources: {
         Row: {
@@ -3008,7 +4260,15 @@ export type Database = {
           pairing_engine?: string | null;
           notes?: string | null;
         };
-        Relationships: [{ foreignKeyName: "rounds_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "rounds_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       scoring_scales: {
         Row: {
@@ -3143,7 +4403,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "standings_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "standings_player_id_fkey"; columns: ["player_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "standings_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "standings_player_id_fkey";
+            columns: ["player_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       team_matches: {
         Row: {
@@ -3179,7 +4454,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "team_matches_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "team_matches_home_team_id_fkey"; columns: ["home_team_id"]; isOneToOne: false; referencedRelation: "teams"; referencedColumns: ["id"] }, { foreignKeyName: "team_matches_away_team_id_fkey"; columns: ["away_team_id"]; isOneToOne: false; referencedRelation: "teams"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "team_matches_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "team_matches_home_team_id_fkey";
+            columns: ["home_team_id"];
+            isOneToOne: false;
+            referencedRelation: "teams";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "team_matches_away_team_id_fkey";
+            columns: ["away_team_id"];
+            isOneToOne: false;
+            referencedRelation: "teams";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       team_members: {
         Row: {
@@ -3209,7 +4506,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "team_members_team_id_fkey"; columns: ["team_id"]; isOneToOne: false; referencedRelation: "teams"; referencedColumns: ["id"] }, { foreignKeyName: "team_members_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "team_members_team_id_fkey";
+            columns: ["team_id"];
+            isOneToOne: false;
+            referencedRelation: "teams";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "team_members_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       teams: {
         Row: {
@@ -3242,7 +4554,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "teams_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "teams_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "teams_captain_id_fkey"; columns: ["captain_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "teams_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "teams_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "teams_captain_id_fkey";
+            columns: ["captain_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       tour_points: {
         Row: {
@@ -3269,7 +4603,22 @@ export type Database = {
           points?: number;
           created_at?: string;
         };
-        Relationships: [{ foreignKeyName: "tour_points_stage_id_fkey"; columns: ["stage_id"]; isOneToOne: false; referencedRelation: "tour_stages"; referencedColumns: ["id"] }, { foreignKeyName: "tour_points_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "tour_points_stage_id_fkey";
+            columns: ["stage_id"];
+            isOneToOne: false;
+            referencedRelation: "tour_stages";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tour_points_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       tour_stages: {
         Row: {
@@ -3317,7 +4666,29 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "tour_stages_season_id_fkey"; columns: ["season_id"]; isOneToOne: false; referencedRelation: "seasons"; referencedColumns: ["id"] }, { foreignKeyName: "tour_stages_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: true; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "tour_stages_scale_id_fkey"; columns: ["scale_id"]; isOneToOne: false; referencedRelation: "scoring_scales"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "tour_stages_season_id_fkey";
+            columns: ["season_id"];
+            isOneToOne: false;
+            referencedRelation: "seasons";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tour_stages_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: true;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tour_stages_scale_id_fkey";
+            columns: ["scale_id"];
+            isOneToOne: false;
+            referencedRelation: "scoring_scales";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       tournament_audit: {
         Row: {
@@ -3347,7 +4718,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "tournament_audit_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "tournament_audit_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       tournament_partners: {
         Row: {
@@ -3383,7 +4762,15 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "tournament_partners_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "tournament_partners_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       tournament_staff: {
         Row: {
@@ -3410,7 +4797,22 @@ export type Database = {
           created_at?: string;
           updated_at?: string;
         };
-        Relationships: [{ foreignKeyName: "tournament_staff_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "tournament_staff_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "tournament_staff_tournament_id_fkey";
+            columns: ["tournament_id"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tournament_staff_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       tournaments: {
         Row: {
@@ -3585,7 +4987,72 @@ export type Database = {
           team_scoring?: string;
           team_size?: number;
         };
-        Relationships: [{ foreignKeyName: "tournaments_organizer_profile_id_fkey"; columns: ["organizer_profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "tournaments_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "tournaments_duplicated_from_fkey"; columns: ["duplicated_from"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "tournaments_league_fk"; columns: ["league_id"]; isOneToOne: false; referencedRelation: "leagues"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "tournaments_organizer_profile_id_fkey";
+            columns: ["organizer_profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tournaments_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tournaments_duplicated_from_fkey";
+            columns: ["duplicated_from"];
+            isOneToOne: false;
+            referencedRelation: "tournaments";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tournaments_league_fk";
+            columns: ["league_id"];
+            isOneToOne: false;
+            referencedRelation: "leagues";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      user_badges: {
+        Row: {
+          profile_id: string;
+          badge_code: string;
+          awarded_at: string;
+          context: string | null;
+        };
+        Insert: {
+          profile_id: string;
+          badge_code: string;
+          awarded_at?: string;
+          context?: string | null;
+        };
+        Update: {
+          profile_id?: string;
+          badge_code?: string;
+          awarded_at?: string;
+          context?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_badges_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "user_badges_badge_code_fkey";
+            columns: ["badge_code"];
+            isOneToOne: false;
+            referencedRelation: "badges";
+            referencedColumns: ["code"];
+          },
+        ];
       };
       user_roles: {
         Row: {
@@ -3660,7 +5127,22 @@ export type Database = {
           product_id?: string;
           created_at?: string;
         };
-        Relationships: [{ foreignKeyName: "wishlists_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "wishlists_product_id_fkey"; columns: ["product_id"]; isOneToOne: false; referencedRelation: "products"; referencedColumns: ["id"] }];
+        Relationships: [
+          {
+            foreignKeyName: "wishlists_profile_id_fkey";
+            columns: ["profile_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "wishlists_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          },
+        ];
       };
     };
     Views: {
@@ -3676,6 +5158,28 @@ export type Database = {
           display_name: string | null;
           club: string | null;
           titles: string[] | null;
+        };
+        Relationships: [];
+      };
+      lesson_catalog: {
+        Row: {
+          id: string | null;
+          slug: string | null;
+          level: string | null;
+          theme: string | null;
+          title: Json | null;
+          summary: Json | null;
+          position: number | null;
+          is_premium: boolean | null;
+        };
+        Relationships: [];
+      };
+      prediction_leaderboard: {
+        Row: {
+          profile_id: string | null;
+          display_name: string | null;
+          points: number | null;
+          predictions: number | null;
         };
         Relationships: [];
       };
@@ -3862,6 +5366,20 @@ export type Database = {
         };
         Relationships: [];
       };
+      resource_catalog: {
+        Row: {
+          id: string | null;
+          title: Json | null;
+          description: Json | null;
+          kind: string | null;
+          level: string | null;
+          language: string | null;
+          is_premium: boolean | null;
+          created_at: string | null;
+          url: string | null;
+        };
+        Relationships: [];
+      };
       tour_standings: {
         Row: {
           season_id: string | null;
@@ -3881,66 +5399,304 @@ export type Database = {
       };
     };
     Functions: {
-      add_child: { Args: { p_profile: Json; p_image_rights?: boolean }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
-      add_tournament_staff: { Args: { p_tournament_id: string; p_identifier: string; p_role: string }; Returns: Database["public"]["Tables"]["tournament_staff"]["Row"] };
-      admin_alerts: { Args: Record<PropertyKey, never>; Returns: { kind: string; count: number; detail: string }[] };
+      add_child: {
+        Args: { p_profile: Json; p_image_rights?: boolean };
+        Returns: Database["public"]["Tables"]["profiles"]["Row"];
+      };
+      add_tournament_staff: {
+        Args: { p_tournament_id: string; p_identifier: string; p_role: string };
+        Returns: Database["public"]["Tables"]["tournament_staff"]["Row"];
+      };
+      admin_alerts: {
+        Args: Record<PropertyKey, never>;
+        Returns: { kind: string; count: number; detail: string }[];
+      };
       admin_anonymize_profile: { Args: { p_profile: string }; Returns: string };
-      admin_find_duplicates: { Args: { p_profile: string }; Returns: { id: string; first_name: string; last_name: string; birth_date: string; phone: string; fide_id: string; user_id: string; reason: string }[] };
+      admin_find_duplicates: {
+        Args: { p_profile: string };
+        Returns: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          birth_date: string;
+          phone: string;
+          fide_id: string;
+          user_id: string;
+          reason: string;
+        }[];
+      };
       admin_merge_profiles: { Args: { p_keep: string; p_merge: string }; Returns: number };
-      admin_overview: { Args: Record<PropertyKey, never>; Returns: { users: number; profiles: number; registrations: number; payments_succeeded: number; revenue_xof: number; pending_data_requests: number; contact_new: number }[] };
-      admin_record_refund: { Args: { p_payment: string; p_amount: number; p_reason: string }; Returns: Database["public"]["Tables"]["refunds"]["Row"] };
+      admin_overview: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          users: number;
+          profiles: number;
+          registrations: number;
+          payments_succeeded: number;
+          revenue_xof: number;
+          pending_data_requests: number;
+          contact_new: number;
+        }[];
+      };
+      admin_record_refund: {
+        Args: { p_payment: string; p_amount: number; p_reason: string };
+        Returns: Database["public"]["Tables"]["refunds"]["Row"];
+      };
       admin_stats: { Args: { p_from: string; p_to: string }; Returns: Json };
       agree_postponement: { Args: { p_id: string }; Returns: undefined };
       allocate_season_by_rating: { Args: { p_season: string }; Returns: number };
-      approve_coach_application: { Args: { p_application_id: string }; Returns: Database["public"]["Tables"]["coach_profiles"]["Row"] };
-      assign_start_numbers: { Args: { p_tournament_id: string; p_only_checked_in?: boolean }; Returns: number };
-      book_slot: { Args: { p_slot_id: string; p_offer_id: string; p_student_id: string; p_notes?: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };
-      cancel_booking: { Args: { p_booking_id: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };
-      cancel_order: { Args: { p_order_id: string; p_note?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
-      cancel_registration: { Args: { p_registration_id: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
-      challenge_leaderboard: { Args: { p_challenge: string }; Returns: { display_name: string; solved: number }[] };
-      check_in: { Args: { p_ticket_code: string; p_mark_paid?: boolean }; Returns: { registration_id: string; tournament_id: string; display_name: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in_at: string; already: boolean }[] };
-      check_promo: { Args: { p_code: string; p_subtotal: number }; Returns: { valid: boolean; kind: string; discount_xof: number }[] };
+      approve_coach_application: {
+        Args: { p_application_id: string };
+        Returns: Database["public"]["Tables"]["coach_profiles"]["Row"];
+      };
+      assign_start_numbers: {
+        Args: { p_tournament_id: string; p_only_checked_in?: boolean };
+        Returns: number;
+      };
+      award_results: {
+        Args: { p_edition: string };
+        Returns: { category_id: string; nominee_id: string; votes: number }[];
+      };
+      book_slot: {
+        Args: { p_slot_id: string; p_offer_id: string; p_student_id: string; p_notes?: string };
+        Returns: Database["public"]["Tables"]["bookings"]["Row"];
+      };
+      cancel_booking: {
+        Args: { p_booking_id: string };
+        Returns: Database["public"]["Tables"]["bookings"]["Row"];
+      };
+      cancel_order: {
+        Args: { p_order_id: string; p_note?: string };
+        Returns: Database["public"]["Tables"]["orders"]["Row"];
+      };
+      cancel_registration: {
+        Args: { p_registration_id: string };
+        Returns: Database["public"]["Tables"]["registrations"]["Row"];
+      };
+      cast_award_vote: { Args: { p_nominee: string }; Returns: undefined };
+      challenge_leaderboard: {
+        Args: { p_challenge: string };
+        Returns: { display_name: string; solved: number }[];
+      };
+      check_in: {
+        Args: { p_ticket_code: string; p_mark_paid?: boolean };
+        Returns: {
+          registration_id: string;
+          tournament_id: string;
+          display_name: string;
+          status: Database["public"]["Enums"]["registration_status"];
+          payment_status: Database["public"]["Enums"]["payment_status"];
+          checked_in_at: string;
+          already: boolean;
+        }[];
+      };
+      check_promo: {
+        Args: { p_code: string; p_subtotal: number };
+        Returns: { valid: boolean; kind: string; discount_xof: number }[];
+      };
+      claim_referral: { Args: { p_code: string }; Returns: boolean };
       close_league: { Args: { p_league: string }; Returns: string };
-      complete_onboarding: { Args: { p_profile: Json; p_consents: Json; p_version?: string }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
+      complete_onboarding: {
+        Args: { p_profile: Json; p_consents: Json; p_version?: string };
+        Returns: Database["public"]["Tables"]["profiles"]["Row"];
+      };
       compute_tour_points: { Args: { p_tournament: string }; Returns: number };
-      confirm_payment: { Args: { p_payment_id: string; p_status: string; p_provider_ref: string; p_reason?: string }; Returns: Database["public"]["Tables"]["payments"]["Row"] };
+      confirm_payment: {
+        Args: { p_payment_id: string; p_status: string; p_provider_ref: string; p_reason?: string };
+        Returns: Database["public"]["Tables"]["payments"]["Row"];
+      };
       create_league_matchday: { Args: { p_league: string; p_date?: string }; Returns: string };
-      daily_puzzle: { Args: { p_day?: string }; Returns: Database["public"]["Tables"]["puzzles"]["Row"] };
+      daily_puzzle: {
+        Args: { p_day?: string };
+        Returns: Database["public"]["Tables"]["puzzles"]["Row"];
+      };
       decide_listing_claim: { Args: { p_claim: string; p_approve: boolean }; Returns: undefined };
-      duplicate_tournament: { Args: { p_tournament_id: string; p_slug: string; p_starts_at: string }; Returns: Database["public"]["Tables"]["tournaments"]["Row"] };
+      duplicate_tournament: {
+        Args: { p_tournament_id: string; p_slug: string; p_starts_at: string };
+        Returns: Database["public"]["Tables"]["tournaments"]["Row"];
+      };
       gift_card_balance: { Args: { p_code: string }; Returns: number };
-      import_standings: { Args: { p_tournament_id: string; p_rows: Json; p_publish?: boolean }; Returns: number };
-      log_admin_view: { Args: { p_object_type: string; p_object_id: string; p_context: string }; Returns: undefined };
-      log_personal_data_access: { Args: { p_profile_id: string; p_context: string }; Returns: undefined };
+      import_standings: {
+        Args: { p_tournament_id: string; p_rows: Json; p_publish?: boolean };
+        Returns: number;
+      };
+      log_admin_view: {
+        Args: { p_object_type: string; p_object_id: string; p_context: string };
+        Returns: undefined;
+      };
+      log_personal_data_access: {
+        Args: { p_profile_id: string; p_context: string };
+        Returns: undefined;
+      };
       loyalty_balance: { Args: Record<PropertyKey, never>; Returns: number };
-      my_managed_tournaments: { Args: Record<PropertyKey, never>; Returns: Database["public"]["Tables"]["tournaments"]["Row"][] };
-      place_order: { Args: { p_items: Json; p_delivery: string; p_address: Json; p_contact_name: string; p_contact_phone: string; p_contact_email?: string; p_promo?: string; p_gift_code?: string; p_use_points?: number; p_notes?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
+      member_progress: {
+        Args: { p_profile: string };
+        Returns: {
+          tournaments: number;
+          games: number;
+          puzzles: number;
+          lessons_booked: number;
+          predictions: number;
+        }[];
+      };
+      my_managed_tournaments: {
+        Args: Record<PropertyKey, never>;
+        Returns: Database["public"]["Tables"]["tournaments"]["Row"][];
+      };
+      my_referral_code: { Args: Record<PropertyKey, never>; Returns: string };
+      place_order: {
+        Args: {
+          p_items: Json;
+          p_delivery: string;
+          p_address: Json;
+          p_contact_name: string;
+          p_contact_phone: string;
+          p_contact_email?: string;
+          p_promo?: string;
+          p_gift_code?: string;
+          p_use_points?: number;
+          p_notes?: string;
+        };
+        Returns: Database["public"]["Tables"]["orders"]["Row"];
+      };
+      predict: { Args: { p_pairing: string; p_result: string }; Returns: undefined };
       propose_organization: { Args: { p_org: Json }; Returns: string };
-      public_stats: { Args: Record<PropertyKey, never>; Returns: { rated_players: number; tournaments: number; games: number; demo: boolean }[] };
+      public_stats: {
+        Args: Record<PropertyKey, never>;
+        Returns: { rated_players: number; tournaments: number; games: number; demo: boolean }[];
+      };
+      pvm_tally: { Args: { p_game: string }; Returns: { move: string; votes: number }[] };
+      pvm_vote: { Args: { p_game: string; p_move: string }; Returns: undefined };
+      refresh_badges: { Args: { p_profile: string }; Returns: number };
       refresh_league_forfeits: { Args: { p_league: string }; Returns: number };
-      register_for_tournament: { Args: { p_tournament_id: string; p_player_id: string; p_answers?: Json; p_payment_method?: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
-      request_league_license: { Args: { p_season: string; p_profile: string }; Returns: Database["public"]["Tables"]["league_licenses"]["Row"] };
+      register_for_tournament: {
+        Args: {
+          p_tournament_id: string;
+          p_player_id: string;
+          p_answers?: Json;
+          p_payment_method?: string;
+        };
+        Returns: Database["public"]["Tables"]["registrations"]["Row"];
+      };
+      request_league_license: {
+        Args: { p_season: string; p_profile: string };
+        Returns: Database["public"]["Tables"]["league_licenses"]["Row"];
+      };
+      request_membership: {
+        Args: { p_plan: string };
+        Returns: Database["public"]["Tables"]["memberships"]["Row"];
+      };
       run_maintenance: { Args: { p_job: string }; Returns: Json };
-      set_order_status: { Args: { p_order_id: string; p_status: Database["public"]["Enums"]["order_status"]; p_note?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
-      shop_overview: { Args: Record<PropertyKey, never>; Returns: { orders_to_process: number; revenue_xof: number; low_stock: number; pending_payment: number }[] };
+      set_order_status: {
+        Args: {
+          p_order_id: string;
+          p_status: Database["public"]["Enums"]["order_status"];
+          p_note?: string;
+        };
+        Returns: Database["public"]["Tables"]["orders"]["Row"];
+      };
+      shop_overview: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          orders_to_process: number;
+          revenue_xof: number;
+          low_stock: number;
+          pending_payment: number;
+        }[];
+      };
       slot_remaining: { Args: { p_slot_id: string }; Returns: number };
-      ticket_info: { Args: { p_ticket_code: string }; Returns: { display_name: string; tournament_name: string; tournament_slug: string; starts_at: string; venue: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in: boolean }[] };
-      tournament_staff_list: { Args: { p_tournament_id: string }; Returns: { id: string; role: string; profile_id: string; name: string; phone: string; email: string }[] };
-      track_order: { Args: { p_number: string; p_phone: string }; Returns: { number: string; status: Database["public"]["Enums"]["order_status"]; delivery_method: string; created_at: string; events: Json }[] };
+      ticket_info: {
+        Args: { p_ticket_code: string };
+        Returns: {
+          display_name: string;
+          tournament_name: string;
+          tournament_slug: string;
+          starts_at: string;
+          venue: string;
+          status: Database["public"]["Enums"]["registration_status"];
+          payment_status: Database["public"]["Enums"]["payment_status"];
+          checked_in: boolean;
+        }[];
+      };
+      tournament_staff_list: {
+        Args: { p_tournament_id: string };
+        Returns: {
+          id: string;
+          role: string;
+          profile_id: string;
+          name: string;
+          phone: string;
+          email: string;
+        }[];
+      };
+      track_order: {
+        Args: { p_number: string; p_phone: string };
+        Returns: {
+          number: string;
+          status: Database["public"]["Enums"]["order_status"];
+          delivery_method: string;
+          created_at: string;
+          events: Json;
+        }[];
+      };
     };
     Enums: {
-      app_role: "player" | "parent" | "coach" | "arbiter" | "organizer" | "editor" | "partner" | "admin" | "super_admin" | "admin_competitions" | "admin_shop" | "moderator";
+      app_role:
+        | "player"
+        | "parent"
+        | "coach"
+        | "arbiter"
+        | "organizer"
+        | "editor"
+        | "partner"
+        | "admin"
+        | "super_admin"
+        | "admin_competitions"
+        | "admin_shop"
+        | "moderator";
       cadence: "blitz" | "rapid" | "classical";
       consent_type: "terms" | "newsletter" | "public_profile" | "image_rights" | "parental";
       game_result: "1-0" | "0-1" | "1/2-1/2" | "+-" | "-+" | "=-=" | "0-0";
-      order_status: "pending_payment" | "paid" | "preparing" | "ready_for_pickup" | "shipped" | "delivered" | "cancelled" | "refunded";
-      org_type: "club" | "school" | "organizer" | "association" | "departmental_league" | "federation" | "vendor" | "content_creator" | "media" | "university" | "company";
+      order_status:
+        | "pending_payment"
+        | "paid"
+        | "preparing"
+        | "ready_for_pickup"
+        | "shipped"
+        | "delivered"
+        | "cancelled"
+        | "refunded";
+      org_type:
+        | "club"
+        | "school"
+        | "organizer"
+        | "association"
+        | "departmental_league"
+        | "federation"
+        | "vendor"
+        | "content_creator"
+        | "media"
+        | "university"
+        | "company";
       payment_status: "not_required" | "pending" | "paid" | "due_on_site" | "refunded" | "failed";
       rating_type: "blitz" | "rapid" | "classical" | "online";
-      registration_status: "pending_payment" | "pending_validation" | "confirmed" | "waitlisted" | "cancelled" | "refused";
+      registration_status:
+        | "pending_payment"
+        | "pending_validation"
+        | "confirmed"
+        | "waitlisted"
+        | "cancelled"
+        | "refused";
       sex: "M" | "F";
-      tournament_status: "draft" | "published" | "registration_open" | "registration_closed" | "ongoing" | "finished" | "archived" | "cancelled";
+      tournament_status:
+        | "draft"
+        | "published"
+        | "registration_open"
+        | "registration_closed"
+        | "ongoing"
+        | "finished"
+        | "archived"
+        | "cancelled";
     };
     CompositeTypes: Record<string, never>;
   };
@@ -3948,7 +5704,9 @@ export type Database = {
 
 type PublicSchema = Database["public"];
 export type Tables<T extends keyof PublicSchema["Tables"]> = PublicSchema["Tables"][T]["Row"];
-export type TablesInsert<T extends keyof PublicSchema["Tables"]> = PublicSchema["Tables"][T]["Insert"];
-export type TablesUpdate<T extends keyof PublicSchema["Tables"]> = PublicSchema["Tables"][T]["Update"];
+export type TablesInsert<T extends keyof PublicSchema["Tables"]> =
+  PublicSchema["Tables"][T]["Insert"];
+export type TablesUpdate<T extends keyof PublicSchema["Tables"]> =
+  PublicSchema["Tables"][T]["Update"];
 export type Views<T extends keyof PublicSchema["Views"]> = PublicSchema["Views"][T]["Row"];
 export type Enums<T extends keyof PublicSchema["Enums"]> = PublicSchema["Enums"][T];

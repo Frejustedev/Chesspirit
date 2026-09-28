@@ -48,6 +48,19 @@ test("média et académie", async ({ page }) => {
   await shoot(page, "34-lexique", "/academie/lexique");
 });
 
+test("communauté", async ({ page }) => {
+  test.setTimeout(240_000);
+  await shoot(page, "40-communaute", "/communaute");
+  await shoot(page, "41-adhesion", "/communaute/adhesion");
+  await shoot(page, "42-awards", "/communaute/awards");
+  await shoot(page, "43-public-contre-maitre", "/communaute/public-contre-le-maitre/partie-demo");
+  await shoot(page, "44-premium", "/academie/premium");
+  await loginWithPhone(page, "+22990000001", "/communaute/badges");
+  await page.waitForURL(/communaute\/badges/);
+  await shoot(page, "45-badges", "/communaute/badges");
+  await shoot(page, "46-ambassadeurs", "/communaute/ambassadeurs");
+});
+
 test("espace joueur", async ({ page }) => {
   await loginWithPhone(page, "+22990000001", "/compte");
   await page.waitForURL(/compte/);

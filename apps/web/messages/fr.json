@@ -102,7 +102,8 @@
       "privacy": "Confidentialité",
       "cookies": "Cookies",
       "refunds": "Retours et remboursements",
-      "rules": "Règlement type des tournois"
+      "rules": "Règlement type des tournois",
+      "pvm": "Public contre maître"
     }
   },
   "footer": {
@@ -404,7 +405,9 @@
     "coach": "Espace coach",
     "orders": "Commandes",
     "leagues": "Ligues",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "joinCta": "Adhérer à la communauté",
+    "levelLine": "Niveau {level} · {xp} points"
   },
   "family": {
     "title": "Compte famille",
@@ -1546,7 +1549,8 @@
     "leagues": "Ligues et Tour",
     "directory": "Annuaire",
     "content": "Contenus",
-    "stats": "Statistiques"
+    "stats": "Statistiques",
+    "community": "Communauté"
   },
   "adminUsers": {
     "title": "Utilisateurs",
@@ -2333,7 +2337,8 @@
     "send": "Envoyer",
     "suggestionThanks": "Merci, votre proposition sera relue.",
     "signInToSuggest": "Connectez-vous pour proposer une traduction.",
-    "suggestionError": "Envoi impossible."
+    "suggestionError": "Envoi impossible.",
+    "premiumLockedShort": "premium"
   },
   "adminContent": {
     "title": "Contenus",
@@ -2483,5 +2488,284 @@
     "noRounds": "Aucune ronde appariée.",
     "loading": "Chargement…",
     "noCopy": "Aucune copie locale : ouvrez cette page avec du réseau."
+  },
+  "community": {
+    "title": "Communauté",
+    "intro": "Adhésion, niveaux et badges, ambassadeurs et parrainage, pronostics gratuits, parties contre le public et Chesspirit Awards.",
+    "nav": {
+      "membership": "Adhésion",
+      "badges": "Niveaux et badges",
+      "ambassadors": "Ambassadeurs",
+      "predictions": "Pronostics",
+      "pvm": "Le public contre le maître",
+      "awards": "Awards"
+    },
+    "cards": {
+      "membership": "Carte de membre gratuite, ou adhésion premium pour les cours avancés.",
+      "badges": "Du Pion au Roi : votre niveau grandit avec vos tournois, parties et puzzles.",
+      "ambassadors": "Représentez Chesspirit dans votre ville et parrainez vos proches.",
+      "predictions": "Devinez les résultats des parties en cours. Gratuit, sans argent en jeu.",
+      "pvm": "Votez chaque coup du public face à un maître.",
+      "awards": "Votez pour les joueurs, clubs et moments de la saison."
+    },
+    "levels": {
+      "pawn": "Pion",
+      "knight": "Cavalier",
+      "bishop": "Fou",
+      "rook": "Tour",
+      "queen": "Dame",
+      "king": "Roi"
+    },
+    "myLevel": "Mon niveau",
+    "xp": "{xp} points d'expérience",
+    "toNext": "Encore {n} points pour devenir {level}",
+    "maxLevel": "Niveau maximal atteint.",
+    "membership": {
+      "title": "Adhésion membre",
+      "intro": "Rejoignez la communauté Chesspirit : l'adhésion simple est gratuite, l'adhésion premium donne accès aux cours avancés.",
+      "free": "Gratuit",
+      "price": "{price} pour {months} mois",
+      "priceTbc": "Le tarif sera annoncé prochainement.",
+      "active": "Adhésion active",
+      "signIn": "Se connecter pour adhérer",
+      "joinFree": "Adhérer gratuitement",
+      "joinPremium": "Devenir membre premium",
+      "pay": "Finaliser le paiement",
+      "card": "Carte de membre",
+      "cardHelp": "Présentez ce QR code à l'entrée des événements.",
+      "validUntil": "Valable jusqu'au {date}",
+      "noEnd": "Sans date de fin",
+      "note": "Le paiement de l'adhésion premium passe par Mobile Money ; l'adhésion est activée dès la confirmation du paiement.",
+      "checkTitle": "Vérification de carte",
+      "cardValid": "Carte de membre valide",
+      "cardInvalid": "Carte inconnue ou expirée",
+      "member": "Membre",
+      "premiumMember": "Membre premium",
+      "privateName": "Profil privé"
+    },
+    "premium": {
+      "title": "Cours premium",
+      "intro": "Des cours approfondis, des ressources exclusives et un badge premium, réservés aux membres premium.",
+      "priceLabel": "Tarif :",
+      "price": "{price} pour {months} mois",
+      "cta": "Devenir membre premium",
+      "youArePremium": "Vous êtes membre premium : tous les cours sont ouverts.",
+      "lessons": "Leçons premium",
+      "noLessons": "Les premières leçons premium sont en préparation.",
+      "resources": "Ressources premium"
+    },
+    "badges": {
+      "title": "Niveaux et badges",
+      "intro": "Chaque tournoi, partie, puzzle et cours vous fait progresser, du Pion au Roi. Les badges récompensent les étapes marquantes.",
+      "signIn": "Connectez-vous pour voir votre niveau et vos badges.",
+      "levels": "Les six niveaux",
+      "fromXp": "dès {xp} points",
+      "howTo": "Comment gagner des points",
+      "rules": {
+        "tournaments": "Tournoi joué",
+        "games": "Partie jouée",
+        "puzzles": "Puzzle résolu",
+        "lessons": "Cours suivi",
+        "predictions": "Bon pronostic",
+        "badges": "Badge obtenu"
+      },
+      "all": "Tous les badges",
+      "owned": "obtenu",
+      "passport": "Passeport du Chesspirit Tour",
+      "passportIntro": "Un tampon pour chaque ville d'étape du Tour où vous avez joué.",
+      "passportEmpty": "Aucune étape jouée pour l'instant."
+    },
+    "ambassadors": {
+      "title": "Ambassadeurs et parrainage",
+      "intro": "Les ambassadeurs font vivre les échecs dans leur ville : ils accueillent les nouveaux joueurs et relaient les événements.",
+      "list": "Nos ambassadeurs",
+      "none": "Les premiers ambassadeurs seront annoncés prochainement.",
+      "apply": "Devenir ambassadeur",
+      "applyIntro": "Présentez-vous en quelques lignes ; l'équipe vous répondra.",
+      "signIn": "Se connecter pour candidater",
+      "city": "Ville",
+      "motivation": "Votre motivation (20 caractères minimum)",
+      "submit": "Envoyer ma candidature",
+      "applied": "Candidature envoyée. Merci !",
+      "status": {
+        "pending": "Candidature en cours d'examen.",
+        "approved": "Vous êtes ambassadeur Chesspirit.",
+        "refused": "Votre candidature n'a pas été retenue cette fois-ci."
+      }
+    },
+    "referral": {
+      "title": "Parrainage",
+      "intro": "Invitez vos proches avec votre lien personnel : chaque inscription parrainée compte pour le badge « Parrain ».",
+      "yourLink": "Votre lien de parrainage",
+      "yourCode": "Votre code : {code}",
+      "count": "{n, plural, =0 {Aucune personne parrainée pour l'instant} one {# personne parrainée} other {# personnes parrainées}}",
+      "copy": "Copier",
+      "copied": "Copié",
+      "haveCode": "Vous avez un code de parrainage ?",
+      "code": "Code de parrainage",
+      "claim": "Valider",
+      "claimed": "Parrainage enregistré. Bienvenue !"
+    },
+    "predictions": {
+      "title": "Pronostics",
+      "intro": "Devinez le résultat des parties des tournois en cours. Pronostics gratuits : aucun argent n'est engagé, seulement des points et un classement.",
+      "open": "Parties ouvertes aux pronostics",
+      "rules": "Les pronostics ferment 15 minutes après la publication des appariements. 1 point par bon pronostic.",
+      "noneOpen": "Aucune partie ouverte aux pronostics en ce moment. Revenez à la publication de la prochaine ronde.",
+      "round": "Ronde {n}",
+      "board": "Échiquier {n}",
+      "result": {
+        "white": "Blancs gagnent",
+        "draw": "Nulle",
+        "black": "Noirs gagnent"
+      },
+      "saved": "Pronostic enregistré.",
+      "signIn": "Se connecter pour pronostiquer",
+      "myScore": "Mon score : {points} point(s) pour {n} pronostic(s).",
+      "leaderboard": "Classement des pronostiqueurs",
+      "points": "{n} pt",
+      "emptyBoard": "Le classement apparaîtra après les premiers résultats.",
+      "free": "Jeu gratuit, sans mise ni gain d'argent."
+    },
+    "pvm": {
+      "title": "Le public contre le maître",
+      "intro": "Le public joue ensemble contre un maître : chaque coup du public est choisi au vote.",
+      "none": "Aucune partie en cours pour l'instant.",
+      "master": "Maître : {name}",
+      "moves": "{n, plural, =0 {aucun coup} one {# coup} other {# coups}}",
+      "inProgress": "Partie en cours",
+      "finished": "Partie terminée : {result}",
+      "demo": "démonstration",
+      "publicPlays": "le public joue les {color}",
+      "white": "blancs",
+      "black": "noirs",
+      "boardLabel": "Échiquier de la partie",
+      "yourTurn": "Au public de jouer : choisissez votre coup sur l'échiquier.",
+      "signInToVote": "Au public de jouer : connectez-vous pour voter.",
+      "signIn": "Se connecter pour voter",
+      "voteClosed": "Vote clos : le coup du public va être joué.",
+      "masterTurn": "Au maître de jouer.",
+      "voteEnds": "Fin du vote : {date}",
+      "voteRecorded": "Vote enregistré.",
+      "tally": "Votes pour ce coup",
+      "votes": "{n, plural, one {# voix} other {# voix}}",
+      "noVotes": "Pas encore de vote.",
+      "movesTitle": "Coups joués",
+      "control": "Pilotage (maître ou administration)",
+      "playPublic": "Jouer le coup le plus voté",
+      "masterMove": "Coup du maître (ex. e7e5)",
+      "play": "Jouer",
+      "finish": "Déclarer le résultat :",
+      "finishConfirm": "Terminer la partie sur le résultat {result} ?"
+    },
+    "awards": {
+      "title": "Chesspirit Awards",
+      "intro": "Chaque saison, la communauté élit les joueurs, clubs et moments marquants des échecs au Bénin.",
+      "editions": "Éditions",
+      "none": "La première édition des Awards sera annoncée prochainement.",
+      "demo": "Édition de démonstration : catégories et nommés fictifs.",
+      "votingUntil": "Vote ouvert jusqu'au {date}.",
+      "votingOpen": "Vote ouvert.",
+      "votingClosed": "Le vote n'est pas ouvert.",
+      "results": "Résultats du vote.",
+      "signIn": "Se connecter pour voter",
+      "vote": "Voter",
+      "yourVote": "Votre vote",
+      "votes": "{n, plural, one {# voix} other {# voix}}",
+      "winner": "Lauréat"
+    },
+    "errors": {
+      "auth_required": "Connectez-vous pour continuer.",
+      "invalid": "Données invalides.",
+      "voting_closed": "Le vote est clos.",
+      "prediction_closed": "Les pronostics sont fermés pour cette partie.",
+      "vote_closed": "Le vote est clos pour ce coup.",
+      "illegal_move": "Coup illégal dans cette position.",
+      "no_votes": "Aucun coup légal n'a reçu de vote.",
+      "forbidden": "Action non autorisée.",
+      "payment_unavailable": "Le paiement est momentanément indisponible.",
+      "already_applied": "Vous avez déjà candidaté.",
+      "invalid_code": "Code invalide.",
+      "referral_refused": "Ce code ne peut pas être appliqué (code inconnu, le vôtre, ou compte créé il y a plus de 30 jours).",
+      "price_not_set": "Le tarif n'est pas encore fixé.",
+      "generic": "Une erreur est survenue. Réessayez."
+    }
+  },
+  "adminCommunity": {
+    "title": "Communauté",
+    "tabs": "Rubriques",
+    "tab": {
+      "adhesions": "Adhésions",
+      "ambassadeurs": "Ambassadeurs",
+      "awards": "Awards",
+      "public-contre-le-maitre": "Public contre maître"
+    },
+    "saved": "Enregistré.",
+    "save": "Enregistrer",
+    "price": "Tarif (FCFA)",
+    "priceHint": "Laisser vide tant que le tarif n'est pas confirmé.",
+    "duration": "Durée (mois)",
+    "activePlan": "Formule proposée",
+    "referralsCount": "{n, plural, =0 {Aucun parrainage} one {# parrainage enregistré} other {# parrainages enregistrés}}",
+    "members": "Adhésions récentes",
+    "card": "Carte",
+    "name": "Nom",
+    "plan": "Formule",
+    "status": "Statut",
+    "validity": "Fin de validité",
+    "memberStatus": {
+      "pending_payment": "paiement en attente",
+      "active": "active",
+      "expired": "expirée",
+      "cancelled": "annulée"
+    },
+    "approve": "Approuver",
+    "refuse": "Refuser",
+    "ambassadorStatus": {
+      "pending": "en attente",
+      "approved": "approuvé",
+      "refused": "refusé"
+    },
+    "noAmbassadors": "Aucune candidature.",
+    "newEdition": "Nouvelle édition",
+    "year": "Année",
+    "slug": "Adresse (slug)",
+    "titleFr": "Titre (FR)",
+    "titleEn": "Titre (EN)",
+    "votingEnds": "Fin du vote",
+    "createEdition": "Créer l'édition",
+    "editionStatus": {
+      "draft": "Brouillon",
+      "voting": "Vote ouvert",
+      "closed": "Clos (résultats publiés)"
+    },
+    "categoryFr": "Catégorie (FR)",
+    "categoryEn": "Catégorie (EN)",
+    "addCategory": "Ajouter la catégorie",
+    "nominee": "Nommé",
+    "nomineeDescription": "Description",
+    "addNominee": "Ajouter",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer définitivement ?",
+    "demo": "démonstration",
+    "newPvm": "Nouvelle partie « le public contre le maître »",
+    "pvmHelp": "La partie est pilotée depuis sa page publique : coup du maître, puis clôture du vote du public.",
+    "masterName": "Nom du maître",
+    "publicColor": "Couleur du public",
+    "white": "Blancs",
+    "black": "Noirs",
+    "voteMinutes": "Durée de chaque vote (minutes)",
+    "createPvm": "Créer la partie",
+    "pvmStatus": {
+      "draft": "brouillon",
+      "open": "en cours",
+      "finished": "terminée"
+    },
+    "errors": {
+      "invalid": "Données invalides.",
+      "forbidden": "Action non autorisée.",
+      "slug_taken": "Cette adresse est déjà utilisée.",
+      "generic": "Une erreur est survenue."
+    }
   }
 }

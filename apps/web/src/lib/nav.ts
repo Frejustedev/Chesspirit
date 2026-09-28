@@ -89,6 +89,7 @@ export const NAV: NavSection[] = [
       { key: "badges", href: "/communaute/badges" },
       { key: "ambassadors", href: "/communaute/ambassadeurs" },
       { key: "predictions", href: "/communaute/pronostics" },
+      { key: "pvm", href: "/communaute/public-contre-le-maitre" },
       { key: "awards", href: "/communaute/awards" },
     ],
   },

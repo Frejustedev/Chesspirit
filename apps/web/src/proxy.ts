@@ -3,6 +3,7 @@ import createMiddleware from "next-intl/middleware";
 import { createServerClient } from "@supabase/ssr";
 import { routing } from "./i18n/routing";
 import { env } from "./lib/env";
+import { REFERRAL_COOKIE, REFERRAL_RE } from "./lib/referral";
 
 const intl = createMiddleware(routing);
 
@@ -21,6 +22,15 @@ export default async function proxy(request: NextRequest) {
       },
     },
   });
+  const referral = request.nextUrl.searchParams.get("parrain")?.toUpperCase();
+  if (referral && REFERRAL_RE.test(referral))
+    response.cookies.set(REFERRAL_COOKIE, referral, {
+      maxAge: 60 * 60 * 24 * 30,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: request.nextUrl.protocol === "https:",
+      path: "/",
+    });
   // Ne rien intercaler ici : getUser() rafraîchit le jeton si nécessaire.
   await supabase.auth.getUser();
   return response;
