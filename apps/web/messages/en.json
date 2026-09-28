@@ -161,13 +161,13 @@
     "register": "Register",
     "seeEvent": "See the tournament",
     "kicker": "Chess in Benin",
-    "fallbackTitle": "One account for all your chess.",
+    "fallbackTitle": "From your first lesson to the podium.",
     "fallbackText": "Lessons, tournaments, ratings, games and shop: Chesspirit brings Benin's chess ecosystem together.",
     "puzzleTitle": "Daily puzzle",
     "morePuzzles": "More puzzles",
     "latestResults": "Latest results",
     "ecosystemKicker": "The ecosystem",
-    "ecosystemTitle": "Six pillars, one account.",
+    "ecosystemTitle": "Six pillars, one passion.",
     "ecosystemText": "Every lesson, every tournament and every recorded game feeds your dashboard.",
     "pillars": {
       "coaching": {
