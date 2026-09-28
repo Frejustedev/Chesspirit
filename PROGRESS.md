@@ -2,7 +2,7 @@
 
 - **Phase en cours** : mise en ligne assistée (le propriétaire a demandé de l'aide pour tout publier)
 - **Dernière tâche terminée** : correctifs de l'audit de mise en production (v1.0.1 : droits de l'API explicites, vues en lecture seule, réclamation des profils importés, connexion adaptée aux réglages Supabase, parcours payants fermés sans prestataire, Vercel compatible avec tous les forfaits, polices des affiches, appariement de secours conforme aux couleurs FIDE)
-- **Prochaine tâche** : site public sur https://www.chesspirit.com (Vercel `chesspirit-web`, branche de production `main`, domaines chesspirit.com → www vérifiés ; PR #4 fusionnée). Reste : Supabase Auth (URL, modèles `{{ .Token }}`, OTP 6 chiffres) et **SMTP o2switch indispensable avant de diffuser le lien d'inscription** (sans lui, les codes ne partent qu'aux membres de l'équipe Supabase), super-administrateur et MFA, recette
+- **Prochaine tâche** : site public sur https://www.chesspirit.com (branche de production `main`) ; super-administrateur chesspiritbj@gmail.com créé. Reste : **SMTP o2switch `no-reply@chesspirit.com` dans Supabase Auth (indispensable avant de diffuser le lien d'inscription)**, test de connexion avec une adresse extérieure, informations réelles du tournoi du 3 octobre saisies dans l'administration, puis (facultatif) service échecs, paiement en ligne, SMS
 
 ## Mise en ligne assistée — état (28 septembre 2026)
 
