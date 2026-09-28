@@ -321,7 +321,7 @@
     "sendError": "Could not send the code. Please try again.",
     "codeInvalid": "Wrong or expired code.",
     "tooMany": "Too many attempts. Please wait a few minutes.",
-    "oauthError": "Google sign-in failed. Try again or sign in with a code."
+    "oauthError": "Sign-in did not complete (link expired or opened in another browser). Request a new code below."
   },
   "errors": {
     "required": "Required field",
@@ -1754,7 +1754,7 @@
       "active": "ongoing",
       "closed": "finished"
     },
-    "plannedNote": "Season in preparation: schedule, venues and licence fee will be published here once decided.",
+    "plannedNote": "Season in preparation: exact dates, schedule, venues, licence fee and rule details will be published here once decided.",
     "division": {
       "label": "Division",
       "l1": "League 1",
@@ -1807,7 +1807,9 @@
     "rankingTitle": "League standings",
     "rankingIntro": "The top three of each championship and the season's titles.",
     "tripleCrown": "Triple Crown",
-    "notStarted": "No results yet."
+    "notStarted": "No results yet.",
+    "sofiaTbc": "Sofia rule (no draw by agreement):",
+    "rulePostponeTbc": "Postponement possible with the agreement of both players and the arbiter, before a deadline; monitored online game as an exception. Deadline:"
   },
   "tour": {
     "title": "Chesspirit Tour",

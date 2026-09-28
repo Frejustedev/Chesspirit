@@ -13,6 +13,20 @@ export function formatDate(
   }).format(d);
 }
 
+/**
+ * Date du jour à Porto-Novo au format AAAA-MM-JJ. À utiliser à la place de `iso.slice(0, 10)` (jour UTC) :
+ * un tournoi du 3 octobre à 0 h 30 heure locale est encore le 2 octobre en UTC.
+ */
+export function localDate(iso: string | Date): string {
+  const d = typeof iso === "string" ? new Date(iso) : iso;
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(d);
+}
+
 export function formatDateTime(iso: string | Date, locale: string = "fr"): string {
   return formatDate(iso, locale, { dateStyle: "long", timeStyle: "short" });
 }

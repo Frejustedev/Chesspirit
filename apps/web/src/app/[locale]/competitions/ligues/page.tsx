@@ -34,6 +34,9 @@ export default async function LeaguesPage({
   const [season, seasons] = await Promise.all([pickSeason(saison), getSeasons()]);
   const leagues = season ? await getSeasonLeagues(season.id) : [];
   const rules = (season?.league_rules ?? {}) as LeagueRules;
+  // Saison réelle en préparation : dates au mois près, délai de report et règle de Sofia à confirmer.
+  const planned = !!season && !season.is_demo && season.status === "planned";
+  const monthYear = { month: "long", year: "numeric" } as const;
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
@@ -50,10 +53,13 @@ export default async function LeaguesPage({
         <>
           <p className="mt-6 flex flex-wrap items-center gap-2 text-stone">
             <span className="font-semibold text-ink">{season.name}</span>
-            {season.is_demo ? <DemoBadge /> : null}· {formatDate(season.starts_on, locale)} →{" "}
-            {formatDate(season.ends_on, locale)} · {t(`seasonStatus.${season.status}`)}
+            {season.is_demo ? <DemoBadge /> : null}·{" "}
+            {/* Saison en préparation : seuls le mois de début et de fin sont connus. */}
+            {formatDate(season.starts_on, locale, planned ? monthYear : undefined)} →{" "}
+            {formatDate(season.ends_on, locale, planned ? monthYear : undefined)} ·{" "}
+            {t(`seasonStatus.${season.status}`)}
           </p>
-          {!season.is_demo && season.status === "planned" ? (
+          {planned ? (
             <p className="mt-3 rounded bg-gold-soft/60 px-4 py-3">{t("plannedNote")}</p>
           ) : null}
           <div className="mt-8 overflow-x-auto">
@@ -130,8 +136,26 @@ export default async function LeaguesPage({
                     lower: rules.playoff?.lower_rank ?? 3,
                   })}
                 </li>
-                <li>{rules.sofia_rule ? t("sofiaOn") : t("sofiaOff")}</li>
-                <li>{t("rulePostpone", { days: rules.postpone_deadline_days ?? 7 })}</li>
+                <li>
+                  {planned ? (
+                    <>
+                      {t("sofiaTbc")} <Tbc />
+                    </>
+                  ) : rules.sofia_rule ? (
+                    t("sofiaOn")
+                  ) : (
+                    t("sofiaOff")
+                  )}
+                </li>
+                <li>
+                  {planned ? (
+                    <>
+                      {t("rulePostponeTbc")} <Tbc />
+                    </>
+                  ) : (
+                    t("rulePostpone", { days: rules.postpone_deadline_days ?? 7 })
+                  )}
+                </li>
                 <li>{t("ruleForfeits", { n: rules.max_unjustified_forfeits ?? 2 })}</li>
                 <li>{t("ruleFirstSeason")}</li>
                 <li>{t("ruleTitles")}</li>

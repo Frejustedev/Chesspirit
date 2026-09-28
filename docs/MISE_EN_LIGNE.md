@@ -71,7 +71,7 @@ openssl rand -hex 24   # pour CHESS_ENGINE_KEY (et WHATSAPP_VERIFY_TOKEN si What
 4. **Ne jamais lancer `supabase config push`** : `supabase/config.toml` ne sert qu'au développement local (codes de test, adresses locales).
 5. **Réglages de connexion** (_Authentication_), indispensables : le site n'accepte que des **codes à 6 chiffres**, pas des liens.
    - _Sign In / Providers → Email_ : activé, « Confirm email » activé, **Email OTP Length = 6**, Email OTP Expiration = 3600.
-   - _Emails → SMTP Settings_ : activer le SMTP personnalisé (sans lui, Supabase n'envoie qu'aux membres de l'équipe du projet, quelques messages par heure). Exemple avec la boîte o2switch `no-reply@chesspirit.com` : hôte `mail.chesspirit.com` (ou celui indiqué par o2switch), port 465, identifiant = l'adresse, mot de passe de la boîte ; expéditeur `no-reply@chesspirit.com`, nom « Chesspirit ». Avec Resend : hôte `smtp.resend.com`, port 465, identifiant `resend`, mot de passe = clé d'API.
+   - _Emails → SMTP Settings_ : activer le SMTP personnalisé (sans lui, Supabase n'envoie qu'aux membres de l'équipe du projet, quelques messages par heure). Exemple avec la boîte o2switch `no-reply@chesspirit.com` : hôte = le **nom du serveur o2switch** affiché dans cPanel (_Comptes de messagerie → Connecter les appareils_, serveur sortant, par exemple `xxxx.o2switch.net`), plutôt que `mail.chesspirit.com` qui dépend du DNS ; port 465 (SSL), identifiant = l'adresse complète, mot de passe de la boîte ; expéditeur `no-reply@chesspirit.com`, nom « Chesspirit ». Avec Resend : hôte `smtp.resend.com`, port 465, identifiant `resend`, mot de passe = clé d'API.
    - _Emails → Templates_ : dans **« Magic Link » et « Confirm signup »**, remplacer le contenu par le code (sans lien) :
      - Sujet : `Votre code de connexion Chesspirit`
      - Corps : `<h2>Votre code Chesspirit</h2><p>Saisissez ce code sur la page de connexion :</p><p style="font-size:28px;font-weight:700;letter-spacing:6px">{{ .Token }}</p><p>Ce code expire dans une heure. Si vous n'avez rien demandé, ignorez cet e-mail.</p>`
@@ -107,7 +107,7 @@ La branche de production est `main` : fusionner d'abord la demande de fusion (PR
    - **Root Directory : `apps/web`** ; « Include files outside the Root Directory » : activé (par défaut) ;
    - Framework : Next.js ; commandes d'installation et de compilation : par défaut ;
    - Node.js : 22.x (fixé par `apps/web/package.json`) ; région des fonctions : Paris `cdg1` (fixée par `apps/web/vercel.json`).
-2. **Avant de cliquer sur « Deploy »**, ouvrir _Environment Variables_ et saisir (Production et Preview) :
+2. **Avant de cliquer sur « Deploy »**, ouvrir _Environment Variables_ et saisir, pour l'environnement Production (et Preview seulement si vous voulez tester des branches : elles utiliseraient la même base) :
    - `NEXT_PUBLIC_SITE_URL=https://chesspirit.com`
    - `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY` (3.1, étape 2)
    - `SUPABASE_SERVICE_ROLE_KEY` (secrète)
@@ -117,8 +117,16 @@ La branche de production est `main` : fusionner d'abord la demande de fusion (PR
    Ne pas définir `NODE_ENV` ni `PAYMENT_PROVIDER` tant qu'aucun prestataire de paiement n'est validé. Les variables `NEXT_PUBLIC_*` sont figées à la compilation : après toute modification, relancer un déploiement (_Deployments → Redeploy_).
 
 3. _Settings → Domains_ : ajouter `chesspirit.com` et `www.chesspirit.com`. Vercel affiche les enregistrements DNS à créer chez le registraire (en général un enregistrement A `76.76.21.21` pour `chesspirit.com` et un CNAME `cname.vercel-dns.com` pour `www`) : les recopier exactement.
+   **Chez o2switch** (cPanel → _Zone Editor_ du domaine), sans casser la messagerie qui envoie les codes de connexion :
+   1. la veille si possible, abaisser la durée de vie (TTL) des enregistrements `chesspirit.com` et `www` à 300 s ;
+   2. noter l'adresse IP actuelle de `chesspirit.com` (c'est celle du serveur o2switch) ;
+   3. si `mail.chesspirit.com` est un CNAME vers `chesspirit.com`, le remplacer par un enregistrement A vers cette adresse IP o2switch ; vérifier que l'enregistrement MX pointe vers `mail.chesspirit.com` (ou le serveur o2switch), pas vers `chesspirit.com` ;
+   4. vérifier que l'enregistrement SPF (TXT `v=spf1 …`) autorise le serveur o2switch par son adresse (`ip4:…`) ou par `mx`, et pas seulement par `a` (qui désignerait désormais Vercel) ; garder DKIM et DMARC ;
+   5. supprimer les enregistrements AAAA de `chesspirit.com` et de `www` (IPv6 d'o2switch) ;
+   6. enfin, remplacer l'enregistrement A de `chesspirit.com` par `76.76.21.21` et faire de `www` un CNAME vers `cname.vercel-dns.com`.
 4. Le certificat HTTPS est créé automatiquement par Vercel une fois le DNS propagé (de quelques minutes à quelques heures).
-5. Forfait : le forfait gratuit (Hobby) suffit techniquement (tâches planifiées quotidiennes, une région), mais il est réservé à un usage non commercial ; passer au forfait Pro avant d'encaisser des paiements en ligne.
+5. Forfait : le forfait gratuit (Hobby) suffit techniquement (tâches planifiées quotidiennes, une région), mais il est réservé à un usage non commercial et, en cas de dépassement de ses quotas, le projet est suspendu (pas de dépassement facturé) : un risque le jour d'un tournoi. Passer au forfait Pro avant d'encaisser des paiements en ligne, et de préférence avant le 3 octobre.
+6. Dépôt : le garder **public**, ou fusionner les demandes de fusion depuis GitHub. Pour un dépôt privé, Vercel ne déploie que les commits des membres de l'équipe, et les commits préparés par Claude sont signés d'une autre identité.
 
 ### 3.4 E-mails (SPF, DKIM, DMARC)
 
@@ -248,9 +256,9 @@ E2E_BASE_URL=https://chesspirit.com pnpm --filter web exec playwright test --pro
    ```
    (ou : se connecter normalement sur `/connexion`, puis dans l'éditeur SQL de Supabase : `insert into public.user_roles (user_id, role) select id, 'super_admin' from auth.users where email = 'vous@chesspirit.com' on conflict do nothing;`). Se connecter ensuite par code e-mail ; `/admin` demande la double authentification : scanner le QR code avec une application (Google Authenticator, Aegis…) et **conserver le secret affiché** en lieu sûr (aucun code de secours n'est fourni).
 4. **Données de démonstration** : ne pas les charger en production (`pnpm seed -- --no-demo`, ce que fait le script). Mettre `NEXT_PUBLIC_DEMO_BANNER=false`.
-5. **Tournoi du 3 octobre** : dans _Administration → Tournois_, remplacer chaque « À confirmer » (lieu, horaires, frais, cadence, nombre de rondes, prix, capacité, règlement) puis ouvrir les inscriptions. **Saisir l'horaire avant le 1er octobre à 17 h** (heure de Cotonou) : le rappel J-1 part ce jour-là ; tant que l'horaire n'est pas confirmé, il n'annonce que la date.
+5. **Tournoi du 3 octobre** : dans _Administration → Tournois_, remplacer chaque « À confirmer » (lieu, horaires, frais, cadence, nombre de rondes, prix, capacité, règlement) ; les inscriptions sont déjà ouvertes. **Saisir l'horaire avant le 1er octobre à 17 h** (heure de Cotonou) : le rappel J-1 part ce jour-là ; tant que l'horaire n'est pas confirmé, il n'annonce que la date.
    Sans service échecs, les appariements suisses utilisent le calcul de secours du site (signalé à l'arbitre et dans le rapport) : il respecte les règles absolues (pas de rematch, écart de couleurs d'au plus 2, jamais trois fois de suite la même couleur) mais n'est pas homologué FIDE. Relire chaque ronde avant de la publier ; pour 8 joueurs ou moins, choisir le système « toutes rondes ».
-6. **Participants déjà inscrits** hors du site : les importer depuis un fichier CSV (_Administration → Tournois → Inscrits → Importer_). Tant que la connexion par SMS n'est pas active, un joueur importé qui se connecte par e-mail obtient un nouveau profil : fusionner les doublons (_Administration → Utilisateurs → Doublons_) avant d'apparier la première ronde.
+6. **Participants déjà inscrits** hors du site : les importer depuis un fichier CSV (_Administration → Tournois → Inscrits → Importer_). Tant que la connexion par SMS n'est pas active, un joueur importé qui se connecte par e-mail obtient un nouveau profil : fusionner les doublons avant d'apparier la première ronde (_Administration → Utilisateurs_, fiche du joueur, section « Doublons » : « Fusionner ici »).
 7. **Tarifs** : tarif premium de l'adhésion (_Administration → Communauté_), licences de ligue (_Administration → Ligues_), catalogue de la boutique.
 
 ---

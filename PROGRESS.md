@@ -2,7 +2,7 @@
 
 - **Phase en cours** : mise en ligne assistée (le propriétaire a demandé de l'aide pour tout publier)
 - **Dernière tâche terminée** : correctifs de l'audit de mise en production (v1.0.1 : droits de l'API explicites, vues en lecture seule, réclamation des profils importés, connexion adaptée aux réglages Supabase, parcours payants fermés sans prestataire, Vercel compatible avec tous les forfaits, polices des affiches, appariement de secours conforme aux couleurs FIDE)
-- **Prochaine tâche** : étape 1 ci-dessous (CI verte puis fusion de la PR #1), puis étapes 2 à 4
+- **Prochaine tâche** : étape 2 ci-dessous (projet Supabase), dès que le connecteur Supabase donne accès à l'organisation Chesspirit (nouvelle session nécessaire après la reconnexion)
 
 ## Mise en ligne assistée — état (28 septembre 2026)
 
@@ -11,13 +11,13 @@ Décisions du propriétaire et contraintes constatées :
 - **Supabase** : nouvelle organisation gratuite « Chesspirit » créée par le propriétaire avec chesspirit@gmail.com (il a refusé un projet payant dans l'organisation Dizonli). Le projet Supabase existant « dizonliapp@gmail.com's Project » (organisation Dizonli) est une autre application en production : **ne jamais y toucher**.
 - **Accès de Claude** : le connecteur Supabase n'a accès qu'à une organisation (choisie à l'autorisation). Le propriétaire le bascule sur l'organisation Chesspirit (ou ajoute un second connecteur personnalisé `https://mcp.supabase.com/mcp`). Depuis la session, `api.supabase.com` et `api.vercel.com` sont bloqués par la politique réseau : tout passe par les connecteurs.
 - **Vercel** : équipe « FREJUSTE's projects » (`team_Gh0eLMRnheeegLeaTkmENg80`). Le connecteur ne peut pas créer de projet (403) : le propriétaire importe le dépôt `Frejustedev/Chesspirit` dans Vercel (dossier racine `apps/web`) et colle le bloc de variables fourni ; Claude suit ensuite les déploiements avec le connecteur.
-- **Domaine** : chesspirit.com est chez o2switch (DNS externe). Enregistrements à créer quand le projet Vercel existe : `A @ 76.76.21.21`, `CNAME www cname.vercel-dns.com` (reprendre les valeurs affichées par Vercel).
+- **Domaine** : chesspirit.com est chez o2switch (DNS externe). Enregistrements à créer quand le projet Vercel existe : `A @ 76.76.21.21`, `CNAME www cname.vercel-dns.com` (reprendre les valeurs affichées par Vercel), sans casser la messagerie : `mail` en A vers l'IP o2switch, MX et SPF vérifiés, AAAA supprimés (docs/MISE_EN_LIGNE.md 3.3, étape 3).
 - **E-mails de connexion** : boîte o2switch `no-reply@chesspirit.com`, déclarée comme SMTP dans Supabase Auth.
 
 Étapes restantes, dans l'ordre :
 
-1. Correctifs de l'audit appliqués et vérifiés (tests SQL sur une base simulant un projet Supabase récent, parcours e2e) ; reste : CI verte, fusionner la PR #1 dans `main`.
-2. Créer le projet Supabase « chesspirit » (région eu-west-3) dans l'organisation Chesspirit, appliquer les migrations une par une (puis aligner l'historique `supabase_migrations.schema_migrations` sur les numéros des fichiers), charger les données de référence sans démonstration (export SQL de `pnpm seed --no-demo` : 82 lignes, 13 tables, vérifié sur base neuve et rejouable), lire les conseillers de sécurité.
+1. ✔ Correctifs de l'audit appliqués et vérifiés (tests SQL sur une base simulant un projet Supabase récent, parcours e2e), CI verte, PR #1 fusionnée dans `main` (commit 4c0712f). Les travaux suivants partent de `main` sur la même branche (nouvelle PR).
+2. Créer le projet Supabase « chesspirit » (région eu-west-3) dans l'organisation Chesspirit, appliquer les migrations une par une (puis aligner l'historique `supabase_migrations.schema_migrations` sur les numéros des fichiers), charger les données de référence sans démonstration (export SQL de `pnpm seed --no-demo` sur une base locale neuve : 82 lignes, 13 tables, vérifié sur base neuve et rejouable ; retirer les lignes `\restrict` / `\unrestrict` de pg_dump avant `execute_sql`), lire les conseillers de sécurité.
 3. Fournir au propriétaire le bloc de variables Vercel (URL et clé publique Supabase, clé de service copiée par lui, `CRON_SECRET` généré, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_DEMO_BANNER=false`), puis suivre le déploiement.
 4. Domaine chesspirit.com (DNS o2switch), réglages Auth de Supabase (URL du site, redirections, SMTP, modèles d'e-mail avec le code), compte super-administrateur, recette et test de fumée en production.
 
@@ -80,3 +80,6 @@ Décisions du propriétaire et contraintes constatées :
 - Import FIDE réel : non testé contre le site FIDE (réseau fermé ici) ; validé sur un fichier d'exemple au même format.
 
 - Remboursements par API des prestataires (FedaPay, KKiaPay) : enregistrement manuel seulement.
+- Application mobile : saisie d'une adresse e-mail malcommode (clavier téléphonique par défaut) tant que la connexion par SMS n'est pas active.
+- Données de référence par l'API (`pnpm seed --no-demo`) : non atomiques ; préférer l'export SQL appliqué en une transaction.
+- CI : migrations et tests SQL exécutés sur Postgres 16 (la production Supabase est en 17 ; aucune incompatibilité relevée).

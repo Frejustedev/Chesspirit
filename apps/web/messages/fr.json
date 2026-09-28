@@ -321,7 +321,7 @@
     "sendError": "Impossible d'envoyer le code. Réessayez.",
     "codeInvalid": "Code incorrect ou expiré.",
     "tooMany": "Trop de tentatives. Patientez quelques minutes.",
-    "oauthError": "La connexion avec Google a échoué. Réessayez ou recevez un code de connexion."
+    "oauthError": "La connexion n'a pas abouti (lien expiré ou ouvert dans un autre navigateur). Demandez un nouveau code ci-dessous."
   },
   "errors": {
     "required": "Champ obligatoire",
@@ -1754,7 +1754,7 @@
       "active": "en cours",
       "closed": "terminée"
     },
-    "plannedNote": "Saison en préparation : calendrier, lieux et montant de la licence seront publiés ici dès qu'ils seront arrêtés.",
+    "plannedNote": "Saison en préparation : dates exactes, calendrier, lieux, montant de la licence et détails du règlement seront publiés ici dès qu'ils seront arrêtés.",
     "division": {
       "label": "Division",
       "l1": "Ligue 1",
@@ -1807,7 +1807,9 @@
     "rankingTitle": "Classements des ligues",
     "rankingIntro": "Les trois premiers de chaque championnat et les titres de la saison.",
     "tripleCrown": "Triple Couronne",
-    "notStarted": "Pas encore de résultats."
+    "notStarted": "Pas encore de résultats.",
+    "sofiaTbc": "Règle de Sofia (pas de nulle par accord) :",
+    "rulePostponeTbc": "Report possible avec l'accord des deux joueurs et de l'arbitre, avant une date limite ; partie en ligne surveillée à titre exceptionnel. Délai :"
   },
   "tour": {
     "title": "Chesspirit Tour",
