@@ -5,21 +5,34 @@ import { getNextEvent, getLatestResults } from "@/lib/data/tournaments";
 import { createClient } from "@/lib/supabase/server";
 import type { Tables } from "@/lib/supabase/types";
 import { puzzleOfTheDay, type Puzzle } from "@/lib/puzzles";
+import { NAV } from "@/lib/nav";
 import { ChessClock } from "@/components/home/chess-clock";
 import { getFideRanking } from "@/lib/data/fide";
 import { KnightDraw } from "@/components/home/knight-draw";
 import { PuzzleBoard } from "@/components/chess/puzzle";
 import { PieceSvg, type PieceKind } from "@/components/icons/pieces";
-import { IconArrow, IconCalendar, IconPin, IconClock } from "@/components/icons";
+import { IconArrow, IconPin, IconClock } from "@/components/icons";
 import { DemoBadge } from "@/components/ui/demo-badge";
+
+/** Les huit rubriques posées sur la rangée de départ : tour, cavalier, fou, dame, roi, fou, cavalier, tour. */
+const BACK_RANK: PieceKind[] = ["r", "n", "b", "q", "k", "b", "n", "r"];
+const FILES = "abcdefgh";
+// Classes écrites en entier pour que Tailwind les génère.
+const SQUARE = { light: "bg-square-light", dark: "bg-square-dark" };
+const SQUARE_SM = { light: "sm:bg-square-light", dark: "sm:bg-square-dark" };
+const SQUARE_LG = { light: "lg:bg-square-light", dark: "lg:bg-square-dark" };
+const COORD = { light: "text-square-dark", dark: "text-square-light" };
+const COORD_SM = { light: "sm:text-square-dark", dark: "sm:text-square-light" };
+const COORD_LG = { light: "lg:text-square-dark", dark: "lg:text-square-light" };
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
+  const tn = await getTranslations("nav");
   const tt = await getTranslations("tournament");
   const supabase = await createClient();
-  const [next, results, stats, top, fide] = await Promise.all([
+  const [next, results, stats, top, fide, daily] = await Promise.all([
     getNextEvent(),
     getLatestResults(6),
     supabase.rpc("public_stats").maybeSingle(),
@@ -28,128 +41,171 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       .select("*")
       .eq("type", "rapid")
       .order("rating", { ascending: false })
-      .limit(10),
-    getFideRanking("standard", 10),
+      .limit(5),
+    getFideRanking("standard", 5),
+    supabase.rpc("daily_puzzle"),
   ]);
   // Même puzzle que l'académie (base de puzzles), repli sur la liste intégrée.
-  const daily = (await (await createClient()).rpc("daily_puzzle")).data as Tables<"puzzles"> | null;
-  const puzzle: Puzzle = daily
+  const dp = daily.data as Tables<"puzzles"> | null;
+  const puzzle: Puzzle = dp
     ? {
-        id: daily.code,
-        fen: daily.fen,
-        solution: daily.solution,
-        theme: daily.theme as Puzzle["theme"],
-        mateIn: daily.mate_in ?? Math.ceil(daily.solution.length / 2),
+        id: dp.code,
+        fen: dp.fen,
+        solution: dp.solution,
+        theme: dp.theme as Puzzle["theme"],
+        mateIn: dp.mate_in ?? Math.ceil(dp.solution.length / 2),
       }
     : puzzleOfTheDay();
+  const figures = (
+    [
+      ["ratedPlayers", stats.data?.rated_players ?? 0],
+      ["tournaments", stats.data?.tournaments ?? 0],
+      ["games", stats.data?.games ?? 0],
+    ] as const
+  ).filter(([, v]) => v > 0);
 
-  const pillars: { key: string; href: string; piece: PieceKind }[] = [
-    { key: "coaching", href: "/coaching", piece: "p" },
-    { key: "competitions", href: "/competitions", piece: "n" },
-    { key: "rankings", href: "/classements", piece: "r" },
-    { key: "directory", href: "/annuaire", piece: "b" },
-    { key: "shop", href: "/boutique", piece: "q" },
-    { key: "media", href: "/media", piece: "k" },
-  ];
+  const day = next
+    ? new Intl.DateTimeFormat(locale, { day: "2-digit", timeZone: "Africa/Porto-Novo" }).format(
+        new Date(next.starts_at),
+      )
+    : "";
+  const month = next
+    ? new Intl.DateTimeFormat(locale, { month: "short", timeZone: "Africa/Porto-Novo" }).format(
+        new Date(next.starts_at),
+      )
+    : "";
 
   return (
     <>
-      {/* Bandeau vivant */}
+      {/* Accueil */}
       <section className="relative overflow-hidden bg-ink text-cream">
         <KnightDraw />
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 pb-14 pt-10 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:px-6 lg:pb-20 lg:pt-16">
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-4 pb-16 pt-12 lg:grid-cols-[1.35fr_1fr] lg:items-end lg:gap-16 lg:px-6 lg:pb-24 lg:pt-24">
           <div className="animate-[rise_700ms_var(--ease-out-soft)_both]">
-            {next ? (
-              <>
-                <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-gold">
-                  {t("nextEvent")}
-                </p>
-                <h1
-                  className="mt-3 font-display text-[2.6rem] font-semibold leading-[1.02] sm:text-6xl lg:text-7xl"
-                  style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+            <p className="flex items-center gap-3 font-sans text-sm font-semibold uppercase tracking-[0.2em] text-gold">
+              <span aria-hidden className="h-px w-8 bg-gold" />
+              {t("welcomeKicker")}
+            </p>
+            <h1
+              className="mt-6 max-w-[15ch] font-display text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.01em] sm:text-6xl lg:text-[5.4rem]"
+              style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+            >
+              {t.rich("welcomeTitle", {
+                em: (chunks) => <em className="font-medium italic text-gold-deep">{chunks}</em>,
+              })}
+            </h1>
+            <p className="mt-7 max-w-xl font-serif text-xl leading-snug text-cream/80 sm:text-[1.4rem]">
+              {t("welcomeText")}
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <a
+                href="#portail"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-6 text-[1.05rem] font-semibold text-onaccent transition-colors hover:bg-gold-deep"
+              >
+                {t("explore")} <IconArrow className="size-5 rotate-90" />
+              </a>
+              {next?.status === "registration_open" ? (
+                <Link
+                  href={`/competitions/${next.slug}/inscription`}
+                  className="inline-flex min-h-12 items-center font-semibold text-cream underline decoration-gold decoration-2 underline-offset-[6px] hover:text-gold-deep"
                 >
-                  {next.name}
-                </h1>
-                <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 font-sans text-[1.02rem] text-cream/85">
-                  <li className="flex items-center gap-2">
-                    <IconCalendar className="size-5 text-gold" />
-                    <span className="first-letter:uppercase">
-                      {formatDate(next.starts_at, locale, {
-                        weekday: "long",
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </span>
-                  </li>
-                  {next.venue ? (
-                    <li className="flex items-center gap-2">
-                      <IconPin className="size-5 text-gold" />
-                      {next.venue}
-                      {next.city ? `, ${next.city}` : ""}
-                    </li>
-                  ) : null}
-                  {next.cadence ? (
-                    <li className="flex items-center gap-2">
-                      <IconClock className="size-5 text-gold" />
-                      {tt(`cadence.${next.cadence}`)}
-                    </li>
-                  ) : null}
-                </ul>
-                <div className="mt-9">
-                  <ChessClock
-                    target={next.starts_at}
-                    dateOnly={next.unconfirmed_fields.includes("schedule")}
-                  />
-                </div>
-                <div className="mt-9 flex flex-wrap items-center gap-4">
-                  {next.status === "registration_open" ? (
-                    <Link
-                      href={`/competitions/${next.slug}/inscription`}
-                      className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-6 text-[1.05rem] font-semibold text-onaccent transition-colors hover:bg-accent"
-                    >
-                      {t("register")} <IconArrow className="size-5" />
-                    </Link>
-                  ) : null}
-                  <Link
-                    href={`/competitions/${next.slug}`}
-                    className="inline-flex min-h-12 items-center font-semibold text-cream underline decoration-gold decoration-2 underline-offset-4 hover:text-gold"
-                  >
-                    {t("seeEvent")}
-                  </Link>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-gold">
-                  {t("kicker")}
-                </p>
-                <h1 className="mt-3 font-display text-5xl font-semibold leading-[1.02] lg:text-7xl">
-                  {t("fallbackTitle")}
-                </h1>
-                <p className="mt-5 max-w-xl font-serif text-xl text-cream/80">
-                  {t("fallbackText")}
-                </p>
-              </>
-            )}
+                  {tn("ctaTournament")}
+                </Link>
+              ) : null}
+            </div>
           </div>
 
+          {/* Prochain tournoi, présenté comme un billet */}
           <aside
-            className="animate-[rise_900ms_var(--ease-out-soft)_120ms_both] rounded-lg bg-paper p-4 text-fg shadow-[0_30px_60px_-30px_rgb(0_0_0/0.8)] sm:p-5 lg:self-start"
-            aria-labelledby="puzzle-title"
+            className="animate-[rise_900ms_var(--ease-out-soft)_150ms_both]"
+            aria-labelledby="next-title"
           >
-            <div className="mb-3 flex items-baseline justify-between gap-3">
-              <h2 id="puzzle-title" className="font-display text-2xl font-semibold">
-                {t("puzzleTitle")}
-              </h2>
-              <Link
-                href="/academie/puzzle-du-jour"
-                className="text-sm font-semibold text-accent hover:underline"
-              >
-                {t("morePuzzles")}
-              </Link>
-            </div>
-            <PuzzleBoard puzzle={puzzle} compact />
+            {next ? (
+              <div className="relative rounded-lg border border-cream/12 bg-paper/95 text-fg shadow-[0_40px_80px_-40px_rgb(0_0_0/0.9)] backdrop-blur">
+                <div className="flex items-stretch">
+                  <div className="flex w-24 shrink-0 flex-col items-center justify-center border-r border-dashed border-line px-3 py-5 text-center sm:w-28">
+                    <span className="tabular font-display text-5xl font-semibold leading-none text-gold-deep">
+                      {day}
+                    </span>
+                    <span className="mt-1 font-sans text-sm font-semibold uppercase tracking-[0.18em] text-stone">
+                      {month}
+                    </span>
+                  </div>
+                  <div className="min-w-0 flex-1 p-5">
+                    <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+                      {t("nextTournament")}
+                    </p>
+                    <h2
+                      id="next-title"
+                      className="mt-1.5 font-display text-2xl font-semibold leading-tight sm:text-[1.75rem]"
+                    >
+                      <Link href={`/competitions/${next.slug}`} className="hover:text-accent">
+                        {next.name}
+                      </Link>
+                    </h2>
+                    <ul className="mt-3 space-y-1 text-[0.98rem] text-stone">
+                      <li className="first-letter:uppercase">
+                        {formatDate(next.starts_at, locale, {
+                          weekday: "long",
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </li>
+                      {next.venue ? (
+                        <li className="flex items-center gap-2">
+                          <IconPin className="size-4 text-accent" />
+                          {next.venue}
+                          {next.city ? `, ${next.city}` : ""}
+                        </li>
+                      ) : null}
+                      {next.cadence ? (
+                        <li className="flex items-center gap-2">
+                          <IconClock className="size-4 text-accent" />
+                          {tt(`cadence.${next.cadence}`)}
+                        </li>
+                      ) : null}
+                    </ul>
+                  </div>
+                </div>
+                <div className="border-t border-dashed border-line px-5 pb-5 pt-6">
+                  <ChessClock
+                    target={next.starts_at}
+                    compact
+                    dateOnly={next.unconfirmed_fields.includes("schedule")}
+                  />
+                  <div className="mt-1 flex flex-wrap items-center gap-x-5 gap-y-3">
+                    {next.status === "registration_open" ? (
+                      <Link
+                        href={`/competitions/${next.slug}/inscription`}
+                        className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bordeaux px-5 font-semibold text-cream transition-colors hover:bg-bordeaux-bright"
+                      >
+                        {t("register")} <IconArrow className="size-5" />
+                      </Link>
+                    ) : null}
+                    <Link
+                      href={`/competitions/${next.slug}`}
+                      className="text-sm font-semibold text-accent hover:underline"
+                    >
+                      {t("seeEvent")}
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="rounded-lg border border-cream/12 p-6">
+                <h2 id="next-title" className="font-display text-2xl font-semibold">
+                  {t("nextTournament")}
+                </h2>
+                <p className="mt-2 font-serif text-lg text-cream/75">{t("noEvent")}</p>
+                <Link
+                  href="/competitions"
+                  className="mt-4 inline-flex items-center gap-2 font-semibold text-gold-deep hover:text-cream"
+                >
+                  {t("calendar")} <IconArrow className="size-5" />
+                </Link>
+              </div>
+            )}
           </aside>
         </div>
 
@@ -189,129 +245,182 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         ) : null}
       </section>
 
-      {/* Piliers */}
+      {/* Le portail : huit rubriques, huit colonnes */}
       <section
-        className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-24"
-        aria-labelledby="pillars-title"
+        id="portail"
+        className="mx-auto max-w-7xl scroll-mt-20 px-4 py-16 lg:px-6 lg:py-24"
+        aria-labelledby="portal-title"
       >
-        <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
+        <div className="grid gap-4 lg:grid-cols-[1fr_1.1fr] lg:items-end lg:gap-16">
           <div>
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-              {t("ecosystemKicker")}
+            <p className="font-sans text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+              {t("portalKicker")}
             </p>
-            <h2 id="pillars-title" className="mt-3 font-display text-4xl font-semibold lg:text-5xl">
-              {t("ecosystemTitle")}
+            <h2
+              id="portal-title"
+              className="mt-3 font-display text-4xl font-semibold leading-[1.05] lg:text-[3.4rem]"
+            >
+              {t("portalTitle")}
             </h2>
-            <p className="mt-4 max-w-md font-serif text-xl leading-snug text-stone">
-              {t("ecosystemText")}
-            </p>
           </div>
-          <ol className="divide-y divide-line border-y border-line">
-            {pillars.map((p, i) => (
-              <li key={p.key}>
+          <p className="max-w-xl font-serif text-xl leading-snug text-stone">{t("portalText")}</p>
+        </div>
+
+        <ol className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-4 lg:grid-cols-8">
+          {NAV.map((s, i) => {
+            // Damier juste à chaque largeur : 2, 4 puis 8 colonnes.
+            const sq = (light: boolean) => (light ? "light" : "dark");
+            const tone = [
+              sq((i + Math.floor(i / 2)) % 2 === 0),
+              sq((i + Math.floor(i / 4)) % 2 === 0),
+              sq(i % 2 === 0),
+            ] as const;
+            return (
+              <li key={s.key} className="group relative flex flex-col bg-paper">
                 <Link
-                  href={p.href}
-                  className="group grid grid-cols-[2.5rem_3rem_1fr_auto] items-center gap-3 py-4 sm:grid-cols-[3rem_3.5rem_1fr_auto] sm:gap-5"
+                  href={s.href}
+                  className={`relative flex aspect-[5/4] items-center justify-center transition-[filter] duration-300 group-hover:brightness-110 lg:aspect-square ${SQUARE[tone[0]]} ${SQUARE_SM[tone[1]]} ${SQUARE_LG[tone[2]]}`}
+                  aria-label={tn(`sections.${s.key}`)}
                 >
-                  <span className="tabular font-sans text-sm font-semibold text-stone">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
                   <PieceSvg
-                    kind={p.piece}
-                    color="w"
-                    className="size-11 transition-transform duration-300 group-hover:-translate-y-1 sm:size-12"
+                    kind={BACK_RANK[i] ?? "r"}
+                    color={i % 2 === 0 ? "b" : "w"}
+                    className="size-16 drop-shadow-[0_6px_8px_rgb(0_0_0/0.25)] transition-transform duration-500 [transition-timing-function:var(--ease-out-soft)] group-hover:-translate-y-2 lg:size-[4.5rem]"
                   />
-                  <span>
-                    <span className="block font-display text-2xl font-semibold group-hover:text-accent">
-                      {t(`pillars.${p.key}.title`)}
-                    </span>
-                    <span className="block text-[0.98rem] text-stone">
-                      {t(`pillars.${p.key}.text`)}
-                    </span>
+                  <span
+                    aria-hidden
+                    className={`absolute bottom-1.5 left-2 font-sans text-sm font-bold ${COORD[tone[0]]} ${COORD_SM[tone[1]]} ${COORD_LG[tone[2]]}`}
+                  >
+                    {FILES[i]}
                   </span>
-                  <IconArrow className="size-5 text-stone transition-transform group-hover:translate-x-1 group-hover:text-accent" />
                 </Link>
+                <div className="flex flex-1 flex-col p-4">
+                  <Link
+                    href={s.href}
+                    className="font-display text-xl font-semibold leading-tight hover:text-accent"
+                  >
+                    {tn(`sections.${s.key}`)}
+                  </Link>
+                  <p className="mt-1.5 text-[0.92rem] leading-snug text-stone">
+                    {t(`files.${s.key}`)}
+                  </p>
+                  <ul className="mt-auto space-y-1 pt-4 text-[0.9rem]">
+                    {s.items.slice(1, 3).map((it) => (
+                      <li key={it.key}>
+                        <Link
+                          href={it.href}
+                          className="inline-flex min-h-7 items-center gap-1.5 text-fg/85 hover:text-accent"
+                        >
+                          <span aria-hidden className="text-gold">
+                            ›
+                          </span>
+                          {tn(`items.${it.key}`)}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </li>
-            ))}
-          </ol>
+            );
+          })}
+        </ol>
+      </section>
+
+      {/* Aujourd'hui : puzzle et classements */}
+      <section className="border-y border-line bg-surface/60" aria-labelledby="today-title">
+        <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
+          <p className="font-sans text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+            {t("todayKicker")}
+          </p>
+          <h2 id="today-title" className="mt-3 font-display text-4xl font-semibold lg:text-5xl">
+            {t("todayTitle")}
+          </h2>
+          <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
+            <div>
+              <div className="mb-3 flex items-baseline justify-between gap-3">
+                <h3 className="font-display text-2xl font-semibold">{t("puzzleTitle")}</h3>
+                <Link
+                  href="/academie/puzzle-du-jour"
+                  className="text-sm font-semibold text-accent hover:underline"
+                >
+                  {t("morePuzzles")}
+                </Link>
+              </div>
+              <div className="rounded-lg border border-line bg-paper p-3 sm:p-4">
+                <PuzzleBoard puzzle={puzzle} compact />
+              </div>
+            </div>
+            <div className="space-y-10">
+              <TopList
+                title={t("top5")}
+                href="/classements"
+                linkLabel={t("fullRanking")}
+                empty={t("rankingEmpty")}
+                rows={(top.data ?? []).map((r) => ({
+                  key: r.profile_id!,
+                  rank: r.rank!,
+                  name: r.display_name ?? "",
+                  demo: !!r.is_demo,
+                  detail: r.club_name,
+                  value: r.rating!,
+                }))}
+              />
+              <TopList
+                title={t("top5Fide")}
+                href="/classements/fide"
+                linkLabel={t("fullRanking")}
+                empty={t("rankingEmptyFide")}
+                rows={fide.rows.map((r) => ({
+                  key: r.id,
+                  rank: r.rank,
+                  name: r.displayName,
+                  demo: r.isDemo,
+                  detail: r.titles.join(", ") || r.club,
+                  value: r.standard!,
+                }))}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Classements (cote Chesspirit et Elo FIDE officiel) et chiffres */}
-      <section className="border-y border-line bg-surface/60">
-        <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6">
-          <h2 className="font-display text-3xl font-semibold sm:text-4xl">{t("rankingsTitle")}</h2>
-          <div className="mt-6 grid gap-10 lg:grid-cols-2">
-            <TopList
-              title={t("top10")}
-              href="/classements"
-              linkLabel={t("fullRanking")}
-              empty={t("rankingEmpty")}
-              rows={(top.data ?? []).map((r) => ({
-                key: r.profile_id!,
-                rank: r.rank!,
-                name: r.display_name ?? "",
-                demo: !!r.is_demo,
-                detail: r.club_name,
-                value: r.rating!,
-              }))}
-            />
-            <TopList
-              title={t("top10Fide")}
-              href="/classements/fide"
-              linkLabel={t("fullFide")}
-              empty={t("rankingEmptyFide")}
-              rows={fide.rows.map((r) => ({
-                key: r.id,
-                rank: r.rank,
-                name: r.displayName,
-                demo: r.isDemo,
-                detail: r.titles.join(", ") || r.club,
-                value: r.standard!,
-              }))}
-            />
+      {/* Organisateurs, chiffres et partenaires */}
+      <section className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
+        <div className="grid gap-10 rounded-lg bg-bordeaux p-7 text-cream sm:p-10 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+          <div>
+            <h2 className="font-display text-3xl font-semibold lg:text-4xl">
+              {t("organizersTitle")}
+            </h2>
+            <p className="mt-3 max-w-2xl font-serif text-xl leading-snug text-cream/85">
+              {t("organizersText")}
+            </p>
+            <Link
+              href="/contact"
+              className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-gold-deep hover:text-cream"
+            >
+              {t("organizersCta")} <IconArrow className="size-5" />
+            </Link>
           </div>
-          <div className="mt-14 grid gap-12 lg:grid-cols-2">
+          {figures.length ? (
             <div>
-              <h2 className="font-display text-3xl font-semibold">{t("figures")}</h2>
-              <dl className="mt-5 grid grid-cols-3 gap-3">
-                {(
-                  [
-                    ["ratedPlayers", stats.data?.rated_players],
-                    ["tournaments", stats.data?.tournaments],
-                    ["games", stats.data?.games],
-                  ] as const
-                ).map(([k, v]) => (
-                  <div
-                    key={k}
-                    className="rounded-[var(--radius-card)] border border-line bg-paper p-4"
-                  >
-                    <dt className="text-sm text-stone">{t(`stats.${k}`)}</dt>
-                    <dd className="tabular mt-1 font-display text-4xl font-semibold">{v ?? 0}</dd>
+              <dl className="grid grid-cols-3 gap-4 border-t border-cream/15 pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+                {figures.map(([k, v]) => (
+                  <div key={k}>
+                    <dd className="tabular font-display text-4xl font-semibold text-gold-deep">
+                      {v}
+                    </dd>
+                    <dt className="mt-1 text-sm text-cream/75">{t(`stats.${k}`)}</dt>
                   </div>
                 ))}
               </dl>
               {stats.data?.demo ? (
-                <p className="mt-2 text-sm text-stone">{t("statsDemo")}</p>
+                <p className="mt-3 text-sm text-cream/60">{t("statsDemo")}</p>
               ) : null}
             </div>
-            <div className="self-start rounded-[var(--radius-card)] bg-bordeaux p-6 text-cream">
-              <h3 className="font-display text-2xl font-semibold">{t("organizersTitle")}</h3>
-              <p className="mt-2 font-serif text-lg text-cream/85">{t("organizersText")}</p>
-              <Link
-                href="/contact"
-                className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-gold hover:text-cream"
-              >
-                {t("organizersCta")} <IconArrow className="size-5" />
-              </Link>
-            </div>
-          </div>
+          ) : null}
         </div>
-      </section>
 
-      {/* Partenaires */}
-      <section className="mx-auto max-w-7xl px-4 py-14 lg:px-6">
-        <p className="text-center font-sans text-sm font-semibold uppercase tracking-[0.18em] text-stone">
+        <p className="mt-14 text-center font-sans text-sm font-semibold uppercase tracking-[0.2em] text-stone">
           {t("partnersTitle")}
         </p>
         <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-14 gap-y-4 font-display text-3xl text-fg/80">
@@ -326,7 +435,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   );
 }
 
-/** Top 10 d'un classement, avec lien vers la liste complète. */
+/** Tête d'un classement, avec lien vers la liste complète. */
 function TopList({
   title,
   href,
@@ -349,16 +458,16 @@ function TopList({
 }) {
   return (
     <div>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line pb-2">
         <h3 className="font-display text-2xl font-semibold">{title}</h3>
         <Link href={href} className="text-sm font-semibold text-accent hover:underline">
           {linkLabel}
         </Link>
       </div>
       {rows.length ? (
-        <ol className="mt-4 divide-y divide-line rounded-[var(--radius-card)] border border-line bg-paper">
+        <ol className="divide-y divide-line">
           {rows.map((r) => (
-            <li key={r.key} className="flex items-center gap-4 px-4 py-2.5">
+            <li key={r.key} className="flex items-center gap-4 py-2.5">
               <span className="tabular w-6 text-right font-display text-lg text-accent">
                 {r.rank}
               </span>
@@ -373,9 +482,7 @@ function TopList({
           ))}
         </ol>
       ) : (
-        <p className="mt-4 rounded-[var(--radius-card)] border border-dashed border-line bg-paper p-6 font-serif text-lg text-stone">
-          {empty}
-        </p>
+        <p className="mt-3 font-serif text-lg leading-snug text-stone">{empty}</p>
       )}
     </div>
   );
