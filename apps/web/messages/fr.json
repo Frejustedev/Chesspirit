@@ -279,7 +279,15 @@
     "pending": "En attente",
     "fullResults": "Résultats complets",
     "free": "Gratuit",
-    "roundN": "Ronde {n}"
+    "roundN": "Ronde {n}",
+    "teamsTitle": "Tournoi par équipes",
+    "teamsText": "Compositions, rencontres et classement des équipes.",
+    "teamsLink": "Voir les équipes",
+    "onlineTitle": "Tournoi en ligne",
+    "onlineText": "Les parties se jouent sur Lichess. Liez votre compte Lichess à votre profil pour que vos résultats soient reconnus.",
+    "onlineLink": "Ouvrir le tournoi sur Lichess",
+    "onlineLinkAccount": "Lier mon compte Lichess",
+    "fairPlay": "Règles de fair-play : caméra et partage d'écran pour les compétitions dotées."
   },
   "auth": {
     "title": "Connexion",
@@ -536,7 +544,9 @@
       "resultats": "Résultats et parties",
       "reglages": "Réglages",
       "rondes": "Rondes",
-      "affiches": "Affiches"
+      "affiches": "Affiches",
+      "equipes": "Équipes",
+      "en-ligne": "En ligne"
     },
     "registrantsSummary": "{total} inscrits · {checked} pointés",
     "exportCsv": "Exporter en CSV",
@@ -1915,5 +1925,102 @@
       "already_member": "Déjà membre.",
       "tournament_already_stage": "Ce tournoi est déjà une étape."
     }
+  },
+  "teamsAdmin": {
+    "teams": "Équipes",
+    "teamName": "Nom de l'équipe",
+    "addTeam": "Ajouter l'équipe",
+    "orderByRating": "Ordre par la cote",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer cette équipe ?",
+    "removeMember": "Retirer {name}",
+    "player": "Joueur",
+    "choosePlayer": "Choisir un joueur inscrit",
+    "substitute": "Remplaçant",
+    "add": "Ajouter",
+    "rounds": "Rondes",
+    "generate": "Apparier la ronde suivante",
+    "round": "Ronde {n}",
+    "publish": "Publier",
+    "unpublish": "Dépublier",
+    "table": "Table {n}",
+    "bye": "exempt",
+    "boardPlayer": "Échiquier {n}, {side}",
+    "white": "Blancs",
+    "black": "Noirs",
+    "boardResult": "Résultat de l'échiquier {n}",
+    "standings": "Classement",
+    "team": "Équipe",
+    "mp": "Pts match",
+    "gp": "Pts partie",
+    "warnings": {
+      "team_size": "composition incomplète",
+      "too_many_substitutes": "trop de remplaçants",
+      "min_women": "joueuse obligatoire manquante",
+      "min_youth": "jeune obligatoire manquant"
+    },
+    "errors": {
+      "generic": "Action impossible.",
+      "forbidden": "Action non autorisée.",
+      "not_enough_teams": "Il faut au moins deux équipes.",
+      "round_not_finished": "La ronde en cours n'est pas terminée.",
+      "all_rounds_done": "Toutes les rondes sont jouées.",
+      "team_exists": "Ce nom d'équipe existe déjà.",
+      "already_member": "Ce joueur est déjà dans l'équipe."
+    }
+  },
+  "onlineAdmin": {
+    "lichess": "Tournoi sur Lichess",
+    "help": "Liez le tournoi à une Arena ou à un tournoi suisse Lichess, puis importez les résultats : les joueurs sont reconnus par leur compte Lichess lié.",
+    "kind": "Type",
+    "swiss": "Suisse",
+    "id": "Identifiant ou lien Lichess",
+    "link": "Lier",
+    "saved": "Tournoi Lichess lié.",
+    "createArena": "Créer l'Arena sur Lichess",
+    "created": "Arena créée : {id}",
+    "import": "Importer les résultats",
+    "imported": "{players} joueurs classés, {games} parties importées, {unknown} comptes inconnus",
+    "noToken": "Création automatique indisponible : jeton du compte Chesspirit non configuré (LICHESS_API_TOKEN).",
+    "lastImport": "Dernier import : {date}",
+    "fairPlayTitle": "Fair-play",
+    "fairPlayText": "Pour une compétition dotée : caméra et partage d'écran obligatoires, arbitre en visio, commission fair-play et sanctions selon le règlement.",
+    "players": "Inscrits et comptes Lichess",
+    "notLinked": "compte non lié",
+    "errors": {
+      "generic": "Action impossible.",
+      "forbidden": "Action non autorisée.",
+      "invalid": "Identifiant Lichess invalide.",
+      "lichess_id_missing": "Liez d'abord un tournoi Lichess.",
+      "lichess_not_configured": "Jeton Lichess non configuré."
+    }
+  },
+  "lichessLink": {
+    "title": "Compte Lichess",
+    "help": "Liez votre compte pour participer aux compétitions en ligne : vos résultats comptent pour la cote en ligne et le Tour. Chesspirit ne conserve que votre nom d'utilisateur.",
+    "link": "Lier mon compte Lichess",
+    "unlink": "Délier",
+    "fakeLabel": "Nom d'utilisateur Lichess",
+    "fakeLink": "Lier (mode test)",
+    "fakeNote": "Mode de démonstration : la liaison réelle passe par la connexion Lichess.",
+    "status": {
+      "ok": "Compte Lichess lié.",
+      "error": "Liaison impossible, réessayez.",
+      "taken": "Ce compte Lichess est déjà lié à un autre profil."
+    }
+  },
+  "teamsPublic": {
+    "title": "Équipes et rencontres",
+    "scoring": {
+      "match_points": "Classement aux points de match",
+      "game_points": "Classement aux points de partie"
+    },
+    "boards": "{n} échiquiers",
+    "standings": "Classement",
+    "team": "Équipe",
+    "mp": "Pts match",
+    "gp": "Pts partie",
+    "round": "Ronde {n}",
+    "bye": "exempt"
   }
 }

@@ -228,6 +228,40 @@ export default async function TournamentPage({ params }: Props) {
             </p>
           </section>
 
+          {t.pairing_system === "team_swiss" ? (
+            <section className="rounded-lg border border-line p-5">
+              <h2 className="font-display text-2xl font-semibold">{tt("teamsTitle")}</h2>
+              <p className="mt-1 text-stone">{tt("teamsText")}</p>
+              <Link
+                href={`/competitions/${t.slug}/equipes`}
+                className="mt-3 inline-flex min-h-11 items-center font-semibold text-bordeaux hover:underline"
+              >
+                {tt("teamsLink")} →
+              </Link>
+            </section>
+          ) : null}
+          {t.is_online ? (
+            <section className="rounded-lg bg-gold-soft/50 p-5">
+              <h2 className="font-display text-2xl font-semibold">{tt("onlineTitle")}</h2>
+              <p className="mt-1">{tt("onlineText")}</p>
+              {t.lichess_id ? (
+                <a
+                  href={`https://lichess.org/${t.lichess_kind === "swiss" ? "swiss" : "tournament"}/${t.lichess_id}`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="mt-3 inline-flex min-h-11 items-center font-semibold text-bordeaux hover:underline"
+                >
+                  {tt("onlineLink")} ↗
+                </a>
+              ) : null}
+              <p className="mt-3 text-sm">
+                <Link href="/compte/profil#lichess" className="font-semibold underline">
+                  {tt("onlineLinkAccount")}
+                </Link>{" "}
+                · {tt("fairPlay")}
+              </p>
+            </section>
+          ) : null}
           {extras.standings.length ? (
             <section aria-labelledby="results">
               <div className="flex items-baseline justify-between gap-4">

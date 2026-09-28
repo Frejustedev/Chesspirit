@@ -67,3 +67,16 @@ describe("appariement suisse de secours", () => {
     expect(pairs.flatMap((x) => [x.white, x.black])).not.toContain("p1");
   });
 });
+
+describe("suisse accéléré (Baku)", async () => {
+  const { bakuVirtualPoints } = await import("./swiss");
+  it("groupe A et points virtuels par ronde", () => {
+    // 20 joueurs, 9 rondes : groupe A = 10, 5 rondes accélérées (1 point aux rondes 1-3, ½ aux rondes 4-5).
+    expect(bakuVirtualPoints(10, 20, 1, 9)).toBe(1);
+    expect(bakuVirtualPoints(11, 20, 1, 9)).toBe(0);
+    expect(bakuVirtualPoints(1, 20, 3, 9)).toBe(1);
+    expect(bakuVirtualPoints(1, 20, 4, 9)).toBe(0.5);
+    expect(bakuVirtualPoints(1, 20, 6, 9)).toBe(0);
+    expect(bakuVirtualPoints(12, 22, 1, 7)).toBe(1);
+  });
+});

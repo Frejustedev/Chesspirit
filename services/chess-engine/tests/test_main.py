@@ -34,3 +34,19 @@ def test_joueur_inconnu_refuse() -> None:
 def test_corps_trop_volumineux() -> None:
     headers = {**KEY, "content-length": str(main.MAX_BODY_BYTES + 1), "content-type": "application/json"}
     assert client.post("/ratings/replay", content=b"{}", headers=headers).status_code == 413
+
+
+def test_acceleration_xxa() -> None:
+    from app.swiss import SwissRequest, build_trf
+
+    req = SwissRequest(
+        total_rounds=5,
+        round=1,
+        players=[
+            {"start_no": 1, "name": "A", "acceleration": [1, 1, 0.5, 0, 0]},
+            {"start_no": 2, "name": "B"},
+        ],
+    )
+    trf = build_trf(req)
+    assert "XXA    1  1.0  1.0  0.5  0.0  0.0" in trf
+    assert "XXA    2" not in trf

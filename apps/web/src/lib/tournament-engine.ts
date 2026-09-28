@@ -1,5 +1,6 @@
 import "server-only";
 import {
+  bakuVirtualPoints,
   bergerTables,
   computeStandings,
   firstRound,
@@ -212,7 +213,17 @@ export async function generateNextRound(
           id: p.playerId,
           startNo: p.startNo,
           rating: p.rating,
-          points: rows.reduce((a, r) => a + r.points, 0),
+          // Points virtuels (suisse accéléré) : comptent pour l'appariement uniquement.
+          points:
+            rows.reduce((a, r) => a + r.points, 0) +
+            (t.pairing_system === "swiss_accelerated"
+              ? bakuVirtualPoints(
+                  p.startNo,
+                  state.participants.length,
+                  roundNumber,
+                  t.rounds_count ?? Math.max(roundNumber, 5),
+                )
+              : 0),
           opponents: rows.filter((r) => r.opponent).map((r) => r.opponent!),
           colors: rows
             .filter((r) => r.color !== "-" && ["1", "0", "="].includes(r.code))
@@ -288,8 +299,10 @@ async function pairWithEngine(
   if (!url || !key) throw new Error("engine_not_configured");
   const start = new Map(state.participants.map((p) => [p.playerId, p.startNo]));
   const active = new Set(players.map((p) => p.playerId));
+  const totalRounds = state.tournament.rounds_count ?? Math.max(round, 5);
+  const accelerated = state.tournament.pairing_system === "swiss_accelerated";
   const body = {
-    total_rounds: state.tournament.rounds_count ?? Math.max(round, 5),
+    total_rounds: totalRounds,
     round,
     initial_color: state.tournament.initial_color,
     players: state.participants.map((p) => {
@@ -306,6 +319,11 @@ async function pairWithEngine(
           result: r.code,
         })),
         absent: !active.has(p.playerId),
+        acceleration: accelerated
+          ? Array.from({ length: totalRounds }, (_, i) =>
+              bakuVirtualPoints(p.startNo, state.participants.length, i + 1, totalRounds),
+            )
+          : [],
       };
     }),
   };

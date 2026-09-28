@@ -25,6 +25,16 @@ if (!fs.existsSync(envFile)) {
   );
   console.log("✓ apps/web/.env.local créé avec les valeurs locales");
 }
+// Valeurs locales ajoutées au fil des versions (sans toucher aux valeurs existantes).
+{
+  const current = fs.readFileSync(envFile, "utf8");
+  const missing = [
+    "LICHESS_FAKE=true",
+    `CRON_SECRET=${crypto.randomBytes(24).toString("hex")}`,
+  ].filter((l) => !new RegExp(`^${l.slice(0, l.indexOf("="))}=`, "m").test(current));
+  if (missing.length)
+    fs.appendFileSync(envFile, `${current.endsWith("\n") ? "" : "\n"}${missing.join("\n")}\n`);
+}
 
 const useCli = process.env.SUPABASE_CLI === "1";
 const stack = useCli

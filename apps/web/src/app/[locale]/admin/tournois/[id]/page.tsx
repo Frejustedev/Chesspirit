@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { teamsBody, onlineBody } from "./extra-tabs";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { formatXof } from "@chesspirit/shared";
 import { Link } from "@/i18n/navigation";
@@ -19,7 +20,16 @@ import { IconDownload } from "@/components/icons";
 
 export const metadata: Metadata = { robots: { index: false } };
 
-const TABS = ["inscrits", "pointage", "rondes", "resultats", "affiches", "reglages"] as const;
+const TABS = [
+  "inscrits",
+  "pointage",
+  "rondes",
+  "equipes",
+  "en-ligne",
+  "resultats",
+  "affiches",
+  "reglages",
+] as const;
 
 export default async function AdminTournament({
   params,
@@ -49,7 +59,15 @@ export default async function AdminTournament({
   if (!/^[0-9a-f-]{36}$/.test(id)) notFound();
   const { data: tn } = await supabase.from("tournaments").select("*").eq("id", id).maybeSingle();
   if (!tn) notFound();
-  const tab = (TABS as readonly string[]).includes(onglet ?? "")
+  // Onglets selon le format : équipes pour les tournois par équipes, « en ligne » pour Lichess.
+  const isTeam = tn.pairing_system === "team_swiss";
+  const tabs = TABS.filter(
+    (k) =>
+      (k !== "equipes" || isTeam) &&
+      (k !== "rondes" || !isTeam) &&
+      (k !== "en-ligne" || tn.is_online),
+  );
+  const tab = (tabs as readonly string[]).includes(onglet ?? "")
     ? (onglet as (typeof TABS)[number])
     : "inscrits";
 
@@ -177,6 +195,10 @@ export default async function AdminTournament({
         }))}
       />
     );
+  } else if (tab === "equipes") {
+    body = await teamsBody(supabase, tn.id);
+  } else if (tab === "en-ligne") {
+    body = await onlineBody(supabase, tn);
   } else if (tab === "affiches") {
     const { count } = await supabase
       .from("standings")
@@ -247,7 +269,7 @@ export default async function AdminTournament({
       <h1 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">{tn.name}</h1>
       <nav aria-label={t("tabs")} className="-mx-4 mt-6 overflow-x-auto px-4">
         <ul className="flex gap-1 border-b border-line">
-          {TABS.map((k) => (
+          {tabs.map((k) => (
             <li key={k}>
               <Link
                 href={`/admin/tournois/${tn.id}?onglet=${k}`}

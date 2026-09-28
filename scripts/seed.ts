@@ -1078,7 +1078,13 @@ async function seedShop(demo: boolean) {
   must(
     await db.from("promo_codes").insert([
       { code: "DEMO10", kind: "percent", value: 10, is_demo: true, max_uses_per_user: null },
-      { code: "LIVRAISON-DEMO", kind: "free_shipping", value: 0, is_demo: true, max_uses_per_user: null },
+      {
+        code: "LIVRAISON-DEMO",
+        kind: "free_shipping",
+        value: 0,
+        is_demo: true,
+        max_uses_per_user: null,
+      },
     ]),
     "codes promo",
   );

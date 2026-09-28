@@ -5,6 +5,9 @@ import { safeNext } from "@/lib/safe-next";
 import { ProfileForm } from "@/components/account/profile-form";
 import { AccountNav, AccountShell } from "@/components/account/account-nav";
 import type { ProfileInput } from "@chesspirit/shared";
+import { createClient } from "@/lib/supabase/server";
+import { lichessFake } from "@/lib/lichess";
+import { LichessLink } from "@/components/account/lichess-link";
 
 export const metadata: Metadata = { robots: { index: false } };
 
@@ -13,11 +16,11 @@ export default async function ProfilePage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ next?: string }>;
+  searchParams: Promise<{ next?: string; lichess?: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { next } = await searchParams;
+  const { next, lichess } = await searchParams;
   const session = await requireSession(locale, "/compte/profil", { onboarded: false });
   const t = await getTranslations("profile");
   const p = session.profile;
@@ -45,12 +48,22 @@ export default async function ProfilePage({
       </div>
     );
   }
+  const { data: linked } = await (
+    await createClient()
+  )
+    .from("lichess_accounts")
+    .select("username")
+    .eq("profile_id", p.id)
+    .maybeSingle();
   return (
     <AccountShell
       nav={<AccountNav current="/compte/profil" isAdmin={isAdminRole(session.roles)} />}
       title={t("title")}
     >
       <ProfileForm mode="edit" defaults={defaults} />
+      <div className="mt-10">
+        <LichessLink username={linked?.username ?? null} fake={lichessFake()} status={lichess} />
+      </div>
     </AccountShell>
   );
 }

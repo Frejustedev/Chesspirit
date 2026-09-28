@@ -101,3 +101,22 @@ function backtrack(list: SwissState[], budget = { n: 200000 }): [SwissState, Swi
   }
   return null;
 }
+
+/**
+ * Suisse accéléré, méthode Baku (FIDE C.04.5.1) : le groupe A (première moitié du classement
+ * initial, arrondie au nombre pair supérieur) reçoit des points virtuels pendant la première
+ * moitié des rondes : 1 point sur la première moitié des rondes accélérées, ½ point ensuite.
+ * Les points virtuels ne servent qu'à l'appariement, jamais au classement.
+ */
+export function bakuVirtualPoints(
+  startNo: number,
+  players: number,
+  round: number,
+  totalRounds: number,
+): number {
+  const groupA = 2 * Math.ceil(players / 4);
+  if (startNo > groupA) return 0;
+  const accelerated = Math.ceil(totalRounds / 2);
+  const full = Math.ceil(accelerated / 2);
+  return round <= full ? 1 : round <= accelerated ? 0.5 : 0;
+}

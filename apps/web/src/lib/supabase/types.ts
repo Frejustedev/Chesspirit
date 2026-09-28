@@ -116,6 +116,42 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "availability_slots_coach_id_fkey"; columns: ["coach_id"]; isOneToOne: false; referencedRelation: "coach_profiles"; referencedColumns: ["id"] }, { foreignKeyName: "availability_slots_offer_id_fkey"; columns: ["offer_id"]; isOneToOne: false; referencedRelation: "offers"; referencedColumns: ["id"] }];
       };
+      board_results: {
+        Row: {
+          id: string;
+          team_match_id: string;
+          board: number;
+          white_id: string | null;
+          black_id: string | null;
+          home_is_white: boolean;
+          result: Database["public"]["Enums"]["game_result"] | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          team_match_id: string;
+          board: number;
+          white_id?: string | null;
+          black_id?: string | null;
+          home_is_white: boolean;
+          result?: Database["public"]["Enums"]["game_result"] | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          team_match_id?: string;
+          board?: number;
+          white_id?: string | null;
+          black_id?: string | null;
+          home_is_white?: boolean;
+          result?: Database["public"]["Enums"]["game_result"] | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "board_results_team_match_id_fkey"; columns: ["team_match_id"]; isOneToOne: false; referencedRelation: "team_matches"; referencedColumns: ["id"] }, { foreignKeyName: "board_results_white_id_fkey"; columns: ["white_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "board_results_black_id_fkey"; columns: ["black_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
       bookings: {
         Row: {
           id: string;
@@ -961,6 +997,33 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [{ foreignKeyName: "leagues_season_id_fkey"; columns: ["season_id"]; isOneToOne: false; referencedRelation: "seasons"; referencedColumns: ["id"] }, { foreignKeyName: "leagues_champion_id_fkey"; columns: ["champion_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      lichess_accounts: {
+        Row: {
+          profile_id: string;
+          username: string;
+          lichess_id: string;
+          linked_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          profile_id: string;
+          username: string;
+          lichess_id: string;
+          linked_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          profile_id?: string;
+          username?: string;
+          lichess_id?: string;
+          linked_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "lichess_accounts_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: true; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
       loyalty_ledger: {
         Row: {
@@ -2527,6 +2590,105 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "standings_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "standings_player_id_fkey"; columns: ["player_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      team_matches: {
+        Row: {
+          id: string;
+          tournament_id: string;
+          round_number: number;
+          table_number: number;
+          home_team_id: string;
+          away_team_id: string | null;
+          published: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          tournament_id: string;
+          round_number: number;
+          table_number: number;
+          home_team_id: string;
+          away_team_id?: string | null;
+          published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          tournament_id?: string;
+          round_number?: number;
+          table_number?: number;
+          home_team_id?: string;
+          away_team_id?: string | null;
+          published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "team_matches_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "team_matches_home_team_id_fkey"; columns: ["home_team_id"]; isOneToOne: false; referencedRelation: "teams"; referencedColumns: ["id"] }, { foreignKeyName: "team_matches_away_team_id_fkey"; columns: ["away_team_id"]; isOneToOne: false; referencedRelation: "teams"; referencedColumns: ["id"] }];
+      };
+      team_members: {
+        Row: {
+          id: string;
+          team_id: string;
+          profile_id: string;
+          board_order: number;
+          is_substitute: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          team_id: string;
+          profile_id: string;
+          board_order: number;
+          is_substitute?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          team_id?: string;
+          profile_id?: string;
+          board_order?: number;
+          is_substitute?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "team_members_team_id_fkey"; columns: ["team_id"]; isOneToOne: false; referencedRelation: "teams"; referencedColumns: ["id"] }, { foreignKeyName: "team_members_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      teams: {
+        Row: {
+          id: string;
+          tournament_id: string;
+          name: string;
+          organization_id: string | null;
+          captain_id: string | null;
+          seed: number | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          tournament_id: string;
+          name: string;
+          organization_id?: string | null;
+          captain_id?: string | null;
+          seed?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          tournament_id?: string;
+          name?: string;
+          organization_id?: string | null;
+          captain_id?: string | null;
+          seed?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "teams_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "teams_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "teams_captain_id_fkey"; columns: ["captain_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
       tour_points: {
         Row: {
           id: string;
@@ -2748,6 +2910,11 @@ export type Database = {
           updated_at: string;
           initial_color: string;
           bye_points: number;
+          lichess_kind: string | null;
+          lichess_id: string | null;
+          lichess_imported_at: string | null;
+          team_scoring: string;
+          team_size: number;
         };
         Insert: {
           id?: string;
@@ -2800,6 +2967,11 @@ export type Database = {
           updated_at?: string;
           initial_color?: string;
           bye_points?: number;
+          lichess_kind?: string | null;
+          lichess_id?: string | null;
+          lichess_imported_at?: string | null;
+          team_scoring?: string;
+          team_size?: number;
         };
         Update: {
           id?: string;
@@ -2852,6 +3024,11 @@ export type Database = {
           updated_at?: string;
           initial_color?: string;
           bye_points?: number;
+          lichess_kind?: string | null;
+          lichess_id?: string | null;
+          lichess_imported_at?: string | null;
+          team_scoring?: string;
+          team_size?: number;
         };
         Relationships: [{ foreignKeyName: "tournaments_organizer_profile_id_fkey"; columns: ["organizer_profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }, { foreignKeyName: "tournaments_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "tournaments_duplicated_from_fkey"; columns: ["duplicated_from"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "tournaments_league_fk"; columns: ["league_id"]; isOneToOne: false; referencedRelation: "leagues"; referencedColumns: ["id"] }];
       };
@@ -2920,6 +3097,17 @@ export type Database = {
         };
         Relationships: [];
       };
+      public_board_results: {
+        Row: {
+          team_match_id: string | null;
+          board: number | null;
+          home_is_white: boolean | null;
+          result: Database["public"]["Enums"]["game_result"] | null;
+          white_name: string | null;
+          black_name: string | null;
+        };
+        Relationships: [];
+      };
       public_coaches: {
         Row: {
           id: string | null;
@@ -2951,6 +3139,13 @@ export type Database = {
           display_name: string | null;
           club: string | null;
           titles: string[] | null;
+        };
+        Relationships: [];
+      };
+      public_lichess_accounts: {
+        Row: {
+          profile_id: string | null;
+          username: string | null;
         };
         Relationships: [];
       };
@@ -3054,6 +3249,18 @@ export type Database = {
           titles: string[] | null;
           fide_id: string | null;
           sex: Database["public"]["Enums"]["sex"] | null;
+        };
+        Relationships: [];
+      };
+      public_team_members: {
+        Row: {
+          team_id: string | null;
+          tournament_id: string | null;
+          profile_id: string | null;
+          board_order: number | null;
+          is_substitute: boolean | null;
+          display_name: string | null;
+          titles: string[] | null;
         };
         Relationships: [];
       };

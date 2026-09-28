@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { loginWithPhone } from "./helpers";
+import { loginWithPhone, serviceDb } from "./helpers";
 
 test("espace joueur : tournois, attestation PDF, parties filtrées, PGN, statistiques, annotations", async ({
   page,
@@ -14,13 +14,19 @@ test("espace joueur : tournois, attestation PDF, parties filtrées, PGN, statist
   expect(pdf.headers()["content-type"]).toBe("application/pdf");
   expect((await pdf.body()).subarray(0, 4).toString()).toBe("%PDF");
 
+  const db = serviceDb();
+  const { data: me } = await db.from("profiles").select("id").eq("phone", "+22990000001").single();
+  const { count } = await db
+    .from("games")
+    .select("id", { count: "exact", head: true })
+    .or(`white_id.eq.${me!.id},black_id.eq.${me!.id}`);
   await page.goto("/compte/parties");
-  await expect(page.getByText(/^5 parties$/)).toBeVisible();
+  await expect(page.getByText(new RegExp(`^${count} parties$`))).toBeVisible();
   await page.getByLabel("Couleur").selectOption("w");
   await page.getByRole("button", { name: "Filtrer" }).click();
   await expect(page).toHaveURL(/color=w/);
   const pgn = await page.request.get("/api/me/games");
-  expect((await pgn.text()).match(/\[Event /g)).toHaveLength(5);
+  expect((await pgn.text()).match(/\[Event /g)).toHaveLength(count!);
 
   await page.goto("/compte/statistiques");
   await expect(page.getByRole("heading", { name: "Résultats par couleur" })).toBeVisible();

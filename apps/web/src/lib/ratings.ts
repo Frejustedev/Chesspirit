@@ -25,6 +25,7 @@ export async function recomputeAllRatings(): Promise<{
     .from("tournaments")
     .select("id, starts_at, cadence")
     .eq("rated", true)
+    .eq("is_online", false)
     .in("status", ["finished", "archived"])
     .not("cadence", "is", null);
   const tournaments = ts ?? [];
@@ -143,10 +144,78 @@ export async function recomputeAllRatings(): Promise<{
       .eq("tournament_id", h.tournamentId)
       .eq("player_id", h.playerId);
   }
+  const online = await recomputeOnlineRatings(db, Number(setting?.value ?? 1200));
   await db.from("audit_logs").insert({
     action: "recompute_ratings",
     object_type: "ratings",
-    after: { engine, tournaments: ids.length, players: playerIds.length },
+    after: { engine, tournaments: ids.length, players: playerIds.length, online },
   });
   return { engine, tournaments: ids.length, players: playerIds.length };
+}
+
+/**
+ * Cote en ligne, distincte des cotes en présentiel : mêmes règles Elo, rejouée sur les tournois
+ * en ligne homologués (parties importées de Lichess), sans amorçage par l'Elo FIDE.
+ */
+async function recomputeOnlineRatings(
+  db: ReturnType<typeof createAdminClient>,
+  startRating: number,
+): Promise<number> {
+  const { data: ts } = await db
+    .from("tournaments")
+    .select("id, starts_at")
+    .eq("rated", true)
+    .eq("is_online", true)
+    .in("status", ["finished", "archived"]);
+  const tournaments = ts ?? [];
+  const ids = tournaments.map((t) => t.id);
+  if (!ids.length) return 0;
+  const { data: pairings } = await db
+    .from("pairings")
+    .select("tournament_id, white_id, black_id, result")
+    .in("tournament_id", ids)
+    .not("black_id", "is", null);
+  const playerIds = [...new Set((pairings ?? []).flatMap((p) => [p.white_id, p.black_id!]))];
+  const { data: profiles } = playerIds.length
+    ? await db.from("profiles").select("id, birth_date").in("id", playerIds)
+    : { data: [] };
+  const out = replayRatings({
+    startRating,
+    players: Object.fromEntries(
+      (profiles ?? []).map((p) => [p.id, { birthDate: p.birth_date, fide: null }]),
+    ),
+    // Le moteur de rejeu travaille par cadence : la cote en ligne est calculée dans un seul compartiment.
+    tournaments: tournaments.map((t) => ({
+      id: t.id,
+      date: t.starts_at,
+      cadence: "rapid" as OtbCadence,
+      games: (pairings ?? [])
+        .filter((p) => p.tournament_id === t.id && p.result && p.result in SCORES)
+        .map((p) => ({ white: p.white_id, black: p.black_id!, score: SCORES[p.result!]! })),
+    })),
+  });
+  await db.from("rating_history").delete().in("tournament_id", ids);
+  const dates = new Map(tournaments.map((t) => [t.id, t.starts_at.slice(0, 10)]));
+  if (out.history.length)
+    await db.from("rating_history").insert(
+      out.history.map((h) => ({
+        profile_id: h.playerId,
+        type: "online" as const,
+        tournament_id: h.tournamentId,
+        rating_before: h.before,
+        rating_after: h.after,
+        games: h.games,
+        effective_on: dates.get(h.tournamentId)!,
+      })),
+    );
+  const rows = Object.entries(out.ratings.rapid).map(([profile_id, s]) => ({
+    profile_id,
+    type: "online" as const,
+    rating: s.rating,
+    games: s.games,
+    provisional: s.provisional,
+    peak: s.peak,
+  }));
+  if (rows.length) await db.from("ratings").upsert(rows, { onConflict: "profile_id,type" });
+  return rows.length;
 }

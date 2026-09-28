@@ -279,7 +279,15 @@
     "pending": "Pending",
     "fullResults": "Full results",
     "free": "Free",
-    "roundN": "Round {n}"
+    "roundN": "Round {n}",
+    "teamsTitle": "Team tournament",
+    "teamsText": "Line-ups, matches and team standings.",
+    "teamsLink": "See the teams",
+    "onlineTitle": "Online tournament",
+    "onlineText": "Games are played on Lichess. Link your Lichess account to your profile so your results are recognised.",
+    "onlineLink": "Open the tournament on Lichess",
+    "onlineLinkAccount": "Link my Lichess account",
+    "fairPlay": "Fair-play rules: camera and screen sharing for events with prizes."
   },
   "auth": {
     "title": "Sign in",
@@ -536,7 +544,9 @@
       "resultats": "Results and games",
       "reglages": "Settings",
       "rondes": "Rounds",
-      "affiches": "Posters"
+      "affiches": "Posters",
+      "equipes": "Teams",
+      "en-ligne": "Online"
     },
     "registrantsSummary": "{total} entrants · {checked} checked in",
     "exportCsv": "Export CSV",
@@ -1915,5 +1925,102 @@
       "already_member": "Already a member.",
       "tournament_already_stage": "This tournament is already a stage."
     }
+  },
+  "teamsAdmin": {
+    "teams": "Teams",
+    "teamName": "Team name",
+    "addTeam": "Add team",
+    "orderByRating": "Order by rating",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this team?",
+    "removeMember": "Remove {name}",
+    "player": "Player",
+    "choosePlayer": "Choose a registered player",
+    "substitute": "Substitute",
+    "add": "Add",
+    "rounds": "Rounds",
+    "generate": "Pair next round",
+    "round": "Round {n}",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "table": "Table {n}",
+    "bye": "bye",
+    "boardPlayer": "Board {n}, {side}",
+    "white": "White",
+    "black": "Black",
+    "boardResult": "Board {n} result",
+    "standings": "Standings",
+    "team": "Team",
+    "mp": "Match pts",
+    "gp": "Game pts",
+    "warnings": {
+      "team_size": "incomplete line-up",
+      "too_many_substitutes": "too many substitutes",
+      "min_women": "required woman player missing",
+      "min_youth": "required young player missing"
+    },
+    "errors": {
+      "generic": "Action not possible.",
+      "forbidden": "Action not allowed.",
+      "not_enough_teams": "At least two teams are needed.",
+      "round_not_finished": "The current round is not finished.",
+      "all_rounds_done": "All rounds have been played.",
+      "team_exists": "This team name already exists.",
+      "already_member": "This player is already in the team."
+    }
+  },
+  "onlineAdmin": {
+    "lichess": "Tournament on Lichess",
+    "help": "Link the tournament to a Lichess Arena or Swiss, then import results: players are recognised by their linked Lichess account.",
+    "kind": "Type",
+    "swiss": "Swiss",
+    "id": "Lichess ID or link",
+    "link": "Link",
+    "saved": "Lichess tournament linked.",
+    "createArena": "Create the Arena on Lichess",
+    "created": "Arena created: {id}",
+    "import": "Import results",
+    "imported": "{players} players ranked, {games} games imported, {unknown} unknown accounts",
+    "noToken": "Automatic creation unavailable: Chesspirit account token not configured (LICHESS_API_TOKEN).",
+    "lastImport": "Last import: {date}",
+    "fairPlayTitle": "Fair play",
+    "fairPlayText": "For events with prizes: camera and screen sharing required, arbiter on video call, fair-play committee and sanctions per the rules.",
+    "players": "Registrants and Lichess accounts",
+    "notLinked": "account not linked",
+    "errors": {
+      "generic": "Action not possible.",
+      "forbidden": "Action not allowed.",
+      "invalid": "Invalid Lichess ID.",
+      "lichess_id_missing": "Link a Lichess tournament first.",
+      "lichess_not_configured": "Lichess token not configured."
+    }
+  },
+  "lichessLink": {
+    "title": "Lichess account",
+    "help": "Link your account to play online competitions: your results count for the online rating and the Tour. Chesspirit only keeps your username.",
+    "link": "Link my Lichess account",
+    "unlink": "Unlink",
+    "fakeLabel": "Lichess username",
+    "fakeLink": "Link (test mode)",
+    "fakeNote": "Demo mode: the real link goes through Lichess sign-in.",
+    "status": {
+      "ok": "Lichess account linked.",
+      "error": "Linking failed, please try again.",
+      "taken": "This Lichess account is already linked to another profile."
+    }
+  },
+  "teamsPublic": {
+    "title": "Teams and matches",
+    "scoring": {
+      "match_points": "Ranked by match points",
+      "game_points": "Ranked by game points"
+    },
+    "boards": "{n} boards",
+    "standings": "Standings",
+    "team": "Team",
+    "mp": "Match pts",
+    "gp": "Game pts",
+    "round": "Round {n}",
+    "bye": "bye"
   }
 }

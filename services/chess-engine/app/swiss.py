@@ -27,6 +27,8 @@ class SwissPlayer(BaseModel):
     history: list[RoundEntry] = []
     absent: bool = False  # ne pas apparier à la ronde demandée (bye à zéro point)
     half_bye: bool = False  # bye demandé à un demi-point
+    # Suisse accéléré : points virtuels par ronde (1..total), transmis en lignes XXA.
+    acceleration: list[float] = Field(default=[], max_length=40)
 
 
 class SwissRequest(BaseModel):
@@ -81,7 +83,12 @@ def trf_line(p: SwissPlayer, target_round: int) -> str:
 
 def build_trf(req: SwissRequest) -> str:
     lines = ["012 Chesspirit", f"XXR {req.total_rounds}", f"XXC {req.initial_color}"]
-    lines += [trf_line(p, req.round) for p in sorted(req.players, key=lambda x: x.start_no)]
+    ordered = sorted(req.players, key=lambda x: x.start_no)
+    lines += [trf_line(p, req.round) for p in ordered]
+    for p in ordered:
+        if any(v > 0 for v in p.acceleration):
+            points = "".join(" " + _pad(f"{v:.1f}", 4) for v in p.acceleration)
+            lines.append("XXA " + _pad(p.start_no, 4) + points)
     return "\n".join(lines) + "\n"
 
 
