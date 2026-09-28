@@ -1,8 +1,25 @@
 # Avancement
 
-- **Phase en cours** : livrée — v1.0.0
-- **Dernière tâche terminée** : phase 3, revue de sécurité finale, plan de mise en ligne, rapport final (tag v1.0.0)
-- **Prochaine tâche** : mise en ligne par le propriétaire (docs/MISE_EN_LIGNE.md), puis la liste « À reprendre »
+- **Phase en cours** : mise en ligne assistée (le propriétaire a demandé de l'aide pour tout publier)
+- **Dernière tâche terminée** : CI verte sur la PR #1 (correctifs du plan du site, des tests SQL et des parcours e2e)
+- **Prochaine tâche** : voir « Mise en ligne assistée — état » ci-dessous
+
+## Mise en ligne assistée — état (28 septembre 2026)
+
+Décisions du propriétaire et contraintes constatées :
+
+- **Supabase** : nouvelle organisation gratuite « Chesspirit » créée par le propriétaire avec chesspirit@gmail.com (il a refusé un projet payant dans l'organisation Dizonli). Le projet Supabase existant « dizonliapp@gmail.com's Project » (organisation Dizonli) est une autre application en production : **ne jamais y toucher**.
+- **Accès de Claude** : le connecteur Supabase n'a accès qu'à une organisation (choisie à l'autorisation). Le propriétaire le bascule sur l'organisation Chesspirit (ou ajoute un second connecteur personnalisé `https://mcp.supabase.com/mcp`). Depuis la session, `api.supabase.com` et `api.vercel.com` sont bloqués par la politique réseau : tout passe par les connecteurs.
+- **Vercel** : équipe « FREJUSTE's projects » (`team_Gh0eLMRnheeegLeaTkmENg80`). Le connecteur ne peut pas créer de projet (403) : le propriétaire importe le dépôt `Frejustedev/Chesspirit` dans Vercel (dossier racine `apps/web`) et colle le bloc de variables fourni ; Claude suit ensuite les déploiements avec le connecteur.
+- **Domaine** : chesspirit.com est chez o2switch (DNS externe). Enregistrements à créer quand le projet Vercel existe : `A @ 76.76.21.21`, `CNAME www cname.vercel-dns.com` (reprendre les valeurs affichées par Vercel).
+- **E-mails de connexion** : boîte o2switch `no-reply@chesspirit.com`, déclarée comme SMTP dans Supabase Auth.
+
+Étapes restantes, dans l'ordre :
+
+1. Appliquer les correctifs de l'audit de mise en production (compatibilité Supabase hébergé, configuration minimale sans paiement ni moteur, authentification hébergée, Vercel, données de départ), CI verte, fusionner la PR #1 dans `main`.
+2. Créer le projet Supabase « chesspirit » (région eu-west-3) dans l'organisation Chesspirit, appliquer les migrations une par une, charger les données de référence sans démonstration, lire les conseillers de sécurité.
+3. Fournir au propriétaire le bloc de variables Vercel (URL et clé publique Supabase, clé de service copiée par lui, `CRON_SECRET` généré, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_DEMO_BANNER=false`), puis suivre le déploiement.
+4. Domaine chesspirit.com (DNS o2switch), réglages Auth de Supabase (URL du site, redirections, SMTP, modèles d'e-mail avec le code), compte super-administrateur, recette et test de fumée en production.
 
 ## Phase 0 — lancement (v0.1.0) ✔
 
