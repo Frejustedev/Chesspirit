@@ -191,3 +191,43 @@ test("assistant WhatsApp : vérification, signature, réponse et déduplication"
     await db.from("notifications").delete().eq("recipient", "+22990000077");
   }
 });
+
+test("import de participants depuis un fichier CSV", async ({ page }) => {
+  const db = serviceDb();
+  const suffix = Date.now().toString(36);
+  const { data: t } = await db
+    .from("tournaments")
+    .insert({
+      slug: `e2e-import-${suffix}`,
+      name: `Import ${suffix}`,
+      starts_at: new Date(Date.now() + 5 * 86_400_000).toISOString(),
+      status: "registration_open",
+      entry_fee_xof: 1000,
+    })
+    .select("id")
+    .single();
+  const csv = `prénom;nom;naissance;sexe;téléphone;paiement\nAya${suffix};Importée;2004-05-06;F;;payé\n;SansPrénom;;;;\n`;
+  try {
+    await loginAsAdmin(page);
+    await page.goto(`/admin/tournois/${t!.id}?onglet=inscrits`);
+    await page.getByText("Importer des participants (CSV)").click();
+    await page
+      .getByLabel("Fichier CSV")
+      .setInputFiles({ name: "inscrits.csv", mimeType: "text/csv", buffer: Buffer.from(csv) });
+    await expect(page.getByText("2 lignes prêtes")).toBeVisible();
+    await page.getByRole("button", { name: "Importer", exact: true }).click();
+    await expect(
+      page.getByText(/1 inscrit\(s\), 0 déjà inscrit\(s\) ; 1 profil\(s\) créé\(s\)/),
+    ).toBeVisible();
+    await expect(page.getByText("Ligne 3 : prénom et nom obligatoires")).toBeVisible();
+    await expect(page.getByText(`Aya${suffix}`).first()).toBeVisible();
+  } finally {
+    const { data: regs } = await db
+      .from("registrations")
+      .select("player_id")
+      .eq("tournament_id", t!.id);
+    await db.from("tournaments").delete().eq("id", t!.id);
+    for (const r of regs ?? [])
+      await db.from("profiles").delete().eq("id", r.player_id).eq("source", "import");
+  }
+});

@@ -2834,5 +2834,27 @@
       "already_exists": "Cette partie a déjà été saisie.",
       "generic": "Une erreur est survenue."
     }
+  },
+  "participantsImport": {
+    "title": "Importer des participants (CSV)",
+    "help": "Pour une liste tenue hors du site : une ligne par joueur, séparateur virgule ou point-virgule. Seuls le prénom et le nom sont obligatoires ; un profil existant est retrouvé par identifiant FIDE, téléphone (format +229…) ou nom et date de naissance (AAAA-MM-JJ). Paiement : payé, sur place ou gratuit.",
+    "file": "Fichier CSV",
+    "tooLarge": "Fichier trop lourd (1 Mo au plus).",
+    "tooMany": "1 000 lignes au plus par import.",
+    "badHeader": "En-têtes « prenom » et « nom » introuvables.",
+    "badFile": "Fichier illisible ou lignes invalides.",
+    "forbidden": "Import réservé à l'organisation du tournoi.",
+    "ready": "{n, plural, one {# ligne prête} other {# lignes prêtes}}",
+    "import": "Importer",
+    "report": "{registered} inscrit(s), {already} déjà inscrit(s) ; {created} profil(s) créé(s), {matched} retrouvé(s).",
+    "lineError": "Ligne {line} : {error}",
+    "errors": {
+      "name_required": "prénom et nom obligatoires",
+      "birth_date_invalid": "date de naissance invalide",
+      "phone_invalid": "téléphone invalide (format +229…)",
+      "fide_invalid": "identifiant FIDE invalide",
+      "payment_invalid": "paiement invalide",
+      "invalid": "ligne invalide"
+    }
   }
 }

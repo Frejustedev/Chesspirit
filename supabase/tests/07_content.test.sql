@@ -16,10 +16,14 @@ select tests.eq((select count(*)::int from public.daily_puzzle()), 1, 'puzzle du
 
 select tests.login_as((select lecteur from ids));
 select tests.throws($$update public.articles set status = 'published' where slug = 'publie-test' returning 1/0$$, 'un lecteur ne modifie pas un article');
-insert into public.puzzle_attempts (puzzle_id, profile_id, solved) values ('00000000-0000-0000-0000-00000000c0de', private.my_profile_id(), true);
-select tests.throws($$insert into public.puzzle_attempts (puzzle_id, profile_id, solved) values ('00000000-0000-0000-0000-00000000c0de', gen_random_uuid(), true)$$, 'tentative au nom d''un autre refusée');
+select tests.throws($$insert into public.puzzle_attempts (puzzle_id, profile_id, solved) values ('00000000-0000-0000-0000-00000000c0de', private.my_profile_id(), true)$$, 'tentative non écrite par le lecteur (vérifiée par le serveur)');
 insert into public.glossary_suggestions (term_id, profile_id, term_fon) select id, private.my_profile_id(), 'proposition' from public.glossary_terms limit 1;
 select tests.throws($$update public.glossary_terms set term_fon = 'x', fon_status = 'validated' returning 1/0$$, 'un lecteur ne valide pas le fon');
+
+-- Tentative enregistrée par le serveur après vérification des coups.
+select tests.reset_role();
+insert into public.puzzle_attempts (puzzle_id, profile_id, solved)
+  select '00000000-0000-0000-0000-00000000c0de', p.id, true from public.profiles p join ids on p.user_id = ids.lecteur;
 
 select tests.login_as((select redac from ids));
 select tests.eq((select count(*)::int from public.articles where slug = 'brouillon-test'), 1, 'la rédaction voit les brouillons');

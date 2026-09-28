@@ -1,8 +1,8 @@
 # Avancement
 
-- **Phase en cours** : 3 — communauté, premium et application mobile
-- **Dernière tâche terminée** : phase 2 complète (tag v0.3.0)
-- **Prochaine tâche** : phase 3 — badges et niveaux, adhésion premium, Awards, pronostics, « le public contre le maître », assistant WhatsApp, recherche par position, OCR des feuilles (factice), application Expo, préparation sous-région, revue de sécurité finale
+- **Phase en cours** : livrée — v1.0.0
+- **Dernière tâche terminée** : phase 3, revue de sécurité finale, plan de mise en ligne, rapport final (tag v1.0.0)
+- **Prochaine tâche** : mise en ligne par le propriétaire (docs/MISE_EN_LIGNE.md), puis la liste « À reprendre »
 
 ## Phase 0 — lancement (v0.1.0) ✔
 
@@ -38,12 +38,14 @@
 ## Phase 3 — communauté et au-delà (v1.0.0)
 
 1. Communauté : adhésion gratuite ou premium (carte de membre à QR code vérifiable, paiement confirmé par webhook), cours et ressources premium protégés en base, niveaux du Pion au Roi, badges et passeport du Tour, parrainage, ambassadeurs, Chesspirit Awards, pronostics gratuits, « le public contre le maître » ✔
-
 2. Archives : recherche de parties, explorateur de positions (index `game_positions`, tâche planifiée et indexation après import) ✔
 3. Feuilles de notation photographiées : parcours complet derrière l'indicateur `scoresheet_ocr`, lecture simulée (aucun service de reconnaissance branché) ✔
 4. Assistant WhatsApp : webhook vérifié (jeton + signature X-Hub-Signature-256), réponses sur informations publiques, déduplication, limite par numéro, « stop », indicateur `whatsapp_assistant` ✔
 5. Application mobile Expo (`apps/mobile`) : connexion par code, tournois et inscription (API du site), cotes, parties, notifications, profil ; `eas.json` prêt, rien de publié ; compilation Android vérifiée (`expo export`) ✔
 6. Préparation de la sous-région : table `countries` (Bénin ouvert, 8 pays préparés), pays relié à chaque fiche, formulaire de profil adapté, ouverture en super-administration ; plan dans docs/SOUS_REGION.md ✔
+7. Import CSV des participants d'un tournoi ✔
+8. Revue de sécurité finale et correctifs (docs/SECURITE.md) ✔
+9. Mise en ligne : docs/MISE_EN_LIGNE.md, scripts/setup-production.sh, test de fumée, santé, plan du site ✔ — tag v1.0.0
 
 ## À reprendre
 
@@ -52,6 +54,12 @@
 - Lecture des feuilles de notation : aucun service de reconnaissance réel branché (mode simulé seulement ; interface prête dans `lib/ocr.ts`).
 - Notifications push de l'application mobile : jetons enregistrés, envoi par Expo Push à brancher côté serveur.
 - Application mobile : interface en français seulement ; icônes et écran de lancement définitifs à fournir.
+- Image Docker du service échecs : non construite ici (registre Docker inaccessible) ; dépendances de l'image vérifiées dans un environnement Python propre. Construire l'image au premier déploiement (`flyctl deploy` la construit).
+- Suivi des erreurs (Sentry) : non branché.
+- Fair-play en visio (caméra, partage d'écran) : règles affichées, pas d'outil intégré.
+- Création d'un « compte express » par l'arbitre : pas d'écran dédié (l'import CSV crée des profils réclamables par téléphone).
+- Exports Excel et PDF des statistiques : CSV seulement.
+- Commentaires et signalement d'erreur par les joueurs : non faits (formulaire de contact).
 - Import FIDE réel : non testé contre le site FIDE (réseau fermé ici) ; validé sur un fichier d'exemple au même format.
 
 - Remboursements par API des prestataires (FedaPay, KKiaPay) : enregistrement manuel seulement.

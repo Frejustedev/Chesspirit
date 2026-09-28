@@ -2,6 +2,8 @@
  * Puzzles de base (positions de mat classiques, vérifiées par test).
  * La base complète (table `puzzles`) arrive avec l'académie ; ceci sert de repli.
  */
+import { Chess } from "chess.js";
+
 export type Puzzle = {
   id: string;
   fen: string;
@@ -105,4 +107,35 @@ export function puzzleOfTheDay(date = new Date()): Puzzle {
   const day = new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Porto-Novo" }).format(date);
   const n = Math.floor(Date.parse(`${day}T00:00:00Z`) / 86_400_000);
   return BASE_PUZZLES[n % BASE_PUZZLES.length]!;
+}
+
+/**
+ * Vérifie qu'une suite de coups (ceux de la personne, en UCI) résout le puzzle : chaque coup est
+ * celui de la solution, sauf le dernier qui peut être tout autre mat ; les réponses de la solution
+ * sont jouées entre deux coups.
+ */
+export function solvesPuzzle(fen: string, solution: string[], moves: string[]): boolean {
+  const game = new Chess(fen);
+  for (let i = 0; i < moves.length; i++) {
+    const uci = moves[i]!;
+    const expected = solution[i * 2];
+    if (!expected) return false;
+    try {
+      game.move({ from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4] ?? "q" });
+    } catch {
+      return false;
+    }
+    const last = i === moves.length - 1;
+    const matches = uci === expected || (expected.startsWith(uci) && uci.length === 4);
+    if (!matches && !(last && game.isCheckmate())) return false;
+    const reply = solution[i * 2 + 1];
+    if (!reply || game.isCheckmate()) return last;
+    if (last) return false;
+    try {
+      game.move({ from: reply.slice(0, 2), to: reply.slice(2, 4), promotion: reply[4] });
+    } catch {
+      return false;
+    }
+  }
+  return false;
 }

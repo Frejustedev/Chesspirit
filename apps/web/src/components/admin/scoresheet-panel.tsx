@@ -44,7 +44,8 @@ export function ScoresheetPanel({
   const illegal = useMemo(() => (moves.trim() ? firstIllegal(moves) : null), [moves]);
   const err = (code: string) =>
     t.has(`errors.${code}`) ? t(`errors.${code}`) : t("errors.generic");
-  if (!pairings.length) return <p className="text-stone">{t("noPairings")}</p>;
+  // Après un enregistrement, la liste se vide peut-être : on garde la confirmation affichée.
+  if (!pairings.length && !saved) return <p className="text-stone">{t("noPairings")}</p>;
   return (
     <div className="space-y-6">
       <p className="text-sm text-stone">{t("help")}</p>

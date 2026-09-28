@@ -41,12 +41,16 @@ export type TourCategory = (typeof TOUR_CATEGORIES)[number];
 
 export function tourCategories(p: {
   age: number | null;
+  /** Tranche d'âge publiée pour les mineurs (leur âge exact n'est pas exposé). */
+  ageGroup?: "u14" | "u18" | null;
   sex: "M" | "F" | null;
   rating: number | null;
 }): TourCategory[] {
   const c: TourCategory[] = ["general"];
-  if (p.age !== null && p.age < 18) c.push("u18");
-  if (p.age !== null && p.age < 14) c.push("u14");
+  const u14 = (p.age !== null && p.age < 14) || p.ageGroup === "u14";
+  const u18 = u14 || (p.age !== null && p.age < 18) || p.ageGroup === "u18";
+  if (u18) c.push("u18");
+  if (u14) c.push("u14");
   if (p.sex === "F") c.push("women");
   if (p.age !== null && p.age > 50) c.push("over50");
   if ((p.rating ?? 0) < 1600) c.push("amateur");

@@ -15,7 +15,8 @@ export function PuzzleBoard({
 }: {
   puzzle: Puzzle;
   compact?: boolean;
-  onDone?: (solved: boolean) => void;
+  /** Fin de la tentative : résultat et coups joués par la personne (UCI), vérifiables par le serveur. */
+  onDone?: (solved: boolean, moves: string[]) => void;
 }) {
   const t = useTranslations("puzzle");
   const [game, setGame] = useState(() => new Chess(puzzle.fen));
@@ -23,6 +24,7 @@ export function PuzzleBoard({
   const [status, setStatus] = useState<Status>("playing");
   const [last, setLast] = useState<[string, string] | null>(null);
   const [bad, setBad] = useState<string | null>(null);
+  const [played, setPlayed] = useState<string[]>([]);
   const side = puzzle.fen.split(" ")[1] === "b" ? "b" : "w";
   const fen = game.fen();
 
@@ -40,6 +42,8 @@ export function PuzzleBoard({
     const g = new Chess(game.fen());
     const mv = g.move({ from, to, promotion: promotion ?? "q" });
     if (!mv) return;
+    const moves = [...played, `${from}${to}${promotion ?? ""}`];
+    setPlayed(moves);
     if (
       uci !== expected &&
       !(expected?.startsWith(uci) && !promotion) &&
@@ -47,7 +51,7 @@ export function PuzzleBoard({
     ) {
       setBad(to);
       setStatus("wrong");
-      onDone?.(false);
+      onDone?.(false, moves);
       return;
     }
     setBad(null);
@@ -56,7 +60,7 @@ export function PuzzleBoard({
     if (!reply || g.isCheckmate()) {
       setGame(g);
       setStatus("solved");
-      onDone?.(true);
+      onDone?.(true, moves);
       return;
     }
     g.move({ from: reply.slice(0, 2), to: reply.slice(2, 4), promotion: reply[4] });
@@ -68,6 +72,7 @@ export function PuzzleBoard({
 
   function reset() {
     setGame(new Chess(puzzle.fen));
+    setPlayed([]);
     setStep(0);
     setStatus("playing");
     setLast(null);

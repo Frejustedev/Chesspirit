@@ -1,5 +1,22 @@
 # Journal des modifications
 
+## [1.0.0] — 2026-09-28 — Phase 3 : communauté, application mobile et mise en ligne
+
+### Ajouté
+
+- Communauté : adhésion gratuite ou premium (tarif premium « à confirmer » tant qu'il n'est pas fixé, paiement confirmé par webhook), carte de membre à QR code vérifiable, cours et ressources premium protégés en base, niveaux du Pion au Roi, badges et passeport du Tour, parrainage (lien et code), ambassadeurs, Chesspirit Awards, pronostics gratuits sans argent, « Le public contre le maître », administration de la communauté.
+- Archives : recherche de parties (joueur, ouverture, année, résultat) et explorateur de positions (index des positions, coups suivants et résultats).
+- Feuilles de notation photographiées derrière l'indicateur `scoresheet_ocr` : lecture simulée, relecture validée coup par coup, enregistrement de la partie.
+- Assistant WhatsApp (webhook signé, réponses sur informations publiques, « stop »).
+- Import CSV des participants d'un tournoi (rapprochement des profils existants).
+- Application mobile Expo : connexion par code, tournois et inscription, cotes, parties, notifications, profil ; configuration EAS sans publication.
+- Préparation de la sous-région : pays reliés à chaque fiche, 8 pays préparés et fermés, ouverture en super-administration.
+- Mise en ligne : `docs/MISE_EN_LIGNE.md`, `scripts/setup-production.sh`, test de fumée, `/api/health`, `sitemap.xml`, `robots.txt`.
+
+### Sécurité
+
+- Revue finale (docs/SECURITE.md, M1 à M4 et F1 à F5) : publication des structures réservée à la modération, parties public/maître réservées à l'administration, nom et âge des mineurs réduits dans toutes les vues publiques, tentatives de puzzle vérifiées par le serveur, CSV des statistiques échappé, liens web contrôlés, reports de ligue conditionnés à l'accord de l'adversaire, mode factice Lichess refusé en production.
+
 ## [0.3.0] — 2026-09-28 — Phase 2 : compétitions et contenus
 
 ### Ajouté

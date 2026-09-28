@@ -8,7 +8,3 @@ services:
     envVars:
       - key: CHESS_ENGINE_KEY
         sync: false
-      - key: SUPABASE_URL
-        sync: false
-      - key: SUPABASE_SERVICE_ROLE_KEY
-        sync: false

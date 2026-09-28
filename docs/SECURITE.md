@@ -26,17 +26,37 @@ Points vérifiés sans anomalie : RLS activée partout, fonctions `SECURITY DEFI
 
 ## Phase 3 — communauté
 
-| Point | Traitement |
-| --- | --- |
-| Accès au contenu premium par l'API | RLS sur `lessons_library` et `resources` (adhésion premium active) ; catalogue par vues sans contenu. Test SQL. |
-| Adhésion auto-attribuée | Aucune politique d'insertion ou de modification pour les membres : création par `request_membership` (montant fixé en base), activation par `confirm_payment` (rôle service). Tests SQL. |
-| Énumération des cartes de membre | La page de vérification n'affiche le nom que pour un profil public. |
-| Votes et pronostics forgés | Écriture uniquement par fonctions (`cast_award_vote`, `predict`, `pvm_vote`) ; points calculés par déclencheur ; pas d'auto-pronostic sur sa propre partie. Tests SQL. |
-| Pilotage de la partie public/maître | Écriture réservée à l'administration et au maître rattaché (RLS) ; coups validés par chess.js ; mise à jour conditionnelle. |
-| Parrainage abusif | Une fois par profil, 30 jours après la création, jamais pour soi ; cookie `httpOnly`, code validé par motif. |
-| Positions des parties privées | `game_positions` lisible seulement si la partie l'est ; écriture par le service. Test SQL 09. |
-| Webhook WhatsApp forgé ou rejoué | Signature HMAC-SHA256 à temps constant, secret obligatoire, corps limité à 256 Ko, déduplication, limite par numéro. Tests unitaires et e2e. |
-| Fichier déposé (feuille de notation) | Signature d'image vérifiée, 5 Mo max, non conservé ; lecture réservée au staff, enregistrement contrôlé par RLS. |
-| API d'inscription mobile | Jeton de session vérifié par Supabase (`getUser`), client limité par RLS, corps borné (16 Ko), mêmes contrôles que le site. Test e2e (sans jeton, jeton invalide, règlement non accepté). |
-| Secrets dans l'application mobile | Aucun : adresses publiques et clé `anon` uniquement ; session dans le trousseau ; `.gitignore` des clés de signature. |
-| Jetons de notification | Écriture limitée à son propre profil, format contrôlé. Test SQL 10. |
+| Point                                | Traitement                                                                                                                                                                                |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accès au contenu premium par l'API   | RLS sur `lessons_library` et `resources` (adhésion premium active) ; catalogue par vues sans contenu. Test SQL.                                                                           |
+| Adhésion auto-attribuée              | Aucune politique d'insertion ou de modification pour les membres : création par `request_membership` (montant fixé en base), activation par `confirm_payment` (rôle service). Tests SQL.  |
+| Énumération des cartes de membre     | La page de vérification n'affiche le nom que pour un profil public.                                                                                                                       |
+| Votes et pronostics forgés           | Écriture uniquement par fonctions (`cast_award_vote`, `predict`, `pvm_vote`) ; points calculés par déclencheur ; pas d'auto-pronostic sur sa propre partie. Tests SQL.                    |
+| Pilotage de la partie public/maître  | Écriture réservée à l'administration et au maître rattaché (RLS) ; coups validés par chess.js ; mise à jour conditionnelle.                                                               |
+| Parrainage abusif                    | Une fois par profil, 30 jours après la création, jamais pour soi ; cookie `httpOnly`, code validé par motif.                                                                              |
+| Positions des parties privées        | `game_positions` lisible seulement si la partie l'est ; écriture par le service. Test SQL 09.                                                                                             |
+| Webhook WhatsApp forgé ou rejoué     | Signature HMAC-SHA256 à temps constant, secret obligatoire, corps limité à 256 Ko, déduplication, limite par numéro. Tests unitaires et e2e.                                              |
+| Fichier déposé (feuille de notation) | Signature d'image vérifiée, 5 Mo max, non conservé ; lecture réservée au staff, enregistrement contrôlé par RLS.                                                                          |
+| API d'inscription mobile             | Jeton de session vérifié par Supabase (`getUser`), client limité par RLS, corps borné (16 Ko), mêmes contrôles que le site. Test e2e (sans jeton, jeton invalide, règlement non accepté). |
+| Secrets dans l'application mobile    | Aucun : adresses publiques et clé `anon` uniquement ; session dans le trousseau ; `.gitignore` des clés de signature.                                                                     |
+| Jetons de notification               | Écriture limitée à son propre profil, format contrôlé. Test SQL 10.                                                                                                                       |
+
+## Revue de sécurité finale (v1.0.0)
+
+Revue indépendante du code ajouté depuis la phase 1 (migrations, actions serveur, routes d'API, service Python, application mobile). Chaque constat a été reproduit (requêtes SQL dans une transaction annulée) avant correction.
+
+| Réf. | Gravité | Constat                                                                                                        | Correction                                                                                                                                              |
+| ---- | ------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| M1   | Moyenne | Le gestionnaire d'une structure proposée pouvait la rendre publique lui-même (contournement de la modération). | Garde `organizations_guard` étendu à `is_public` ; rôle administrateur vérifié dans l'action de modération. Test SQL 11.                                |
+| M2   | Moyenne | Tout compte pouvait créer une partie « public contre le maître » publique à son nom (usurpation).              | Création et suppression réservées à l'administration ; le maître ne peut que jouer (déclencheur `pvm_guard` fige l'identité de la partie). Test SQL 11. |
+| M3   | Moyenne | Nom complet des mineurs au profil public dans les noms affichés (classements, appariements, pronostics).       | `display_name` réduit le nom à l'initiale pour tout mineur. Test SQL 11.                                                                                |
+| M4   | Moyenne | Âge exact des mineurs dans la vue publique du classement du Tour.                                              | Âge publié pour les adultes seulement ; tranche `u14` / `u18` pour les mineurs ; catégories recalculées. Test unitaire.                                 |
+| F1   | Faible  | Injection de formules possible dans l'export CSV des statistiques (valeur après un saut de ligne).             | Échappement cellule par cellule (`lib/csv.ts`). Test unitaire.                                                                                          |
+| F2   | Faible  | Tentatives de puzzle écrites directement : classement du défi et badges falsifiables.                          | Écriture réservée au serveur, qui rejoue les coups contre la solution (`solvesPuzzle`). Tests unitaires et SQL.                                         |
+| F3   | Faible  | Aucun contrôle du format du site web des structures (`javascript:`).                                           | Contrainte `^https?://`. Test SQL 11.                                                                                                                   |
+| F4   | Faible  | Report de ligue approuvable sans l'accord de l'adversaire par l'API.                                           | Condition ajoutée à la politique de l'arbitre.                                                                                                          |
+| F5   | Faible  | Mode factice Lichess (liaison de n'importe quel pseudo) activable en production par erreur de configuration.   | Mode refusé en production.                                                                                                                              |
+
+Vérifié sans anomalie : `search_path` vide sur les 98 fonctions `SECURITY DEFINER` ; fonctions sensibles réservées au rôle service ; RLS de toutes les nouvelles tables ; usages de la clé de service ; routes d'API (tâches planifiées, webhooks WhatsApp et paiement, API mobile, OAuth Lichess avec `state` et PKCE, exports) ; cookie de parrainage ; service échecs (clé à temps constant, fichiers locaux refusés, XML sûr, tailles bornées) ; absence de secret dans l'historique Git et dans l'application mobile.
+
+Point restant, accepté : `script-src 'unsafe-inline'` dans la CSP (nécessaire au rendu actuel de Next.js ; passer à des nonces est une amélioration possible).

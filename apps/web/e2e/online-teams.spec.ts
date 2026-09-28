@@ -68,7 +68,8 @@ test("en ligne : liaison Lichess, import des résultats, cote en ligne", async (
   await page.goto(`/admin/tournois/${t!.id}?onglet=rondes`);
   page.once("dialog", (d) => d.accept());
   await page.getByRole("button", { name: "Clôturer le tournoi" }).click();
-  await expect(page.getByText(/clôturé/i).first()).toBeVisible();
+  // La clôture recalcule toutes les cotes (rejeu des parties homologuées) : quelques secondes.
+  await expect(page.getByText(/clôturé/i).first()).toBeVisible({ timeout: 30_000 });
   const { data: online } = await db
     .from("rating_history")
     .select("type")
@@ -93,6 +94,7 @@ test("équipes : compositions, appariement, résultats par échiquier, classemen
     .select("id, first_name, last_name")
     .eq("is_demo", true)
     .is("user_id", null)
+    .order("id")
     .limit(8);
   const { data: t } = await db
     .from("tournaments")

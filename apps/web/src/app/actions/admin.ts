@@ -417,3 +417,41 @@ export async function saveSettingAction(
   revalidatePath("/", "layout");
   return { ok: true };
 }
+
+const participantRow = z.object({
+  first_name: z.string().max(80),
+  last_name: z.string().max(80),
+  birth_date: z.string().max(10).optional(),
+  sex: z.string().max(2).optional(),
+  phone: z.string().max(20).optional(),
+  club: z.string().max(120).optional(),
+  fide_id: z.string().max(12).optional(),
+  payment: z.string().max(20).optional(),
+});
+
+/** Import de participants (liste tenue hors du site) ; contrôles et rapprochement des profils en base. */
+export async function importParticipantsAction(
+  tournamentId: string,
+  rows: unknown,
+): Promise<
+  Result<{
+    registered: number;
+    already: number;
+    created_profiles: number;
+    matched_profiles: number;
+    errors: { line: number; error: string }[];
+  }>
+> {
+  if (!z.string().uuid().safeParse(tournamentId).success) return { ok: false, error: "invalid" };
+  const parsed = z.array(participantRow).min(1).max(1000).safeParse(rows);
+  if (!parsed.success) return { ok: false, error: "invalid" };
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("import_participants", {
+    p_tournament: tournamentId,
+    p_rows: parsed.data,
+  });
+  if (error)
+    return { ok: false, error: error.message.includes("forbidden") ? "forbidden" : "invalid" };
+  revalidatePath(`/admin/tournois/${tournamentId}`);
+  return { ok: true, data: data as never };
+}

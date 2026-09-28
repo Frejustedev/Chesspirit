@@ -34,6 +34,7 @@ export default async function TourRanking({
   const filtered = (rows ?? []).filter((r) =>
     tourCategories({
       age: r.age,
+      ageGroup: r.age_group === "u14" || r.age_group === "u18" ? r.age_group : null,
       sex: r.is_woman ? "F" : r.sex === "M" ? "M" : null,
       rating: r.rapid_rating,
     }).includes(cat),

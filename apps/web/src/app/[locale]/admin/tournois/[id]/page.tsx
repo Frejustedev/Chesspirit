@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { teamsBody, onlineBody, scoresheetBody } from "./extra-tabs";
+import { ParticipantsImport } from "@/components/admin/participants-import";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { formatXof } from "@chesspirit/shared";
 import { Link } from "@/i18n/navigation";
@@ -110,6 +111,7 @@ export default async function AdminTournament({
             <IconDownload className="size-5" /> {t("exportCsv")}
           </a>
         </div>
+        <ParticipantsImport tournamentId={tn.id} />
         <div className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-line">
           <table className="w-full min-w-[52rem] text-left text-sm">
             <thead className="bg-cream/70 text-xs uppercase tracking-[0.08em] text-stone">

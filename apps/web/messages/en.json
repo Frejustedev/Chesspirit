@@ -2834,5 +2834,27 @@
       "already_exists": "This game has already been entered.",
       "generic": "Something went wrong."
     }
+  },
+  "participantsImport": {
+    "title": "Import participants (CSV)",
+    "help": "For a list kept outside the site: one line per player, comma or semicolon separated. Only first and last names are required; an existing profile is matched by FIDE ID, phone (+229… format) or name and birth date (YYYY-MM-DD). Payment: payé, sur place or gratuit.",
+    "file": "CSV file",
+    "tooLarge": "File too large (1 MB max).",
+    "tooMany": "1,000 lines max per import.",
+    "badHeader": "Headers “prenom” and “nom” not found.",
+    "badFile": "Unreadable file or invalid lines.",
+    "forbidden": "Import is reserved to the tournament organisers.",
+    "ready": "{n, plural, one {# line ready} other {# lines ready}}",
+    "import": "Import",
+    "report": "{registered} registered, {already} already registered; {created} profile(s) created, {matched} matched.",
+    "lineError": "Line {line}: {error}",
+    "errors": {
+      "name_required": "first and last name required",
+      "birth_date_invalid": "invalid birth date",
+      "phone_invalid": "invalid phone (+229… format)",
+      "fide_invalid": "invalid FIDE ID",
+      "payment_invalid": "invalid payment",
+      "invalid": "invalid line"
+    }
   }
 }

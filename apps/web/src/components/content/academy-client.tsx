@@ -22,10 +22,10 @@ export function TrackedPuzzle({
   return (
     <PuzzleBoard
       puzzle={puzzle}
-      onDone={(solved) => {
+      onDone={(solved, moves) => {
         if (!signedIn || recorded) return;
         setRecorded(true);
-        void recordAttemptAction(id, solved, context);
+        void recordAttemptAction(id, solved ? moves : null, context);
       }}
     />
   );

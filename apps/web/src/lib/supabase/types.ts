@@ -4425,6 +4425,7 @@ export type Database = {
           age: number | null;
           is_woman: boolean | null;
           rapid_rating: number | null;
+          age_group: string | null;
         };
         Relationships: [];
       };
@@ -4462,6 +4463,7 @@ export type Database = {
       decide_listing_claim: { Args: { p_claim: string; p_approve: boolean }; Returns: undefined };
       duplicate_tournament: { Args: { p_tournament_id: string; p_slug: string; p_starts_at: string }; Returns: Database["public"]["Tables"]["tournaments"]["Row"] };
       gift_card_balance: { Args: { p_code: string }; Returns: number };
+      import_participants: { Args: { p_tournament: string; p_rows: Json }; Returns: Json };
       import_standings: { Args: { p_tournament_id: string; p_rows: Json; p_publish?: boolean }; Returns: number };
       log_admin_view: { Args: { p_object_type: string; p_object_id: string; p_context: string }; Returns: undefined };
       log_personal_data_access: { Args: { p_profile_id: string; p_context: string }; Returns: undefined };

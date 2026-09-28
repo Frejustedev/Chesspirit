@@ -9,7 +9,14 @@ import crypto from "node:crypto";
  */
 export const LICHESS_HOST = process.env.LICHESS_HOST ?? "https://lichess.org";
 export const LICHESS_CLIENT_ID = process.env.LICHESS_CLIENT_ID ?? "chesspirit.com";
-export const lichessFake = () => process.env.LICHESS_FAKE === "true";
+/** Mode factice : jamais en production (il permettrait de lier n'importe quel compte Lichess). */
+export const lichessFake = () =>
+  process.env.LICHESS_FAKE === "true" &&
+  process.env.VERCEL_ENV !== "production" &&
+  !isProductionSite();
+function isProductionSite() {
+  return /^https:\/\/(www\.)?chesspirit\.com\/?$/.test(process.env.NEXT_PUBLIC_SITE_URL ?? "");
+}
 export const lichessCanCreate = () => !!process.env.LICHESS_API_TOKEN || lichessFake();
 
 const b64url = (b: Buffer) => b.toString("base64url");

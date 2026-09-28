@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { BENIN_DEPARTMENTS } from "@chesspirit/shared";
 import { createClient } from "@/lib/supabase/server";
-import { getSession } from "@/lib/auth";
+import { getSession, isAdminRole } from "@/lib/auth";
 
 type Result<T = undefined> = { ok: true; data?: T } | { ok: false; error: string };
 const uuid = z.string().uuid();
@@ -188,6 +188,8 @@ export async function moderateOrganizationAction(
   patch: { is_public?: boolean; verified?: boolean; remove?: boolean },
 ): Promise<Result> {
   if (!uuid.safeParse(id).success) return { ok: false, error: "invalid" };
+  const session = await getSession();
+  if (!session || !isAdminRole(session.roles)) return { ok: false, error: "forbidden" };
   const supabase = await createClient();
   const q = patch.remove
     ? supabase.from("organizations").delete().eq("id", id).select("id")

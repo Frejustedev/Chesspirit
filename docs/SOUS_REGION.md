@@ -5,7 +5,7 @@ Chesspirit est lancé au Bénin. La base est prête à accueillir d'autres pays 
 ## Ce qui est prêt
 
 - **Pays sur chaque fiche** : profils, tournois et structures ont un code pays (ISO 3166, `BJ` par défaut) relié à la table `countries`.
-- **Table `countries`** : Bénin ouvert ; Togo, Burkina Faso, Niger, Côte d'Ivoire, Sénégal, Mali, Nigéria et Ghana préparés mais fermés (indicatif téléphonique, monnaie, fuseau horaire). Ouverture par la super-administration dans *Administration → Réglages → Pays*.
+- **Table `countries`** : Bénin ouvert ; Togo, Burkina Faso, Niger, Côte d'Ivoire, Sénégal, Mali, Nigéria et Ghana préparés mais fermés (indicatif téléphonique, monnaie, fuseau horaire). Ouverture par la super-administration dans _Administration → Réglages → Pays_.
 - **Profil** : dès qu'un second pays est ouvert, le formulaire propose le pays ; le département n'est demandé que pour le Bénin. Un pays fermé est refusé à l'enregistrement.
 - **Téléphones** : tous les numéros au format international (E.164) sont acceptés.
 - **Monnaie** : le franc CFA (XOF) est commun aux pays de l'UEMOA ; tous les montants sont stockés en XOF.

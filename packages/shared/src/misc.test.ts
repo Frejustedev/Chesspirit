@@ -173,3 +173,17 @@ describe("profil et pays", () => {
     expect(ps.safeParse({ ...base, country: "tg" }).success).toBe(false);
   });
 });
+
+describe("catégories du Tour sans âge exact des mineurs", () => {
+  it("utilise la tranche d'âge publiée", () => {
+    expect(tourCategories({ age: null, ageGroup: "u14", sex: null, rating: 1700 })).toEqual([
+      "general",
+      "u18",
+      "u14",
+    ]);
+    expect(tourCategories({ age: null, ageGroup: "u18", sex: null, rating: 1700 })).toEqual([
+      "general",
+      "u18",
+    ]);
+  });
+});

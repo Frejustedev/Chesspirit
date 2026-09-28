@@ -10,8 +10,12 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 BBP_PAIRINGS_BIN=/usr/local/bin/bbpPairings
 COPY --from=build /usr/local/bin/bbpPairings /usr/local/bin/bbpPairings
 WORKDIR /app
-COPY pyproject.toml ./
-RUN pip install --no-cache-dir "fastapi>=0.115" "uvicorn[standard]>=0.32" "pydantic>=2.9" "httpx>=0.27"
+# Dépendances exactement celles de uv.lock (même liste qu'en développement et en test).
+COPY pyproject.toml uv.lock ./
+RUN pip install --no-cache-dir uv \
+  && uv export --frozen --no-dev --no-emit-project --no-hashes -o requirements.txt \
+  && pip install --no-cache-dir -r requirements.txt \
+  && pip uninstall -y uv && rm requirements.txt
 COPY app ./app
 RUN useradd --create-home engine
 USER engine

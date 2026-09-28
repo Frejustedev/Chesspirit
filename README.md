@@ -10,11 +10,11 @@ La plateforme des échecs au Bénin : coaching, compétitions, classement, annua
 | Dossier                 | Contenu                                                                               |
 | ----------------------- | ------------------------------------------------------------------------------------- |
 | `apps/web`              | Application Next.js (App Router, TypeScript strict, Tailwind v4, next-intl FR/EN)     |
-| `apps/mobile`           | Application Expo (phase 3)                                                            |
+| `apps/mobile`           | Application Expo (voir [`apps/mobile/README.md`](apps/mobile/README.md))              |
 | `packages/shared`       | Logique pure partagée : cote Elo, départages, tables de Berger, TRF, PGN, schémas Zod |
 | `services/chess-engine` | Service Python (FastAPI) : appariements bbpPairings, recalcul des cotes, documents    |
 | `supabase`              | Migrations SQL (RLS sur toutes les tables), tests des politiques, configuration CLI   |
-| `scripts`               | Pile locale, seed, création du super-administrateur, génération des types             |
+| `scripts`               | Pile locale, seed, super-administrateur, types, mise en production                    |
 
 ## Démarrer en local
 
@@ -57,7 +57,13 @@ Le paiement en local utilise un **fournisseur factice** : la page de paiement pr
 
 ## Variables d'environnement
 
-Voir [`apps/web/.env.example`](apps/web/.env.example). En local, `pnpm dev` crée `apps/web/.env.local` avec les valeurs de la pile locale. Chaque service externe (paiement, SMS, e-mail, WhatsApp, statistiques, erreurs) a une implémentation factice active tant que sa clé est absente.
+Voir [`apps/web/.env.example`](apps/web/.env.example). En local, `pnpm dev` crée `apps/web/.env.local` avec les valeurs de la pile locale. Chaque service externe (paiement, SMS, e-mail, WhatsApp, statistiques) a une implémentation factice active tant que sa clé est absente.
+
+## Documents
+
+- [`RAPPORT_FINAL.md`](RAPPORT_FINAL.md) : état du projet, fonctionnalités, tests, limites.
+- [`docs/MISE_EN_LIGNE.md`](docs/MISE_EN_LIGNE.md) : mise en ligne pas à pas, avec `scripts/setup-production.sh`.
+- [`docs/DECISIONS.md`](docs/DECISIONS.md), [`docs/SECURITE.md`](docs/SECURITE.md), [`docs/SOUS_REGION.md`](docs/SOUS_REGION.md), [`PROGRESS.md`](PROGRESS.md), [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Licences
 
