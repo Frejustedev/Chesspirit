@@ -41,7 +41,7 @@ Ce guide s'adresse à la personne qui met le site en ligne, sans connaissance te
 Toutes ces valeurs se rangent dans un fichier `.env.production` à la racine du projet (jamais envoyé sur GitHub : il est exclu automatiquement).
 
 ```bash
-cp apps/web/.env.example .env.production
+cp .env.example .env.production
 # puis ouvrir .env.production avec un éditeur de texte et le remplir
 ```
 
@@ -67,6 +67,7 @@ openssl rand -hex 24   # pour CHESS_ENGINE_KEY (et WHATSAPP_VERIFY_TOKEN si What
    supabase db push
    ```
    (ou lancer le workflow GitHub « Migrations Supabase », voir 4.) La première migration (`20260927000000_api_default_privileges.sql`) rend explicites les droits de l'API : les projets récents ne les accordent plus automatiquement, et sans elle aucune page ne pourrait lire la base. Si les migrations ont été appliquées autrement (outil MCP, éditeur SQL), l'historique doit porter les numéros des fichiers : `supabase migration list` doit afficher les mêmes versions en local et à distance (sinon `supabase migration repair`).
+   **Sans CLI ni connecteur** : ouvrir `supabase/production/installation.sql` (sur GitHub : bouton _Raw_, puis tout sélectionner et copier), le coller dans _SQL Editor → New query_ du projet neuf et cliquer sur _Run_ (une seule fois). Ce fichier contient toutes les migrations, l'historique aux numéros des fichiers et les données de référence (sans démonstration), dans une seule transaction : en cas d'erreur rien n'est appliqué, et une seconde exécution est refusée. Le régénérer après toute nouvelle migration : `scripts/build-production-sql.sh`.
    **Numérotation** : toute nouvelle migration doit porter un numéro supérieur à la dernière existante (par exemple `20261009000200_…`), même si la date du jour est antérieure.
 4. **Ne jamais lancer `supabase config push`** : `supabase/config.toml` ne sert qu'au développement local (codes de test, adresses locales).
 5. **Réglages de connexion** (_Authentication_), indispensables : le site n'accepte que des **codes à 6 chiffres**, pas des liens.
@@ -105,7 +106,7 @@ La branche de production est `main` : fusionner d'abord la demande de fusion (PR
 
 1. Sur vercel.com : _Add New → Project_, importer le dépôt GitHub `frejustedev/chesspirit`. Réglages :
    - **Root Directory : `apps/web`** ; « Include files outside the Root Directory » : activé (par défaut) ;
-   - Framework : Next.js ; commandes d'installation et de compilation : par défaut ;
+   - Framework (« Application Preset ») : **Next.js** — si Vercel propose « Services » (il détecte aussi `services/chess-engine`), choisir Next.js ; commandes d'installation et de compilation : par défaut ;
    - Node.js : 22.x (fixé par `apps/web/package.json`) ; région des fonctions : Paris `cdg1` (fixée par `apps/web/vercel.json`).
 2. **Avant de cliquer sur « Deploy »**, ouvrir _Environment Variables_ et saisir, pour l'environnement Production (et Preview seulement si vous voulez tester des branches : elles utiliseraient la même base) :
    - `NEXT_PUBLIC_SITE_URL=https://chesspirit.com`

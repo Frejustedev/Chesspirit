@@ -3,7 +3,14 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "http://localhost:54321";
+// Origine seule, comme src/lib/env.ts (l'URL copiée du tableau de bord peut finir par /rest/v1/).
+const supabaseUrl = (() => {
+  try {
+    return new URL(process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || "http://localhost:54321").origin;
+  } catch {
+    return "http://localhost:54321";
+  }
+})();
 // Statistiques Plausible (facultatives) : le script et ses envois viennent de cet hôte.
 const plausible = process.env.NEXT_PUBLIC_PLAUSIBLE_HOST
   ? ` ${process.env.NEXT_PUBLIC_PLAUSIBLE_HOST}`

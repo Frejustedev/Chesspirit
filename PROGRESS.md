@@ -2,7 +2,7 @@
 
 - **Phase en cours** : mise en ligne assistée (le propriétaire a demandé de l'aide pour tout publier)
 - **Dernière tâche terminée** : correctifs de l'audit de mise en production (v1.0.1 : droits de l'API explicites, vues en lecture seule, réclamation des profils importés, connexion adaptée aux réglages Supabase, parcours payants fermés sans prestataire, Vercel compatible avec tous les forfaits, polices des affiches, appariement de secours conforme aux couleurs FIDE)
-- **Prochaine tâche** : validation de l'aperçu par le propriétaire (galerie privée, version 2 : couleurs de la couverture, classements Chesspirit et FIDE), puis étape 2 ci-dessous (projet Supabase) dès que le connecteur donne accès à l'organisation Chesspirit
+- **Prochaine tâche** : base Supabase installée (projet `mzjcawounrodnilujpqp`) et site déployé sur Vercel (projet `chesspirit-web`, branche de production `claude/chesspirit-project-g1mur7`, branche par défaut du dépôt) ; reste : Supabase Auth (URL du site et de redirection, SMTP o2switch, modèles `{{ .Token }}`), domaine chesspirit.com (Vercel + DNS o2switch), super-administrateur et MFA, recette
 
 ## Mise en ligne assistée — état (28 septembre 2026)
 

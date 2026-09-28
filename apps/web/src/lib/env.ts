@@ -1,7 +1,16 @@
+/** Garde l'origine d'une URL (« https://ref.supabase.co/rest/v1/ » collée depuis le tableau de bord → « https://ref.supabase.co »). */
+function origin(raw: string | undefined, fallback: string) {
+  try {
+    return new URL((raw ?? "").trim() || fallback).origin;
+  } catch {
+    return fallback;
+  }
+}
+
 /** Variables d'environnement publiques (valeurs par défaut = pile locale). */
 export const env = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? "http://localhost:54321",
+  siteUrl: origin(process.env.NEXT_PUBLIC_SITE_URL, "http://localhost:3000"),
+  supabaseUrl: origin(process.env.NEXT_PUBLIC_SUPABASE_URL, "http://localhost:54321"),
   supabaseAnonKey:
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
     // Clé « anon » de démonstration de la CLI Supabase (publique, locale uniquement).

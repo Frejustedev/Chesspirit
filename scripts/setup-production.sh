@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Mise en production de Chesspirit : automatise ce qui peut l'être une fois les identifiants fournis.
 #
-#   1. Copier le modèle :   cp apps/web/.env.example .env.production   (jamais versionné)
+#   1. Copier le modèle :   cp .env.example .env.production   (jamais versionné)
 #   2. Le remplir (voir docs/MISE_EN_LIGNE.md, « Ce que le propriétaire doit fournir »)
 #   3. Lancer :              bash scripts/setup-production.sh            (ou --dry-run pour tout afficher sans rien faire)
 #
@@ -39,7 +39,7 @@ has() { command -v "$1" >/dev/null 2>&1; }
 
 bold "0. Fichier de configuration"
 if [ ! -f "$ENV_FILE" ]; then
-  fail "$ENV_FILE introuvable. Copier apps/web/.env.example vers .env.production et le remplir."
+  fail "$ENV_FILE introuvable. Copier .env.example vers .env.production et le remplir."
   exit 1
 fi
 if git -C "$ROOT" ls-files --error-unmatch "$ENV_FILE" >/dev/null 2>&1; then
