@@ -16,6 +16,7 @@ export async function AccountNav({ current, isAdmin }: { current: string; isAdmi
     { href: "/compte/ligues", key: "leagues" },
     { href: "/compte/commandes", key: "orders" },
     ...(isCoach ? [{ href: "/compte/coach", key: "coach" }] : []),
+    { href: "/compte/notifications", key: "notifications" },
     { href: "/compte/profil", key: "profile" },
     { href: "/compte/famille", key: "family" },
     { href: "/compte/donnees", key: "data" },

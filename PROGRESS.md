@@ -1,8 +1,8 @@
 # Avancement
 
-- **Phase en cours** : 2 — compétitions et contenus
-- **Dernière tâche terminée** : phase 1 complète (tag v0.2.0) ; phase 2 : ligues et Tour (pages publiques, espace joueur)
-- **Prochaine tâche** : administration des ligues et du Tour, puis en ligne (Lichess) et équipes
+- **Phase en cours** : 3 — communauté, premium et application mobile
+- **Dernière tâche terminée** : phase 2 complète (tag v0.3.0)
+- **Prochaine tâche** : phase 3 — badges et niveaux, adhésion premium, Awards, pronostics, « le public contre le maître », assistant WhatsApp, recherche par position, OCR des feuilles (factice), application Expo, préparation sous-région, revue de sécurité finale
 
 ## Phase 0 — lancement (v0.1.0) ✔
 
@@ -29,12 +29,16 @@
 
 ## Phase 2 — compétitions et contenus (v0.3.0)
 
-1. Ligues et Chesspirit Tour — en cours
-2. En ligne (Lichess) et équipes, autres formats
-3. Annuaire complet, fiches revendicables, carte, emplois
-4. Média et académie
-5. Statistiques, WhatsApp, mode hors ligne, import FIDE, tâches planifiées
+1. Ligues et Chesspirit Tour ✔
+2. En ligne (Lichess) et équipes, suisse accéléré ✔ (Scheveningen, poules, simultanée : non faits)
+3. Annuaire complet, fiches revendicables, carte, emplois ✔
+4. Média et académie ✔ (cours premium : phase 3)
+5. Statistiques, WhatsApp, mode hors ligne, import FIDE, tâches planifiées ✔ — tag v0.3.0
 
 ## À reprendre
+
+- Formats Scheveningen, poules puis phase finale et simultanée : sélectionnables mais sans moteur d'appariement dédié.
+- Galerie photo des tournois : non faite (stockage de fichiers à brancher).
+- Import FIDE réel : non testé contre le site FIDE (réseau fermé ici) ; validé sur un fichier d'exemple au même format.
 
 - Remboursements par API des prestataires (FedaPay, KKiaPay) : enregistrement manuel seulement.

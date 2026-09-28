@@ -1,8 +1,25 @@
 import { expect, test } from "@playwright/test";
-import { loginWithPhone } from "./helpers";
+import { loginWithPhone, serviceDb } from "./helpers";
 
 test("coaching : filtres, réservation payée, suivi par le coach", async ({ page, browser }) => {
   test.setTimeout(150_000);
+  // Créneau libre garanti pour les offres en ligne (les créneaux de démonstration s'épuisent au fil des exécutions).
+  const db = serviceDb();
+  const { data: offers } = await db
+    .from("offers")
+    .select("coach_id")
+    .eq("modality", "online")
+    .eq("level", "intermediate")
+    .eq("is_active", true);
+  const start = new Date(Date.now() + 3 * 86400000 + Math.floor(Math.random() * 3600) * 1000);
+  await db.from("availability_slots").insert(
+    [...new Set((offers ?? []).map((o) => o.coach_id))].map((coach_id) => ({
+      coach_id,
+      starts_at: start.toISOString(),
+      ends_at: new Date(start.getTime() + 3600000).toISOString(),
+      modality: "online",
+    })),
+  );
   await page.goto("/coaching?langue=fon");
   await expect(page.getByText("Atelier découverte pour enfants")).toBeVisible();
   await expect(page.getByText("Préparation de tournoi")).toHaveCount(0);

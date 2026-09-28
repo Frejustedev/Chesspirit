@@ -1,5 +1,21 @@
 # Journal des modifications
 
+## [0.3.0] — 2026-09-28 — Phase 2 : compétitions et contenus
+
+### Ajouté
+
+- Ligues : saisons, 9 championnats (Ligue 1, Ligue 2, Amateur × classique, rapide, blitz), journées rattachées aux tournois, classements (Sonneborn-Berger), montées, descentes et barrage proposés, licence payante, reports (accord de l'adversaire puis de l'arbitre), forfaits et exclusion, titres et Triple Couronne, administration complète.
+- Chesspirit Tour : étapes (Majeures 1,5, en ligne 0,5), barème paramétrable, meilleurs résultats, classements par catégorie, zone Masters.
+- En ligne : liaison Lichess (OAuth PKCE, identité seule), création d'Arena, import des résultats et des parties, cote en ligne distincte, règles de fair-play.
+- Tournois par équipes : compositions, ordre des échiquiers, appariement suisse, couleurs alternées, résultats par échiquier, classement aux points de match ou de partie, contrôle des compositions ; suisse accéléré (méthode Baku) transmis à bbpPairings.
+- Annuaire : joueurs, entraîneurs, arbitres, structures proposées et revendiquées (badge vérifié), carte « Où jouer au Bénin », offres d'emploi, modération.
+- Média et académie : émissions, épisodes vidéo, podcast et direct, articles (brouillon automatique à la clôture d'un tournoi), leçons avec positions jouables, puzzle du jour et série, défi de la semaine, ressources, lexique français, anglais et fon (propositions validées), administration des contenus.
+- Exploitation : statistiques d'administration et export CSV, alertes, préférences de notification (e-mail, SMS, WhatsApp derrière indicateur), tâches planifiées (expiration des commandes, rappels J-1, liste mensuelle des cotes, import FIDE, synthèse et rapport mensuel), arbitrage hors ligne (IndexedDB et service worker).
+
+### Corrigé
+
+- Politiques des structures (récursion), nom de famille des mineurs dans la vue publique, CSP pour la redirection Lichess.
+
 ## [0.2.0] — 2026-09-28 — Phase 1 : le socle
 
 ### Ajouté

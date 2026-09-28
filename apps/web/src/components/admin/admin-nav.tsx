@@ -15,6 +15,7 @@ export async function AdminNav() {
     session.roles.some((r) => ["admin", "super_admin", ...roles].includes(r));
   const items: [string, string][] = admin || staff ? [["/admin", t("home")]] : [];
   if (admin) {
+    items.push(["/admin/statistiques", t("stats")]);
     items.push(["/admin/utilisateurs", t("users")]);
     if (has("admin_competitions")) items.push(["/admin/ligues", t("leagues")]);
     if (has("admin_competitions", "admin_shop")) items.push(["/admin/paiements", t("payments")]);

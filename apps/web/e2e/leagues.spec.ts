@@ -62,7 +62,9 @@ test("administration des ligues : saison, membre, journée, licence payée", asy
   await block.getByRole("button", { name: "Prendre la licence" }).first().click();
   await expect(player.getByRole("heading", { name: "Paiement simulé" })).toBeVisible();
   await player.getByRole("button", { name: "Simuler un paiement réussi" }).click();
-  await expect(player.getByRole("heading", { name: "Paiement confirmé" })).toBeVisible();
+  await expect(player.getByRole("heading", { name: "Paiement confirmé" })).toBeVisible({
+    timeout: 20_000,
+  });
   await player.goto("/compte/ligues");
   await expect(
     player

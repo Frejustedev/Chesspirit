@@ -152,6 +152,13 @@ export default async function AdminTournament({
   } else if (tab === "pointage") {
     body = <CheckInScanner />;
   } else if (tab === "rondes") {
+    const offlineLink = (
+      <p className="mb-4 text-sm">
+        <Link href={`/arbitrage/${tn.id}`} className="font-semibold text-bordeaux hover:underline">
+          {t("offlineMode")} →
+        </Link>
+      </p>
+    );
     const st = await loadState(supabase, tn.id);
     const { data: canManage } = await supabase
       .from("tournaments")
@@ -159,41 +166,44 @@ export default async function AdminTournament({
       .eq("id", tn.id)
       .maybeSingle();
     body = (
-      <RoundsManager
-        tournamentId={tn.id}
-        slug={tn.slug}
-        system={tn.pairing_system}
-        roundsCount={tn.rounds_count}
-        canClose={!!canManage}
-        participants={st.participants.map((p) => ({
-          registrationId: p.registrationId,
-          playerId: p.playerId,
-          startNo: p.startNo,
-          name: p.name,
-          rating: p.rating,
-          checkedIn: p.checkedIn,
-          withdrawn: p.withdrawn,
-          byeRequests: p.byeRequests,
-        }))}
-        rounds={st.rounds.map((r) => ({
-          id: r.id,
-          number: r.number,
-          status: r.status,
-          published: !!r.published_at,
-          engine: r.pairing_engine,
-        }))}
-        pairings={st.pairings.map((p) => ({
-          id: p.id,
-          roundId: p.round_id,
-          board: p.board,
-          white: p.white_id,
-          black: p.black_id,
-          result: p.result,
-          byeType: p.bye_type,
-          stage: p.stage,
-          manual: p.is_manual,
-        }))}
-      />
+      <>
+        {offlineLink}
+        <RoundsManager
+          tournamentId={tn.id}
+          slug={tn.slug}
+          system={tn.pairing_system}
+          roundsCount={tn.rounds_count}
+          canClose={!!canManage}
+          participants={st.participants.map((p) => ({
+            registrationId: p.registrationId,
+            playerId: p.playerId,
+            startNo: p.startNo,
+            name: p.name,
+            rating: p.rating,
+            checkedIn: p.checkedIn,
+            withdrawn: p.withdrawn,
+            byeRequests: p.byeRequests,
+          }))}
+          rounds={st.rounds.map((r) => ({
+            id: r.id,
+            number: r.number,
+            status: r.status,
+            published: !!r.published_at,
+            engine: r.pairing_engine,
+          }))}
+          pairings={st.pairings.map((p) => ({
+            id: p.id,
+            roundId: p.round_id,
+            board: p.board,
+            white: p.white_id,
+            black: p.black_id,
+            result: p.result,
+            byeType: p.bye_type,
+            stage: p.stage,
+            manual: p.is_manual,
+          }))}
+        />
+      </>
     );
   } else if (tab === "equipes") {
     body = await teamsBody(supabase, tn.id);

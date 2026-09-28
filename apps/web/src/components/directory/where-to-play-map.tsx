@@ -34,6 +34,13 @@ export function WhereToPlayMap({
         maxZoom: 18,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(map);
+      if (points.length && !focus)
+        map.fitBounds(
+          L.latLngBounds(points.map((p) => [p.lat, p.lng] as [number, number])).pad(0.3),
+          {
+            maxZoom: 11,
+          },
+        );
       for (const p of points) {
         const marker = L.circleMarker([p.lat, p.lng], {
           radius: p.kind === "tournament" ? 9 : 7,

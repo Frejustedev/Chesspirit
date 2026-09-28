@@ -15,9 +15,10 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
   const t = await getTranslations("admin");
   const tt = await getTranslations("tournament");
   const supabase = await createClient();
-  const [{ data: tournaments }, overview] = await Promise.all([
+  const [{ data: tournaments }, overview, { data: alerts }] = await Promise.all([
     supabase.rpc("my_managed_tournaments"),
     admin ? supabase.rpc("admin_overview").maybeSingle() : Promise.resolve({ data: null }),
+    admin ? supabase.rpc("admin_alerts") : Promise.resolve({ data: [] }),
   ]);
   const o = overview.data;
   return (
@@ -42,6 +43,19 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
             </div>
           ))}
         </dl>
+      ) : null}
+      {alerts?.length ? (
+        <section className="mt-6 rounded-lg border border-bordeaux/40 bg-bordeaux-soft/40 p-4">
+          <h2 className="font-semibold text-bordeaux">{t("alerts.title")}</h2>
+          <ul className="mt-2 space-y-1 text-sm">
+            {alerts.map((a) => (
+              <li key={a.kind}>
+                <span className="font-semibold">{t(`alerts.${a.kind}`)}</span> : {Number(a.count)}
+                {a.detail ? ` — ${a.detail}` : ""}
+              </li>
+            ))}
+          </ul>
+        </section>
       ) : null}
       <section className="mt-10">
         <div className="flex flex-wrap items-center justify-between gap-3">

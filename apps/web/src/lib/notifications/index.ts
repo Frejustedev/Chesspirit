@@ -14,6 +14,8 @@ export interface Message {
   template: string;
   subject?: string;
   text: string;
+  /** Modèle WhatsApp approuvé (obligatoire hors fenêtre de 24 h) : nom et paramètres du corps. */
+  whatsappTemplate?: { name: string; params: string[] };
 }
 
 async function deliver(m: Message): Promise<{
@@ -75,12 +77,33 @@ async function deliver(m: Message): Promise<{
             authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
             "content-type": "application/json",
           },
-          body: JSON.stringify({
-            messaging_product: "whatsapp",
-            to: m.to.replace(/^\+/, ""),
-            type: "text",
-            text: { body: m.text },
-          }),
+          body: JSON.stringify(
+            m.whatsappTemplate
+              ? {
+                  messaging_product: "whatsapp",
+                  to: m.to.replace(/^\+/, ""),
+                  type: "template",
+                  template: {
+                    name: m.whatsappTemplate.name,
+                    language: { code: process.env.WHATSAPP_TEMPLATE_LANG ?? "fr" },
+                    components: [
+                      {
+                        type: "body",
+                        parameters: m.whatsappTemplate.params.map((text) => ({
+                          type: "text",
+                          text,
+                        })),
+                      },
+                    ],
+                  },
+                }
+              : {
+                  messaging_product: "whatsapp",
+                  to: m.to.replace(/^\+/, ""),
+                  type: "text",
+                  text: { body: m.text },
+                },
+          ),
         },
       );
       const j = (await r.json()) as { messages?: { id: string }[]; error?: { message: string } };
@@ -112,4 +135,60 @@ export async function notify(messages: Message[]) {
       sent_at: r.status === "sent" ? new Date().toISOString() : null,
     });
   }
+}
+
+/**
+ * Notification d'une personne selon ses préférences (e-mail, SMS, WhatsApp). WhatsApp n'est
+ * utilisé que si la fonctionnalité est activée. Un mineur sans coordonnées est prévenu via son
+ * responsable légal.
+ */
+export async function notifyProfile(
+  profileId: string,
+  msg: {
+    template: string;
+    subject: string;
+    text: string;
+    whatsappTemplate?: { name: string; params: string[] };
+  },
+) {
+  const db = createAdminClient();
+  const { data: p } = await db
+    .from("profiles")
+    .select("id, phone, email, notification_prefs, guardian_id")
+    .eq("id", profileId)
+    .maybeSingle();
+  if (!p) return;
+  let contact = { phone: p.phone, email: p.email };
+  if (!contact.phone && !contact.email && p.guardian_id) {
+    const { data: g } = await db
+      .from("profiles")
+      .select("phone, email")
+      .eq("id", p.guardian_id)
+      .maybeSingle();
+    if (g) contact = g;
+  }
+  const prefs = {
+    email: true,
+    sms: true,
+    whatsapp: false,
+    ...((p.notification_prefs ?? {}) as Record<string, boolean>),
+  };
+  const { data: flag } = await db
+    .from("feature_flags")
+    .select("enabled")
+    .eq("key", "whatsapp_notifications")
+    .maybeSingle();
+  const out: Message[] = [];
+  const base = { profileId: p.id, template: msg.template, text: msg.text };
+  if (contact.email && prefs.email)
+    out.push({ ...base, channel: "email", to: contact.email, subject: msg.subject });
+  if (contact.phone && prefs.whatsapp && flag?.enabled)
+    out.push({
+      ...base,
+      channel: "whatsapp",
+      to: contact.phone,
+      whatsappTemplate: msg.whatsappTemplate,
+    });
+  else if (contact.phone && prefs.sms) out.push({ ...base, channel: "sms", to: contact.phone });
+  if (out.length) await notify(out);
 }

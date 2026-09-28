@@ -403,7 +403,8 @@
     "lessons": "My lessons",
     "coach": "Coach space",
     "orders": "Orders",
-    "leagues": "Leagues"
+    "leagues": "Leagues",
+    "notifications": "Notifications"
   },
   "family": {
     "title": "Family account",
@@ -640,7 +641,16 @@
     "exportsTitle": "Exports",
     "exportTrf": "Export the tournament as TRF (FIDE, Swiss Manager)",
     "exportPgn": "Download all games (PGN)",
-    "exportReport": "Arbiter report (PDF)"
+    "exportReport": "Arbiter report (PDF)",
+    "alerts": {
+      "title": "Watch list",
+      "low_stock": "Low stock",
+      "tournament_almost_full": "Tournament almost full",
+      "payment_failed": "Failed payments (7 days)",
+      "needs_refund": "Payments to refund",
+      "pending_requests": "Pending requests"
+    },
+    "offlineMode": "Offline mode (enter results without network)"
   },
   "viewer": {
     "board": "Game position",
@@ -1535,7 +1545,8 @@
     "audit": "Audit log",
     "leagues": "Leagues & Tour",
     "directory": "Directory",
-    "content": "Content"
+    "content": "Content",
+    "stats": "Statistics"
   },
   "adminUsers": {
     "title": "Users",
@@ -2393,5 +2404,84 @@
       "duplicate": "This address or code already exists.",
       "forbidden": "Action not allowed."
     }
+  },
+  "adminStats": {
+    "title": "Statistics",
+    "export": "Export (CSV)",
+    "from": "From",
+    "to": "To",
+    "apply": "Show",
+    "users": "Users",
+    "totalProfiles": "Profiles",
+    "accounts": "Accounts",
+    "newProfiles": "New profiles",
+    "active": "Active accounts",
+    "byDepartment": "By department",
+    "byCity": "By city (top 10)",
+    "byAge": "By age",
+    "bySex": "By sex",
+    "competitions": "Competitions",
+    "tournaments": "Tournaments",
+    "registrations": "Registrations",
+    "players": "Distinct players",
+    "games": "Games recorded",
+    "tournamentsByMonth": "Tournaments per month",
+    "finance": "Finance",
+    "revenue": "Collected",
+    "refunds": "Refunds",
+    "failed": "Failed payments",
+    "commission": "Coaching commissions",
+    "byMonth": "Collected per month",
+    "byObject": "By object",
+    "activity": "Activity",
+    "bookings": "Lessons booked",
+    "orders": "Orders",
+    "puzzleSolvers": "Puzzle solvers",
+    "published": "Published content",
+    "topProducts": "Best-selling products"
+  },
+  "notificationsPage": {
+    "title": "Notifications",
+    "email": "By e-mail",
+    "sms": "By SMS",
+    "whatsapp": "By WhatsApp (instead of SMS)",
+    "whatsappSoon": "WhatsApp will be offered once Chesspirit's WhatsApp Business account is open; SMS is used meanwhile.",
+    "help": "Confirmations, tickets, tournament and lesson reminders. Sign-in codes are always sent by SMS or e-mail.",
+    "save": "Save",
+    "saved": "Preferences saved.",
+    "error": "Could not save.",
+    "history": "Latest messages",
+    "empty": "No messages yet.",
+    "channel": {
+      "email": "E-mail",
+      "sms": "SMS",
+      "whatsapp": "WhatsApp",
+      "push": "Notification",
+      "in_app": "Website"
+    },
+    "status": {
+      "queued": "queued",
+      "sent": "sent",
+      "failed": "failed",
+      "skipped": "simulated (test mode)"
+    }
+  },
+  "offline": {
+    "title": "Offline arbitration",
+    "intro": "Open this page with a connection before the round: it stays available offline. Results entered offline are sent automatically when the network returns.",
+    "back": "Back to rounds",
+    "online": "Online",
+    "offline": "Offline",
+    "pending": "{n, plural, =0 {no pending results} one {# result waiting to be sent} other {# results waiting to be sent}}",
+    "syncing": "sending…",
+    "synced": "{n, plural, one {# result sent} other {# results sent}}",
+    "savedAt": "copy from {date}",
+    "round": "Round {n}",
+    "bye": "bye",
+    "notSent": "not sent",
+    "setResult": "Board {board}: {result}",
+    "noRounds": "No paired round.",
+    "loading": "Loading…",
+    "noCopy": "No local copy: open this page with a connection."
   }
 }

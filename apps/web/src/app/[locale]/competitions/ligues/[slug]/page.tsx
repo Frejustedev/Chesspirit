@@ -90,14 +90,14 @@ export default async function LeaguePage({
         <h2 className="font-display text-2xl font-semibold">{t("standings")}</h2>
         {standings?.length ? (
           <div className="mt-3 overflow-x-auto">
-            <table className="w-full min-w-[32rem]">
+            <table className="w-full">
               <thead>
                 <tr className="border-b border-line text-left text-sm text-stone">
                   <th className="py-2 pr-2">#</th>
                   <th className="py-2 pr-2">{t("player")}</th>
                   <th className="py-2 pr-2 text-right">{t("pts")}</th>
-                  <th className="py-2 pr-2 text-right">SB</th>
-                  <th className="py-2 text-right">{t("games")}</th>
+                  <th className="hidden py-2 pr-2 text-right sm:table-cell">SB</th>
+                  <th className="hidden py-2 text-right sm:table-cell">{t("games")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -133,8 +133,10 @@ export default async function LeaguePage({
                       <td className="tabular py-2 pr-2 text-right font-semibold">
                         {Number(s.points)}
                       </td>
-                      <td className="tabular py-2 pr-2 text-right">{Number(s.sonneborn_berger)}</td>
-                      <td className="tabular py-2 text-right">{s.games}</td>
+                      <td className="tabular hidden py-2 pr-2 text-right sm:table-cell">
+                        {Number(s.sonneborn_berger)}
+                      </td>
+                      <td className="tabular hidden py-2 text-right sm:table-cell">{s.games}</td>
                     </tr>
                   );
                 })}

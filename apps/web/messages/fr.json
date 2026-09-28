@@ -403,7 +403,8 @@
     "lessons": "Mes cours",
     "coach": "Espace coach",
     "orders": "Commandes",
-    "leagues": "Ligues"
+    "leagues": "Ligues",
+    "notifications": "Notifications"
   },
   "family": {
     "title": "Compte famille",
@@ -640,7 +641,16 @@
     "exportsTitle": "Exports",
     "exportTrf": "Exporter le tournoi au format TRF (FIDE, Swiss Manager)",
     "exportPgn": "Télécharger toutes les parties (PGN)",
-    "exportReport": "Rapport d'arbitrage (PDF)"
+    "exportReport": "Rapport d'arbitrage (PDF)",
+    "alerts": {
+      "title": "À surveiller",
+      "low_stock": "Stock bas",
+      "tournament_almost_full": "Tournoi presque complet",
+      "payment_failed": "Paiements échoués (7 jours)",
+      "needs_refund": "Paiements à rembourser",
+      "pending_requests": "Demandes en attente"
+    },
+    "offlineMode": "Mode hors ligne (saisie des résultats sans réseau)"
   },
   "viewer": {
     "board": "Position de la partie",
@@ -1535,7 +1545,8 @@
     "audit": "Journal",
     "leagues": "Ligues et Tour",
     "directory": "Annuaire",
-    "content": "Contenus"
+    "content": "Contenus",
+    "stats": "Statistiques"
   },
   "adminUsers": {
     "title": "Utilisateurs",
@@ -2393,5 +2404,84 @@
       "duplicate": "Cette adresse ou ce code existe déjà.",
       "forbidden": "Action non autorisée."
     }
+  },
+  "adminStats": {
+    "title": "Statistiques",
+    "export": "Exporter (CSV)",
+    "from": "Du",
+    "to": "Au",
+    "apply": "Afficher",
+    "users": "Utilisateurs",
+    "totalProfiles": "Profils",
+    "accounts": "Comptes",
+    "newProfiles": "Nouveaux profils",
+    "active": "Comptes actifs",
+    "byDepartment": "Par département",
+    "byCity": "Par ville (10 premières)",
+    "byAge": "Par âge",
+    "bySex": "Par sexe",
+    "competitions": "Compétitions",
+    "tournaments": "Tournois",
+    "registrations": "Inscriptions",
+    "players": "Joueurs différents",
+    "games": "Parties enregistrées",
+    "tournamentsByMonth": "Tournois par mois",
+    "finance": "Finances",
+    "revenue": "Encaissements",
+    "refunds": "Remboursements",
+    "failed": "Paiements échoués",
+    "commission": "Commissions coaching",
+    "byMonth": "Encaissements par mois",
+    "byObject": "Par objet",
+    "activity": "Activité",
+    "bookings": "Cours réservés",
+    "orders": "Commandes",
+    "puzzleSolvers": "Joueurs de puzzles",
+    "published": "Contenus publiés",
+    "topProducts": "Produits les plus vendus"
+  },
+  "notificationsPage": {
+    "title": "Notifications",
+    "email": "Par e-mail",
+    "sms": "Par SMS",
+    "whatsapp": "Par WhatsApp (à la place du SMS)",
+    "whatsappSoon": "WhatsApp sera proposé dès l'ouverture du compte WhatsApp Business de Chesspirit ; en attendant, le SMS est utilisé.",
+    "help": "Confirmations, billets, rappels de tournoi et de cours. Les codes de connexion sont toujours envoyés par SMS ou e-mail.",
+    "save": "Enregistrer",
+    "saved": "Préférences enregistrées.",
+    "error": "Enregistrement impossible.",
+    "history": "Derniers messages",
+    "empty": "Aucun message pour le moment.",
+    "channel": {
+      "email": "E-mail",
+      "sms": "SMS",
+      "whatsapp": "WhatsApp",
+      "push": "Notification",
+      "in_app": "Site"
+    },
+    "status": {
+      "queued": "en attente",
+      "sent": "envoyé",
+      "failed": "échec",
+      "skipped": "simulé (mode test)"
+    }
+  },
+  "offline": {
+    "title": "Arbitrage hors ligne",
+    "intro": "Ouvrez cette page avec du réseau avant la ronde : elle reste disponible sans connexion. Les résultats saisis hors ligne sont envoyés automatiquement au retour du réseau.",
+    "back": "Retour aux rondes",
+    "online": "En ligne",
+    "offline": "Hors ligne",
+    "pending": "{n, plural, =0 {aucun résultat en attente} one {# résultat en attente d'envoi} other {# résultats en attente d'envoi}}",
+    "syncing": "envoi…",
+    "synced": "{n, plural, one {# résultat envoyé} other {# résultats envoyés}}",
+    "savedAt": "copie du {date}",
+    "round": "Ronde {n}",
+    "bye": "exempt",
+    "notSent": "non envoyé",
+    "setResult": "Échiquier {board} : {result}",
+    "noRounds": "Aucune ronde appariée.",
+    "loading": "Chargement…",
+    "noCopy": "Aucune copie locale : ouvrez cette page avec du réseau."
   }
 }

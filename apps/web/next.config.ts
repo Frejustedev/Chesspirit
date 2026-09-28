@@ -19,7 +19,8 @@ const csp = [
   "worker-src 'self' blob:",
   "frame-src 'self' https://checkout.fedapay.com https://sandbox-checkout.fedapay.com https://widget-v3.kkiapay.me https://www.youtube-nocookie.com https://player.vimeo.com",
   "frame-ancestors 'none'",
-  "form-action 'self' https://checkout.fedapay.com https://sandbox-checkout.fedapay.com",
+  // Lichess : redirection OAuth depuis le formulaire « Lier mon compte ».
+  "form-action 'self' https://checkout.fedapay.com https://sandbox-checkout.fedapay.com https://lichess.org",
   "base-uri 'self'",
   "object-src 'none'",
   ...(isDev ? [] : ["upgrade-insecure-requests"]),

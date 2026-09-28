@@ -19,7 +19,7 @@ async function shoot(page: Page, name: string, url: string) {
 }
 
 test("pages publiques", async ({ page }) => {
-  test.setTimeout(240_000);
+  test.setTimeout(400_000);
   const { data: g } = await serviceDb().from("games").select("id").limit(1).single();
   await shoot(page, "01-accueil", "/");
   await shoot(page, "02-calendrier", "/competitions");
@@ -32,6 +32,20 @@ test("pages publiques", async ({ page }) => {
   await shoot(page, "12-coaching", "/coaching");
   await shoot(page, "13-boutique", "/boutique");
   await shoot(page, "14-produit", "/boutique/produit/echiquier-bois-demo");
+  await shoot(page, "15-ligues", "/competitions/ligues?saison=saison-demo");
+  await shoot(page, "16-ligue", "/competitions/ligues/saison-demo-l1-classique");
+  await shoot(page, "17-tour", "/classements/tour?saison=saison-demo");
+  await shoot(page, "18-annuaire", "/annuaire");
+  await shoot(page, "19-carte", "/annuaire/carte");
+});
+
+test("média et académie", async ({ page }) => {
+  test.setTimeout(180_000);
+  await shoot(page, "30-media", "/media");
+  await shoot(page, "31-episode", "/media/episodes/coup-de-la-semaine-demo-1");
+  await shoot(page, "32-academie", "/academie");
+  await shoot(page, "33-puzzle-du-jour", "/academie/puzzle-du-jour");
+  await shoot(page, "34-lexique", "/academie/lexique");
 });
 
 test("espace joueur", async ({ page }) => {
@@ -42,6 +56,7 @@ test("espace joueur", async ({ page }) => {
 });
 
 test("administration", async ({ page }) => {
+  test.setTimeout(240_000);
   await loginAsAdmin(page);
   const { data: t } = await serviceDb()
     .from("tournaments")
@@ -53,4 +68,6 @@ test("administration", async ({ page }) => {
   await shoot(page, "22-admin-pointage", `/admin/tournois/${t!.id}?onglet=pointage`);
   await shoot(page, "23-admin-reglages", `/admin/tournois/${t!.id}?onglet=reglages`);
   await shoot(page, "24-admin-boutique", "/admin/boutique?filtre=all");
+  await shoot(page, "25-admin-statistiques", "/admin/statistiques");
+  await shoot(page, "26-admin-ligues", "/admin/ligues?saison=saison-demo");
 });

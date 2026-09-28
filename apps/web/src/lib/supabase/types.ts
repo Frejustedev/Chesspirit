@@ -1016,6 +1016,33 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "job_posts_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "job_posts_posted_by_fkey"; columns: ["posted_by"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      job_runs: {
+        Row: {
+          id: string;
+          job: string;
+          status: string;
+          details: Json;
+          started_at: string;
+          finished_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          job: string;
+          status?: string;
+          details?: Json;
+          started_at?: string;
+          finished_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          job?: string;
+          status?: string;
+          details?: Json;
+          started_at?: string;
+          finished_at?: string | null;
+        };
+        Relationships: [];
+      };
       league_licenses: {
         Row: {
           id: string;
@@ -2848,6 +2875,7 @@ export type Database = {
           start_number: number | null;
           withdrawn_at: string | null;
           bye_requests: Json;
+          reminder_sent_at: string | null;
         };
         Insert: {
           id?: string;
@@ -2872,6 +2900,7 @@ export type Database = {
           start_number?: number | null;
           withdrawn_at?: string | null;
           bye_requests?: Json;
+          reminder_sent_at?: string | null;
         };
         Update: {
           id?: string;
@@ -2896,6 +2925,7 @@ export type Database = {
           start_number?: number | null;
           withdrawn_at?: string | null;
           bye_requests?: Json;
+          reminder_sent_at?: string | null;
         };
         Relationships: [{ foreignKeyName: "registrations_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "registrations_player_id_fkey"; columns: ["player_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
@@ -3853,11 +3883,13 @@ export type Database = {
     Functions: {
       add_child: { Args: { p_profile: Json; p_image_rights?: boolean }; Returns: Database["public"]["Tables"]["profiles"]["Row"] };
       add_tournament_staff: { Args: { p_tournament_id: string; p_identifier: string; p_role: string }; Returns: Database["public"]["Tables"]["tournament_staff"]["Row"] };
+      admin_alerts: { Args: Record<PropertyKey, never>; Returns: { kind: string; count: number; detail: string }[] };
       admin_anonymize_profile: { Args: { p_profile: string }; Returns: string };
       admin_find_duplicates: { Args: { p_profile: string }; Returns: { id: string; first_name: string; last_name: string; birth_date: string; phone: string; fide_id: string; user_id: string; reason: string }[] };
       admin_merge_profiles: { Args: { p_keep: string; p_merge: string }; Returns: number };
       admin_overview: { Args: Record<PropertyKey, never>; Returns: { users: number; profiles: number; registrations: number; payments_succeeded: number; revenue_xof: number; pending_data_requests: number; contact_new: number }[] };
       admin_record_refund: { Args: { p_payment: string; p_amount: number; p_reason: string }; Returns: Database["public"]["Tables"]["refunds"]["Row"] };
+      admin_stats: { Args: { p_from: string; p_to: string }; Returns: Json };
       agree_postponement: { Args: { p_id: string }; Returns: undefined };
       allocate_season_by_rating: { Args: { p_season: string }; Returns: number };
       approve_coach_application: { Args: { p_application_id: string }; Returns: Database["public"]["Tables"]["coach_profiles"]["Row"] };
@@ -3889,6 +3921,7 @@ export type Database = {
       refresh_league_forfeits: { Args: { p_league: string }; Returns: number };
       register_for_tournament: { Args: { p_tournament_id: string; p_player_id: string; p_answers?: Json; p_payment_method?: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
       request_league_license: { Args: { p_season: string; p_profile: string }; Returns: Database["public"]["Tables"]["league_licenses"]["Row"] };
+      run_maintenance: { Args: { p_job: string }; Returns: Json };
       set_order_status: { Args: { p_order_id: string; p_status: Database["public"]["Enums"]["order_status"]; p_note?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
       shop_overview: { Args: Record<PropertyKey, never>; Returns: { orders_to_process: number; revenue_xof: number; low_stock: number; pending_payment: number }[] };
       slot_remaining: { Args: { p_slot_id: string }; Returns: number };

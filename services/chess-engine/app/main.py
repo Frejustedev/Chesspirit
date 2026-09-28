@@ -13,6 +13,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
+from .fide import FideImportRequest, FidePlayer, import_list
 from .rating import RatingState, apply_game, replay_ratings
 from .roundrobin import berger_tables
 from .swiss import Pair, SwissRequest, bbp_binary, pair_round
@@ -101,3 +102,12 @@ def replay_tournaments(data: dict) -> dict:
         return replay_ratings(data)
     except (KeyError, TypeError, ValueError) as e:
         raise HTTPException(status_code=422, detail=f"invalid input: {e}") from e
+
+
+@app.post("/fide/import", dependencies=[Depends(require_key)])
+def fide_import(req: FideImportRequest) -> list[FidePlayer]:
+    """Liste FIDE du mois, filtrée (fédération et identifiants des joueurs Chesspirit)."""
+    try:
+        return import_list(req)
+    except (OSError, ValueError, StopIteration) as e:
+        raise HTTPException(status_code=502, detail=f"fide list unavailable: {e}") from e

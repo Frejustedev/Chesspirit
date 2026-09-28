@@ -13,7 +13,9 @@ export default async function PlacementPage({ params }: { params: Promise<{ loca
   setRequestLocale(locale);
   const t = await getTranslations("placement");
   // Du plus simple au plus difficile : mats en 1 puis mats en 2.
-  const series = [...BASE_PUZZLES].sort((a, b) => a.mateIn - b.mateIn);
+  // Série fixe de cinq positions graduées (la base de puzzles s'enrichit sans changer le test).
+  const SERIES = ["back-rank", "scholar", "back-rank-2", "philidor", "philidor-black"];
+  const series = SERIES.map((id) => BASE_PUZZLES.find((p) => p.id === id)!).filter(Boolean);
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
       <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
