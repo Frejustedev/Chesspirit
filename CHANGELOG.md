@@ -1,5 +1,23 @@
 # Journal des modifications
 
+## [1.0.1] — 2026-09-28 — Préparation de la mise en production
+
+### Sécurité
+
+- Vues publiques en lecture seule pour les rôles d'API : un visiteur anonyme pouvait modifier ou supprimer des profils et déverrouiller le contenu premium par trois vues modifiables (P1, docs/SECURITE.md).
+- Droits de l'API explicites dès la première migration : un projet Supabase récent n'aurait servi aucune donnée (P2).
+- Effacement d'un compte : suppression du compte de connexion débloquée, erreur remontée (P3) ; journaux de production sans données personnelles (P4).
+
+### Modifié
+
+- Connexion : méthodes proposées selon les réglages réels de Supabase Auth (onglet téléphone masqué sans fournisseur SMS, bouton Google selon le fournisseur).
+- Sans prestataire de paiement : boutique, cours payants, licences, adhésion premium et inscription « en ligne » fermés avant toute réservation ; textes (pied de page, FAQ, boutique, adhésion) alignés sur le paiement sur place ; interrupteur `payments_online` effectif.
+- Horaire « à confirmer » : compte à rebours en jours et rappel J-1 sans heure provisoire.
+- Vercel : tâches planifiées quotidiennes (compatibles avec tous les forfaits), fonctions à Paris (`cdg1`), Node 22 ; polices des affiches embarquées dans la fonction déployée.
+- Appariement suisse de secours conforme aux critères absolus de couleur de la FIDE (écart ≤ 2, jamais trois fois la même couleur) ; rapport d'arbitrage : appariement de secours signalé ; import FIDE sauté sans service échecs.
+- `scripts/setup-production.sh` : paiement et service échecs facultatifs, liaison Vercel par dépôt ; `create-admin` insensible à la casse de l'e-mail.
+- `docs/MISE_EN_LIGNE.md` : réglages Supabase Auth complets (SMTP, modèles d'e-mail avec le code, limites), réglages Vercel exacts.
+
 ## [1.0.0] — 2026-09-28 — Phase 3 : communauté, application mobile et mise en ligne
 
 ### Ajouté

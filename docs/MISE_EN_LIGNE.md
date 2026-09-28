@@ -30,7 +30,7 @@ Ce guide s'adresse à la personne qui met le site en ligne, sans connaissance te
 | Compte **Resend** et domaine d'envoi vérifié                       | E-mails (confirmations, reçus, rappels)                                | resend.com                                             | `RESEND_API_KEY`, `EMAIL_FROM`                                                                                   |
 | **WhatsApp Business** (Meta)                                       | Notifications et assistant WhatsApp (facultatif)                       | business.facebook.com / developers.facebook.com        | `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`                     |
 | Hébergeur du **service échecs** (Fly.io, ou Render)                | Appariements suisses (bbpPairings), calcul des cotes, import FIDE      | fly.io ou render.com                                   | `CHESS_ENGINE_URL`, `CHESS_ENGINE_KEY`                                                                           |
-| Identifiants **Google OAuth** (facultatif)                         | Connexion avec Google                                                  | console.cloud.google.com                               | dans Supabase ; `NEXT_PUBLIC_AUTH_GOOGLE_ENABLED=true`                                                           |
+| Identifiants **Google OAuth** (facultatif)                         | Connexion avec Google                                                  | console.cloud.google.com                               | dans Supabase (le bouton apparaît quand le fournisseur est activé)                                               |
 | **Lichess** (facultatif)                                           | Tournois en ligne ; jeton du compte Chesspirit pour créer des tournois | lichess.org/account/oauth/token                        | `LICHESS_API_TOKEN` (la liaison des comptes joueurs ne demande aucun secret)                                     |
 | **Statistiques** (facultatif)                                      | Mesure d'audience sans cookie                                          | plausible.io (ou instance hébergée)                    | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`, `NEXT_PUBLIC_PLAUSIBLE_HOST`                                                     |
 | **Sentry** (facultatif)                                            | Suivi des erreurs                                                      | sentry.io                                              | non branché dans le code (voir « À reprendre »)                                                                  |
@@ -58,7 +58,7 @@ openssl rand -hex 24   # pour CHESS_ENGINE_KEY (et WHATSAPP_VERIFY_TOKEN si What
 
 ### 3.1 Supabase (base de données et connexion)
 
-1. Créer un projet sur supabase.com. Région : choisir dans la liste celle qui est **la plus proche du Bénin** (en pratique une région d'Europe de l'Ouest ; comparer les temps de réponse depuis Cotonou si possible). Noter le mot de passe de la base.
+1. Créer un projet sur supabase.com. Région : **eu-west-3 (Paris)**, la plus proche du Bénin parmi les régions proposées, et la même que les fonctions du site (`cdg1`, voir 3.3). Noter le mot de passe de la base.
 2. Dans _Project Settings → API_ : copier l'URL du projet, la clé `anon` (publique) et la clé `service_role` (secrète) dans `.env.production`. Dans _Project Settings → General_ : copier la référence du projet (`SUPABASE_PROJECT_REF`).
 3. **Migrations** : installer la CLI Supabase (supabase.com/docs/guides/cli), puis :
    ```bash
@@ -66,11 +66,21 @@ openssl rand -hex 24   # pour CHESS_ENGINE_KEY (et WHATSAPP_VERIFY_TOKEN si What
    supabase link --project-ref VOTRE_REFERENCE
    supabase db push
    ```
-   (ou lancer le workflow GitHub « Migrations Supabase », voir 4.)
-4. **Connexion par téléphone** : _Authentication → Providers → Phone_ : activer, choisir Twilio (ou autre fournisseur proposé) et saisir ses identifiants. Les codes de connexion SMS sont envoyés par Supabase.
-5. **Connexion par e-mail** : _Authentication → Providers → Email_ : activer la connexion par code. Dans _Authentication → SMTP Settings_, renseigner le serveur SMTP de Resend (smtp.resend.com) pour que les e-mails partent du domaine chesspirit.com.
-6. **Google** (facultatif) : _Authentication → Providers → Google_ avec les identifiants OAuth ; adresse de retour autorisée : celle affichée par Supabase. Mettre `NEXT_PUBLIC_AUTH_GOOGLE_ENABLED=true`.
-7. **Adresses autorisées** : _Authentication → URL Configuration_ : Site URL `https://chesspirit.com`, Redirect URLs `https://chesspirit.com/**` et `https://www.chesspirit.com/**`.
+   (ou lancer le workflow GitHub « Migrations Supabase », voir 4.) La première migration (`20260927000000_api_default_privileges.sql`) rend explicites les droits de l'API : les projets récents ne les accordent plus automatiquement, et sans elle aucune page ne pourrait lire la base. Si les migrations ont été appliquées autrement (outil MCP, éditeur SQL), l'historique doit porter les numéros des fichiers : `supabase migration list` doit afficher les mêmes versions en local et à distance (sinon `supabase migration repair`).
+   **Numérotation** : toute nouvelle migration doit porter un numéro supérieur à la dernière existante (par exemple `20261009000200_…`), même si la date du jour est antérieure.
+4. **Ne jamais lancer `supabase config push`** : `supabase/config.toml` ne sert qu'au développement local (codes de test, adresses locales).
+5. **Réglages de connexion** (_Authentication_), indispensables : le site n'accepte que des **codes à 6 chiffres**, pas des liens.
+   - _Sign In / Providers → Email_ : activé, « Confirm email » activé, **Email OTP Length = 6**, Email OTP Expiration = 3600.
+   - _Emails → SMTP Settings_ : activer le SMTP personnalisé (sans lui, Supabase n'envoie qu'aux membres de l'équipe du projet, quelques messages par heure). Exemple avec la boîte o2switch `no-reply@chesspirit.com` : hôte `mail.chesspirit.com` (ou celui indiqué par o2switch), port 465, identifiant = l'adresse, mot de passe de la boîte ; expéditeur `no-reply@chesspirit.com`, nom « Chesspirit ». Avec Resend : hôte `smtp.resend.com`, port 465, identifiant `resend`, mot de passe = clé d'API.
+   - _Emails → Templates_ : dans **« Magic Link » et « Confirm signup »**, remplacer le contenu par le code (sans lien) :
+     - Sujet : `Votre code de connexion Chesspirit`
+     - Corps : `<h2>Votre code Chesspirit</h2><p>Saisissez ce code sur la page de connexion :</p><p style="font-size:28px;font-weight:700;letter-spacing:6px">{{ .Token }}</p><p>Ce code expire dans une heure. Si vous n'avez rien demandé, ignorez cet e-mail.</p>`
+   - _Rate Limits_ (disponible une fois le SMTP activé, 30 e-mails par heure par défaut, pour tout le projet) : « Rate limit for sending emails » = 150 par heure au moins (sans dépasser le quota horaire du fournisseur SMTP). Les vérifications de code sont aussi limitées par adresse IP : le jour du tournoi, demander aux joueurs de se connecter avant d'arriver plutôt que sur le Wi-Fi de la salle.
+   - _URL Configuration_ : Site URL `https://chesspirit.com` ; Redirect URLs `https://chesspirit.com/**`, `https://www.chesspirit.com/**` et `https://*-frejustes-projects.vercel.app/**` (prévisualisations).
+   - _Multi-Factor_ : laisser TOTP activé (par défaut) : la double authentification est obligatoire pour l'administration.
+   - Laisser désactivés : connexions anonymes, CAPTCHA, crochets d'authentification (« Auth Hooks »).
+6. **Connexion par téléphone** (plus tard) : _Authentication → Providers → Phone_ : activer avec Twilio (ou autre fournisseur proposé), SMS OTP Length = 6. Tant que ce fournisseur n'est pas activé, l'onglet « Téléphone » est masqué automatiquement sur la page de connexion ; il apparaît dès l'activation (dans les 5 minutes).
+7. **Google** (facultatif) : _Authentication → Providers → Google_ avec les identifiants OAuth (dans Google Cloud : origines `https://chesspirit.com` et `https://www.chesspirit.com`, adresse de retour affichée par Supabase, écran de consentement « En production »). Le bouton Google apparaît automatiquement quand le fournisseur est activé (`NEXT_PUBLIC_AUTH_GOOGLE_ENABLED=false` le masque malgré tout).
 8. **Stockage** : aucun espace de stockage de fichiers n'est utilisé à ce jour (les photos de feuilles de notation ne sont pas conservées ; affiches et attestations sont générées à la demande).
 9. **Tâches planifiées** : elles sont lancées par Vercel (voir 3.7), pas par Supabase.
 
@@ -91,10 +101,24 @@ La région est `cdg` (Paris) par défaut ; la changer dans `fly.toml` si une ré
 
 ### 3.3 Vercel (site) et domaine
 
-1. Sur vercel.com : _Add New → Project_, importer le dépôt GitHub `frejustedev/chesspirit`, **Root Directory : `apps/web`**. Le reste est détecté automatiquement.
-2. _Settings → Environment Variables_ : saisir toutes les variables de `.env.production` pour l'environnement _Production_ (le script `scripts/setup-production.sh` peut le faire, voir 4.). Mettre `NEXT_PUBLIC_SITE_URL=https://chesspirit.com`, `PAYMENT_PROVIDER=fedapay` (ou `kkiapay`), `NEXT_PUBLIC_DEMO_BANNER=false` une fois les données de démonstration absentes.
-3. _Settings → Domains_ : ajouter `chesspirit.com` et `www.chesspirit.com`. Vercel affiche les enregistrements DNS à créer chez le registraire (en général un enregistrement A pour `chesspirit.com` et un CNAME pour `www`) : les recopier exactement.
+La branche de production est `main` : fusionner d'abord la demande de fusion (PR) du projet, sinon le dossier `apps/web` n'existe pas sur `main`.
+
+1. Sur vercel.com : _Add New → Project_, importer le dépôt GitHub `frejustedev/chesspirit`. Réglages :
+   - **Root Directory : `apps/web`** ; « Include files outside the Root Directory » : activé (par défaut) ;
+   - Framework : Next.js ; commandes d'installation et de compilation : par défaut ;
+   - Node.js : 22.x (fixé par `apps/web/package.json`) ; région des fonctions : Paris `cdg1` (fixée par `apps/web/vercel.json`).
+2. **Avant de cliquer sur « Deploy »**, ouvrir _Environment Variables_ et saisir (Production et Preview) :
+   - `NEXT_PUBLIC_SITE_URL=https://chesspirit.com`
+   - `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY` (3.1, étape 2)
+   - `SUPABASE_SERVICE_ROLE_KEY` (secrète)
+   - `CRON_SECRET` (au moins 32 caractères : `openssl rand -hex 24`)
+   - `NEXT_PUBLIC_DEMO_BANNER=false`
+
+   Ne pas définir `NODE_ENV` ni `PAYMENT_PROVIDER` tant qu'aucun prestataire de paiement n'est validé. Les variables `NEXT_PUBLIC_*` sont figées à la compilation : après toute modification, relancer un déploiement (_Deployments → Redeploy_).
+
+3. _Settings → Domains_ : ajouter `chesspirit.com` et `www.chesspirit.com`. Vercel affiche les enregistrements DNS à créer chez le registraire (en général un enregistrement A `76.76.21.21` pour `chesspirit.com` et un CNAME `cname.vercel-dns.com` pour `www`) : les recopier exactement.
 4. Le certificat HTTPS est créé automatiquement par Vercel une fois le DNS propagé (de quelques minutes à quelques heures).
+5. Forfait : le forfait gratuit (Hobby) suffit techniquement (tâches planifiées quotidiennes, une région), mais il est réservé à un usage non commercial ; passer au forfait Pro avant d'encaisser des paiements en ligne.
 
 ### 3.4 E-mails (SPF, DKIM, DMARC)
 
@@ -131,19 +155,19 @@ Le paiement simulé est automatiquement refusé en production.
 
 Elles sont décrites dans `apps/web/vercel.json` et appelées par Vercel Cron avec le jeton `CRON_SECRET` :
 
-| Tâche             | Fréquence         | Rôle                                                        |
-| ----------------- | ----------------- | ----------------------------------------------------------- |
-| `expire-orders`   | toutes les heures | libère le stock des commandes non payées                    |
-| `index-positions` | toutes les heures | indexe les nouvelles parties pour la recherche par position |
-| `reminders`       | tous les jours    | rappels J-1 des tournois et des cours                       |
-| `refresh-minors`  | tous les jours    | passage à la majorité                                       |
-| `admin-digest`    | tous les jours    | synthèse des alertes aux administrateurs                    |
-| `purge-whatsapp`  | tous les jours    | effacement des messages WhatsApp reçus de plus de 90 jours  |
-| `rating-lists`    | le 1er du mois    | publication de la liste mensuelle des cotes                 |
-| `fide-import`     | le 3 du mois      | import de la liste FIDE (joueurs du Bénin)                  |
-| `monthly-report`  | le 1er du mois    | rapport mensuel par e-mail                                  |
+| Tâche             | Fréquence (UTC)     | Rôle                                                               |
+| ----------------- | ------------------- | ------------------------------------------------------------------ |
+| `expire-orders`   | tous les jours 0 h  | libère le stock des commandes non payées depuis 48 h               |
+| `index-positions` | tous les jours 2 h  | indexe les parties restantes (les imports indexent déjà les leurs) |
+| `reminders`       | tous les jours 16 h | rappels J-1 des tournois et des cours                              |
+| `refresh-minors`  | tous les jours      | passage à la majorité                                              |
+| `admin-digest`    | tous les jours      | synthèse des alertes aux administrateurs                           |
+| `purge-whatsapp`  | tous les jours      | effacement des messages WhatsApp reçus de plus de 90 jours         |
+| `rating-lists`    | le 1er du mois      | publication de la liste mensuelle des cotes                        |
+| `fide-import`     | le 3 du mois        | import de la liste FIDE (sautée tant que le service échecs manque) |
+| `monthly-report`  | le 1er du mois      | rapport mensuel par e-mail                                         |
 
-Le nombre et la fréquence des tâches autorisées dépendent du forfait Vercel (voir la page des tarifs). Si le forfait ne permet pas les tâches horaires, un planificateur externe peut appeler les mêmes adresses :
+Toutes les tâches sont au plus quotidiennes : elles sont donc acceptées par tous les forfaits Vercel (le forfait gratuit refuse tout déploiement contenant une tâche plus fréquente). Pour une fréquence plus élevée, un planificateur externe peut appeler les mêmes adresses :
 
 ```bash
 curl -H "Authorization: Bearer $CRON_SECRET" https://chesspirit.com/api/cron/expire-orders
@@ -181,7 +205,7 @@ Chaque exécution est visible dans la table `job_runs` et dans _Administration �
 | `apps/web/vercel.json`                           | Tâches planifiées                                                                                                          |
 | `scripts/setup-production.sh`                    | Automatise la mise en production                                                                                           |
 
-**Script de mise en production** — vérifie la configuration, applique les migrations, charge les données de référence (sans démonstration), crée le super-administrateur, déploie le service échecs et le site, puis teste. Il est rejouable et demande de taper « oui » avant chaque action irréversible :
+**Script de mise en production** — vérifie la configuration, applique les migrations, charge les données de référence (sans démonstration), crée le super-administrateur, déploie le service échecs (si `CHESS_ENGINE_KEY` est fournie), renseigne les variables du projet Vercel, puis teste. Le site lui-même se déploie depuis GitHub (fusion sur `main`). Seules les variables Supabase et `CRON_SECRET` sont obligatoires : sans prestataire de paiement, les inscriptions se règlent sur place ; sans service échecs, le site calcule lui-même appariements et cotes. Il est rejouable et demande de taper « oui » avant chaque action irréversible :
 
 ```bash
 bash scripts/setup-production.sh --dry-run   # affiche ce qui serait fait, sans rien faire
@@ -220,12 +244,13 @@ E2E_BASE_URL=https://chesspirit.com pnpm --filter web exec playwright test --pro
 2. **Pages légales** : faire relire et valider par un juriste les brouillons (mentions légales, CGU, CGV, confidentialité, cookies, remboursements, règlement type des tournois), puis compléter les champs « À confirmer » (raison sociale, adresse, RCCM, IFU, directeur de publication).
 3. **Super-administrateur** :
    ```bash
-   SUPABASE_URL=https://VOTRE_REF.supabase.co SUPABASE_SERVICE_ROLE_KEY=... pnpm create-admin --email vous@chesspirit.com --phone +229XXXXXXXX
+   SUPABASE_URL=https://VOTRE_REF.supabase.co SUPABASE_SERVICE_ROLE_KEY=... pnpm create-admin --email vous@chesspirit.com --first Prénom --last Nom
    ```
-   puis se connecter et activer la double authentification (obligatoire pour l'administration).
+   (ou : se connecter normalement sur `/connexion`, puis dans l'éditeur SQL de Supabase : `insert into public.user_roles (user_id, role) select id, 'super_admin' from auth.users where email = 'vous@chesspirit.com' on conflict do nothing;`). Se connecter ensuite par code e-mail ; `/admin` demande la double authentification : scanner le QR code avec une application (Google Authenticator, Aegis…) et **conserver le secret affiché** en lieu sûr (aucun code de secours n'est fourni).
 4. **Données de démonstration** : ne pas les charger en production (`pnpm seed -- --no-demo`, ce que fait le script). Mettre `NEXT_PUBLIC_DEMO_BANNER=false`.
-5. **Tournoi du 3 octobre** : dans _Administration → Tournois_, remplacer chaque « À confirmer » (lieu, horaires, frais, cadence, nombre de rondes, prix, capacité, règlement) puis ouvrir les inscriptions.
-6. **Participants déjà inscrits** hors du site : les importer depuis un fichier CSV (_Administration → Tournois → Inscrits → Importer_).
+5. **Tournoi du 3 octobre** : dans _Administration → Tournois_, remplacer chaque « À confirmer » (lieu, horaires, frais, cadence, nombre de rondes, prix, capacité, règlement) puis ouvrir les inscriptions. **Saisir l'horaire avant le 1er octobre à 17 h** (heure de Cotonou) : le rappel J-1 part ce jour-là ; tant que l'horaire n'est pas confirmé, il n'annonce que la date.
+   Sans service échecs, les appariements suisses utilisent le calcul de secours du site (signalé à l'arbitre et dans le rapport) : il respecte les règles absolues (pas de rematch, écart de couleurs d'au plus 2, jamais trois fois de suite la même couleur) mais n'est pas homologué FIDE. Relire chaque ronde avant de la publier ; pour 8 joueurs ou moins, choisir le système « toutes rondes ».
+6. **Participants déjà inscrits** hors du site : les importer depuis un fichier CSV (_Administration → Tournois → Inscrits → Importer_). Tant que la connexion par SMS n'est pas active, un joueur importé qui se connecte par e-mail obtient un nouveau profil : fusionner les doublons (_Administration → Utilisateurs → Doublons_) avant d'apparier la première ronde.
 7. **Tarifs** : tarif premium de l'adhésion (_Administration → Communauté_), licences de ligue (_Administration → Ligues_), catalogue de la boutique.
 
 ---

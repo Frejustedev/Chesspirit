@@ -1,8 +1,8 @@
 # Avancement
 
 - **Phase en cours** : mise en ligne assistée (le propriétaire a demandé de l'aide pour tout publier)
-- **Dernière tâche terminée** : CI verte sur la PR #1 (correctifs du plan du site, des tests SQL et des parcours e2e)
-- **Prochaine tâche** : voir « Mise en ligne assistée — état » ci-dessous
+- **Dernière tâche terminée** : correctifs de l'audit de mise en production (v1.0.1 : droits de l'API explicites, vues en lecture seule, réclamation des profils importés, connexion adaptée aux réglages Supabase, parcours payants fermés sans prestataire, Vercel compatible avec tous les forfaits, polices des affiches, appariement de secours conforme aux couleurs FIDE)
+- **Prochaine tâche** : étape 1 ci-dessous (CI verte puis fusion de la PR #1), puis étapes 2 à 4
 
 ## Mise en ligne assistée — état (28 septembre 2026)
 
@@ -16,8 +16,8 @@ Décisions du propriétaire et contraintes constatées :
 
 Étapes restantes, dans l'ordre :
 
-1. Appliquer les correctifs de l'audit de mise en production (compatibilité Supabase hébergé, configuration minimale sans paiement ni moteur, authentification hébergée, Vercel, données de départ), CI verte, fusionner la PR #1 dans `main`.
-2. Créer le projet Supabase « chesspirit » (région eu-west-3) dans l'organisation Chesspirit, appliquer les migrations une par une, charger les données de référence sans démonstration, lire les conseillers de sécurité.
+1. Correctifs de l'audit appliqués et vérifiés (tests SQL sur une base simulant un projet Supabase récent, parcours e2e) ; reste : CI verte, fusionner la PR #1 dans `main`.
+2. Créer le projet Supabase « chesspirit » (région eu-west-3) dans l'organisation Chesspirit, appliquer les migrations une par une (puis aligner l'historique `supabase_migrations.schema_migrations` sur les numéros des fichiers), charger les données de référence sans démonstration (export SQL de `pnpm seed --no-demo` : 82 lignes, 13 tables, vérifié sur base neuve et rejouable), lire les conseillers de sécurité.
 3. Fournir au propriétaire le bloc de variables Vercel (URL et clé publique Supabase, clé de service copiée par lui, `CRON_SECRET` généré, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_DEMO_BANNER=false`), puis suivre le déploiement.
 4. Domaine chesspirit.com (DNS o2switch), réglages Auth de Supabase (URL du site, redirections, SMTP, modèles d'e-mail avec le code), compte super-administrateur, recette et test de fumée en production.
 
