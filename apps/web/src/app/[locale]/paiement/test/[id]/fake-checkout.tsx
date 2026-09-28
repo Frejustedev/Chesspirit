@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useSyncExternalStore, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/form";
@@ -10,6 +10,13 @@ export function FakeCheckout({ paymentId, disabled }: { paymentId: string; disab
   const t = useTranslations("payment");
   const router = useRouter();
   const [pending, start] = useTransition();
+  // Boutons actifs seulement une fois la page interactive : un clic avant l'hydratation serait perdu.
+  const hydrated = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+  const off = !hydrated || pending || disabled;
   const go = (o: "succeeded" | "failed" | "pending") =>
     start(async () => {
       await simulateFakePayment(paymentId, o);
@@ -17,13 +24,13 @@ export function FakeCheckout({ paymentId, disabled }: { paymentId: string; disab
     });
   return (
     <div className="mt-6 grid gap-2">
-      <Button disabled={pending || disabled} onClick={() => go("succeeded")}>
+      <Button disabled={off} onClick={() => go("succeeded")}>
         {t("fakeSuccess")}
       </Button>
-      <Button variant="secondary" disabled={pending || disabled} onClick={() => go("failed")}>
+      <Button variant="secondary" disabled={off} onClick={() => go("failed")}>
         {t("fakeFailure")}
       </Button>
-      <Button variant="ghost" disabled={pending || disabled} onClick={() => go("pending")}>
+      <Button variant="ghost" disabled={off} onClick={() => go("pending")}>
         {t("fakePending")}
       </Button>
     </div>

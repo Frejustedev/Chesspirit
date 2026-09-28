@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { indexPendingGames } from "@/lib/positions";
+import { indexGames } from "@/lib/positions";
 import { Chess } from "chess.js";
 import {
   customFieldSchema,
@@ -153,9 +153,10 @@ export async function importPgnAction(
     });
   }
   if (rows.length) {
-    const { error } = await supabase.from("games").insert(rows);
+    const { data: inserted, error } = await supabase.from("games").insert(rows).select("id");
     if (error) return { ok: false, error: error.message };
-    await indexPendingGames().catch(() => null);
+    // Recherche par position : parties importées indexées tout de suite (la tâche planifiée rattrape le reste).
+    await indexGames((inserted ?? []).map((g) => g.id)).catch(() => null);
   }
   revalidatePath("/", "layout");
   return { ok: true, data: { imported: rows.length, rejected, linked } };

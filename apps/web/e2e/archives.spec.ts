@@ -16,7 +16,12 @@ const PNG = Buffer.from(
   "base64",
 );
 
-test("archives : recherche de parties et explorateur de positions", async ({ page }) => {
+test("archives : recherche de parties et explorateur de positions", async ({ page, request }) => {
+  // Les parties chargées par le seed sont indexées par la tâche planifiée, comme en production.
+  const index = await request.get("/api/cron/index-positions", {
+    headers: { authorization: `Bearer ${localEnv("CRON_SECRET")}` },
+  });
+  expect(index.status()).toBe(200);
   const { data: g } = await serviceDb().from("games").select("white_name").limit(1).single();
   const surname = g!.white_name.split(" ").at(-1)!;
   await page.goto(`/competitions/archives?joueur=${encodeURIComponent(surname)}`);

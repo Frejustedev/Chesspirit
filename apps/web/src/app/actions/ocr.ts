@@ -6,7 +6,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { readScoresheet } from "@/lib/ocr";
-import { indexPendingGames } from "@/lib/positions";
+import { indexGames } from "@/lib/positions";
 
 type Result<T = undefined> = { ok: true; data?: T } | { ok: false; error: string };
 const uuid = z.string().uuid();
@@ -113,7 +113,7 @@ export async function saveScoresheetGameAction(raw: unknown): Promise<Result<{ g
     .select("id")
     .single();
   if (error || !g) return { ok: false, error: "forbidden" };
-  await indexPendingGames(20).catch(() => null);
+  await indexGames([g.id]).catch(() => null);
   revalidatePath(`/admin/tournois/${pr.tournament_id}`);
   return { ok: true, data: { gameId: g.id } };
 }

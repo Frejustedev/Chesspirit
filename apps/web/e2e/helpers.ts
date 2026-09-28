@@ -20,9 +20,28 @@ export async function readOtp(identifier: string, after: number): Promise<string
   throw new Error(`Aucun code pour ${identifier}`);
 }
 
+/**
+ * Le serveur d'authentification refuse deux demandes de code au même numéro à moins de 5 s
+ * (GOTRUE_SMS_MAX_FREQUENCY) : on attend la fin de ce délai si un code vient d'être envoyé.
+ */
+async function waitOtpCooldown(identifier: string, cooldownMs = 6000) {
+  if (!fs.existsSync(OTP_LOG)) return;
+  const id = identifier.replace(/^\+/, "");
+  const last = fs
+    .readFileSync(OTP_LOG, "utf8")
+    .trim()
+    .split("\n")
+    .reverse()
+    .map((l) => l.split(" "))
+    .find(([, , who]) => who === id);
+  const elapsed = last ? Date.now() - Date.parse(last[0]!) : Infinity;
+  if (elapsed < cooldownMs) await new Promise((r) => setTimeout(r, cooldownMs - elapsed));
+}
+
 export async function loginWithPhone(page: Page, phone: string, next = "/compte") {
   await page.goto(`/connexion?next=${encodeURIComponent(next)}`);
   await page.getByLabel(/Numéro de téléphone/).fill(phone);
+  await waitOtpCooldown(phone);
   const t = Date.now();
   await page.getByRole("button", { name: "Recevoir le code" }).click();
   const code = await readOtp(phone, t);
