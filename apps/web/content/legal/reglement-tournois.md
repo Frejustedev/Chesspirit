@@ -11,7 +11,7 @@ Les tournois Chesspirit se jouent selon les Règles des échecs de la FIDE en vi
 ## Cadence et appariements
 
 - La cadence, le nombre de rondes et le système d'appariement sont indiqués sur la page du tournoi.
-- Les appariements du système suisse sont établis par un moteur homologué par la FIDE ; l'arbitre peut les ajuster, chaque modification étant tracée.
+- Les appariements du système suisse sont établis par le moteur bbpPairings (homologué par la FIDE) ou, à défaut, par le calcul de secours du site, signalé dans le rapport d'arbitrage ; l'arbitre peut les ajuster, chaque modification étant tracée.
 
 ## Retards, forfaits et byes
 
