@@ -1,5 +1,14 @@
 # Journal des modifications
 
+## [1.0.2] — 2026-09-28 — Derniers constats de l'audit
+
+### Modifié
+
+- Dates enregistrées au jour de Porto-Novo (`localDate`) et non au jour UTC : fichier TRF, archives, historique des cotes, rapport d'arbitrage.
+- Saison de ligues en préparation : dates au mois près, délai de report et règle de Sofia « à confirmer ».
+- Règlement des tournois : moteur bbpPairings ou calcul de secours signalé ; message d'échec de connexion neutre ; bouton Google laissé à la détection automatique dans `.env.example`.
+- `docs/MISE_EN_LIGNE.md` : bascule DNS chez o2switch sans couper la messagerie (enregistrements `mail`, MX, SPF, AAAA), serveur SMTP o2switch, forfait Vercel, dépôt public.
+
 ## [1.0.1] — 2026-09-28 — Préparation de la mise en production
 
 ### Sécurité
