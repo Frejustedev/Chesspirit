@@ -23,15 +23,15 @@ Plateforme des échecs au Bénin (chesspirit.com). Brief complet : `docs/BRIEF.m
 
 ## Commandes
 
-| Commande | Rôle |
-| --- | --- |
-| `pnpm install` | Dépendances |
-| `pnpm dev` | Pile locale + application web |
-| `pnpm seed` | Données de démonstration |
-| `pnpm lint` / `pnpm typecheck` / `pnpm test` | Qualité |
-| `pnpm test:rls` | Tests des politiques RLS (Postgres local) |
-| `pnpm e2e` | Playwright (parcours et captures) |
-| `pnpm --filter chess-engine test` ou `cd services/chess-engine && uv run pytest` | Service Python |
+| Commande                                                                         | Rôle                                      |
+| -------------------------------------------------------------------------------- | ----------------------------------------- |
+| `pnpm install`                                                                   | Dépendances                               |
+| `pnpm dev`                                                                       | Pile locale + application web             |
+| `pnpm seed`                                                                      | Données de démonstration                  |
+| `pnpm lint` / `pnpm typecheck` / `pnpm test`                                     | Qualité                                   |
+| `pnpm test:rls`                                                                  | Tests des politiques RLS (Postgres local) |
+| `pnpm e2e`                                                                       | Playwright (parcours et captures)         |
+| `pnpm --filter chess-engine test` ou `cd services/chess-engine && uv run pytest` | Service Python                            |
 
 ## Conventions
 
@@ -41,3 +41,5 @@ Plateforme des échecs au Bénin (chesspirit.com). Brief complet : `docs/BRIEF.m
 - Aucune bibliothèque d'icônes : SVG maison dans `apps/web/src/components/icons`.
 - Palette et typographies uniquement via les design tokens (`apps/web/src/app/tokens.css`).
 - Toute nouvelle table : RLS activée + politiques + test dans `supabase/tests`.
+- Fonction interne du schéma `private` (appelée seulement par des fonctions `security definer`) : `revoke execute … from public, anon, authenticated, service_role` (le schéma accorde l'exécution aux rôles d'API par défaut).
+- Toute nouvelle migration porte un numéro supérieur à la dernière existante (`20261009000100` au 28 septembre 2026), même si la date du jour est antérieure.

@@ -1,0 +1,33 @@
+{
+  "name": "chesspirit",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "stack": "bash scripts/local-stack.sh start",
+    "stack:stop": "bash scripts/local-stack.sh stop",
+    "db:reset": "bash scripts/local-stack.sh reset",
+    "seed": "tsx scripts/seed.ts",
+    "build": "pnpm -r --filter=!chesspirit-mobile build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "test:rls": "bash supabase/tests/run.sh",
+    "e2e": "pnpm --filter web e2e",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "create-admin": "tsx scripts/create-super-admin.ts",
+    "gen:types": "node scripts/gen-types.mjs"
+  },
+  "devDependencies": {
+    "@chesspirit/shared": "workspace:*",
+    "@supabase/supabase-js": "^2.117.2",
+    "chess.js": "^1.4.0",
+    "prettier": "^3.9.9",
+    "tsx": "^4.23.15"
+  }
+}

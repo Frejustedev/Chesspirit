@@ -1,0 +1,35 @@
+# Licences des composants tiers
+
+| Composant                                       | Licence                                                  | Usage                                                                                | Obligations                                                                                                               |
+| ----------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Next.js, React                                  | MIT                                                      | Application web                                                                      | Conserver les mentions de licence                                                                                         |
+| Supabase (supabase-js, @supabase/ssr)           | MIT                                                      | Accès aux données                                                                    | —                                                                                                                         |
+| PostgREST (pile locale)                         | MIT                                                      | Développement local                                                                  | —                                                                                                                         |
+| GoTrue / Supabase Auth (pile locale)            | MIT                                                      | Développement local                                                                  | —                                                                                                                         |
+| chess.js                                        | BSD-2-Clause                                             | Règles et PGN                                                                        | Conserver la mention de copyright                                                                                         |
+| next-intl                                       | MIT                                                      | Traductions                                                                          | —                                                                                                                         |
+| Zod, React Hook Form                            | MIT                                                      | Formulaires                                                                          | —                                                                                                                         |
+| qrcode (npm)                                    | MIT                                                      | QR codes des billets                                                                 | —                                                                                                                         |
+| jsQR                                            | Apache 2.0                                               | Lecture des QR codes (repli)                                                         | Conserver la notice                                                                                                       |
+| papaparse                                       | MIT                                                      | Import/export CSV                                                                    | —                                                                                                                         |
+| Fraunces, EB Garamond, Source Sans 3            | SIL Open Font License 1.1                                | Typographies (copie pour les affiches dans `apps/web/assets/fonts`, avec la licence) | Ne pas vendre les polices seules ; conserver la licence                                                                   |
+| bbpPairings                                     | Apache 2.0                                               | Appariements suisses (service Python)                                                | Conserver `LICENSE.txt` et la notice ; signaler les modifications                                                         |
+| FastAPI, Pydantic, Uvicorn                      | MIT / BSD                                                | Service Python                                                                       | —                                                                                                                         |
+| Stockfish (WebAssembly, à partir de la phase 1) | GPL v3                                                   | Analyse dans le navigateur                                                           | Voir ci-dessous                                                                                                           |
+| Leaflet 1.9                                     | BSD-2-Clause                                             | Carte « Où jouer au Bénin »                                                          | Conserver la mention de licence                                                                                           |
+| Tuiles et données OpenStreetMap                 | ODbL (données), usage des tuiles selon la politique OSMF | Fond de carte                                                                        | Attribution « © OpenStreetMap » affichée sur la carte ; pour un trafic important, passer à un fournisseur de tuiles dédié |
+| defusedxml                                      | PSF-2.0                                                  | Lecture sûre de la liste FIDE (service Python)                                       | Conserver la mention de licence                                                                                           |
+
+## Stockfish (GPL v3)
+
+Stockfish est chargé comme **programme séparé**, dans un Web Worker, à partir d'un fichier distinct servi par le site. Il n'est pas lié au code de Chesspirit. Obligations lors de la mise en ligne :
+
+1. Indiquer que Stockfish est distribué sous GPL v3, avec un lien vers le texte de la licence.
+2. Fournir l'accès au code source correspondant à la version distribuée (lien vers le dépôt officiel et la version exacte, ou copie hébergée).
+3. Ne pas imposer de restriction supplémentaire à la redistribution de ce fichier.
+
+Ces mentions figurent sur la page d'analyse (phase 1). Le reste du code de Chesspirit n'est pas soumis à la GPL tant que Stockfish reste un programme séparé communiquant par messages.
+
+## Composant d'échiquier
+
+Aucune dépendance : l'échiquier et les pièces sont dessinés sur mesure (chessground, sous GPL, n'est pas utilisé).

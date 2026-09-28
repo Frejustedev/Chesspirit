@@ -26,28 +26,28 @@ Stratégie clé : le module de gestion de tournois est gratuit pour tous les org
 
 ## 5. Stack technique
 
-| Couche | Choix |
-| --- | --- |
-| Web | Next.js (App Router) et TypeScript strict, Tailwind CSS, déployable sur Vercel |
-| Données | Supabase : Postgres, Auth (code par SMS, e-mail, Google), Storage, Realtime, Edge Functions |
-| Migrations | SQL versionné dans `supabase/migrations`, réversible quand c'est possible |
-| Sécurité des données | Row Level Security activée sur toutes les tables, sans exception |
-| Service échecs | Python 3.12 et FastAPI dans un conteneur Docker |
-| Appariements | bbpPairings (moteur suisse homologué par la FIDE), appelé par le service Python |
-| Règles et PGN côté client | chess.js |
-| Échiquier | Composant sous licence permissive (par exemple react-chessboard, MIT). Pas de chessground (GPL). |
-| Analyse | Stockfish en WebAssembly dans un Web Worker, chargé à part. Licence GPL : documente les obligations dans `docs/LICENCES.md`. |
-| Langues | next-intl, français par défaut, anglais |
-| Formulaires | React Hook Form et Zod, schémas partagés entre client et serveur |
-| Paiement | Interface commune ; FedaPay par défaut, KKiaPay en alternative, « paiement sur place », et un fournisseur factice pour le développement |
-| Notifications | E-mail par Resend ; SMS par Supabase Auth avec Twilio ; WhatsApp Business Cloud API ; fournisseurs factices en développement |
-| Affiches et visuels | Rendu HTML/CSS vers PNG (Satori) ; PDF avec react-pdf ou WeasyPrint dans le service Python |
-| Recherche | Recherche plein texte Postgres et pg_trgm |
-| Statistiques de fréquentation | Plausible ou PostHog, désactivé sans clé |
-| Erreurs | Sentry, désactivé sans clé |
-| Tests | Vitest (unitaires), Playwright (parcours critiques et captures), pytest (service échecs) |
-| PWA | Manifest, service worker, mode hors ligne de l'arbitrage (IndexedDB et synchronisation) |
-| Mobile | React Native avec Expo, branché sur la même base Supabase |
+| Couche                        | Choix                                                                                                                                   |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Web                           | Next.js (App Router) et TypeScript strict, Tailwind CSS, déployable sur Vercel                                                          |
+| Données                       | Supabase : Postgres, Auth (code par SMS, e-mail, Google), Storage, Realtime, Edge Functions                                             |
+| Migrations                    | SQL versionné dans `supabase/migrations`, réversible quand c'est possible                                                               |
+| Sécurité des données          | Row Level Security activée sur toutes les tables, sans exception                                                                        |
+| Service échecs                | Python 3.12 et FastAPI dans un conteneur Docker                                                                                         |
+| Appariements                  | bbpPairings (moteur suisse homologué par la FIDE), appelé par le service Python                                                         |
+| Règles et PGN côté client     | chess.js                                                                                                                                |
+| Échiquier                     | Composant sous licence permissive (par exemple react-chessboard, MIT). Pas de chessground (GPL).                                        |
+| Analyse                       | Stockfish en WebAssembly dans un Web Worker, chargé à part. Licence GPL : documente les obligations dans `docs/LICENCES.md`.            |
+| Langues                       | next-intl, français par défaut, anglais                                                                                                 |
+| Formulaires                   | React Hook Form et Zod, schémas partagés entre client et serveur                                                                        |
+| Paiement                      | Interface commune ; FedaPay par défaut, KKiaPay en alternative, « paiement sur place », et un fournisseur factice pour le développement |
+| Notifications                 | E-mail par Resend ; SMS par Supabase Auth avec Twilio ; WhatsApp Business Cloud API ; fournisseurs factices en développement            |
+| Affiches et visuels           | Rendu HTML/CSS vers PNG (Satori) ; PDF avec react-pdf ou WeasyPrint dans le service Python                                              |
+| Recherche                     | Recherche plein texte Postgres et pg_trgm                                                                                               |
+| Statistiques de fréquentation | Plausible ou PostHog, désactivé sans clé                                                                                                |
+| Erreurs                       | Sentry, désactivé sans clé                                                                                                              |
+| Tests                         | Vitest (unitaires), Playwright (parcours critiques et captures), pytest (service échecs)                                                |
+| PWA                           | Manifest, service worker, mode hors ligne de l'arbitrage (IndexedDB et synchronisation)                                                 |
+| Mobile                        | React Native avec Expo, branché sur la même base Supabase                                                                               |
 
 Le service Python reçoit les appels de l'application web avec une clé secrète et lit ou écrit dans Supabase avec la clé de service. Il n'est jamais exposé directement au navigateur.
 
@@ -55,7 +55,7 @@ Utilise les versions stables les plus récentes et consulte leur documentation o
 
 ## 6. Direction design
 
-- Le logo n'existe pas encore. Crée un logotype typographique provisoire : le mot « Chesspirit » en Fraunces, avec le « s » central (partagé entre *chess* et *spirit*) en or. Tout passe par des design tokens pour changer la charte en un seul endroit.
+- Le logo n'existe pas encore. Crée un logotype typographique provisoire : le mot « Chesspirit » en Fraunces, avec le « s » central (partagé entre _chess_ et _spirit_) en or. Tout passe par des design tokens pour changer la charte en un seul endroit.
 - Palette : noir chaud `#1c1815`, crème `#f6f0e3`, papier `#fbf8f1`, or `#b08b3e`, bordeaux `#6e1c2c`, gris chaud `#6f655b`. Pas de bleu.
 - Typographies : Fraunces pour les titres, EB Garamond pour les textes longs, une sans-serif très lisible pour l'interface dense (tableaux, formulaires).
 - Aucune bibliothèque d'icônes générique. Pièces d'échecs, pictogrammes et illustrations sont des SVG dessinés sur mesure. Le site ne doit ni ressembler à un template ni avoir l'air généré par une IA.
@@ -67,17 +67,17 @@ Utilise les versions stables les plus récentes et consulte leur documentation o
 
 Un même compte peut cumuler plusieurs rôles.
 
-| Rôle | Droits principaux |
-| --- | --- |
-| visitor | Pages publiques, classements, annuaire, contenus gratuits |
-| player | Tableau de bord, inscriptions, parties, cours, achats, communauté |
-| parent | Gère les comptes et inscriptions de ses enfants mineurs |
-| coach | Profil public, offres, disponibilités, élèves, revenus |
-| arbiter | Appariements et résultats des tournois qui lui sont assignés |
-| organizer | Création et gestion de ses propres tournois |
-| editor | Articles, vidéos, podcasts, leçons |
-| partner | Tableau de bord de visibilité de son sponsoring |
-| admin | Tout voir et tout gérer, avec des sous-rôles : super_admin, admin_competitions, admin_shop, moderator |
+| Rôle      | Droits principaux                                                                                     |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| visitor   | Pages publiques, classements, annuaire, contenus gratuits                                             |
+| player    | Tableau de bord, inscriptions, parties, cours, achats, communauté                                     |
+| parent    | Gère les comptes et inscriptions de ses enfants mineurs                                               |
+| coach     | Profil public, offres, disponibilités, élèves, revenus                                                |
+| arbiter   | Appariements et résultats des tournois qui lui sont assignés                                          |
+| organizer | Création et gestion de ses propres tournois                                                           |
+| editor    | Articles, vidéos, podcasts, leçons                                                                    |
+| partner   | Tableau de bord de visibilité de son sponsoring                                                       |
+| admin     | Tout voir et tout gérer, avec des sous-rôles : super_admin, admin_competitions, admin_shop, moderator |
 
 Double authentification obligatoire pour tous les rôles d'administration. Chaque action d'administration ou d'arbitrage est inscrite dans un journal d'audit.
 
@@ -120,11 +120,11 @@ Double authentification obligatoire pour tous les rôles d'administration. Chaqu
 
 Saison de septembre à juin. Neuf championnats : Ligue 1, Ligue 2, Ligue Amateur, chacune en blitz, rapide et classique.
 
-| Cadence | Temps | Ligue 1 et Ligue 2 (12 joueurs) | Ligue Amateur |
-| --- | --- | --- | --- |
+| Cadence   | Temps         | Ligue 1 et Ligue 2 (12 joueurs)                     | Ligue Amateur                |
+| --------- | ------------- | --------------------------------------------------- | ---------------------------- |
 | Classique | 60 min + 30 s | Toutes rondes, 11 rondes, une toutes les 2 semaines | Suisse, une journée par mois |
-| Rapide | 15 min + 10 s | Aller-retour, 22 rondes sur 4 journées | Suisse, une journée par mois |
-| Blitz | 3 min + 2 s | Aller-retour, 22 rondes sur 2 journées | Suisse, une journée par mois |
+| Rapide    | 15 min + 10 s | Aller-retour, 22 rondes sur 4 journées              | Suisse, une journée par mois |
+| Blitz     | 3 min + 2 s   | Aller-retour, 22 rondes sur 2 journées              | Suisse, une journée par mois |
 
 - Montées et descentes : 2 descendent, 2 montent, barrage entre le 10e de la division supérieure et le 3e de la division inférieure. Tout est paramétrable par saison.
 - Points 1, ½, 0 ; départage Sonneborn-Berger ; règle de Sofia en option.
@@ -237,21 +237,20 @@ Pars de cette base et améliore-la si besoin. Chaque table a `id` (uuid), `creat
 - En-têtes de sécurité (CSP, HSTS), protection contre les injections et le CSRF, dépendances auditées.
 - Fais une revue de sécurité complète (sous-agent dédié) à la fin des phases 1 et 3, et corrige ce qu'elle trouve.
 
-
 ## Compléments issus du dossier de projet (27 septembre 2026)
 
 ### Arborescence (8 menus principaux)
 
-| Menu | Pages |
-| --- | --- |
-| Coaching | Cours et programmes, Nos coachs, Test de niveau, Réserver un cours, Écoles et entreprises |
-| Compétitions | Calendrier, Ligues, Chesspirit Tour, Tournois par équipes, Résultats en direct, Archives |
-| Classements | Cote Chesspirit, Elo FIDE, Classement des ligues, Classement du Tour, Méthode de calcul |
-| Annuaire | Joueurs, Entraîneurs, Arbitres, Clubs et structures, Où jouer au Bénin, Offres d'emploi |
-| Boutique | Échiquiers et pièces, Pendules et livres, Accessoires, Packs et cadeaux, Location de matériel |
-| Média | Vidéos, Podcasts, En direct, Émissions |
-| Académie | Leçons par niveau, Puzzle du jour, Ressources, Lexique en fon, Cours premium |
-| Communauté | Adhésion membre, Badges et niveaux, Ambassadeurs, Pronostics, Chesspirit Awards |
+| Menu         | Pages                                                                                         |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| Coaching     | Cours et programmes, Nos coachs, Test de niveau, Réserver un cours, Écoles et entreprises     |
+| Compétitions | Calendrier, Ligues, Chesspirit Tour, Tournois par équipes, Résultats en direct, Archives      |
+| Classements  | Cote Chesspirit, Elo FIDE, Classement des ligues, Classement du Tour, Méthode de calcul       |
+| Annuaire     | Joueurs, Entraîneurs, Arbitres, Clubs et structures, Où jouer au Bénin, Offres d'emploi       |
+| Boutique     | Échiquiers et pièces, Pendules et livres, Accessoires, Packs et cadeaux, Location de matériel |
+| Média        | Vidéos, Podcasts, En direct, Émissions                                                        |
+| Académie     | Leçons par niveau, Puzzle du jour, Ressources, Lexique en fon, Cours premium                  |
+| Communauté   | Adhésion membre, Badges et niveaux, Ambassadeurs, Pronostics, Chesspirit Awards               |
 
 En haut à droite, toujours visibles : recherche, panier, « Mon compte », et un bouton d'action contextuel (« S'inscrire au prochain tournoi » ou « Réserver un cours »). « À propos », « Contact » et les pages légales sont dans le menu secondaire et le pied de page, avec le sélecteur FR/EN.
 

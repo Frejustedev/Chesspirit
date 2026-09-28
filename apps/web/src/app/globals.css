@@ -1,0 +1,166 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@import "@fontsource-variable/fraunces/index.css";
+@import "@fontsource-variable/fraunces/wght-italic.css";
+@import "@fontsource-variable/eb-garamond/index.css";
+@import "@fontsource-variable/source-sans-3/index.css";
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    overflow-x: clip;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-bordeaux);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--color-gold-soft);
+  }
+  a {
+    text-underline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Texte long éditorial */
+  .prose-cs {
+    font-family: var(--font-serif);
+    font-size: 1.1875rem;
+    line-height: 1.6;
+  }
+  .prose-cs p + p {
+    margin-top: 0.9em;
+  }
+  .prose-cs h2 {
+    font-size: 1.6rem;
+    margin: 1.6em 0 0.5em;
+  }
+  .prose-cs h3 {
+    font-size: 1.25rem;
+    margin: 1.2em 0 0.4em;
+  }
+  .prose-cs ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .prose-cs li {
+    padding-left: 1.2em;
+    position: relative;
+    margin: 0.3em 0;
+  }
+  .prose-cs li::before {
+    content: "";
+    position: absolute;
+    left: 0.2em;
+    top: 0.62em;
+    width: 0.4em;
+    height: 0.4em;
+    background: var(--color-gold);
+    transform: rotate(45deg);
+  }
+  .prose-cs a {
+    color: var(--color-bordeaux);
+    text-decoration: underline;
+  }
+
+  /* Filet décoratif : damier fin */
+  .rule-checker {
+    height: 6px;
+    background-image: conic-gradient(
+      var(--color-ink) 25%,
+      transparent 0 50%,
+      var(--color-ink) 0 75%,
+      transparent 0
+    );
+    background-size: 6px 6px;
+    opacity: 0.85;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Étiquette « À confirmer » */
+  .tbc {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-bordeaux);
+    background: var(--color-bordeaux-soft);
+    border-radius: 999px;
+    padding: 0.1em 0.65em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes tick {
+  from {
+    transform: translateY(-18%);
+    opacity: 0.2;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: var(--len, 400);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

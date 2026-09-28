@@ -30,4 +30,3 @@ Ligues (9 championnats), Chesspirit Tour, compétitions en ligne via Lichess, to
 ### Phase 3 : communauté et extension (tag v1.0.0 avec le plan de mise en ligne)
 
 Niveaux et badges, adhésion premium, Awards, pronostics, partie « Le public contre le maître », assistant WhatsApp, recherche par position, lecture de feuilles de notation photographiées (derrière un indicateur, service factice si nécessaire), application mobile Expo (connexion, profil, cotes, tournois et inscription, Mes parties, notifications ; configuration EAS prête, sans publication), préparation de l'extension à la sous-région, revue de sécurité finale.
-
