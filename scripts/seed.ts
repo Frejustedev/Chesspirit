@@ -1391,6 +1391,59 @@ async function seedLeagues(demo: boolean) {
   console.log("✓ Saison de démonstration : Ligue 1 classique jouée (12 joueurs), 2 étapes du Tour");
 }
 
+/** Annuaire de démonstration : fiche d'arbitre et offre d'emploi fictives. */
+async function seedDirectory() {
+  const { data: arb } = await db
+    .from("profiles")
+    .select("id")
+    .eq("phone", "+22990000005")
+    .maybeSingle();
+  if (!arb) return;
+  const { data: existing } = await db
+    .from("arbiter_profiles")
+    .select("id")
+    .eq("profile_id", arb.id)
+    .maybeSingle();
+  if (existing) {
+    console.log("• Annuaire de démonstration déjà présent");
+    return;
+  }
+  must(
+    await db.from("arbiter_profiles").insert({
+      profile_id: arb.id,
+      title: "club",
+      zone: "Littoral et Ouémé (démonstration)",
+      availability: "Week-ends (démonstration)",
+      languages: ["fr", "fon"],
+      verified: false,
+    }),
+    "arbitre démo",
+  );
+  await db.from("profiles").update({ is_public: true }).eq("id", arb.id);
+  const { data: club } = await db
+    .from("organizations")
+    .select("id")
+    .eq("slug", "club-demo-cotonou")
+    .maybeSingle();
+  must(
+    await db.from("job_posts").insert({
+      organization_id: club?.id ?? null,
+      posted_by: arb.id,
+      kind: "coach",
+      title: "Coach pour l'atelier jeunes du samedi (démonstration)",
+      description:
+        "Offre fictive servant à la démonstration de l'annuaire : animation d'un atelier d'initiation pour enfants le samedi matin.",
+      city: "Cotonou",
+      contract: "part_time",
+      contact: "contact@demo.chesspirit.local",
+      status: "published",
+      is_demo: true,
+    }),
+    "offre démo",
+  );
+  console.log("✓ Annuaire de démonstration : 1 arbitre, 1 offre d'emploi");
+}
+
 const launchId = await seedLaunchTournament();
 await seedShop(withDemo);
 
@@ -1402,4 +1455,5 @@ if (withDemo) {
   void launchId;
 }
 await seedLeagues(withDemo);
+if (withDemo) await seedDirectory();
 console.log("✓ Seed terminé");

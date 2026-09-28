@@ -35,6 +35,45 @@ export type Database = {
         };
         Relationships: [];
       };
+      arbiter_profiles: {
+        Row: {
+          id: string;
+          profile_id: string;
+          title: string | null;
+          zone: string | null;
+          availability: string | null;
+          languages: string[];
+          is_public: boolean;
+          verified: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id: string;
+          title?: string | null;
+          zone?: string | null;
+          availability?: string | null;
+          languages?: string[];
+          is_public?: boolean;
+          verified?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string;
+          title?: string | null;
+          zone?: string | null;
+          availability?: string | null;
+          languages?: string[];
+          is_public?: boolean;
+          verified?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "arbiter_profiles_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: true; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
       audit_logs: {
         Row: {
           id: string;
@@ -803,6 +842,63 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "invoices_payment_id_fkey"; columns: ["payment_id"]; isOneToOne: false; referencedRelation: "payments"; referencedColumns: ["id"] }, { foreignKeyName: "invoices_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      job_posts: {
+        Row: {
+          id: string;
+          organization_id: string | null;
+          posted_by: string;
+          kind: string;
+          title: string;
+          description: string;
+          city: string | null;
+          department: string | null;
+          contract: string | null;
+          pay_note: string | null;
+          contact: string;
+          status: string;
+          expires_on: string | null;
+          is_demo: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id?: string | null;
+          posted_by: string;
+          kind: string;
+          title: string;
+          description: string;
+          city?: string | null;
+          department?: string | null;
+          contract?: string | null;
+          pay_note?: string | null;
+          contact: string;
+          status?: string;
+          expires_on?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string | null;
+          posted_by?: string;
+          kind?: string;
+          title?: string;
+          description?: string;
+          city?: string | null;
+          department?: string | null;
+          contract?: string | null;
+          pay_note?: string | null;
+          contact?: string;
+          status?: string;
+          expires_on?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "job_posts_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "job_posts_posted_by_fkey"; columns: ["posted_by"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
       league_licenses: {
         Row: {
           id: string;
@@ -1024,6 +1120,42 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [{ foreignKeyName: "lichess_accounts_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: true; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      listing_claims: {
+        Row: {
+          id: string;
+          organization_id: string;
+          profile_id: string;
+          role_in_org: string;
+          message: string | null;
+          status: string;
+          decided_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          profile_id: string;
+          role_in_org: string;
+          message?: string | null;
+          status?: string;
+          decided_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          profile_id?: string;
+          role_in_org?: string;
+          message?: string | null;
+          status?: string;
+          decided_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "listing_claims_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] }, { foreignKeyName: "listing_claims_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
       loyalty_ledger: {
         Row: {
@@ -3097,6 +3229,22 @@ export type Database = {
         };
         Relationships: [];
       };
+      public_arbiters: {
+        Row: {
+          profile_id: string | null;
+          title: string | null;
+          zone: string | null;
+          availability: string | null;
+          languages: string[] | null;
+          verified: boolean | null;
+          display_name: string | null;
+          city: string | null;
+          department: string | null;
+          country: string | null;
+          is_demo: boolean | null;
+        };
+        Relationships: [];
+      };
       public_board_results: {
         Row: {
           team_match_id: string | null;
@@ -3305,6 +3453,7 @@ export type Database = {
       compute_tour_points: { Args: { p_tournament: string }; Returns: number };
       confirm_payment: { Args: { p_payment_id: string; p_status: string; p_provider_ref: string; p_reason?: string }; Returns: Database["public"]["Tables"]["payments"]["Row"] };
       create_league_matchday: { Args: { p_league: string; p_date?: string }; Returns: string };
+      decide_listing_claim: { Args: { p_claim: string; p_approve: boolean }; Returns: undefined };
       duplicate_tournament: { Args: { p_tournament_id: string; p_slug: string; p_starts_at: string }; Returns: Database["public"]["Tables"]["tournaments"]["Row"] };
       gift_card_balance: { Args: { p_code: string }; Returns: number };
       import_standings: { Args: { p_tournament_id: string; p_rows: Json; p_publish?: boolean }; Returns: number };
@@ -3313,6 +3462,7 @@ export type Database = {
       loyalty_balance: { Args: Record<PropertyKey, never>; Returns: number };
       my_managed_tournaments: { Args: Record<PropertyKey, never>; Returns: Database["public"]["Tables"]["tournaments"]["Row"][] };
       place_order: { Args: { p_items: Json; p_delivery: string; p_address: Json; p_contact_name: string; p_contact_phone: string; p_contact_email?: string; p_promo?: string; p_gift_code?: string; p_use_points?: number; p_notes?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
+      propose_organization: { Args: { p_org: Json }; Returns: string };
       public_stats: { Args: Record<PropertyKey, never>; Returns: { rated_players: number; tournaments: number; games: number; demo: boolean }[] };
       refresh_league_forfeits: { Args: { p_league: string }; Returns: number };
       register_for_tournament: { Args: { p_tournament_id: string; p_player_id: string; p_answers?: Json; p_payment_method?: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };

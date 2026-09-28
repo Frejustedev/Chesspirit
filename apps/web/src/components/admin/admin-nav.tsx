@@ -19,6 +19,7 @@ export async function AdminNav() {
     if (has("admin_competitions", "admin_shop")) items.push(["/admin/paiements", t("payments")]);
     if (has("admin_shop")) items.push(["/admin/boutique", t("shop")]);
     items.push(["/admin/coaching", t("coaching")]);
+    items.push(["/admin/annuaire", t("directory")]);
     items.push(["/admin/messages", t("messages")]);
     items.push(["/admin/reglages", t("settings")]);
     items.push(["/admin/journal", t("audit")]);

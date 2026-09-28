@@ -8,6 +8,7 @@ import type { ProfileInput } from "@chesspirit/shared";
 import { createClient } from "@/lib/supabase/server";
 import { lichessFake } from "@/lib/lichess";
 import { LichessLink } from "@/components/account/lichess-link";
+import { ArbiterForm } from "@/components/directory/directory-forms";
 
 export const metadata: Metadata = { robots: { index: false } };
 
@@ -48,13 +49,15 @@ export default async function ProfilePage({
       </div>
     );
   }
-  const { data: linked } = await (
-    await createClient()
-  )
-    .from("lichess_accounts")
-    .select("username")
-    .eq("profile_id", p.id)
-    .maybeSingle();
+  const supabase = await createClient();
+  const [{ data: linked }, { data: arbiter }] = await Promise.all([
+    supabase.from("lichess_accounts").select("username").eq("profile_id", p.id).maybeSingle(),
+    supabase
+      .from("arbiter_profiles")
+      .select("title, zone, availability, languages, is_public")
+      .eq("profile_id", p.id)
+      .maybeSingle(),
+  ]);
   return (
     <AccountShell
       nav={<AccountNav current="/compte/profil" isAdmin={isAdminRole(session.roles)} />}
@@ -64,6 +67,23 @@ export default async function ProfilePage({
       <div className="mt-10">
         <LichessLink username={linked?.username ?? null} fake={lichessFake()} status={lichess} />
       </div>
+      {!p.is_minor ? (
+        <div className="mt-10">
+          <ArbiterForm
+            initial={
+              arbiter
+                ? {
+                    title: arbiter.title ?? "",
+                    zone: arbiter.zone ?? "",
+                    availability: arbiter.availability ?? "",
+                    languages: arbiter.languages,
+                    is_public: arbiter.is_public,
+                  }
+                : null
+            }
+          />
+        </div>
+      ) : null}
     </AccountShell>
   );
 }

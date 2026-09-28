@@ -11,7 +11,8 @@ const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} 'wasm-unsafe-eval'`,
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob: ${supabaseUrl}`,
+  // Tuiles de la carte « Où jouer » (OpenStreetMap).
+  `img-src 'self' data: blob: ${supabaseUrl} https://tile.openstreetmap.org`,
   "font-src 'self'",
   `connect-src 'self' ${supabaseUrl} ${supabaseUrl.replace(/^http/, "ws")}${process.env.NEXT_PUBLIC_PLAUSIBLE_HOST ? ` ${process.env.NEXT_PUBLIC_PLAUSIBLE_HOST}` : ""}`,
   "media-src 'self' blob:",
