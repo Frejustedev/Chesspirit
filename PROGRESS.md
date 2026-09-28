@@ -42,12 +42,16 @@
 2. Archives : recherche de parties, explorateur de positions (index `game_positions`, tâche planifiée et indexation après import) ✔
 3. Feuilles de notation photographiées : parcours complet derrière l'indicateur `scoresheet_ocr`, lecture simulée (aucun service de reconnaissance branché) ✔
 4. Assistant WhatsApp : webhook vérifié (jeton + signature X-Hub-Signature-256), réponses sur informations publiques, déduplication, limite par numéro, « stop », indicateur `whatsapp_assistant` ✔
+5. Application mobile Expo (`apps/mobile`) : connexion par code, tournois et inscription (API du site), cotes, parties, notifications, profil ; `eas.json` prêt, rien de publié ; compilation Android vérifiée (`expo export`) ✔
+6. Préparation de la sous-région : table `countries` (Bénin ouvert, 8 pays préparés), pays relié à chaque fiche, formulaire de profil adapté, ouverture en super-administration ; plan dans docs/SOUS_REGION.md ✔
 
 ## À reprendre
 
 - Formats Scheveningen, poules puis phase finale et simultanée : sélectionnables mais sans moteur d'appariement dédié.
 - Galerie photo des tournois : non faite (stockage de fichiers à brancher).
 - Lecture des feuilles de notation : aucun service de reconnaissance réel branché (mode simulé seulement ; interface prête dans `lib/ocr.ts`).
+- Notifications push de l'application mobile : jetons enregistrés, envoi par Expo Push à brancher côté serveur.
+- Application mobile : interface en français seulement ; icônes et écran de lancement définitifs à fournir.
 - Import FIDE réel : non testé contre le site FIDE (réseau fermé ici) ; validé sur un fichier d'exemple au même format.
 
 - Remboursements par API des prestataires (FedaPay, KKiaPay) : enregistrement manuel seulement.

@@ -8,6 +8,7 @@ import {
   saveAppSettingAction,
   setContactStatusAction,
   setDataRequestStatusAction,
+  setCountryEnabledAction,
   setFeatureFlagAction,
   setQuoteStatusAction,
 } from "@/app/actions/admin-users";
@@ -94,10 +95,12 @@ export function FlagToggle({
   flag,
   enabled,
   disabled,
+  kind = "flag",
 }: {
   flag: string;
   enabled: boolean;
   disabled: boolean;
+  kind?: "flag" | "country";
 }) {
   const t = useTranslations("adminSettings");
   const router = useRouter();
@@ -110,7 +113,8 @@ export function FlagToggle({
       className={`min-h-10 rounded-full px-4 text-sm font-semibold disabled:opacity-60 ${enabled ? "bg-ink text-cream" : "border border-line"}`}
       onClick={() =>
         start(async () => {
-          await setFeatureFlagAction(flag, !enabled);
+          if (kind === "country") await setCountryEnabledAction(flag, !enabled);
+          else await setFeatureFlagAction(flag, !enabled);
           router.refresh();
         })
       }

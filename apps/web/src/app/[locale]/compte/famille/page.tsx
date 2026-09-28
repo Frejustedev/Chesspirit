@@ -1,3 +1,4 @@
+import { enabledCountries } from "@/lib/countries";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { requireSession, isAdminRole } from "@/lib/auth";
@@ -11,6 +12,7 @@ export const metadata: Metadata = { robots: { index: false } };
 export default async function FamilyPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const countries = await enabledCountries(locale);
   const session = await requireSession(locale, "/compte/famille");
   const t = await getTranslations("family");
   const supabase = await createClient();
@@ -44,6 +46,7 @@ export default async function FamilyPage({ params }: { params: Promise<{ locale:
       <h2 className="mt-10 font-display text-2xl font-semibold">{t("add")}</h2>
       <div className="mt-4">
         <ProfileForm
+          countries={countries}
           mode="child"
           defaults={{
             city: session.profile!.city ?? undefined,

@@ -21,12 +21,26 @@ function fieldErrors(issues: { path: PropertyKey[]; message: string }[]) {
   return out;
 }
 
+/** Pays ouvert aux inscriptions (le pays d'une fiche doit exister ; seuls les pays ouverts sont proposés). */
+async function countryOpen(code: string) {
+  if (code === "BJ") return true;
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("countries")
+    .select("enabled")
+    .eq("code", code)
+    .maybeSingle();
+  return !!data?.enabled;
+}
+
 export async function saveProfile(input: unknown, consents: unknown): Promise<ActionResult> {
   const session = await getSession();
   if (!session) return { ok: false, error: "auth_required" };
   const parsed = profileSchema.safeParse(input);
   if (!parsed.success)
     return { ok: false, error: "invalid", fields: fieldErrors(parsed.error.issues) };
+  if (!(await countryOpen(parsed.data.country)))
+    return { ok: false, error: "invalid", fields: { country: "invalid" } };
   const supabase = await createClient();
   if (!session.profile?.onboarded) {
     const c = consentsSchema.safeParse(consents);
@@ -42,6 +56,7 @@ export async function saveProfile(input: unknown, consents: unknown): Promise<Ac
       .from("profiles")
       .update({
         ...parsed.data,
+        department: parsed.data.country === "BJ" ? parsed.data.department : null,
         club_name: parsed.data.club_name || null,
         fide_id: parsed.data.fide_id || null,
       })
@@ -56,6 +71,8 @@ export async function addChild(input: unknown, imageRights: boolean): Promise<Ac
   const session = await getSession();
   if (!session?.profile) return { ok: false, error: "profile_required" };
   const parsed = childSchema.safeParse(input);
+  if (parsed.success && !(await countryOpen(parsed.data.country)))
+    return { ok: false, error: "invalid", fields: { country: "invalid" } };
   if (!parsed.success)
     return { ok: false, error: "invalid", fields: fieldErrors(parsed.error.issues) };
   const supabase = await createClient();

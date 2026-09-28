@@ -1,3 +1,4 @@
+import { profileSchema as ps } from "./schemas";
 import { describe, expect, it } from "vitest";
 import { classifyCadence } from "./cadence";
 import { formatXof, assertXof } from "./money";
@@ -154,5 +155,21 @@ describe("schémas", () => {
     ]);
     expect(s.safeParse({ tshirt: "M" }).success).toBe(true);
     expect(s.safeParse({ tshirt: "XL" }).success).toBe(false);
+  });
+});
+
+describe("profil et pays", () => {
+  const base = {
+    first_name: "A",
+    last_name: "B",
+    birth_date: "1990-01-01",
+    sex: "F",
+    city: "Lomé",
+  };
+  it("exige le département pour le Bénin seulement", () => {
+    expect(ps.safeParse({ ...base, country: "BJ" }).success).toBe(false);
+    expect(ps.safeParse({ ...base, country: "BJ", department: "Littoral" }).success).toBe(true);
+    expect(ps.safeParse({ ...base, country: "TG" }).success).toBe(true);
+    expect(ps.safeParse({ ...base, country: "tg" }).success).toBe(false);
   });
 });

@@ -1,3 +1,4 @@
+import { enabledCountries } from "@/lib/countries";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { requireSession, isAdminRole } from "@/lib/auth";
@@ -21,6 +22,7 @@ export default async function ProfilePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const countries = await enabledCountries(locale);
   const { next, lichess } = await searchParams;
   const session = await requireSession(locale, "/compte/profil", { onboarded: false });
   const t = await getTranslations("profile");
@@ -44,7 +46,12 @@ export default async function ProfilePage({
         <h1 className="font-display text-4xl font-semibold">{t("welcomeTitle")}</h1>
         <p className="mt-3 font-serif text-xl text-stone">{t("welcomeText")}</p>
         <div className="mt-8">
-          <ProfileForm mode="onboarding" defaults={defaults} next={safeNext(next)} />
+          <ProfileForm
+            countries={countries}
+            mode="onboarding"
+            defaults={defaults}
+            next={safeNext(next)}
+          />
         </div>
       </div>
     );
@@ -63,7 +70,7 @@ export default async function ProfilePage({
       nav={<AccountNav current="/compte/profil" isAdmin={isAdminRole(session.roles)} />}
       title={t("title")}
     >
-      <ProfileForm mode="edit" defaults={defaults} />
+      <ProfileForm countries={countries} mode="edit" defaults={defaults} />
       <div className="mt-10">
         <LichessLink username={linked?.username ?? null} fake={lichessFake()} status={lichess} />
       </div>

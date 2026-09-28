@@ -371,7 +371,8 @@
     "saving": "Saving…",
     "saved": "Profile saved.",
     "addChild": "Add child",
-    "childAdded": "Child profile created."
+    "childAdded": "Child profile created.",
+    "country": "Country"
   },
   "account": {
     "nav": "My space",
@@ -1720,7 +1721,9 @@
     "save": "Save",
     "saved": "Saved.",
     "invalidJson": "Invalid JSON value.",
-    "error": "Could not save."
+    "error": "Could not save.",
+    "countries": "Sub-region countries",
+    "countriesHelp": "Benin is open. Opening another country offers it in profiles; first check payments, SMS and legal notices for that country (docs/SOUS_REGION.md)."
   },
   "adminAudit": {
     "title": "Audit log",

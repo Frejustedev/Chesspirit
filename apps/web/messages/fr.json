@@ -371,7 +371,8 @@
     "saving": "Enregistrement…",
     "saved": "Profil enregistré.",
     "addChild": "Ajouter l'enfant",
-    "childAdded": "Profil de l'enfant créé."
+    "childAdded": "Profil de l'enfant créé.",
+    "country": "Pays"
   },
   "account": {
     "nav": "Mon espace",
@@ -1720,7 +1721,9 @@
     "save": "Enregistrer",
     "saved": "Enregistré.",
     "invalidJson": "Valeur JSON invalide.",
-    "error": "Enregistrement impossible."
+    "error": "Enregistrement impossible.",
+    "countries": "Pays de la sous-région",
+    "countriesHelp": "Le Bénin est ouvert. Ouvrir un autre pays le propose dans les profils ; vérifiez d'abord paiements, SMS et mentions légales pour ce pays (docs/SOUS_REGION.md)."
   },
   "adminAudit": {
     "title": "Journal d'audit",

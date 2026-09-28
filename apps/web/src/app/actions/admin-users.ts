@@ -231,3 +231,18 @@ export async function setFeatureFlagAction(key: string, enabled: boolean): Promi
   revalidatePath("/", "layout");
   return { ok: true };
 }
+
+/** Ouverture d'un pays de la sous-région (super-administration, comme les indicateurs). */
+export async function setCountryEnabledAction(code: string, enabled: boolean): Promise<Result> {
+  if (!/^[A-Z]{2}$/.test(code) || (code === "BJ" && !enabled))
+    return { ok: false, error: "invalid" };
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("countries")
+    .update({ enabled })
+    .eq("code", code)
+    .select("code");
+  if (error || !data?.length) return { ok: false, error: "forbidden" };
+  revalidatePath("/", "layout");
+  return { ok: true };
+}

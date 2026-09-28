@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Chesspirit",
+    "slug": "chesspirit",
+    "scheme": "chesspirit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#fbf8f1",
+    "ios": {
+      "bundleIdentifier": "com.chesspirit.app",
+      "supportsTablet": true,
+      "infoPlist": { "ITSAppUsesNonExemptEncryption": false }
+    },
+    "android": {
+      "package": "com.chesspirit.app",
+      "adaptiveIcon": { "backgroundColor": "#1c1815" }
+    },
+    "plugins": ["expo-router", "expo-secure-store", ["expo-notifications", { "color": "#7a1f2b" }]],
+    "experiments": { "typedRoutes": false },
+    "extra": {
+      "eas": { "projectId": "" }
+    }
+  }
+}

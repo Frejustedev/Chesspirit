@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import {
@@ -20,10 +20,13 @@ export function ProfileForm({
   mode,
   defaults,
   next,
+  countries,
 }: {
   mode: Mode;
   defaults?: Partial<ProfileInput>;
   next?: string;
+  /** Pays ouverts (sélecteur affiché seulement s'il y en a plusieurs). */
+  countries?: { code: string; name: string }[];
 }) {
   const t = useTranslations("profile");
   const te = useTranslations("errors");
@@ -42,12 +45,14 @@ export function ProfileForm({
     handleSubmit,
     reset,
     setError,
+    control,
     formState: { errors },
   } = useForm<z.input<typeof profileSchema>, unknown, z.output<typeof profileSchema>>({
     resolver: zodResolver(schema),
     defaultValues: { country: "BJ", ...defaults },
   });
 
+  const country = useWatch({ control, name: "country" }) ?? "BJ";
   const msg = (m?: string) => (m ? (te.has(m) ? te(m) : te("invalid")) : undefined);
 
   const onSubmit = handleSubmit((values) => {
@@ -121,23 +126,36 @@ export function ProfileForm({
         <Field id="city" label={t("city")} error={msg(errors.city?.message)}>
           <Input id="city" autoComplete="address-level2" {...register("city")} {...aria("city")} />
         </Field>
-        <Field id="department" label={t("department")} error={msg(errors.department?.message)}>
-          <Select
-            id="department"
-            {...register("department")}
-            {...aria("department")}
-            defaultValue={defaults?.department ?? ""}
-          >
-            <option value="" disabled>
-              {t("choose")}
-            </option>
-            {BENIN_DEPARTMENTS.map((d) => (
-              <option key={d} value={d}>
-                {d}
+        {countries && countries.length > 1 ? (
+          <Field id="country" label={t("country")} error={msg(errors.country?.message)}>
+            <Select id="country" {...register("country")} {...aria("country")}>
+              {countries.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </Select>
+          </Field>
+        ) : null}
+        {country === "BJ" ? (
+          <Field id="department" label={t("department")} error={msg(errors.department?.message)}>
+            <Select
+              id="department"
+              {...register("department", { setValueAs: (v) => v || undefined })}
+              {...aria("department")}
+              defaultValue={defaults?.department ?? ""}
+            >
+              <option value="" disabled>
+                {t("choose")}
               </option>
-            ))}
-          </Select>
-        </Field>
+              {BENIN_DEPARTMENTS.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </Select>
+          </Field>
+        ) : null}
         <Field
           id="club_name"
           label={t("club")}

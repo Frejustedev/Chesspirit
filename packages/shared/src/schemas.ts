@@ -42,17 +42,29 @@ export const birthDateSchema = z
     return !Number.isNaN(t) && t < Date.now() && t > Date.parse("1900-01-01");
   }, "date_invalid");
 
-export const profileSchema = z.object({
+const profileBase = z.object({
   first_name: z.string().trim().min(1, "required").max(80),
   last_name: z.string().trim().min(1, "required").max(80),
   birth_date: birthDateSchema,
   sex: z.enum(SEXES),
   city: z.string().trim().min(1, "required").max(80),
-  department: z.enum(BENIN_DEPARTMENTS),
-  country: z.string().length(2).default("BJ"),
+  department: z.enum(BENIN_DEPARTMENTS).optional(),
+  country: z
+    .string()
+    .regex(/^[A-Z]{2}$/)
+    .default("BJ"),
   club_name: z.string().trim().max(120).optional(),
   fide_id: fideIdSchema,
 });
+/** Département obligatoire pour le Bénin seulement (préparation de la sous-région). */
+function departmentForBenin<T extends { country: string; department?: string }>(
+  d: T,
+  ctx: z.RefinementCtx,
+) {
+  if (d.country === "BJ" && !d.department)
+    ctx.addIssue({ code: "custom", path: ["department"], message: "required" });
+}
+export const profileSchema = profileBase.superRefine(departmentForBenin);
 export type ProfileInput = z.infer<typeof profileSchema>;
 
 export const consentsSchema = z.object({
@@ -63,16 +75,18 @@ export const consentsSchema = z.object({
 });
 export type ConsentsInput = z.infer<typeof consentsSchema>;
 
-export const childSchema = profileSchema.extend({
-  birth_date: birthDateSchema.refine((d) => {
-    const b = new Date(`${d}T00:00:00Z`);
-    const now = new Date();
-    let age = now.getUTCFullYear() - b.getUTCFullYear();
-    const m = now.getUTCMonth() - b.getUTCMonth();
-    if (m < 0 || (m === 0 && now.getUTCDate() < b.getUTCDate())) age--;
-    return age < 18;
-  }, "child_must_be_minor"),
-});
+export const childSchema = profileBase
+  .extend({
+    birth_date: birthDateSchema.refine((d) => {
+      const b = new Date(`${d}T00:00:00Z`);
+      const now = new Date();
+      let age = now.getUTCFullYear() - b.getUTCFullYear();
+      const m = now.getUTCMonth() - b.getUTCMonth();
+      if (m < 0 || (m === 0 && now.getUTCDate() < b.getUTCDate())) age--;
+      return age < 18;
+    }, "child_must_be_minor"),
+  })
+  .superRefine(departmentForBenin);
 
 export const PAYMENT_METHODS = ["online", "on_site", "free"] as const;
 

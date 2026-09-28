@@ -37,3 +37,6 @@ Points vérifiés sans anomalie : RLS activée partout, fonctions `SECURITY DEFI
 | Positions des parties privées | `game_positions` lisible seulement si la partie l'est ; écriture par le service. Test SQL 09. |
 | Webhook WhatsApp forgé ou rejoué | Signature HMAC-SHA256 à temps constant, secret obligatoire, corps limité à 256 Ko, déduplication, limite par numéro. Tests unitaires et e2e. |
 | Fichier déposé (feuille de notation) | Signature d'image vérifiée, 5 Mo max, non conservé ; lecture réservée au staff, enregistrement contrôlé par RLS. |
+| API d'inscription mobile | Jeton de session vérifié par Supabase (`getUser`), client limité par RLS, corps borné (16 Ko), mêmes contrôles que le site. Test e2e (sans jeton, jeton invalide, règlement non accepté). |
+| Secrets dans l'application mobile | Aucun : adresses publiques et clé `anon` uniquement ; session dans le trousseau ; `.gitignore` des clés de signature. |
+| Jetons de notification | Écriture limitée à son propre profil, format contrôlé. Test SQL 10. |
