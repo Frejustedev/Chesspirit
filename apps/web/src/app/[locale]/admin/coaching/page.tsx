@@ -46,7 +46,7 @@ export default async function AdminCoaching({ params }: { params: Promise<{ loca
     <div className="mx-auto max-w-6xl space-y-12 px-4 py-10 lg:px-6">
       <div>
         <nav className="text-sm text-stone">
-          <Link href="/admin" className="hover:text-bordeaux">
+          <Link href="/admin" className="hover:text-accent">
             {t("back")}
           </Link>
         </nav>
@@ -88,7 +88,7 @@ export default async function AdminCoaching({ params }: { params: Promise<{ loca
             <li key={c.id} className="flex flex-wrap items-center gap-3 py-2">
               <Link
                 href={`/coaching/coachs/${c.slug}`}
-                className="flex-1 font-medium hover:text-bordeaux"
+                className="flex-1 font-medium hover:text-accent"
               >
                 {c.profiles?.first_name} {c.profiles?.last_name}
               </Link>

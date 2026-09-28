@@ -10,20 +10,18 @@ export async function LevelCard({ standing }: { standing: ReturnType<typeof leve
     <div className="flex items-center gap-4 rounded-lg border border-line p-4">
       <PieceSvg
         kind={level.piece}
-        color="b"
+        color="w"
         className="size-16 shrink-0"
         title={t(`levels.${level.code}`)}
       />
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-semibold uppercase tracking-wide text-gold-deep">
-          {t("myLevel")}
-        </p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-accent">{t("myLevel")}</p>
         <p className="font-display text-3xl font-semibold">{t(`levels.${level.code}`)}</p>
         <p className="text-sm text-stone">{t("xp", { xp })}</p>
         {next ? (
           <>
             <div
-              className="mt-2 h-2 overflow-hidden rounded-full bg-cream"
+              className="mt-2 h-2 overflow-hidden rounded-full bg-surface"
               role="progressbar"
               aria-valuemin={0}
               aria-valuemax={100}

@@ -47,7 +47,7 @@ export default async function AdminCommunity({
             key={k}
             href={`/admin/communaute?onglet=${k}`}
             aria-current={tab === k ? "page" : undefined}
-            className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-semibold ${tab === k ? "bg-ink text-cream" : "border border-line hover:bg-cream"}`}
+            className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-semibold ${tab === k ? "bg-gold text-onaccent" : "border border-line hover:bg-surface"}`}
           >
             {t(`tab.${k}`)}
           </Link>
@@ -176,9 +176,7 @@ export default async function AdminCommunity({
             <div className="flex flex-wrap items-center gap-3">
               <h2 className="min-w-0 flex-1 font-display text-2xl font-semibold">
                 {tr(e.title, locale)}
-                {e.is_demo ? (
-                  <span className="ml-2 text-sm text-bordeaux">({t("demo")})</span>
-                ) : null}
+                {e.is_demo ? <span className="ml-2 text-sm text-accent">({t("demo")})</span> : null}
               </h2>
               <EditionStatus id={e.id} status={e.status} />
             </div>
@@ -186,7 +184,7 @@ export default async function AdminCommunity({
               {[...e.award_categories]
                 .sort((a, b) => a.position - b.position)
                 .map((c) => (
-                  <li key={c.id} className="rounded-md bg-cream/60 p-3">
+                  <li key={c.id} className="rounded-md bg-surface/60 p-3">
                     <div className="flex items-center gap-2">
                       <h3 className="min-w-0 flex-1 font-semibold">{tr(c.name, locale)}</h3>
                       <DeleteAwardItem kind="category" id={c.id} label={tr(c.name, locale)} />
@@ -233,7 +231,7 @@ export default async function AdminCommunity({
             <li key={g.id} className="flex flex-wrap gap-3 py-3">
               <Link
                 href={`/communaute/public-contre-le-maitre/${g.slug}`}
-                className="font-semibold hover:text-bordeaux"
+                className="font-semibold hover:text-accent"
               >
                 {tr(g.title, locale)}
               </Link>

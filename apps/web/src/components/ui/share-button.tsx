@@ -21,7 +21,7 @@ export function ShareButton({ title }: { title: string }) {
     <button
       type="button"
       onClick={share}
-      className="inline-flex min-h-11 items-center gap-2 font-semibold text-bordeaux hover:underline"
+      className="inline-flex min-h-11 items-center gap-2 font-semibold text-accent hover:underline"
       aria-live="polite"
     >
       {copied ? t("linkCopied") : t("share")}

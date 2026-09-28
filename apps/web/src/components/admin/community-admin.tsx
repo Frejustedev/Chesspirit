@@ -35,7 +35,7 @@ function useRun() {
   const status = msg ? (
     <span
       role={msg.error ? "alert" : "status"}
-      className={`text-sm font-semibold ${msg.error ? "text-bordeaux" : "text-success"}`}
+      className={`text-sm font-semibold ${msg.error ? "text-accent" : "text-success"}`}
     >
       {msg.text}
     </span>
@@ -127,7 +127,7 @@ export function AmbassadorDecision({ profileId }: { profileId: string }) {
       <button
         type="button"
         disabled={busy}
-        className="min-h-10 px-3 text-sm font-semibold text-bordeaux"
+        className="min-h-10 px-3 text-sm font-semibold text-accent"
         onClick={() => run(() => decideAmbassadorAction(profileId, false))}
       >
         {t("refuse")}
@@ -333,7 +333,7 @@ export function DeleteAwardItem({
       type="button"
       disabled={busy}
       aria-label={`${t("delete")} : ${label}`}
-      className="min-h-10 px-2 text-sm font-semibold text-bordeaux"
+      className="min-h-10 px-2 text-sm font-semibold text-accent"
       onClick={() => {
         if (confirm(t("deleteConfirm"))) run(() => deleteAwardItemAction(kind, id));
       }}

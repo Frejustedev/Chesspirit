@@ -101,13 +101,13 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <nav aria-label={t("breadcrumb")} className="text-sm text-stone">
-        <Link href="/boutique" className="hover:text-bordeaux">
+        <Link href="/boutique" className="hover:text-accent">
           {t("title")}
         </Link>
         {p.product_categories ? (
           <>
             {" / "}
-            <Link href={`/boutique/${p.product_categories.slug}`} className="hover:text-bordeaux">
+            <Link href={`/boutique/${p.product_categories.slug}`} className="hover:text-accent">
               {tr(p.product_categories.name, locale)}
             </Link>
           </>
@@ -168,7 +168,7 @@ export default async function ProductPage({
                   </span>{" "}
                   · {authorName(r.profile_id)} · {formatDate(r.created_at, locale)}
                 </p>
-                {r.body ? <p className="mt-1 text-ink/85">{r.body}</p> : null}
+                {r.body ? <p className="mt-1 text-fg/85">{r.body}</p> : null}
               </li>
             ))}
           </ul>

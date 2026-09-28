@@ -30,7 +30,7 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={pending}
-        className="min-h-11 rounded-full bg-gold px-4 font-semibold text-ink hover:bg-cream disabled:opacity-60"
+        className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent hover:bg-accent disabled:opacity-60"
       >
         {t("subscribe")}
       </button>

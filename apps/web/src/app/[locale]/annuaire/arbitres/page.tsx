@@ -55,7 +55,7 @@ export default async function ArbitersDirectory({
             <p className="font-semibold">
               {a.display_name} {a.is_demo ? <DemoBadge /> : null}
               {a.verified ? (
-                <span className="ml-2 rounded-full bg-ink px-2 py-0.5 text-xs font-semibold text-cream">
+                <span className="ml-2 rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-onaccent">
                   {t("verified")}
                 </span>
               ) : null}
@@ -71,7 +71,7 @@ export default async function ArbitersDirectory({
       </ul>
       {!rows.length ? <p className="mt-6 text-stone">{t("empty")}</p> : null}
       <p className="mt-8 text-sm">
-        <Link href="/compte/profil#arbitre" className="font-semibold text-bordeaux hover:underline">
+        <Link href="/compte/profil#arbitre" className="font-semibold text-accent hover:underline">
           {t("beListedArbiter")} →
         </Link>
       </p>

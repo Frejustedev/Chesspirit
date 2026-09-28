@@ -18,7 +18,7 @@ export function RegistrationActions({
   const act = (a: "paid" | "confirm" | "cancel" | "refuse") =>
     start(async () => void (await updateRegistrationAction(id, a)));
   const btn =
-    "min-h-9 rounded-full border border-line px-2.5 text-xs font-semibold hover:bg-cream disabled:opacity-50";
+    "min-h-9 rounded-full border border-line px-2.5 text-xs font-semibold hover:bg-surface disabled:opacity-50";
   return (
     <div className="flex flex-wrap gap-1" aria-busy={pending}>
       {payment === "due_on_site" || payment === "pending" ? (

@@ -45,7 +45,7 @@ export default async function ComingSoon({
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 text-center lg:px-6">
       <PieceSvg kind="n" color="w" className="mx-auto size-20" />
-      <p className="mt-6 font-sans text-sm font-semibold uppercase tracking-[0.16em] text-gold-deep">
+      <p className="mt-6 font-sans text-sm font-semibold uppercase tracking-[0.16em] text-accent">
         {t(`nav.sections.${hit.section}`)}
       </p>
       <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
@@ -61,7 +61,7 @@ export default async function ComingSoon({
             <li key={i.href}>
               <Link
                 href={i.href}
-                className="inline-flex min-h-11 items-center rounded-full border border-line px-4 hover:border-bordeaux hover:text-bordeaux"
+                className="inline-flex min-h-11 items-center rounded-full border border-line px-4 hover:border-accent hover:text-accent"
               >
                 {t(`nav.items.${i.key}`)}
               </Link>
@@ -70,7 +70,7 @@ export default async function ComingSoon({
       </ul>
       <Link
         href="/"
-        className="mt-10 inline-flex min-h-11 items-center font-semibold text-bordeaux hover:underline"
+        className="mt-10 inline-flex min-h-11 items-center font-semibold text-accent hover:underline"
       >
         {t("common.backHome")}
       </Link>

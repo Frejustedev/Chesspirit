@@ -190,7 +190,7 @@ export function ProductEditor({
             maxLength={4000}
             value={p.description[l]}
             onChange={(e) => setP({ ...p, description: { ...p.description, [l]: e.target.value } })}
-            className="mt-1 w-full rounded-md border border-line bg-white p-3"
+            className="mt-1 w-full rounded-md border border-line bg-field p-3"
           />
         </div>
       ))}
@@ -285,7 +285,7 @@ export function ProductEditor({
         ))}
         <button
           type="button"
-          className="min-h-11 rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+          className="min-h-11 rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
           onClick={() =>
             setP({
               ...p,

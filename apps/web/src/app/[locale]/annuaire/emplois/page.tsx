@@ -42,7 +42,7 @@ export default async function JobsPage({
         </div>
         <Link
           href="/annuaire/emplois/publier"
-          className="inline-flex min-h-11 items-center rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-ink"
+          className="inline-flex min-h-11 items-center rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-bordeaux-bright"
         >
           {t("postJob")}
         </Link>
@@ -53,7 +53,7 @@ export default async function JobsPage({
       <ul className="mt-6 space-y-4">
         {(jobs ?? []).map((j) => (
           <li key={j.id} id={j.id} className="rounded-lg border border-line p-5">
-            <p className="text-sm font-semibold uppercase tracking-wide text-gold-deep">
+            <p className="text-sm font-semibold uppercase tracking-wide text-accent">
               {t(`jobKinds.${j.kind}`)}
               {j.contract ? ` · ${t(`contracts.${j.contract}`)}` : ""}
             </p>

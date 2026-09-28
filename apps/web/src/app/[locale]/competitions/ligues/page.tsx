@@ -52,7 +52,7 @@ export default async function LeaguesPage({
       {season ? (
         <>
           <p className="mt-6 flex flex-wrap items-center gap-2 text-stone">
-            <span className="font-semibold text-ink">{season.name}</span>
+            <span className="font-semibold text-fg">{season.name}</span>
             {season.is_demo ? <DemoBadge /> : null}·{" "}
             {/* Saison en préparation : seuls le mois de début et de fin sont connus. */}
             {formatDate(season.starts_on, locale, planned ? monthYear : undefined)} →{" "}
@@ -94,7 +94,7 @@ export default async function LeaguesPage({
                         <td key={c} className="align-top">
                           <Link
                             href={`/competitions/ligues/${l.slug}`}
-                            className="block h-full rounded-[var(--radius-card)] border border-line p-4 hover:border-bordeaux"
+                            className="block h-full rounded-[var(--radius-card)] border border-line p-4 hover:border-accent"
                           >
                             <span className="tabular block text-sm font-semibold">
                               {l.base_minutes} min + {l.increment_seconds} s
@@ -175,7 +175,7 @@ export default async function LeaguesPage({
               </p>
               <Link
                 href="/compte/ligues"
-                className="mt-4 inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-ink hover:bg-cream"
+                className="mt-4 inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-accent"
               >
                 {t("licenseCta")}
               </Link>

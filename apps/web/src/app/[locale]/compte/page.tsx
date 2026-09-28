@@ -59,7 +59,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
                       className="group flex items-center gap-4 py-3"
                     >
                       <span className="min-w-0 flex-1">
-                        <span className="block font-semibold group-hover:text-bordeaux">
+                        <span className="block font-semibold group-hover:text-accent">
                           {r.tournaments?.name}
                         </span>
                         <span className="block text-sm text-stone">
@@ -67,7 +67,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
                           {names.get(r.player_id) ?? ""} · {t(`regStatus.${r.status}`)}
                         </span>
                       </span>
-                      <IconArrow className="size-5 text-stone group-hover:text-bordeaux" />
+                      <IconArrow className="size-5 text-stone group-hover:text-accent" />
                     </Link>
                   </li>
                 ))}
@@ -75,7 +75,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
             ) : (
               <p className="mt-3 text-stone">
                 {t("noTickets")}{" "}
-                <Link href="/competitions" className="font-semibold text-bordeaux hover:underline">
+                <Link href="/competitions" className="font-semibold text-accent hover:underline">
                   {t("seeCalendar")}
                 </Link>
               </p>

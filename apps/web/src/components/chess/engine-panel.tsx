@@ -58,7 +58,7 @@ export function EnginePanel({ fen }: { fen: string }) {
       <button
         type="button"
         onClick={() => setEnabled(true)}
-        className="mt-4 inline-flex min-h-11 items-center rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+        className="mt-4 inline-flex min-h-11 items-center rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
       >
         {t("start")}
       </button>
@@ -133,7 +133,7 @@ export function EnginePanel({ fen }: { fen: string }) {
       <button
         type="button"
         onClick={() => setEnabled(false)}
-        className="mt-2 min-h-11 text-sm font-semibold text-bordeaux"
+        className="mt-2 min-h-11 text-sm font-semibold text-accent"
       >
         {t("stop")}
       </button>

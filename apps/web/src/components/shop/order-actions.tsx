@@ -28,7 +28,7 @@ export function OrderActions({ orderId }: { orderId: string }) {
       <button
         type="button"
         disabled={pending}
-        className="min-h-11 rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+        className="min-h-11 rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
         onClick={() => {
           if (!confirm(t("cancelConfirm"))) return;
           start(async () => {
@@ -41,7 +41,7 @@ export function OrderActions({ orderId }: { orderId: string }) {
         {t("cancelOrder")}
       </button>
       {error ? (
-        <p role="alert" className="w-full text-sm font-semibold text-bordeaux">
+        <p role="alert" className="w-full text-sm font-semibold text-accent">
           {error}
         </p>
       ) : null}

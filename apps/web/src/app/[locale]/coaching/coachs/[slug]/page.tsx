@@ -44,7 +44,7 @@ export default async function CoachPage({ params }: Props) {
         <div>
           <h1 className="font-display text-4xl font-semibold">
             {c.titles?.length ? (
-              <span className="mr-2 text-2xl text-bordeaux">{c.titles.join(" ")}</span>
+              <span className="mr-2 text-2xl text-accent">{c.titles.join(" ")}</span>
             ) : null}
             {c.display_name} {c.is_demo ? <DemoBadge /> : null}
           </h1>
@@ -85,7 +85,7 @@ export default async function CoachPage({ params }: Props) {
           <ul className="mt-3 space-y-3">
             {reviews.map((r, i) => (
               <li key={i} className="rounded-md border border-line p-3">
-                <p className="text-gold-deep" aria-label={t("stars", { n: r.stars })}>
+                <p className="text-accent" aria-label={t("stars", { n: r.stars })}>
                   {"★".repeat(r.stars)}
                   {"☆".repeat(5 - r.stars)}
                 </p>

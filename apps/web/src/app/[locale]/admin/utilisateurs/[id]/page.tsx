@@ -83,7 +83,7 @@ export default async function AdminUser({
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <Link
         href="/admin/utilisateurs"
-        className="text-sm font-semibold text-bordeaux hover:underline"
+        className="text-sm font-semibold text-accent hover:underline"
       >
         ← {t("title")}
       </Link>
@@ -91,7 +91,7 @@ export default async function AdminUser({
         {p.first_name} {p.last_name} {p.is_demo ? <DemoBadge /> : null}
       </h1>
       {p.merged_into ? (
-        <p className="mt-2 rounded bg-bordeaux-soft px-3 py-2 font-semibold text-bordeaux">
+        <p className="mt-2 rounded bg-bordeaux-soft px-3 py-2 font-semibold text-rose">
           {t("mergedInto")}{" "}
           <Link href={`/admin/utilisateurs/${p.merged_into}`} className="underline">
             {p.merged_into}
@@ -99,7 +99,7 @@ export default async function AdminUser({
         </p>
       ) : null}
       {p.suspended_at ? (
-        <p className="mt-2 rounded bg-bordeaux-soft px-3 py-2 font-semibold text-bordeaux">
+        <p className="mt-2 rounded bg-bordeaux-soft px-3 py-2 font-semibold text-rose">
           {t("suspendedSince", { date: formatDateTime(p.suspended_at, locale) })}
         </p>
       ) : null}

@@ -44,7 +44,7 @@ export default async function AdminOrder({
   ]);
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <Link href="/admin/boutique" className="text-sm font-semibold text-bordeaux hover:underline">
+      <Link href="/admin/boutique" className="text-sm font-semibold text-accent hover:underline">
         ← {t("title")}
       </Link>
       <h1 className="mt-2 font-display text-4xl font-semibold">

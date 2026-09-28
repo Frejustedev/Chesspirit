@@ -18,7 +18,7 @@ function Status({ state }: { state: { ok: boolean; error?: string } | null }) {
   return (
     <p
       role={state.ok ? "status" : "alert"}
-      className={`rounded px-3 py-2 text-sm font-semibold ${state.ok ? "bg-gold-soft/60" : "bg-bordeaux-soft text-bordeaux"}`}
+      className={`rounded px-3 py-2 text-sm font-semibold ${state.ok ? "bg-gold-soft/60" : "bg-bordeaux-soft text-rose"}`}
     >
       {state.ok
         ? t("sent")
@@ -48,7 +48,7 @@ export function ClaimForm({ organizationId }: { organizationId: string }) {
           name="message"
           rows={3}
           maxLength={2000}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3"
         />
       </div>
       <Button type="submit" disabled={pending}>
@@ -121,7 +121,7 @@ export function ProposeForm() {
           name="description"
           rows={4}
           maxLength={2000}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3"
         />
       </div>
       <input
@@ -185,7 +185,7 @@ export function JobForm() {
           minLength={20}
           rows={5}
           maxLength={4000}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3"
         />
       </div>
       <Field id="j-city" label={t("city")}>

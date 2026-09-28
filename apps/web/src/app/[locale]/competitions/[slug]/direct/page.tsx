@@ -64,7 +64,7 @@ export default async function LivePage({ params, searchParams }: Props) {
               </span>
             </td>
             <td
-              className={`tabular px-2 py-1.5 text-center font-semibold ${big ? "text-gold" : "text-gold-deep"}`}
+              className={`tabular px-2 py-1.5 text-center font-semibold ${big ? "text-gold" : "text-accent"}`}
             >
               {b.black_id ? fmt(b.result) : tr("bye")}
             </td>
@@ -87,7 +87,7 @@ export default async function LivePage({ params, searchParams }: Props) {
           key={s.player_id}
           className={`flex gap-3 border-b py-1 ${big ? "border-cream/10" : "border-line"}`}
         >
-          <span className={`tabular w-8 text-right ${big ? "text-gold" : "text-gold-deep"}`}>
+          <span className={`tabular w-8 text-right ${big ? "text-gold" : "text-accent"}`}>
             {s.rank}
           </span>
           <span className="flex-1 truncate">{s.display_name}</span>
@@ -124,7 +124,7 @@ export default async function LivePage({ params, searchParams }: Props) {
     <div className="mx-auto max-w-6xl px-4 py-8 lg:px-6">
       <LiveRefresh tournamentId={t.id} />
       <nav className="text-sm text-stone">
-        <Link href={`/competitions/${t.slug}`} className="hover:text-bordeaux">
+        <Link href={`/competitions/${t.slug}`} className="hover:text-accent">
           {t.name}
         </Link>
       </nav>

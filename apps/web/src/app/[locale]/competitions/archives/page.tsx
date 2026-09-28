@@ -70,14 +70,14 @@ export default async function ArchivesPage({
       ...(result ? { resultat: result } : {}),
       page: String(p),
     })}`;
-  const input = "min-h-11 w-full rounded-md border border-line bg-white px-3";
+  const input = "min-h-11 w-full rounded-md border border-line bg-field px-3";
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
       <Link
         href="/competitions/archives/position"
-        className="mt-5 inline-flex min-h-11 items-center rounded-full bg-ink px-5 font-semibold text-cream"
+        className="mt-5 inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent"
       >
         {t("explorerCta")} →
       </Link>
@@ -129,7 +129,7 @@ export default async function ArchivesPage({
           <div className="sm:col-span-5">
             <button
               type="submit"
-              className="min-h-11 rounded-full bg-ink px-5 font-semibold text-cream"
+              className="min-h-11 rounded-full bg-gold px-5 font-semibold text-onaccent"
             >
               {t("search")}
             </button>
@@ -143,7 +143,7 @@ export default async function ArchivesPage({
             <li key={g.id}>
               <Link
                 href={`/parties/${g.id}`}
-                className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3 hover:text-bordeaux"
+                className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3 hover:text-accent"
               >
                 <span className="min-w-0 flex-1 font-semibold">
                   {g.white_name} {g.white_rating ? `(${g.white_rating})` : ""} – {g.black_name}{" "}
@@ -203,7 +203,7 @@ export default async function ArchivesPage({
             <li key={p.id}>
               <Link
                 href={`/competitions/${p.slug}/resultats`}
-                className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-bordeaux"
+                className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-accent"
               >
                 <span className="font-semibold">
                   {p.name} {p.is_demo ? <DemoBadge /> : null}

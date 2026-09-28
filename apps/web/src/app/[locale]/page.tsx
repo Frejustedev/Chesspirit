@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { Tables } from "@/lib/supabase/types";
 import { puzzleOfTheDay, type Puzzle } from "@/lib/puzzles";
 import { ChessClock } from "@/components/home/chess-clock";
+import { getFideRanking } from "@/lib/data/fide";
 import { KnightDraw } from "@/components/home/knight-draw";
 import { PuzzleBoard } from "@/components/chess/puzzle";
 import { PieceSvg, type PieceKind } from "@/components/icons/pieces";
@@ -18,7 +19,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const t = await getTranslations("home");
   const tt = await getTranslations("tournament");
   const supabase = await createClient();
-  const [next, results, stats, top] = await Promise.all([
+  const [next, results, stats, top, fide] = await Promise.all([
     getNextEvent(),
     getLatestResults(6),
     supabase.rpc("public_stats").maybeSingle(),
@@ -28,6 +29,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       .eq("type", "rapid")
       .order("rating", { ascending: false })
       .limit(10),
+    getFideRanking("standard", 10),
   ]);
   // Même puzzle que l'académie (base de puzzles), repli sur la liste intégrée.
   const daily = (await (await createClient()).rpc("daily_puzzle")).data as Tables<"puzzles"> | null;
@@ -104,7 +106,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   {next.status === "registration_open" ? (
                     <Link
                       href={`/competitions/${next.slug}/inscription`}
-                      className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-6 text-[1.05rem] font-semibold text-ink transition-colors hover:bg-cream"
+                      className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-6 text-[1.05rem] font-semibold text-onaccent transition-colors hover:bg-accent"
                     >
                       {t("register")} <IconArrow className="size-5" />
                     </Link>
@@ -133,7 +135,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
 
           <aside
-            className="animate-[rise_900ms_var(--ease-out-soft)_120ms_both] rounded-lg bg-paper p-4 text-ink shadow-[0_30px_60px_-30px_rgb(0_0_0/0.8)] sm:p-5 lg:self-start"
+            className="animate-[rise_900ms_var(--ease-out-soft)_120ms_both] rounded-lg bg-paper p-4 text-fg shadow-[0_30px_60px_-30px_rgb(0_0_0/0.8)] sm:p-5 lg:self-start"
             aria-labelledby="puzzle-title"
           >
             <div className="mb-3 flex items-baseline justify-between gap-3">
@@ -142,7 +144,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </h2>
               <Link
                 href="/academie/puzzle-du-jour"
-                className="text-sm font-semibold text-bordeaux hover:underline"
+                className="text-sm font-semibold text-accent hover:underline"
               >
                 {t("morePuzzles")}
               </Link>
@@ -194,7 +196,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       >
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
           <div>
-            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-gold-deep">
+            <p className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-accent">
               {t("ecosystemKicker")}
             </p>
             <h2 id="pillars-title" className="mt-3 font-display text-4xl font-semibold lg:text-5xl">
@@ -216,18 +218,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   </span>
                   <PieceSvg
                     kind={p.piece}
-                    color={i % 2 ? "b" : "w"}
+                    color="w"
                     className="size-11 transition-transform duration-300 group-hover:-translate-y-1 sm:size-12"
                   />
                   <span>
-                    <span className="block font-display text-2xl font-semibold group-hover:text-bordeaux">
+                    <span className="block font-display text-2xl font-semibold group-hover:text-accent">
                       {t(`pillars.${p.key}.title`)}
                     </span>
                     <span className="block text-[0.98rem] text-stone">
                       {t(`pillars.${p.key}.text`)}
                     </span>
                   </span>
-                  <IconArrow className="size-5 text-stone transition-transform group-hover:translate-x-1 group-hover:text-bordeaux" />
+                  <IconArrow className="size-5 text-stone transition-transform group-hover:translate-x-1 group-hover:text-accent" />
                 </Link>
               </li>
             ))}
@@ -235,61 +237,65 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* Classement et chiffres */}
-      <section className="border-y border-line bg-cream/60">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 lg:grid-cols-2 lg:px-6">
-          <div>
-            <div className="flex items-baseline justify-between gap-4">
-              <h2 className="font-display text-3xl font-semibold">{t("top10")}</h2>
-              <Link
-                href="/classements"
-                className="text-sm font-semibold text-bordeaux hover:underline"
-              >
-                {t("fullRanking")}
-              </Link>
-            </div>
-            {top.data?.length ? (
-              <ol className="mt-5 divide-y divide-line rounded-[var(--radius-card)] border border-line bg-paper">
-                {top.data.map((r) => (
-                  <li key={r.profile_id} className="flex items-center gap-4 px-4 py-2.5">
-                    <span className="tabular w-6 text-right font-display text-lg text-gold-deep">
-                      {r.rank}
-                    </span>
-                    <span className="flex-1 font-medium">
-                      {r.display_name} {r.is_demo ? <DemoBadge /> : null}
-                    </span>
-                    <span className="hidden text-sm text-stone sm:inline">{r.club_name}</span>
-                    <span className="tabular font-semibold">{r.rating}</span>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p className="mt-5 rounded-[var(--radius-card)] border border-dashed border-line bg-paper p-6 font-serif text-lg text-stone">
-                {t("rankingEmpty")}
-              </p>
-            )}
+      {/* Classements (cote Chesspirit et Elo FIDE officiel) et chiffres */}
+      <section className="border-y border-line bg-surface/60">
+        <div className="mx-auto max-w-7xl px-4 py-16 lg:px-6">
+          <h2 className="font-display text-3xl font-semibold sm:text-4xl">{t("rankingsTitle")}</h2>
+          <div className="mt-6 grid gap-10 lg:grid-cols-2">
+            <TopList
+              title={t("top10")}
+              href="/classements"
+              linkLabel={t("fullRanking")}
+              empty={t("rankingEmpty")}
+              rows={(top.data ?? []).map((r) => ({
+                key: r.profile_id!,
+                rank: r.rank!,
+                name: r.display_name ?? "",
+                demo: !!r.is_demo,
+                detail: r.club_name,
+                value: r.rating!,
+              }))}
+            />
+            <TopList
+              title={t("top10Fide")}
+              href="/classements/fide"
+              linkLabel={t("fullFide")}
+              empty={t("rankingEmptyFide")}
+              rows={fide.rows.map((r) => ({
+                key: r.id,
+                rank: r.rank,
+                name: r.displayName,
+                demo: r.isDemo,
+                detail: r.titles.join(", ") || r.club,
+                value: r.standard!,
+              }))}
+            />
           </div>
-          <div>
-            <h2 className="font-display text-3xl font-semibold">{t("figures")}</h2>
-            <dl className="mt-5 grid grid-cols-3 gap-3">
-              {(
-                [
-                  ["ratedPlayers", stats.data?.rated_players],
-                  ["tournaments", stats.data?.tournaments],
-                  ["games", stats.data?.games],
-                ] as const
-              ).map(([k, v]) => (
-                <div
-                  key={k}
-                  className="rounded-[var(--radius-card)] border border-line bg-paper p-4"
-                >
-                  <dt className="text-sm text-stone">{t(`stats.${k}`)}</dt>
-                  <dd className="tabular mt-1 font-display text-4xl font-semibold">{v ?? 0}</dd>
-                </div>
-              ))}
-            </dl>
-            {stats.data?.demo ? <p className="mt-2 text-sm text-stone">{t("statsDemo")}</p> : null}
-            <div className="mt-8 rounded-[var(--radius-card)] bg-bordeaux p-6 text-cream">
+          <div className="mt-14 grid gap-12 lg:grid-cols-2">
+            <div>
+              <h2 className="font-display text-3xl font-semibold">{t("figures")}</h2>
+              <dl className="mt-5 grid grid-cols-3 gap-3">
+                {(
+                  [
+                    ["ratedPlayers", stats.data?.rated_players],
+                    ["tournaments", stats.data?.tournaments],
+                    ["games", stats.data?.games],
+                  ] as const
+                ).map(([k, v]) => (
+                  <div
+                    key={k}
+                    className="rounded-[var(--radius-card)] border border-line bg-paper p-4"
+                  >
+                    <dt className="text-sm text-stone">{t(`stats.${k}`)}</dt>
+                    <dd className="tabular mt-1 font-display text-4xl font-semibold">{v ?? 0}</dd>
+                  </div>
+                ))}
+              </dl>
+              {stats.data?.demo ? (
+                <p className="mt-2 text-sm text-stone">{t("statsDemo")}</p>
+              ) : null}
+            </div>
+            <div className="self-start rounded-[var(--radius-card)] bg-bordeaux p-6 text-cream">
               <h3 className="font-display text-2xl font-semibold">{t("organizersTitle")}</h3>
               <p className="mt-2 font-serif text-lg text-cream/85">{t("organizersText")}</p>
               <Link
@@ -308,7 +314,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <p className="text-center font-sans text-sm font-semibold uppercase tracking-[0.18em] text-stone">
           {t("partnersTitle")}
         </p>
-        <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-14 gap-y-4 font-display text-3xl text-ink/80">
+        <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-14 gap-y-4 font-display text-3xl text-fg/80">
           <li>FSS</li>
           <li aria-hidden className="text-gold">
             ◆
@@ -317,5 +323,60 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </section>
     </>
+  );
+}
+
+/** Top 10 d'un classement, avec lien vers la liste complète. */
+function TopList({
+  title,
+  href,
+  linkLabel,
+  empty,
+  rows,
+}: {
+  title: string;
+  href: string;
+  linkLabel: string;
+  empty: string;
+  rows: {
+    key: string;
+    rank: number;
+    name: string;
+    demo: boolean;
+    detail: string | null;
+    value: number;
+  }[];
+}) {
+  return (
+    <div>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h3 className="font-display text-2xl font-semibold">{title}</h3>
+        <Link href={href} className="text-sm font-semibold text-accent hover:underline">
+          {linkLabel}
+        </Link>
+      </div>
+      {rows.length ? (
+        <ol className="mt-4 divide-y divide-line rounded-[var(--radius-card)] border border-line bg-paper">
+          {rows.map((r) => (
+            <li key={r.key} className="flex items-center gap-4 px-4 py-2.5">
+              <span className="tabular w-6 text-right font-display text-lg text-accent">
+                {r.rank}
+              </span>
+              <span className="min-w-0 flex-1 font-medium">
+                {r.name} {r.demo ? <DemoBadge /> : null}
+              </span>
+              {r.detail ? (
+                <span className="hidden text-sm text-stone sm:inline">{r.detail}</span>
+              ) : null}
+              <span className="tabular font-semibold">{r.value}</span>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p className="mt-4 rounded-[var(--radius-card)] border border-dashed border-line bg-paper p-6 font-serif text-lg text-stone">
+          {empty}
+        </p>
+      )}
+    </div>
   );
 }

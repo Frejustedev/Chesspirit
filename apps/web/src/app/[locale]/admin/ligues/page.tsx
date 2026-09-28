@@ -128,7 +128,7 @@ export default async function AdminLeagues({
                   <div className="flex flex-wrap items-center gap-3">
                     <Link
                       href={`/competitions/ligues/${l.slug}`}
-                      className="font-semibold hover:text-bordeaux"
+                      className="font-semibold hover:text-accent"
                     >
                       {tl(`division.${l.division}`)} · {tl(`cadence.${l.cadence}`)}
                     </Link>
@@ -159,7 +159,7 @@ export default async function AdminLeagues({
                               {m.profiles?.first_name} {m.profiles?.last_name}
                             </Link>
                             {m.unjustified_forfeits ? (
-                              <span className="text-bordeaux">
+                              <span className="text-accent">
                                 {t("forfeits", { n: m.unjustified_forfeits })}
                               </span>
                             ) : null}

@@ -61,7 +61,7 @@ export default async function TicketPage({
           <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-dashed border-line pt-4 text-sm">
             <div>
               <dt className="text-stone">{t("status")}</dt>
-              <dd className={`font-semibold ${ok ? "text-success" : "text-bordeaux"}`}>
+              <dd className={`font-semibold ${ok ? "text-success" : "text-accent"}`}>
                 {t(`status_${info.status}`)}
               </dd>
             </div>
@@ -82,7 +82,7 @@ export default async function TicketPage({
         <PrintButton />
         <Link
           href={`/competitions/${info.tournament_slug}`}
-          className="inline-flex min-h-12 items-center rounded-full border border-ink/25 px-5 font-semibold hover:bg-cream"
+          className="inline-flex min-h-12 items-center rounded-full border border-fg/25 px-5 font-semibold hover:bg-surface"
         >
           {t("seeTournament")}
         </Link>

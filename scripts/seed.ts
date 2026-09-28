@@ -303,6 +303,26 @@ async function seedDemo() {
     await db.from("profiles").insert(rows).select("id, first_name, last_name, sex, is_minor"),
     "joueurs",
   );
+  // Elo FIDE fictifs des joueurs de démonstration dotés d'un identifiant FIDE (liste du mois en cours).
+  const period = `${new Date().toISOString().slice(0, 7)}-01`;
+  must(
+    await db.from("fide_ratings").insert(
+      rows
+        .filter((r) => r.fide_id)
+        .map((r, i) => ({
+          fide_id: r.fide_id!,
+          period,
+          name: `${r.last_name}, ${r.first_name}`,
+          federation: "BEN",
+          title: r.titles[0] ?? null,
+          standard: 2080 - i * 57,
+          rapid: 2010 - i * 43,
+          blitz: i === 3 ? null : 1995 - i * 38,
+          sex: r.sex,
+        })),
+    ),
+    "Elo FIDE de démonstration",
+  );
   // Les mineurs de démonstration restent en profil réduit ; on rend public uniquement les adultes.
   inserted.forEach((p, i) => {
     const rating = Math.round(2150 - i * 26 + (rand() - 0.5) * 60);

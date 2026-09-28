@@ -23,7 +23,7 @@ export async function OrderTimeline({
   const t = await getTranslations("shop");
   if (status === "cancelled" || status === "refunded")
     return (
-      <p className="rounded bg-bordeaux-soft px-3 py-2 font-semibold text-bordeaux">
+      <p className="rounded bg-bordeaux-soft px-3 py-2 font-semibold text-rose">
         {t(`status.${status}`)}
       </p>
     );

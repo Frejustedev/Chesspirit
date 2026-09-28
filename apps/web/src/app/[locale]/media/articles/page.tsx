@@ -34,7 +34,7 @@ export default async function ArticlesPage({ params }: { params: Promise<{ local
           <li key={a.slug} className="py-4">
             <Link
               href={`/media/articles/${a.slug}`}
-              className="font-display text-2xl font-semibold hover:text-bordeaux"
+              className="font-display text-2xl font-semibold hover:text-accent"
             >
               {tr(a.title, locale)}
             </Link>{" "}

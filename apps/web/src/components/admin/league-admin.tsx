@@ -209,7 +209,7 @@ export function SeasonSettings({
           rows={6}
           value={v.rules}
           onChange={(e) => setV({ ...v, rules: e.target.value })}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3 font-mono text-sm"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3 font-mono text-sm"
         />
       </div>
       <div className="flex items-center gap-3 sm:col-span-3">
@@ -251,7 +251,7 @@ export function LeagueRowActions({ leagueId, seasonId }: { leagueId?: string; se
         type="date"
         value={day}
         onChange={(e) => setDay(e.target.value)}
-        className="min-h-10 rounded-md border border-line bg-white px-2 text-sm"
+        className="min-h-10 rounded-md border border-line bg-field px-2 text-sm"
       />
       <Button
         className="min-h-10 px-3 text-sm"
@@ -309,7 +309,7 @@ export function MemberStatus({
         id={`ms-${leagueId}-${profileId}`}
         defaultValue={status}
         disabled={pending}
-        className="min-h-10 rounded-md border border-line bg-white px-2"
+        className="min-h-10 rounded-md border border-line bg-field px-2"
         onChange={(e) =>
           run(() =>
             setMemberStatusAction(
@@ -354,7 +354,7 @@ export function MemberAdd({ leagueId }: { leagueId: string }) {
         value={v}
         placeholder={t("addMemberPlaceholder")}
         onChange={(e) => setV(e.target.value)}
-        className="min-h-10 min-w-0 flex-1 rounded-md border border-line bg-white px-3 text-sm"
+        className="min-h-10 min-w-0 flex-1 rounded-md border border-line bg-field px-3 text-sm"
       />
       <Button type="submit" className="min-h-10 px-3 text-sm" disabled={pending || !v}>
         {t("addMember")}
@@ -395,7 +395,7 @@ export function StageRow({
         id={`kind-${stage.id}`}
         defaultValue={stage.kind}
         disabled={pending}
-        className="min-h-10 rounded-md border border-line bg-white px-2"
+        className="min-h-10 rounded-md border border-line bg-field px-2"
         onChange={(e) => run(() => updateStageAction(stage.id, { kind: e.target.value }))}
       >
         {(["regular", "major", "online", "masters"] as const).map((k) => (
@@ -419,7 +419,7 @@ export function StageRow({
           const c = Number(e.target.value);
           if (c !== stage.coefficient) run(() => updateStageAction(stage.id, { coefficient: c }));
         }}
-        className="tabular min-h-10 w-20 rounded-md border border-line bg-white px-2"
+        className="tabular min-h-10 w-20 rounded-md border border-line bg-field px-2"
       />
       <label htmlFor={`tn-${stage.id}`} className="sr-only">
         {t("tournament")}
@@ -428,7 +428,7 @@ export function StageRow({
         id={`tn-${stage.id}`}
         defaultValue={stage.tournamentId ?? ""}
         disabled={pending}
-        className="min-h-10 max-w-60 rounded-md border border-line bg-white px-2"
+        className="min-h-10 max-w-60 rounded-md border border-line bg-field px-2"
         onChange={(e) =>
           run(() => updateStageAction(stage.id, { tournamentId: e.target.value || null }))
         }

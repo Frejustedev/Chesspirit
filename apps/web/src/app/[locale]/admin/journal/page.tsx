@@ -50,11 +50,11 @@ export default async function AdminAudit({
           name="objet"
           defaultValue={objet}
           placeholder={t("object")}
-          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 font-mono"
+          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 font-mono"
         />
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("apply")}
         </button>

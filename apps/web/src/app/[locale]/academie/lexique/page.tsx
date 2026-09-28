@@ -56,7 +56,7 @@ export default async function LexiconPage({
           id="g-c"
           name="categorie"
           defaultValue={categorie ?? ""}
-          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none"
+          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none"
         >
           <option value="">{t("allCategories")}</option>
           {CATEGORIES.map((c) => (
@@ -67,7 +67,7 @@ export default async function LexiconPage({
         </select>
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("filter")}
         </button>

@@ -28,7 +28,7 @@ function Status({ msg, error }: { msg: string | null; error?: boolean }) {
   return (
     <span
       role={error ? "alert" : "status"}
-      className={`text-sm font-semibold ${error ? "text-bordeaux" : "text-success"}`}
+      className={`text-sm font-semibold ${error ? "text-accent" : "text-success"}`}
     >
       {msg}
     </span>
@@ -86,7 +86,7 @@ export function AmbassadorForm() {
           minLength={20}
           maxLength={2000}
           rows={5}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3"
         />
       </div>
       <div className="flex flex-wrap items-center gap-3">
@@ -127,10 +127,10 @@ export function CopyLink({ url }: { url: string }) {
   const [copied, setCopied] = useState(false);
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <code className="min-w-0 break-all rounded bg-cream px-3 py-2 text-sm">{url}</code>
+      <code className="min-w-0 break-all rounded bg-surface px-3 py-2 text-sm">{url}</code>
       <button
         type="button"
-        className="min-h-11 rounded-full border border-line px-4 text-sm font-semibold hover:bg-cream"
+        className="min-h-11 rounded-full border border-line px-4 text-sm font-semibold hover:bg-surface"
         onClick={() => {
           void navigator.clipboard?.writeText(url).then(() => setCopied(true));
         }}
@@ -167,7 +167,7 @@ export function AwardVoteButton({
         type="button"
         disabled={busy}
         aria-label={`${t("vote")} : ${label}`}
-        className="min-h-10 rounded-full border border-ink px-4 text-sm font-semibold hover:bg-ink hover:text-cream"
+        className="min-h-10 rounded-full border border-fg px-4 text-sm font-semibold hover:bg-bordeaux-bright hover:text-cream"
         onClick={() =>
           start(async () => {
             const r = await castAwardVoteAction(nomineeId);
@@ -211,7 +211,7 @@ export function PredictButtons({
           type="button"
           disabled={busy}
           aria-pressed={current === r}
-          className={`min-h-10 rounded-full border px-3 text-sm font-semibold ${current === r ? "border-bordeaux bg-bordeaux text-cream" : "border-line hover:bg-cream"}`}
+          className={`min-h-10 rounded-full border px-3 text-sm font-semibold ${current === r ? "border-bordeaux bg-bordeaux text-cream" : "border-line hover:bg-surface"}`}
           onClick={() =>
             start(async () => {
               const res = await predictAction(pairingId, r);
@@ -336,7 +336,7 @@ export function PvmControls({ gameId, publicToMove }: { gameId: string; publicTo
             key={r}
             type="button"
             disabled={busy}
-            className="min-h-10 rounded-full border border-line px-3 text-sm font-semibold hover:bg-cream"
+            className="min-h-10 rounded-full border border-line px-3 text-sm font-semibold hover:bg-surface"
             onClick={() => {
               if (confirm(t("finishConfirm", { result: r }))) run(() => pvmFinishAction(gameId, r));
             }}

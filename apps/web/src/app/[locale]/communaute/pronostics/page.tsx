@@ -84,7 +84,7 @@ export default async function PredictionsPage({ params }: { params: Promise<{ lo
                 <h3 className="font-semibold">
                   <Link
                     href={`/competitions/${round.tournaments?.slug}`}
-                    className="hover:text-bordeaux"
+                    className="hover:text-accent"
                   >
                     {round.tournaments?.name}
                   </Link>{" "}
@@ -108,7 +108,7 @@ export default async function PredictionsPage({ params }: { params: Promise<{ lo
                       ) : !me ? (
                         <Link
                           href={`/connexion?next=${encodeURIComponent("/communaute/pronostics")}`}
-                          className="text-sm font-semibold text-bordeaux"
+                          className="text-sm font-semibold text-accent"
                         >
                           {t("signIn")}
                         </Link>

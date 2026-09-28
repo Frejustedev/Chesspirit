@@ -106,11 +106,11 @@ export function ScoresheetPanel({
           value={moves}
           onChange={(e) => setMoves(e.target.value)}
           aria-describedby="ss-check"
-          className="mt-1 w-full rounded-md border border-line bg-white p-3 font-mono text-sm"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3 font-mono text-sm"
         />
         <p
           id="ss-check"
-          className={`mt-1 text-sm font-semibold ${illegal ? "text-bordeaux" : "text-success"}`}
+          className={`mt-1 text-sm font-semibold ${illegal ? "text-accent" : "text-success"}`}
           aria-live="polite"
         >
           {moves.trim()
@@ -137,16 +137,13 @@ export function ScoresheetPanel({
         {msg ? (
           <span
             role={msg.error ? "alert" : "status"}
-            className={`text-sm font-semibold ${msg.error ? "text-bordeaux" : "text-success"}`}
+            className={`text-sm font-semibold ${msg.error ? "text-accent" : "text-success"}`}
           >
             {msg.text}
           </span>
         ) : null}
         {saved ? (
-          <Link
-            href={`/parties/${saved}`}
-            className="text-sm font-semibold text-bordeaux underline"
-          >
+          <Link href={`/parties/${saved}`} className="text-sm font-semibold text-accent underline">
             {t("viewGame")}
           </Link>
         ) : null}

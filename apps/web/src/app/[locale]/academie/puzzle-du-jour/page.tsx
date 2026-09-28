@@ -101,7 +101,7 @@ export default async function DailyPuzzlePage({ params }: { params: Promise<{ lo
           ) : null}
         </div>
         <aside className="space-y-4">
-          <p className="rounded-lg bg-cream p-4">
+          <p className="rounded-lg bg-surface p-4">
             {session?.profile ? t("streak", { n: streak ?? 0 }) : t("signInForStreak")}
           </p>
           <p className="text-sm text-stone">{t("mateIn", { n: puzzle.mateIn })}</p>

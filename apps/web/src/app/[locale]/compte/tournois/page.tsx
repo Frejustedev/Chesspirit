@@ -55,7 +55,7 @@ export default async function MyTournaments({ params }: { params: Promise<{ loca
       ) : (
         <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line">
           <table className="w-full min-w-[40rem] text-left text-[0.95rem]">
-            <thead className="bg-cream/70 text-xs uppercase tracking-[0.08em] text-stone">
+            <thead className="bg-surface/70 text-xs uppercase tracking-[0.08em] text-stone">
               <tr>
                 <th className="px-3 py-2">{t("tournament")}</th>
                 <th className="px-3 py-2 text-right">{t("rank")}</th>
@@ -75,7 +75,7 @@ export default async function MyTournaments({ params }: { params: Promise<{ loca
                     <td className="px-3 py-2">
                       <Link
                         href={`/competitions/${r.tournaments!.slug}${done ? "/resultats" : ""}`}
-                        className="font-medium hover:text-bordeaux"
+                        className="font-medium hover:text-accent"
                       >
                         {r.tournaments!.name}
                       </Link>
@@ -100,7 +100,7 @@ export default async function MyTournaments({ params }: { params: Promise<{ loca
                       {done ? (
                         <a
                           href={`/api/attestations/${r.id}`}
-                          className="inline-flex min-h-11 items-center gap-1 font-semibold text-bordeaux hover:underline"
+                          className="inline-flex min-h-11 items-center gap-1 font-semibold text-accent hover:underline"
                         >
                           <IconDownload className="size-4" /> PDF
                         </a>
@@ -118,7 +118,7 @@ export default async function MyTournaments({ params }: { params: Promise<{ loca
                     <td className="px-3 py-2">
                       <Link
                         href={`/competitions/${x.slug}/resultats`}
-                        className="font-medium hover:text-bordeaux"
+                        className="font-medium hover:text-accent"
                       >
                         {x.name}
                       </Link>

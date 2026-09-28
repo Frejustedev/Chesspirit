@@ -30,7 +30,7 @@ export async function AccountNav({ current, isAdmin }: { current: string; isAdmi
             <Link
               href={i.href}
               aria-current={current === i.href ? "page" : undefined}
-              className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 text-[0.98rem] lg:rounded lg:border-0 ${current === i.href ? "border-bordeaux font-semibold text-bordeaux lg:bg-cream" : "border-transparent text-ink/80 hover:text-bordeaux"}`}
+              className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 text-[0.98rem] lg:rounded lg:border-0 ${current === i.href ? "border-accent font-semibold text-accent lg:bg-surface" : "border-transparent text-fg/80 hover:text-accent"}`}
             >
               {t(i.key)}
             </Link>
@@ -40,7 +40,7 @@ export async function AccountNav({ current, isAdmin }: { current: string; isAdmi
           <form action="/auth/signout" method="post">
             <button
               type="submit"
-              className="flex min-h-11 items-center gap-2 whitespace-nowrap px-3 text-[0.98rem] text-stone hover:text-bordeaux"
+              className="flex min-h-11 items-center gap-2 whitespace-nowrap px-3 text-[0.98rem] text-stone hover:text-accent"
             >
               <IconLogout className="size-4" /> {t("signOut")}
             </button>

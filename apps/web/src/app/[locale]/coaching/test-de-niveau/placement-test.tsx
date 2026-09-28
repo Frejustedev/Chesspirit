@@ -39,7 +39,7 @@ export function PlacementTest({ puzzles }: { puzzles: Puzzle[] }) {
         </p>
         <Link
           href={`/coaching?niveau=${level}`}
-          className="mt-5 inline-flex min-h-12 items-center rounded-full bg-gold px-5 font-semibold text-ink hover:bg-cream"
+          className="mt-5 inline-flex min-h-12 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-accent"
         >
           {t("seeOffers")}
         </Link>

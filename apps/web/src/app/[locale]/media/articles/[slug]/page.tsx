@@ -40,7 +40,7 @@ export default async function ArticlePage({
   const t = await getTranslations("media");
   return (
     <article className="mx-auto max-w-3xl px-4 py-10 lg:px-6">
-      <Link href="/media/articles" className="text-sm font-semibold text-bordeaux hover:underline">
+      <Link href="/media/articles" className="text-sm font-semibold text-accent hover:underline">
         ← {t("articles")}
       </Link>
       <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
@@ -57,7 +57,7 @@ export default async function ArticlePage({
         <p className="mt-8">
           <Link
             href={`/competitions/${a.tournaments.slug}/resultats`}
-            className="font-semibold text-bordeaux hover:underline"
+            className="font-semibold text-accent hover:underline"
           >
             {t("seeResults", { name: a.tournaments.name })} →
           </Link>

@@ -34,6 +34,8 @@ test("pages publiques", async ({ page }) => {
   await shoot(page, "14-produit", "/boutique/produit/echiquier-bois-demo");
   await shoot(page, "15-ligues", "/competitions/ligues?saison=saison-demo");
   await shoot(page, "16-ligue", "/competitions/ligues/saison-demo-l1-classique");
+  await shoot(page, "09-classement-chesspirit", "/classements");
+  await shoot(page, "09-elo-fide", "/classements/fide");
   await shoot(page, "17-tour", "/classements/tour?saison=saison-demo");
   await shoot(page, "18-annuaire", "/annuaire");
   await shoot(page, "19-carte", "/annuaire/carte");

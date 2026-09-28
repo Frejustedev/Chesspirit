@@ -30,7 +30,7 @@ export default async function AdminProducts({ params }: { params: Promise<{ loca
         <h1 className="font-display text-4xl font-semibold">{t("products")}</h1>
         <Link
           href="/admin/boutique/produits/nouveau"
-          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-ink"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-bordeaux-bright"
         >
           <IconPlus className="size-5" /> {t("newProduct")}
         </Link>
@@ -45,7 +45,7 @@ export default async function AdminProducts({ params }: { params: Promise<{ loca
                 href={`/admin/boutique/produits/${p.id}`}
                 className="group flex flex-wrap items-center gap-x-4 gap-y-1 py-3"
               >
-                <span className="min-w-0 flex-1 font-semibold group-hover:text-bordeaux">
+                <span className="min-w-0 flex-1 font-semibold group-hover:text-accent">
                   {tr(p.name, locale)} {p.is_demo ? <DemoBadge /> : null}
                 </span>
                 {!p.is_active ? <span className="text-sm text-stone">{t("inactive")}</span> : null}

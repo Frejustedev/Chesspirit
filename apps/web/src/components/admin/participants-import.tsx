@@ -131,7 +131,7 @@ export function ParticipantsImport({ tournamentId }: { tournamentId: string }) {
         </div>
       ) : null}
       {error ? (
-        <p role="alert" className="mt-2 text-sm font-semibold text-bordeaux">
+        <p role="alert" className="mt-2 text-sm font-semibold text-accent">
           {error}
         </p>
       ) : null}
@@ -146,7 +146,7 @@ export function ParticipantsImport({ tournamentId }: { tournamentId: string }) {
             })}
           </p>
           {report.errors.length ? (
-            <ul className="mt-1 list-disc pl-5 text-bordeaux">
+            <ul className="mt-1 list-disc pl-5 text-accent">
               {report.errors.slice(0, 30).map((e) => (
                 <li key={e.line}>
                   {t("lineError", {

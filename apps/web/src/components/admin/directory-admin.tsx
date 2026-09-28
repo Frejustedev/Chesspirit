@@ -31,7 +31,8 @@ export function ModerationButtons({
       await fn();
       router.refresh();
     });
-  const btn = "min-h-10 rounded-full border border-line px-3 text-sm font-semibold hover:bg-cream";
+  const btn =
+    "min-h-10 rounded-full border border-line px-3 text-sm font-semibold hover:bg-surface";
   return (
     <span className="flex flex-wrap gap-2">
       {kind === "claim" ? (
@@ -74,7 +75,7 @@ export function ModerationButtons({
           </button>
           <button
             type="button"
-            className={`${btn} text-bordeaux`}
+            className={`${btn} text-accent`}
             disabled={pending}
             onClick={() => {
               if (confirm(t("deleteConfirm")))

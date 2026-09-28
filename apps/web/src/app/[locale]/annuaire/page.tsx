@@ -43,7 +43,7 @@ export default async function DirectoryHome({ params }: { params: Promise<{ loca
           <li key={href}>
             <Link
               href={href}
-              className="flex h-full flex-col rounded-lg border border-line p-5 hover:border-bordeaux"
+              className="flex h-full flex-col rounded-lg border border-line p-5 hover:border-accent"
             >
               <span className="tabular font-display text-4xl font-semibold">{n}</span>
               <span className="mt-1 font-semibold">{t(`nav.${key}`)}</span>
@@ -67,7 +67,7 @@ export default async function DirectoryHome({ params }: { params: Promise<{ loca
           <p className="mt-1 text-stone">{t("proposeIntro")}</p>
           <Link
             href="/annuaire/proposer"
-            className="mt-2 inline-flex min-h-11 items-center font-semibold text-bordeaux hover:underline"
+            className="mt-2 inline-flex min-h-11 items-center font-semibold text-accent hover:underline"
           >
             {t("propose")} →
           </Link>
@@ -77,7 +77,7 @@ export default async function DirectoryHome({ params }: { params: Promise<{ loca
           <p className="mt-1 text-stone">{t("claimText")}</p>
           <Link
             href="/annuaire/clubs"
-            className="mt-2 inline-flex min-h-11 items-center font-semibold text-bordeaux hover:underline"
+            className="mt-2 inline-flex min-h-11 items-center font-semibold text-accent hover:underline"
           >
             {t("findMine")} →
           </Link>

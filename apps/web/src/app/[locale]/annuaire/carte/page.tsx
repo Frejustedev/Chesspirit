@@ -94,7 +94,7 @@ export default async function MapPage({
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {points.map((p) => (
             <li key={`${p.kind}-${p.id}`}>
-              <a href={p.href} className="font-semibold hover:text-bordeaux">
+              <a href={p.href} className="font-semibold hover:text-accent">
                 {p.title}
               </a>{" "}
               <span className="text-sm text-stone">{p.subtitle}</span>
@@ -102,7 +102,7 @@ export default async function MapPage({
           ))}
           {unplaced.map((u) => (
             <li key={u.href}>
-              <Link href={u.href} className="font-semibold hover:text-bordeaux">
+              <Link href={u.href} className="font-semibold hover:text-accent">
                 {u.name}
               </Link>{" "}
               <span className="text-sm text-stone">{t("noLocation")}</span>

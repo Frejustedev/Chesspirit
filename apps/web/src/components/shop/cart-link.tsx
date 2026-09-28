@@ -9,7 +9,7 @@ export function CartLink({ label }: { label: string }) {
   return (
     <Link
       href="/boutique/panier"
-      className="relative grid size-11 place-items-center rounded-full text-ink/80 hover:bg-cream hover:text-bordeaux"
+      className="relative grid size-11 place-items-center rounded-full text-fg/80 hover:bg-surface hover:text-accent"
       aria-label={count ? `${label} (${count})` : label}
     >
       <IconBag className="size-[22px]" />

@@ -48,7 +48,7 @@ export function ApplicationForm({ city }: { city: string }) {
           minLength={20}
           maxLength={4000}
           rows={6}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3"
         />
       </Field>
       <fieldset>

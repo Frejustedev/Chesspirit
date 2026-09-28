@@ -9,7 +9,7 @@ export function PrintButton() {
     <button
       type="button"
       onClick={() => window.print()}
-      className="inline-flex min-h-12 items-center gap-2 rounded-full bg-bordeaux px-5 font-semibold text-cream hover:bg-ink"
+      className="inline-flex min-h-12 items-center gap-2 rounded-full bg-bordeaux px-5 font-semibold text-cream hover:bg-bordeaux-bright"
     >
       <IconPrint className="size-5" /> {t("print")}
     </button>

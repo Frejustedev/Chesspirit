@@ -40,7 +40,7 @@ export function StatusSelect({
         id={`st-${id}`}
         defaultValue={value}
         disabled={pending}
-        className="min-h-10 rounded-md border border-line bg-white px-2 text-sm"
+        className="min-h-10 rounded-md border border-line bg-field px-2 text-sm"
         onChange={(e) => {
           const v = e.target.value;
           start(async () => {
@@ -72,7 +72,7 @@ export function RefundButton({ paymentId, max }: { paymentId: string; max: numbe
     <button
       type="button"
       disabled={pending}
-      className="min-h-10 rounded-full border border-line px-3 text-sm font-semibold hover:bg-cream"
+      className="min-h-10 rounded-full border border-line px-3 text-sm font-semibold hover:bg-surface"
       onClick={() => {
         const raw = prompt(t("refundAmount", { max }), String(max));
         if (!raw) return;
@@ -110,7 +110,7 @@ export function FlagToggle({
       type="button"
       aria-pressed={enabled}
       disabled={disabled || pending}
-      className={`min-h-10 rounded-full px-4 text-sm font-semibold disabled:opacity-60 ${enabled ? "bg-ink text-cream" : "border border-line"}`}
+      className={`min-h-10 rounded-full px-4 text-sm font-semibold disabled:opacity-60 ${enabled ? "bg-gold text-onaccent" : "border border-line"}`}
       onClick={() =>
         start(async () => {
           if (kind === "country") await setCountryEnabledAction(flag, !enabled);
@@ -156,12 +156,12 @@ export function SettingEditor({
         value={v}
         disabled={disabled}
         onChange={(e) => setV(e.target.value)}
-        className="min-h-10 min-w-0 flex-1 rounded-md border border-line bg-white px-3 font-mono text-sm"
+        className="min-h-10 min-w-0 flex-1 rounded-md border border-line bg-field px-3 font-mono text-sm"
       />
       <button
         type="submit"
         disabled={disabled || pending || v === value}
-        className="min-h-10 rounded-full bg-ink px-4 text-sm font-semibold text-cream disabled:opacity-50"
+        className="min-h-10 rounded-full bg-gold px-4 text-sm font-semibold text-onaccent disabled:opacity-50"
       >
         {t("save")}
       </button>

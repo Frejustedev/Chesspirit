@@ -32,7 +32,7 @@ export default async function PvmList({ params }: { params: Promise<{ locale: st
             <li key={g.slug}>
               <Link
                 href={`/communaute/public-contre-le-maitre/${g.slug}`}
-                className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-5 hover:border-bordeaux"
+                className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-5 hover:border-accent"
               >
                 <span className="font-display text-2xl font-semibold">{tr(g.title, locale)}</span>
                 <span className="mt-1 text-stone">

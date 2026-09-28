@@ -58,7 +58,7 @@ export function CheckoutForm({
     return (
       <p className="font-serif text-xl text-stone">
         {t("cartEmpty")}{" "}
-        <Link href="/boutique" className="text-bordeaux underline">
+        <Link href="/boutique" className="text-accent underline">
           {t("continue")}
         </Link>
       </p>
@@ -155,7 +155,7 @@ export function CheckoutForm({
               ).map(([k, label, fee, note]) => (
                 <label
                   key={k}
-                  className="flex cursor-pointer items-start gap-3 rounded-md border border-line p-3 has-[:checked]:border-ink has-[:checked]:bg-cream"
+                  className="flex cursor-pointer items-start gap-3 rounded-md border border-line p-3 has-[:checked]:border-fg has-[:checked]:bg-surface"
                 >
                   <input
                     type="radio"
@@ -255,7 +255,7 @@ export function CheckoutForm({
               maxLength={1000}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="mt-1 w-full rounded-md border border-line bg-white p-3"
+              className="mt-1 w-full rounded-md border border-line bg-field p-3"
             />
           </div>
         </fieldset>
@@ -272,11 +272,11 @@ export function CheckoutForm({
               id="promo"
               value={promoInput}
               onChange={(e) => setPromoInput(e.target.value.toUpperCase())}
-              className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 uppercase"
+              className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 uppercase"
             />
             <button
               type="button"
-              className="min-h-11 rounded-full border border-ink/25 px-3 text-sm font-semibold hover:bg-cream"
+              className="min-h-11 rounded-full border border-fg/25 px-3 text-sm font-semibold hover:bg-surface"
               onClick={async () => {
                 setError(null);
                 const r = await checkPromoAction(promoInput, subtotal - giftSubtotal);
@@ -301,11 +301,11 @@ export function CheckoutForm({
               value={giftInput}
               placeholder="CAD-XXXX-XXXX-XXXX"
               onChange={(e) => setGiftInput(e.target.value.toUpperCase())}
-              className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 uppercase"
+              className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 uppercase"
             />
             <button
               type="button"
-              className="min-h-11 rounded-full border border-ink/25 px-3 text-sm font-semibold hover:bg-cream"
+              className="min-h-11 rounded-full border border-fg/25 px-3 text-sm font-semibold hover:bg-surface"
               onClick={async () => {
                 setError(null);
                 const r = await giftCardBalanceAction(giftInput);
@@ -356,13 +356,13 @@ export function CheckoutForm({
         {error ? (
           <p
             role="alert"
-            className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux"
+            className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-rose"
           >
             {error}
           </p>
         ) : null}
-        {blocked ? <p className="text-sm font-semibold text-bordeaux">{t("fixCart")}</p> : null}
-        {!online ? <p className="text-sm font-semibold text-bordeaux">{t("onlineSoon")}</p> : null}
+        {blocked ? <p className="text-sm font-semibold text-accent">{t("fixCart")}</p> : null}
+        {!online ? <p className="text-sm font-semibold text-accent">{t("onlineSoon")}</p> : null}
         <Button type="submit" disabled={pending || blocked || !online} className="w-full">
           {pending
             ? t("placing")

@@ -41,7 +41,7 @@ export default async function CommunityPage({ params }: { params: Promise<{ loca
           <li key={href}>
             <Link
               href={href}
-              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-5 hover:border-bordeaux"
+              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-5 hover:border-accent"
             >
               <span className="font-display text-2xl font-semibold">{t(`nav.${key}`)}</span>
               <span className="mt-2 text-stone">{t(`cards.${key}`)}</span>

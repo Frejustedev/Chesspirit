@@ -20,7 +20,7 @@ export function WishlistButton({
   const [pending, start] = useTransition();
   if (!signedIn)
     return (
-      <Link href="/connexion" className="text-sm font-semibold text-bordeaux hover:underline">
+      <Link href="/connexion" className="text-sm font-semibold text-accent hover:underline">
         ♡ {t("wishlistSignIn")}
       </Link>
     );
@@ -35,7 +35,7 @@ export function WishlistButton({
           if (r.ok) setOn(!!r.data);
         })
       }
-      className="inline-flex min-h-11 items-center gap-2 font-semibold text-bordeaux hover:underline"
+      className="inline-flex min-h-11 items-center gap-2 font-semibold text-accent hover:underline"
     >
       <span aria-hidden>{on ? "♥" : "♡"}</span> {on ? t("wishlisted") : t("wishlistAdd")}
     </button>
@@ -72,7 +72,7 @@ export function ReviewForm({ productId }: { productId: string }) {
                 onChange={() => setRating(n)}
                 className="sr-only"
               />
-              <span aria-hidden className={n <= rating ? "text-gold-deep" : "text-line"}>
+              <span aria-hidden className={n <= rating ? "text-accent" : "text-line"}>
                 ★
               </span>
               <span className="sr-only">{t("stars", { n })}</span>
@@ -89,7 +89,7 @@ export function ReviewForm({ productId }: { productId: string }) {
         maxLength={2000}
         rows={3}
         onChange={(e) => setBody(e.target.value)}
-        className="w-full rounded-md border border-line bg-white p-3"
+        className="w-full rounded-md border border-line bg-field p-3"
       />
       <Button type="submit" disabled={pending}>
         {t("publishReview")}

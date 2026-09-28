@@ -221,7 +221,7 @@ export function ProfileForm({
       {serverError ? (
         <p
           role="alert"
-          className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-bordeaux"
+          className="rounded bg-bordeaux-soft px-3 py-2 text-sm font-semibold text-rose"
         >
           {serverError}
         </p>

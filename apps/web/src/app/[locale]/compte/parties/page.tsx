@@ -25,7 +25,7 @@ export default async function MyGames({
   const qs = new URLSearchParams(
     Object.entries(f).filter(([, v]) => v) as [string, string][],
   ).toString();
-  const input = "min-h-11 w-full rounded-md border border-line bg-white px-3";
+  const input = "min-h-11 w-full rounded-md border border-line bg-field px-3";
   return (
     <AccountShell
       nav={<AccountNav current="/compte/parties" isAdmin={isAdminRole(session.roles)} />}
@@ -76,7 +76,7 @@ export default async function MyGames({
         />
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("filter")}
         </button>
@@ -86,7 +86,7 @@ export default async function MyGames({
         {games.length ? (
           <a
             href={`/api/me/games${qs ? `?${qs}` : ""}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
           >
             <IconDownload className="size-5" /> {t("downloadAll")}
           </a>
@@ -97,10 +97,10 @@ export default async function MyGames({
           <li key={g.id}>
             <Link
               href={`/parties/${g.id}`}
-              className="grid grid-cols-[2.2rem_1fr_auto] items-center gap-3 py-2.5 hover:bg-cream/50"
+              className="grid grid-cols-[2.2rem_1fr_auto] items-center gap-3 py-2.5 hover:bg-surface/50"
             >
               <span
-                className={`grid size-8 place-items-center rounded-full text-sm font-bold ${g.score === 1 ? "bg-success/15 text-success" : g.score === 0 ? "bg-danger/10 text-danger" : "bg-cream text-stone"}`}
+                className={`grid size-8 place-items-center rounded-full text-sm font-bold ${g.score === 1 ? "bg-success/15 text-success" : g.score === 0 ? "bg-danger/10 text-danger" : "bg-surface text-stone"}`}
                 aria-label={g.score === 1 ? t("win") : g.score === 0 ? t("loss") : t("draw")}
               >
                 {g.score === 1 ? "1" : g.score === 0 ? "0" : "½"}
@@ -109,7 +109,7 @@ export default async function MyGames({
                 <span className="block truncate font-medium">
                   <span
                     aria-hidden
-                    className={`mr-1.5 inline-block size-2.5 rounded-sm border border-ink align-middle ${g.white ? "bg-paper" : "bg-ink"}`}
+                    className={`mr-1.5 inline-block size-2.5 rounded-sm border border-fg align-middle ${g.white ? "bg-paper" : "bg-ink"}`}
                   />
                   {g.opponent}{" "}
                   {g.opponentRating ? (

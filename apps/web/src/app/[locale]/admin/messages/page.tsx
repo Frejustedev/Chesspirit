@@ -68,7 +68,7 @@ export default async function AdminMessages({
               <Link
                 href={`/admin/messages?onglet=${k}`}
                 aria-current={tab === k ? "page" : undefined}
-                className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 ${tab === k ? "border-bordeaux font-semibold text-bordeaux" : "border-transparent hover:text-bordeaux"}`}
+                className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 ${tab === k ? "border-accent font-semibold text-accent" : "border-transparent hover:text-accent"}`}
               >
                 {t(`tabs.${k}`)}
               </Link>
@@ -101,7 +101,7 @@ export default async function AdminMessages({
               >
                 {r.profiles?.first_name} {r.profiles?.last_name}
               </Link>
-              <span className="rounded-full bg-cream px-2 py-0.5 text-xs font-semibold">
+              <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-semibold">
                 {t(`requestTypes.${r.type}`)}
               </span>
               <span className="text-sm text-stone">{formatDateTime(r.created_at, locale)}</span>
@@ -119,7 +119,7 @@ export default async function AdminMessages({
               <p className="font-semibold">
                 {q.organization} · {q.contact_name}
               </p>
-              <span className="rounded-full bg-cream px-2 py-0.5 text-xs font-semibold">
+              <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-semibold">
                 {q.kind}
               </span>
               <p className="text-sm text-stone">

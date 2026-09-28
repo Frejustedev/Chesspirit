@@ -14,7 +14,7 @@ export function BookingActions({ id }: { id: string }) {
     <button
       type="button"
       disabled={pending}
-      className="min-h-11 rounded-full border border-line px-4 text-sm font-semibold hover:border-bordeaux"
+      className="min-h-11 rounded-full border border-line px-4 text-sm font-semibold hover:border-accent"
       onClick={() =>
         confirm(t("cancelConfirm")) &&
         start(async () => {

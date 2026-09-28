@@ -195,7 +195,7 @@
         "text": "Videos, podcasts, lessons, puzzles and resources."
       }
     },
-    "top10": "Top 10 — rapid rating",
+    "top10": "Top 10 — Chesspirit rating (rapid)",
     "fullRanking": "Full ranking",
     "rankingEmpty": "The first ranking will be published after the first rated tournaments.",
     "figures": "In numbers",
@@ -208,7 +208,11 @@
     "organizersTitle": "Organisers: the tool is free",
     "organizersText": "Registrations, pairings, results, posters and archives: the tournament manager is free for every organiser in Benin.",
     "organizersCta": "Contact us",
-    "partnersTitle": "With our partners"
+    "partnersTitle": "With our partners",
+    "rankingsTitle": "Player rankings",
+    "top10Fide": "Top 10 — official FIDE Elo (standard)",
+    "fullFide": "Full FIDE Elo list",
+    "rankingEmptyFide": "The FIDE ranking will appear after the first import of the official list."
   },
   "tournament": {
     "cadence": {
@@ -859,7 +863,10 @@
     "games": "Games",
     "empty": "No rated player for these criteria.",
     "note": "“Chesspirit rating”: an internal rating, distinct from FIDE Elo.",
-    "methodLink": "How is it calculated?"
+    "methodLink": "How is it calculated?",
+    "tabs": "Ranking type",
+    "tabChesspirit": "Chesspirit rating",
+    "tabFide": "Official FIDE Elo"
   },
   "player": {
     "peak": "Peak: {peak}",
@@ -898,14 +905,18 @@
     "newRating": "New rating"
   },
   "fide": {
-    "title": "FIDE Elo",
+    "title": "Official FIDE Elo",
     "intro": "Official international ratings of Beninese players who entered their FIDE ID, imported monthly from the FIDE list.",
     "period": "List of {period}",
     "player": "Player",
     "standard": "Standard",
     "rapid": "Rapid",
     "blitz": "Blitz",
-    "empty": "The first FIDE list will be imported at the next monthly import."
+    "empty": "The first FIDE list will be imported at the next monthly import.",
+    "rank": "Rank",
+    "titleCol": "Title",
+    "cadences": "FIDE Elo time control",
+    "unrated": "Players without an Elo in this time control are not ranked."
   },
   "engine": {
     "start": "Analyse with Stockfish",

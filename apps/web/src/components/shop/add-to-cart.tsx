@@ -51,7 +51,7 @@ export function AddToCart({
               return (
                 <label
                   key={x.id}
-                  className={`inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-[0.95rem] font-semibold has-[:checked]:border-ink has-[:checked]:bg-ink has-[:checked]:text-cream has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-bordeaux ${out ? "border-line text-stone line-through" : "border-line"}`}
+                  className={`inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-[0.95rem] font-semibold has-[:checked]:border-fg has-[:checked]:bg-ink has-[:checked]:text-cream has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-bordeaux ${out ? "border-line text-stone line-through" : "border-line"}`}
                 >
                   <input
                     type="radio"
@@ -72,7 +72,7 @@ export function AddToCart({
         </fieldset>
       ) : null}
       {tracksStock ? (
-        <p className={`text-sm ${soldOut ? "text-bordeaux" : "text-stone"}`}>
+        <p className={`text-sm ${soldOut ? "text-accent" : "text-stone"}`}>
           {soldOut ? t("soldOut") : v.stock <= 3 ? t("lowStock", { n: v.stock }) : t("inStock")}
         </p>
       ) : null}
@@ -118,7 +118,7 @@ export function AddToCart({
             value={qty}
             disabled={soldOut}
             onChange={(e) => setQty(Math.max(1, Math.min(max, Number(e.target.value) || 1)))}
-            className="tabular mt-1 min-h-11 w-20 rounded-md border border-line bg-white px-3"
+            className="tabular mt-1 min-h-11 w-20 rounded-md border border-line bg-field px-3"
           />
         </div>
         <Button
@@ -135,7 +135,7 @@ export function AddToCart({
       {added ? (
         <p role="status" className="rounded bg-gold-soft/60 px-3 py-2 text-sm font-semibold">
           {t("added")}{" "}
-          <Link href="/boutique/panier" className="text-bordeaux underline">
+          <Link href="/boutique/panier" className="text-accent underline">
             {t("seeCart")}
           </Link>
         </p>

@@ -316,7 +316,7 @@ export default async function AdminContent({
         <div>
           <Link
             href={`/admin/contenus?onglet=${type}`}
-            className="text-sm font-semibold text-bordeaux hover:underline"
+            className="text-sm font-semibold text-accent hover:underline"
           >
             ← {t(`tabs.${type}`)}
           </Link>
@@ -340,7 +340,7 @@ export default async function AdminContent({
         <div>
           <Link
             href={`/admin/contenus?onglet=${type}&id=nouveau`}
-            className="inline-flex min-h-11 items-center rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-ink"
+            className="inline-flex min-h-11 items-center rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-bordeaux-bright"
           >
             {t("new")}
           </Link>
@@ -351,7 +351,7 @@ export default async function AdminContent({
               <li key={r.id}>
                 <Link
                   href={`/admin/contenus?onglet=${type}&id=${r.id}`}
-                  className="flex justify-between gap-3 py-3 hover:text-bordeaux"
+                  className="flex justify-between gap-3 py-3 hover:text-accent"
                 >
                   <span className="font-semibold">{tr(r.title, locale)}</span>
                   <span className="text-sm text-stone">{t(`status.${r.status}`)}</span>
@@ -374,7 +374,7 @@ export default async function AdminContent({
               <Link
                 href={`/admin/contenus?onglet=${k}`}
                 aria-current={tab === k ? "page" : undefined}
-                className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 ${tab === k ? "border-bordeaux font-semibold text-bordeaux" : "border-transparent hover:text-bordeaux"}`}
+                className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 ${tab === k ? "border-accent font-semibold text-accent" : "border-transparent hover:text-accent"}`}
               >
                 {t(`tabs.${k}`)}
               </Link>

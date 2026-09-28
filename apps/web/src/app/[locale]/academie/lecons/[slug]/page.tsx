@@ -50,7 +50,7 @@ export default async function LessonPage({
   const full = l.full;
   return (
     <article className="mx-auto max-w-4xl px-4 py-10 lg:px-6">
-      <Link href="/academie/lecons" className="text-sm font-semibold text-bordeaux hover:underline">
+      <Link href="/academie/lecons" className="text-sm font-semibold text-accent hover:underline">
         ← {t("nav.lessons")}
       </Link>
       <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">

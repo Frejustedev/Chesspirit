@@ -49,7 +49,7 @@ export default async function EpisodePage({
       {e.media_series ? (
         <Link
           href={`/media/emissions/${e.media_series.slug}`}
-          className="text-sm font-semibold text-bordeaux hover:underline"
+          className="text-sm font-semibold text-accent hover:underline"
         >
           ← {tr(e.media_series.title, locale)}
         </Link>

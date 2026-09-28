@@ -36,7 +36,7 @@ export default async function MyOrders({ params }: { params: Promise<{ locale: s
       nav={<AccountNav current="/compte/commandes" isAdmin={isAdminRole(session.roles)} />}
       title={t("myOrders")}
     >
-      <p className="rounded-lg bg-cream px-4 py-3">
+      <p className="rounded-lg bg-surface px-4 py-3">
         <span className="font-semibold">{t("loyalty")}</span> :{" "}
         <span className="tabular">{t("pointsN", { n: points ?? 0 })}</span>
       </p>
@@ -49,11 +49,9 @@ export default async function MyOrders({ params }: { params: Promise<{ locale: s
                   href={`/compte/commandes/${o.number}`}
                   className="group flex flex-wrap items-center gap-x-4 gap-y-1 py-3"
                 >
-                  <span className="tabular font-semibold group-hover:text-bordeaux">
-                    {o.number}
-                  </span>
+                  <span className="tabular font-semibold group-hover:text-accent">{o.number}</span>
                   <span className="text-sm text-stone">{formatDate(o.created_at, locale)}</span>
-                  <span className="rounded-full bg-cream px-2.5 py-0.5 text-xs font-semibold">
+                  <span className="rounded-full bg-surface px-2.5 py-0.5 text-xs font-semibold">
                     {t(`status.${o.status}`)}
                   </span>
                   <span className="tabular ml-auto font-semibold">
@@ -66,7 +64,7 @@ export default async function MyOrders({ params }: { params: Promise<{ locale: s
         ) : (
           <p className="text-stone">
             {t("noOrders")}{" "}
-            <Link href="/boutique" className="font-semibold text-bordeaux hover:underline">
+            <Link href="/boutique" className="font-semibold text-accent hover:underline">
               {t("continue")}
             </Link>
           </p>
@@ -98,7 +96,7 @@ export default async function MyOrders({ params }: { params: Promise<{ locale: s
                 <li key={w.product_id} className="flex justify-between gap-3 py-3">
                   <Link
                     href={`/boutique/produit/${w.products.slug}`}
-                    className="font-semibold hover:text-bordeaux"
+                    className="font-semibold hover:text-accent"
                   >
                     {tr(w.products.name, locale)}
                   </Link>

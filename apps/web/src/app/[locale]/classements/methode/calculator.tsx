@@ -66,15 +66,15 @@ export function RatingCalculator() {
         className="tabular mt-6 grid grid-cols-2 gap-3 text-center sm:grid-cols-4"
         aria-live="polite"
       >
-        <div className="rounded bg-cream p-3">
+        <div className="rounded bg-surface p-3">
           <dt className="text-sm text-stone">E</dt>
           <dd className="font-display text-2xl">{e.toFixed(3)}</dd>
         </div>
-        <div className="rounded bg-cream p-3">
+        <div className="rounded bg-surface p-3">
           <dt className="text-sm text-stone">K</dt>
           <dd className="font-display text-2xl">{k}</dd>
         </div>
-        <div className="rounded bg-cream p-3">
+        <div className="rounded bg-surface p-3">
           <dt className="text-sm text-stone">Δ</dt>
           <dd className={`font-display text-2xl ${delta >= 0 ? "text-success" : "text-danger"}`}>
             {delta >= 0 ? "+" : ""}

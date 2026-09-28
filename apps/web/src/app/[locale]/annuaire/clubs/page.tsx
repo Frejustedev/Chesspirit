@@ -49,7 +49,7 @@ export default async function StructuresDirectory({
         </div>
         <Link
           href="/annuaire/proposer"
-          className="inline-flex min-h-11 items-center rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+          className="inline-flex min-h-11 items-center rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
         >
           {t("propose")}
         </Link>
@@ -70,7 +70,7 @@ export default async function StructuresDirectory({
               id="d-type"
               name="type"
               defaultValue={sp.type ?? ""}
-              className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none"
+              className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none"
             >
               <option value="">{t("allTypes")}</option>
               {ORG_TYPES.map((x) => (
@@ -87,12 +87,12 @@ export default async function StructuresDirectory({
           <li key={o.id}>
             <Link
               href={`/annuaire/structures/${o.slug}`}
-              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-bordeaux"
+              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-accent"
             >
               <span className="font-semibold">
                 {o.name} {o.is_demo ? <DemoBadge /> : null}
                 {o.verified ? (
-                  <span className="ml-2 rounded-full bg-ink px-2 py-0.5 text-xs font-semibold text-cream">
+                  <span className="ml-2 rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-onaccent">
                     {t("verified")}
                   </span>
                 ) : null}

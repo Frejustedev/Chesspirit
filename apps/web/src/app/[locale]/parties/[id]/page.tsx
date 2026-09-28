@@ -44,7 +44,7 @@ export default async function GamePage({ params }: Props) {
         <nav className="text-sm text-stone">
           <Link
             href={`/competitions/${g.tournaments.slug}/resultats`}
-            className="hover:text-bordeaux"
+            className="hover:text-accent"
           >
             {g.tournaments.name}
           </Link>
@@ -52,7 +52,7 @@ export default async function GamePage({ params }: Props) {
         </nav>
       ) : null}
       <h1 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">
-        {g.white_name} <span className="text-gold-deep">{g.result.replace(/1\/2/g, "½")}</span>{" "}
+        {g.white_name} <span className="text-accent">{g.result.replace(/1\/2/g, "½")}</span>{" "}
         {g.black_name}
       </h1>
       <p className="mt-1 text-stone">
@@ -65,7 +65,7 @@ export default async function GamePage({ params }: Props) {
       </div>
       <a
         href={`/api/games/${g.id}/pgn`}
-        className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-bordeaux hover:underline"
+        className="mt-6 inline-flex min-h-11 items-center gap-2 font-semibold text-accent hover:underline"
       >
         <IconDownload className="size-5" /> {t("download")}
       </a>

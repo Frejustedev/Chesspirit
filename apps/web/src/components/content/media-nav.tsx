@@ -23,7 +23,7 @@ export async function MediaNav({ current }: { current: string }) {
             <Link
               href={href}
               aria-current={current === href ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold ${current === href ? "bg-ink text-cream" : "border border-line hover:bg-cream"}`}
+              className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold ${current === href ? "bg-gold text-onaccent" : "border border-line hover:bg-surface"}`}
             >
               {t(`nav.${key}`)}
             </Link>
@@ -62,9 +62,9 @@ export async function EpisodeGrid({
         <li key={e.slug}>
           <Link
             href={`/media/episodes/${e.slug}`}
-            className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-bordeaux"
+            className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-accent"
           >
-            <span className="text-xs font-semibold uppercase tracking-wide text-gold-deep">
+            <span className="text-xs font-semibold uppercase tracking-wide text-accent">
               {tr(e.media_series?.title ?? null, locale)} · {t(`format.${e.format}`)}
             </span>
             <span className="mt-1 font-display text-xl font-semibold leading-snug">

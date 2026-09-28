@@ -79,7 +79,7 @@ export default async function AdminStats({
         <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
         <a
           href={csv}
-          className="inline-flex min-h-11 items-center rounded-full border border-ink/25 px-4 font-semibold hover:bg-cream"
+          className="inline-flex min-h-11 items-center rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
         >
           {t("export")}
         </a>
@@ -94,7 +94,7 @@ export default async function AdminStats({
             name="du"
             type="date"
             defaultValue={from}
-            className="mt-1 min-h-11 rounded-md border border-line bg-white px-3"
+            className="mt-1 min-h-11 rounded-md border border-line bg-field px-3"
           />
         </div>
         <div>
@@ -106,12 +106,12 @@ export default async function AdminStats({
             name="au"
             type="date"
             defaultValue={to}
-            className="mt-1 min-h-11 rounded-md border border-line bg-white px-3"
+            className="mt-1 min-h-11 rounded-md border border-line bg-field px-3"
           />
         </div>
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("apply")}
         </button>

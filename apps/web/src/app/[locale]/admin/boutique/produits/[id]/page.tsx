@@ -89,7 +89,7 @@ export default async function AdminProduct({
     <div className="mx-auto max-w-4xl px-4 py-10 lg:px-6">
       <Link
         href="/admin/boutique/produits"
-        className="text-sm font-semibold text-bordeaux hover:underline"
+        className="text-sm font-semibold text-accent hover:underline"
       >
         ← {t("products")}
       </Link>

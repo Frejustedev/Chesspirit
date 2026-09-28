@@ -47,7 +47,7 @@ export default async function ResultsPage({ params }: Props) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
       <nav className="text-sm text-stone">
-        <Link href={`/competitions/${t.slug}`} className="hover:text-bordeaux">
+        <Link href={`/competitions/${t.slug}`} className="hover:text-accent">
           {t.name}
         </Link>
       </nav>
@@ -70,7 +70,7 @@ export default async function ResultsPage({ params }: Props) {
       ) : (
         <div className="mt-8 overflow-x-auto rounded-[var(--radius-card)] border border-line">
           <table className="w-full min-w-[34rem] text-left text-[0.95rem]">
-            <thead className="bg-cream/70 text-xs uppercase tracking-[0.08em] text-stone">
+            <thead className="bg-surface/70 text-xs uppercase tracking-[0.08em] text-stone">
               <tr>
                 <th className="px-3 py-2">{tt("rank")}</th>
                 <th className="px-3 py-2">{tt("player")}</th>
@@ -89,19 +89,15 @@ export default async function ResultsPage({ params }: Props) {
                 const tb = (s.tiebreaks ?? {}) as Record<string, number>;
                 return (
                   <tr key={s.player_id} className={s.rank! <= 3 ? "bg-gold-soft/30" : undefined}>
-                    <td className="tabular px-3 py-2 font-display text-lg text-gold-deep">
-                      {s.rank}
-                    </td>
+                    <td className="tabular px-3 py-2 font-display text-lg text-accent">{s.rank}</td>
                     <td className="px-3 py-2 font-medium">
                       {s.titles?.length ? (
-                        <span className="mr-1.5 text-xs font-bold text-bordeaux">
+                        <span className="mr-1.5 text-xs font-bold text-accent">
                           {s.titles.join(" ")}
                         </span>
                       ) : null}
                       {s.display_name}
-                      {s.prize ? (
-                        <span className="ml-2 text-xs text-gold-deep">{s.prize}</span>
-                      ) : null}
+                      {s.prize ? <span className="ml-2 text-xs text-accent">{s.prize}</span> : null}
                     </td>
                     <td className="px-3 py-2 text-stone">{s.club ?? ""}</td>
                     <td className="tabular px-3 py-2 text-right">{s.rating_before ?? "—"}</td>
@@ -125,7 +121,7 @@ export default async function ResultsPage({ params }: Props) {
             <h2 className="font-display text-3xl font-semibold">{tt("games")}</h2>
             <a
               href={`/api/tournaments/${t.slug}/pgn`}
-              className="inline-flex min-h-11 items-center gap-2 font-semibold text-bordeaux hover:underline"
+              className="inline-flex min-h-11 items-center gap-2 font-semibold text-accent hover:underline"
             >
               <IconDownload className="size-5" /> {tt("downloadPgn")}
             </a>
@@ -142,7 +138,7 @@ export default async function ResultsPage({ params }: Props) {
                     <li key={g.id}>
                       <Link
                         href={`/parties/${g.id}`}
-                        className="grid grid-cols-[2rem_1fr_4.5rem_1fr] items-center gap-2 py-2 text-[0.95rem] hover:bg-cream/60"
+                        className="grid grid-cols-[2rem_1fr_4.5rem_1fr] items-center gap-2 py-2 text-[0.95rem] hover:bg-surface/60"
                       >
                         <span className="tabular text-stone">{g.board}</span>
                         <span className="truncate text-right">{g.white_name}</span>

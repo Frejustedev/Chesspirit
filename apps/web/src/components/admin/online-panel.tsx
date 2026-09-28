@@ -111,7 +111,7 @@ export function OnlinePanel({
           </p>
         ) : null}
         {msg ? (
-          <p role="status" className="rounded bg-cream px-3 py-2 text-sm font-semibold">
+          <p role="status" className="rounded bg-surface px-3 py-2 text-sm font-semibold">
             {msg}
           </p>
         ) : null}
@@ -126,7 +126,7 @@ export function OnlinePanel({
           {players.map((p, i) => (
             <li key={i} className="flex gap-3 py-2">
               <span className="min-w-0 flex-1">{p.name}</span>
-              <span className={p.username ? "font-mono" : "text-bordeaux"}>
+              <span className={p.username ? "font-mono" : "text-accent"}>
                 {p.username ?? t("notLinked")}
               </span>
             </li>

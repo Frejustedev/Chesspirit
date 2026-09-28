@@ -26,7 +26,7 @@ export function ShopAdminNav({ current }: { current: string }) {
             <Link
               href={href}
               aria-current={current === href ? "page" : undefined}
-              className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 ${current === href ? "border-bordeaux font-semibold text-bordeaux" : "border-transparent hover:text-bordeaux"}`}
+              className={`flex min-h-11 items-center whitespace-nowrap border-b-2 px-3 ${current === href ? "border-accent font-semibold text-accent" : "border-transparent hover:text-accent"}`}
             >
               {label}
             </Link>
@@ -115,7 +115,7 @@ export function OrderStatusForm({
         <button
           type="button"
           disabled={pending}
-          className="block min-h-11 text-sm font-semibold text-bordeaux hover:underline"
+          className="block min-h-11 text-sm font-semibold text-accent hover:underline"
           onClick={() => {
             if (!confirm(t("cancelConfirm"))) return;
             start(async () => {
@@ -129,7 +129,7 @@ export function OrderStatusForm({
         </button>
       ) : null}
       {error ? (
-        <p role="alert" className="text-sm font-semibold text-bordeaux">
+        <p role="alert" className="text-sm font-semibold text-accent">
           {error}
         </p>
       ) : null}
@@ -206,7 +206,7 @@ export function PromoToggle({ id, active }: { id: string; active: boolean }) {
       type="button"
       disabled={pending}
       aria-pressed={active}
-      className={`min-h-10 rounded-full px-3 text-sm font-semibold ${active ? "bg-ink text-cream" : "border border-line"}`}
+      className={`min-h-10 rounded-full px-3 text-sm font-semibold ${active ? "bg-gold text-onaccent" : "border border-line"}`}
       onClick={() =>
         start(async () => {
           await togglePromoAction(id, !active);

@@ -31,17 +31,17 @@ export default async function CoachesPage({ params }: { params: Promise<{ locale
           <li key={c.id}>
             <Link
               href={`/coaching/coachs/${c.slug}`}
-              className="group flex h-full gap-4 rounded-lg border border-line p-4 hover:border-bordeaux"
+              className="group flex h-full gap-4 rounded-lg border border-line p-4 hover:border-accent"
             >
               <PieceSvg
                 kind={(["k", "q", "r", "b", "n"] as const)[i % 5]!}
-                color={i % 2 ? "b" : "w"}
+                color="w"
                 className="size-14 shrink-0"
               />
               <span className="min-w-0">
-                <span className="block font-display text-xl font-semibold group-hover:text-bordeaux">
+                <span className="block font-display text-xl font-semibold group-hover:text-accent">
                   {c.titles?.length ? (
-                    <span className="mr-1 text-base text-bordeaux">{c.titles.join(" ")}</span>
+                    <span className="mr-1 text-base text-accent">{c.titles.join(" ")}</span>
                   ) : null}
                   {c.display_name} {c.is_demo ? <DemoBadge /> : null}
                 </span>

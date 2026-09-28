@@ -59,7 +59,7 @@ export default async function TourPage({
                 key={s.id}
                 className="flex gap-4 rounded-[var(--radius-card)] border border-line p-4"
               >
-                <span className="tabular grid size-11 shrink-0 place-items-center rounded-full bg-cream font-display text-xl font-semibold">
+                <span className="tabular grid size-11 shrink-0 place-items-center rounded-full bg-surface font-display text-xl font-semibold">
                   {s.number}
                 </span>
                 <div className="min-w-0 flex-1">
@@ -67,7 +67,7 @@ export default async function TourPage({
                     {s.tournaments ? (
                       <Link
                         href={`/competitions/${s.tournaments.slug}`}
-                        className="hover:text-bordeaux"
+                        className="hover:text-accent"
                       >
                         {s.name}
                       </Link>
@@ -84,7 +84,7 @@ export default async function TourPage({
                     )}
                   </p>
                 </div>
-                <span className="self-start rounded-full bg-ink px-2.5 py-0.5 text-xs font-semibold text-cream">
+                <span className="self-start rounded-full bg-gold px-2.5 py-0.5 text-xs font-semibold text-onaccent">
                   {t(`kind.${s.kind}`)} × {Number(s.coefficient).toLocaleString(locale)}
                 </span>
               </li>
@@ -93,7 +93,7 @@ export default async function TourPage({
           {!stages?.length ? <p className="mt-3 text-stone">{t("noStages")}</p> : null}
           <Link
             href={`/classements/tour${season ? `?saison=${season.slug}` : ""}`}
-            className="mt-6 inline-flex min-h-11 items-center rounded-full bg-bordeaux px-5 font-semibold text-cream hover:bg-ink"
+            className="mt-6 inline-flex min-h-11 items-center rounded-full bg-bordeaux px-5 font-semibold text-cream hover:bg-bordeaux-bright"
           >
             {t("seeRanking")}
           </Link>
@@ -119,7 +119,7 @@ export default async function TourPage({
               </h3>
               <ol className="tabular mt-2 grid grid-cols-5 gap-1 text-sm">
                 {scale.places.slice(0, 15).map((pts, i) => (
-                  <li key={i} className="rounded bg-cream px-2 py-1 text-center">
+                  <li key={i} className="rounded bg-surface px-2 py-1 text-center">
                     <span className="block text-xs text-stone">{i + 1}</span>
                     {pts}
                   </li>

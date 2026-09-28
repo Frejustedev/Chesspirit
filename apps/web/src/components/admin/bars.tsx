@@ -18,7 +18,7 @@ export function Bars({
       {entries.map(([k, v]) => (
         <li key={k} className="grid grid-cols-[7rem_1fr_auto] items-center gap-2 text-sm">
           <span className="truncate">{k}</span>
-          <span className="h-3 rounded-full bg-cream">
+          <span className="h-3 rounded-full bg-surface">
             <span
               className="block h-3 rounded-full bg-bordeaux"
               style={{ width: `${(v / max) * 100}%` }}

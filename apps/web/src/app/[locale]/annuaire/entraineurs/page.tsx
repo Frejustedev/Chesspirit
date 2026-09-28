@@ -59,7 +59,7 @@ export default async function CoachesDirectory({
           name="q"
           defaultValue={sp.q}
           placeholder={t("search")}
-          className="min-h-11 min-w-0 basis-full rounded-md border border-line bg-white px-3 sm:flex-1 sm:basis-auto"
+          className="min-h-11 min-w-0 basis-full rounded-md border border-line bg-field px-3 sm:flex-1 sm:basis-auto"
         />
         <label htmlFor="c-l" className="sr-only">
           {t("language")}
@@ -68,7 +68,7 @@ export default async function CoachesDirectory({
           id="c-l"
           name="langue"
           defaultValue={sp.langue ?? ""}
-          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none"
+          className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none"
         >
           <option value="">{t("allLanguages")}</option>
           {(["fr", "en", "fon"] as const).map((l) => (
@@ -79,7 +79,7 @@ export default async function CoachesDirectory({
         </select>
         <button
           type="submit"
-          className="min-h-11 rounded-full bg-ink px-4 font-semibold text-cream"
+          className="min-h-11 rounded-full bg-gold px-4 font-semibold text-onaccent"
         >
           {t("apply")}
         </button>
@@ -89,11 +89,11 @@ export default async function CoachesDirectory({
           <li key={c.id}>
             <Link
               href={`/coaching/coachs/${c.slug}`}
-              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-bordeaux"
+              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-accent"
             >
               <span className="font-semibold">
                 {c.titles?.length ? (
-                  <span className="mr-1 text-gold-deep">{c.titles.join(" ")}</span>
+                  <span className="mr-1 text-accent">{c.titles.join(" ")}</span>
                 ) : null}
                 {c.display_name} {c.is_demo ? <DemoBadge /> : null}
               </span>
@@ -114,10 +114,7 @@ export default async function CoachesDirectory({
       </ul>
       {!rows.length ? <p className="mt-6 text-stone">{t("empty")}</p> : null}
       <p className="mt-8 text-sm">
-        <Link
-          href="/coaching/devenir-coach"
-          className="font-semibold text-bordeaux hover:underline"
-        >
+        <Link href="/coaching/devenir-coach" className="font-semibold text-accent hover:underline">
           {t("becomeCoach")} →
         </Link>
       </p>

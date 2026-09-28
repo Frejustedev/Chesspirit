@@ -54,7 +54,7 @@ export default async function PlayersDirectory({
               id="d-t"
               name="titre"
               defaultValue={sp.titre ?? ""}
-              className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-white px-3 sm:flex-none"
+              className="min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none"
             >
               <option value="">{t("allPlayers")}</option>
               <option value="titled">{t("titledOnly")}</option>
@@ -68,11 +68,11 @@ export default async function PlayersDirectory({
           <li key={p.id}>
             <Link
               href={`/joueurs/${p.id}`}
-              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-3 hover:border-bordeaux"
+              className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-3 hover:border-accent"
             >
               <span className="font-semibold">
                 {p.titles?.length ? (
-                  <span className="mr-1 text-gold-deep">{p.titles.join(" ")}</span>
+                  <span className="mr-1 text-accent">{p.titles.join(" ")}</span>
                 ) : null}
                 {p.display_name} {p.is_demo ? <DemoBadge /> : null}
               </span>

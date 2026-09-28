@@ -53,7 +53,7 @@ export function ContactForm() {
           required
           maxLength={5000}
           rows={6}
-          className="mt-1 w-full rounded-md border border-line bg-white p-3 focus:border-bordeaux focus:outline-none"
+          className="mt-1 w-full rounded-md border border-line bg-field p-3 focus:border-accent focus:outline-none"
         />
       </Field>
       {/* Champ piège anti-robots, invisible pour les humains */}

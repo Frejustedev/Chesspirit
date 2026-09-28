@@ -70,7 +70,7 @@ export default async function AdminShop({
               <Link
                 href={`/admin/boutique?filtre=${k}`}
                 aria-current={f === k ? "page" : undefined}
-                className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold ${f === k ? "bg-ink text-cream" : "border border-line hover:bg-cream"}`}
+                className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold ${f === k ? "bg-gold text-onaccent" : "border border-line hover:bg-surface"}`}
               >
                 {t(`filter.${k}`)}
               </Link>
@@ -86,11 +86,11 @@ export default async function AdminShop({
                 href={`/admin/boutique/commandes/${o.id}`}
                 className="group flex flex-wrap items-center gap-x-4 gap-y-1 py-3"
               >
-                <span className="tabular font-semibold group-hover:text-bordeaux">{o.number}</span>
+                <span className="tabular font-semibold group-hover:text-accent">{o.number}</span>
                 <span className="min-w-0 flex-1 truncate">{o.contact_name}</span>
                 <span className="text-sm text-stone">{formatDateTime(o.created_at, locale)}</span>
                 <span className="text-sm">{ts(`deliveryKind.${o.delivery_method}`)}</span>
-                <span className="rounded-full bg-cream px-2.5 py-0.5 text-xs font-semibold">
+                <span className="rounded-full bg-surface px-2.5 py-0.5 text-xs font-semibold">
                   {ts(`status.${o.status}`)}
                   {o.has_preorder ? ` · ${ts("preorder")}` : ""}
                 </span>

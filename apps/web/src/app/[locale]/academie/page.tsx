@@ -38,14 +38,14 @@ export default async function AcademyHome({ params }: { params: Promise<{ locale
         </Link>
         <Link
           href="/academie/lexique"
-          className="rounded-lg border border-line p-6 hover:border-bordeaux"
+          className="rounded-lg border border-line p-6 hover:border-accent"
         >
           <span className="font-display text-2xl font-semibold">{t("nav.lexicon")}</span>
           <span className="mt-2 block text-stone">{t("lexiconCard")}</span>
         </Link>
         <Link
           href="/academie/ressources"
-          className="rounded-lg border border-line p-6 hover:border-bordeaux"
+          className="rounded-lg border border-line p-6 hover:border-accent"
         >
           <span className="font-display text-2xl font-semibold">{t("nav.resources")}</span>
           <span className="mt-2 block text-stone">{t("resourcesCard")}</span>
@@ -58,9 +58,9 @@ export default async function AcademyHome({ params }: { params: Promise<{ locale
             <li key={l.slug}>
               <Link
                 href={`/academie/lecons/${l.slug}`}
-                className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-bordeaux"
+                className="flex h-full flex-col rounded-[var(--radius-card)] border border-line p-4 hover:border-accent"
               >
-                <span className="text-xs font-semibold uppercase tracking-wide text-gold-deep">
+                <span className="text-xs font-semibold uppercase tracking-wide text-accent">
                   {tc(`level.${l.level}`)}
                 </span>
                 <span className="mt-1 font-display text-xl font-semibold">

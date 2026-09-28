@@ -43,7 +43,7 @@ export function StaffPanel({
               {canManage ? (
                 <button
                   type="button"
-                  className="min-h-10 text-sm font-semibold text-bordeaux"
+                  className="min-h-10 text-sm font-semibold text-accent"
                   onClick={() =>
                     start(async () => {
                       const r = await removeStaffAction(tournamentId, s.id);

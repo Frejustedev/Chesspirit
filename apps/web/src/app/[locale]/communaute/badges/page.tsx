@@ -45,7 +45,7 @@ export default async function BadgesPage({ params }: { params: Promise<{ locale:
           {LEVELS.map((l) => (
             <li
               key={l.code}
-              className={`rounded-lg border p-3 text-center ${standing?.level.code === l.code ? "border-bordeaux bg-cream" : "border-line"}`}
+              className={`rounded-lg border p-3 text-center ${standing?.level.code === l.code ? "border-accent bg-surface" : "border-line"}`}
             >
               <PieceSvg kind={l.piece} color="w" className="mx-auto size-12" />
               <p className="font-display text-lg font-semibold">{tc(`levels.${l.code}`)}</p>
@@ -70,11 +70,7 @@ export default async function BadgesPage({ params }: { params: Promise<{ locale:
               key={b.code}
               className={`flex items-center gap-3 rounded-lg border p-3 ${owned.has(b.code) ? "border-gold bg-gold/10" : "border-line opacity-80"}`}
             >
-              <PieceSvg
-                kind={b.icon as PieceKind}
-                color={owned.has(b.code) ? "b" : "w"}
-                className="size-10 shrink-0"
-              />
+              <PieceSvg kind={b.icon as PieceKind} color="w" className="size-10 shrink-0" />
               <span className="min-w-0">
                 <span className="block font-semibold">
                   {tr(b.name, locale)}
@@ -94,7 +90,7 @@ export default async function BadgesPage({ params }: { params: Promise<{ locale:
             {tourBadges.map((b) => (
               <li
                 key={b.badge_code}
-                className="rounded-full bg-ink px-3 py-1 text-sm font-semibold text-cream"
+                className="rounded-full bg-gold px-3 py-1 text-sm font-semibold text-onaccent"
               >
                 {b.context} · {formatDate(b.awarded_at, locale)}
               </li>
