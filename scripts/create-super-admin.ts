@@ -18,7 +18,9 @@ const { values } = parseArgs({
     last: { type: "string" },
   },
 });
-if (!values.email && !values.phone) {
+// GoTrue enregistre les adresses en minuscules : même forme pour la recherche et la création.
+const email = values.email?.trim().toLowerCase();
+if (!email && !values.phone) {
   console.error("Usage : pnpm create-admin --email … [--phone +229…] [--first Prénom --last Nom]");
   process.exit(1);
 }
@@ -43,13 +45,13 @@ const { data: list, error: listErr } = await db.auth.admin.listUsers({ perPage: 
 if (listErr) throw listErr;
 const phoneDigits = values.phone?.replace(/^\+/, "");
 let user = list.users.find(
-  (u) => (values.email && u.email === values.email) || (phoneDigits && u.phone === phoneDigits),
+  (u) => (email && u.email?.toLowerCase() === email) || (phoneDigits && u.phone === phoneDigits),
 );
 if (!user) {
   const { data, error } = await db.auth.admin.createUser({
-    email: values.email,
+    email,
     phone: values.phone,
-    email_confirm: !!values.email,
+    email_confirm: !!email,
     phone_confirm: !!values.phone,
   });
   if (error) throw error;
@@ -71,14 +73,15 @@ const { data: profile } = await db
   .eq("user_id", user.id)
   .maybeSingle();
 if (!profile && values.first && values.last) {
-  await db.from("profiles").insert({
+  const { error: profileErr } = await db.from("profiles").insert({
     user_id: user.id,
     first_name: values.first,
     last_name: values.last,
-    email: values.email ?? null,
+    email: email ?? null,
     phone: values.phone ?? null,
     source: "signup",
   });
+  if (profileErr) throw profileErr;
 }
 console.log(
   "✓ Rôle super_admin attribué. Connectez-vous sur /connexion puis activez la double authentification.",

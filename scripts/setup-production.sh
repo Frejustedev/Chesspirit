@@ -59,18 +59,21 @@ done
 
 bold "2. Variables obligatoires"
 REQUIRED=(NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY
-  SUPABASE_PROJECT_REF PAYMENT_PROVIDER CRON_SECRET CHESS_ENGINE_URL CHESS_ENGINE_KEY)
+  SUPABASE_PROJECT_REF CRON_SECRET)
 missing=0
 for v in "${REQUIRED[@]}"; do
   if [ -z "${!v:-}" ]; then fail "$v manquante"; missing=1; else ok "$v"; fi
 done
 case "${PAYMENT_PROVIDER:-}" in
+  "") warn "PAYMENT_PROVIDER vide : pas de paiement en ligne (inscriptions payables sur place ; boutique et cours payants fermés)." ;;
   fedapay) for v in FEDAPAY_SECRET_KEY FEDAPAY_WEBHOOK_SECRET; do [ -n "${!v:-}" ] || { fail "$v manquante"; missing=1; }; done ;;
   kkiapay) for v in KKIAPAY_PUBLIC_KEY KKIAPAY_PRIVATE_KEY KKIAPAY_SECRET; do [ -n "${!v:-}" ] || { fail "$v manquante"; missing=1; }; done ;;
   fake) warn "PAYMENT_PROVIDER=fake : aucun paiement réel possible (refusé en production sauf ALLOW_FAKE_PAYMENTS=true)." ;;
   *) fail "PAYMENT_PROVIDER doit valoir fedapay, kkiapay ou fake"; missing=1 ;;
 esac
 if [ "${#CRON_SECRET}" -lt 32 ] 2>/dev/null; then fail "CRON_SECRET trop court (32 caractères au moins : openssl rand -hex 24)"; missing=1; fi
+[ -n "${CHESS_ENGINE_URL:-}" ] && [ -n "${CHESS_ENGINE_KEY:-}" ] ||
+  warn "CHESS_ENGINE_URL ou CHESS_ENGINE_KEY vide : appariements et cotes calculés par le site (repli)."
 for v in RESEND_API_KEY TWILIO_ACCOUNT_SID WHATSAPP_TOKEN WHATSAPP_APP_SECRET; do
   [ -n "${!v:-}" ] || warn "$v vide : service correspondant en mode factice (rien n'est envoyé)."
 done
@@ -93,6 +96,7 @@ if has supabase; then
 else
   warn "CLI Supabase absente : appliquer les migrations depuis GitHub (workflow « Migrations Supabase »)."
 fi
+warn "Réglages d'authentification (SMTP, modèles d'e-mail avec le code, URL du site) : à faire dans le tableau de bord Supabase (docs/MISE_EN_LIGNE.md, section 3.1). Ne jamais lancer « supabase config push » : supabase/config.toml ne sert qu'au développement local."
 
 bold "4. Données de référence (sans données de démonstration)"
 if confirm "Charger les données de référence (tournoi du 3 octobre, boutique, ligues, contenus), sans démonstration ?"; then
@@ -111,7 +115,9 @@ else
 fi
 
 bold "6. Service échecs (Fly.io)"
-if has flyctl; then
+if [ -z "${CHESS_ENGINE_KEY:-}" ]; then
+  warn "CHESS_ENGINE_KEY vide : service échecs non déployé (le site utilise ses calculs de repli)."
+elif has flyctl; then
   cd "$ROOT/services/chess-engine"
   if flyctl status >/dev/null 2>&1; then
     ok "Application Fly existante."
@@ -129,8 +135,10 @@ fi
 
 bold "7. Site (Vercel)"
 if has vercel; then
+  # Liaison par dépôt (monorepo) : le dossier apps/web est associé au projet importé depuis GitHub.
+  cd "$ROOT"
+  run vercel link --repo --yes
   cd "$ROOT/apps/web"
-  run vercel link --yes
   VARS=(NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY
     PAYMENT_PROVIDER FEDAPAY_ENV FEDAPAY_SECRET_KEY FEDAPAY_WEBHOOK_SECRET KKIAPAY_PUBLIC_KEY KKIAPAY_PRIVATE_KEY
     KKIAPAY_SECRET KKIAPAY_SANDBOX RESEND_API_KEY EMAIL_FROM TWILIO_ACCOUNT_SID TWILIO_AUTH_TOKEN TWILIO_FROM
@@ -146,9 +154,7 @@ if has vercel; then
       printf '%s' "${!v}" | run vercel env add "$v" production >/dev/null && ok "$v ajoutée"
     fi
   done
-  if confirm "Déployer le site en production sur Vercel ?"; then
-    run vercel deploy --prod
-  fi
+  warn "Déploiement : fusionner (ou pousser) sur la branche main ; Vercel construit à partir de GitHub. Après toute modification d'une variable NEXT_PUBLIC_*, relancer un déploiement (Redeploy) : ces valeurs sont figées à la compilation."
   cd "$ROOT"
 else
   warn "CLI Vercel absente : importer le dépôt dans Vercel (dossier racine apps/web) et saisir les variables."
@@ -157,7 +163,9 @@ fi
 bold "8. Vérifications"
 if has curl && ! $DRY_RUN; then
   if curl -fsS --max-time 20 "$NEXT_PUBLIC_SITE_URL/api/health" >/dev/null; then ok "Site et base joignables"; else warn "Site injoignable pour l'instant (DNS ou déploiement en cours ?)"; fi
-  if curl -fsS --max-time 20 "$CHESS_ENGINE_URL/health" >/dev/null; then ok "Service échecs joignable"; else warn "Service échecs injoignable"; fi
+  if [ -n "${CHESS_ENGINE_URL:-}" ]; then
+    if curl -fsS --max-time 20 "$CHESS_ENGINE_URL/health" >/dev/null; then ok "Service échecs joignable"; else warn "Service échecs injoignable"; fi
+  fi
 fi
 echo "  Test de fumée complet :"
 echo "    E2E_BASE_URL=$NEXT_PUBLIC_SITE_URL pnpm --filter web exec playwright test --project=smoke"
