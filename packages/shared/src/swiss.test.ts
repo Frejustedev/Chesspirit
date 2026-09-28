@@ -68,6 +68,65 @@ describe("appariement suisse de secours", () => {
   });
 });
 
+describe("critères absolus de couleur (FIDE)", () => {
+  // Générateur pseudo-aléatoire déterministe (résultats reproductibles).
+  function rng(seed: number) {
+    return () => {
+      seed = (seed + 0x6d2b79f5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  it.each([
+    [10, 5],
+    [12, 7],
+    [16, 7],
+    [20, 7],
+    [30, 7],
+    [41, 7],
+    [64, 9],
+  ])(
+    "%i joueurs, %i rondes : écart ≤ 2, jamais trois fois la même couleur, sans rematch",
+    (n, rounds) => {
+      for (let seed = 1; seed <= 10; seed++) {
+        const random = rng(seed * 1000 + n);
+        const p = field(n);
+        const by = new Map(p.map((x) => [x.id, x]));
+        for (let r = 1; r <= rounds; r++) {
+          for (const { white, black } of pairSwissFallback(p, r)) {
+            const w = by.get(white)!;
+            if (!black) {
+              w.points += 1;
+              w.hadBye = true;
+              continue;
+            }
+            const b = by.get(black)!;
+            w.opponents.push(b.id);
+            b.opponents.push(w.id);
+            w.colors.push("w");
+            b.colors.push("b");
+            const x = random();
+            if (x < 0.45) w.points += 1;
+            else if (x < 0.65) {
+              w.points += 0.5;
+              b.points += 0.5;
+            } else b.points += 1;
+          }
+        }
+        for (const x of p) {
+          expect(new Set(x.opponents).size).toBe(x.opponents.length);
+          const d = x.colors.reduce((s, c) => s + (c === "w" ? 1 : -1), 0);
+          expect(Math.abs(d)).toBeLessThanOrEqual(2);
+          for (let i = 2; i < x.colors.length; i++)
+            expect(x.colors[i] === x.colors[i - 1] && x.colors[i] === x.colors[i - 2]).toBe(false);
+        }
+      }
+    },
+  );
+});
+
 describe("suisse accéléré (Baku)", async () => {
   const { bakuVirtualPoints } = await import("./swiss");
   it("groupe A et points virtuels par ronde", () => {
