@@ -118,7 +118,8 @@
     "payments": "Paiements :",
     "card": "carte bancaire",
     "partners": "Partenaires :",
-    "credit": "Conception : <link>Fréjuste Agboton</link>"
+    "credit": "Conception : <link>Fréjuste Agboton</link>",
+    "paymentsOnSite": "sur place pour le moment ; paiement en ligne bientôt"
   },
   "countdown": {
     "days": "jours",
@@ -127,7 +128,10 @@
     "seconds": "s",
     "started": "C'est parti !",
     "loading": "Compte à rebours",
-    "aria": "Début dans {days} jours, {hours} heures et {minutes} minutes"
+    "aria": "Début dans {days} jours, {hours} heures et {minutes} minutes",
+    "today": "C'est aujourd'hui !",
+    "timeTbc": "Horaire à confirmer",
+    "ariaDays": "Début dans {days} jours, horaire à confirmer"
   },
   "board": {
     "board": "Échiquier",
@@ -317,7 +321,7 @@
     "sendError": "Impossible d'envoyer le code. Réessayez.",
     "codeInvalid": "Code incorrect ou expiré.",
     "tooMany": "Trop de tentatives. Patientez quelques minutes.",
-    "oauthError": "La connexion avec Google a échoué. Réessayez ou utilisez votre téléphone."
+    "oauthError": "La connexion avec Google a échoué. Réessayez ou recevez un code de connexion."
   },
   "errors": {
     "required": "Champ obligatoire",
@@ -490,7 +494,8 @@
       "waitlisted": "liste d'attente",
       "cancelled": "annulée",
       "refused": "refusée"
-    }
+    },
+    "noMethod": "Aucun moyen de paiement n'est proposé en ligne pour ce tournoi pour le moment. Contactez l'organisateur pour vous inscrire."
   },
   "payment": {
     "fakeKicker": "Mode test",
@@ -703,7 +708,8 @@
       "rating": "Un classement interne calculé selon la méthode Elo après chaque tournoi homologué, dans chaque cadence. Il ne remplace pas l'Elo FIDE, affiché à côté quand vous en avez un.",
       "minors": "Ajoutez votre enfant dans « Mon compte › Famille », puis inscrivez-le depuis la page du tournoi. Son profil public reste réduit et sans photo.",
       "data": "Depuis « Mon compte › Mes données », vous pouvez modifier vos consentements, exporter vos données et demander leur suppression.",
-      "organizers": "Le module de gestion de tournois est gratuit pour tous les organisateurs du Bénin. Contactez-nous pour l'utiliser."
+      "organizers": "Le module de gestion de tournois est gratuit pour tous les organisateurs du Bénin. Contactez-nous pour l'utiliser.",
+      "paymentOnSite": "Pour le moment, les inscriptions se règlent sur place, le jour du tournoi, auprès de l'organisateur. Le paiement en ligne (Mobile Money et carte bancaire) sera proposé prochainement."
     }
   },
   "contact": {
@@ -1124,7 +1130,8 @@
     "err": {
       "slot_full": "Ce créneau vient d'être réservé. Choisissez-en un autre.",
       "slot_unavailable": "Ce créneau n'est plus disponible."
-    }
+    },
+    "onlinePaymentSoon": "Le paiement en ligne n'est pas encore ouvert : écrivez-nous depuis la page Contact pour réserver ce cours."
   },
   "placement": {
     "title": "Test de niveau",
@@ -1300,7 +1307,7 @@
   },
   "shop": {
     "title": "Boutique",
-    "intro": "Échiquiers, pendules, livres et accessoires pour jouer, apprendre et organiser. Paiement Mobile Money ou carte, retrait ou livraison à Cotonou.",
+    "intro": "Échiquiers, pendules, livres et accessoires pour jouer, apprendre et organiser. Retrait ou livraison à Cotonou.",
     "empty": "Aucun produit dans cette sélection pour le moment.",
     "preorder": "Précommande",
     "soldOut": "Épuisé",
@@ -1456,7 +1463,9 @@
     "yourGiftCards": "Vos cartes cadeaux",
     "payNow": "Payer maintenant",
     "cancelOrder": "Annuler la commande",
-    "cancelConfirm": "Annuler cette commande ?"
+    "cancelConfirm": "Annuler cette commande ?",
+    "onlineSoon": "Les commandes en ligne ouvriront avec le paiement en ligne (Mobile Money et carte). En attendant, écrivez-nous depuis la page Contact pour réserver un article.",
+    "perkPaySoon": "Paiement en ligne bientôt disponible"
   },
   "adminShop": {
     "title": "Boutique",
@@ -1642,7 +1651,8 @@
       "self": "Action impossible sur votre propre compte.",
       "two_accounts": "Les deux fiches ont un compte : fusion impossible.",
       "already_merged": "Fiche déjà fusionnée.",
-      "auth_update_failed": "Le compte n'a pas pu être bloqué."
+      "auth_update_failed": "Le compte n'a pas pu être bloqué.",
+      "auth_delete_failed": "Profil anonymisé, mais le compte de connexion n'a pas pu être supprimé : le supprimer dans Supabase (Authentication → Users), puis clore la demande."
     }
   },
   "adminPayments": {
@@ -2545,7 +2555,8 @@
       "cardInvalid": "Carte inconnue ou expirée",
       "member": "Membre",
       "premiumMember": "Membre premium",
-      "privateName": "Profil privé"
+      "privateName": "Profil privé",
+      "noteSoon": "L'adhésion premium sera payable en ligne dès l'ouverture du paiement en ligne ; l'adhésion gratuite est disponible dès maintenant."
     },
     "premium": {
       "title": "Cours premium",

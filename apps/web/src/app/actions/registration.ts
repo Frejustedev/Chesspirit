@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { sendRegistrationConfirmation, startRegistrationPayment } from "@/lib/registration";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 
 const input = z.object({
   tournamentId: z.string().uuid(),
@@ -22,6 +23,8 @@ export async function registerAction(raw: unknown): Promise<RegisterResult> {
   const parsed = input.safeParse(raw);
   if (!parsed.success) return { ok: false, error: "invalid" };
   const { tournamentId, playerId, paymentMethod, answers } = parsed.data;
+  if (paymentMethod === "online" && !(await onlinePaymentsEnabled()))
+    return { ok: false, error: "payment_unavailable" };
   const supabase = await createClient();
 
   // Validation des champs personnalisés côté serveur (mêmes schémas que le client).

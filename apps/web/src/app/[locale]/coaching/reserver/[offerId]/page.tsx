@@ -7,6 +7,7 @@ import { requireSession } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { tr } from "@/lib/i18n-json";
 import { BookingForm } from "./booking-form";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 
 export const metadata: Metadata = { robots: { index: false } };
 
@@ -91,6 +92,7 @@ export default async function BookOffer({
             self: p.id === session.profile!.id,
           }))}
           paid={offer.price_xof > 0}
+          online={await onlinePaymentsEnabled()}
         />
       </div>
     </div>

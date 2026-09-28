@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { startPayment } from "@/lib/payments/checkout";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 import { orderConfirmation } from "@/lib/shop/notify";
 import type { Json } from "@/lib/supabase/types";
 
@@ -118,6 +119,7 @@ export async function placeOrderAction(
   const p = checkoutSchema.safeParse(raw);
   if (!p.success) return { ok: false, error: "invalid" };
   const v = p.data;
+  if (!(await onlinePaymentsEnabled())) return { ok: false, error: "payment" };
   const supabase = await createClient();
   const { data: order, error } = await supabase.rpc("place_order", {
     p_items: v.lines.map((l) => ({

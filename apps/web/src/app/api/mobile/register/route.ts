@@ -5,6 +5,7 @@ import { z } from "zod";
 import { env } from "@/lib/env";
 import type { Database } from "@/lib/supabase/types";
 import { sendRegistrationConfirmation, startRegistrationPayment } from "@/lib/registration";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 
 const input = z.object({
   tournamentId: z.string().uuid(),
@@ -34,6 +35,8 @@ export async function POST(request: Request) {
   const parsed = input.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ ok: false, error: "invalid" }, { status: 400 });
   const { tournamentId, playerId, paymentMethod, answers } = parsed.data;
+  if (paymentMethod === "online" && !(await onlinePaymentsEnabled()))
+    return NextResponse.json({ ok: false, error: "payment_unavailable" }, { status: 409 });
   const { data: form } = await supabase
     .from("registration_forms")
     .select("fields")

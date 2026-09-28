@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { getProducts, getShopSettings } from "@/lib/shop/data";
 import { ProductGrid, ShopNav } from "@/components/shop/product-grid";
 import { formatXof } from "@chesspirit/shared";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 
 export async function ShopPage({
   locale,
@@ -20,9 +21,10 @@ export async function ShopPage({
   q?: string;
 }) {
   const t = await getTranslations("shop");
-  const [products, settings] = await Promise.all([
+  const [products, settings, online] = await Promise.all([
     getProducts({ category, sort, q }),
     getShopSettings(),
+    onlinePaymentsEnabled(),
   ]);
   const base = category ? `/boutique/${category}` : "/boutique";
   return (
@@ -32,16 +34,19 @@ export async function ShopPage({
           <h1 className="font-display text-4xl font-semibold sm:text-5xl">{title}</h1>
           <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{intro}</p>
         </div>
-        <ul className="grid gap-1 text-sm text-stone lg:justify-self-end">
-          <li>
-            {t("perkDelivery", { fee: formatXof(settings.cotonou, locale) })}
-            {settings.freeFrom
-              ? ` · ${t("perkFree", { from: formatXof(settings.freeFrom, locale) })}`
-              : ""}
-          </li>
-          <li>{t("perkPickup")}</li>
-          <li>{t("perkPay")}</li>
-        </ul>
+        {/* Conditions affichées avec le catalogue : sans produit, rien à livrer ni à payer. */}
+        {products.length ? (
+          <ul className="grid gap-1 text-sm text-stone lg:justify-self-end">
+            <li>
+              {t("perkDelivery", { fee: formatXof(settings.cotonou, locale) })}
+              {settings.freeFrom
+                ? ` · ${t("perkFree", { from: formatXof(settings.freeFrom, locale) })}`
+                : ""}
+            </li>
+            <li>{t("perkPickup")}</li>
+            <li>{online ? t("perkPay") : t("perkPaySoon")}</li>
+          </ul>
+        ) : null}
       </div>
       <div className="mt-8">
         <ShopNav current={category} />

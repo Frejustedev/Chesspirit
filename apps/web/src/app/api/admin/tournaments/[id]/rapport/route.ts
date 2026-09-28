@@ -59,7 +59,12 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
               incrementSeconds: t.increment_seconds ?? 0,
             })
           : "",
-        system: SYSTEMS[t.pairing_system] ?? t.pairing_system,
+        // Rondes appariées sans le moteur FIDE (service échecs absent) : le rapport le dit.
+        system:
+          (SYSTEMS[t.pairing_system] ?? t.pairing_system) +
+          (st.rounds.some((r) => r.pairing_engine === "fallback")
+            ? " — appariement de secours (non homologué)"
+            : ""),
         rounds: st.rounds.length,
         chiefArbiter: name((staff ?? []).find((x) => x.role === "chief_arbiter")?.profiles ?? null),
         deputies: (staff ?? [])

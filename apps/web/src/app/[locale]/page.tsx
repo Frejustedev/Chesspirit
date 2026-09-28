@@ -95,7 +95,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   ) : null}
                 </ul>
                 <div className="mt-9">
-                  <ChessClock target={next.starts_at} />
+                  <ChessClock
+                    target={next.starts_at}
+                    dateOnly={next.unconfirmed_fields.includes("schedule")}
+                  />
                 </div>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   {next.status === "registration_open" ? (

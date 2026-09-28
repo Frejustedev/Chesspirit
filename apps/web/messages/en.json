@@ -118,7 +118,8 @@
     "payments": "Payments:",
     "card": "bank card",
     "partners": "Partners:",
-    "credit": "Design: <link>Fréjuste Agboton</link>"
+    "credit": "Design: <link>Fréjuste Agboton</link>",
+    "paymentsOnSite": "on site for now; online payment coming soon"
   },
   "countdown": {
     "days": "days",
@@ -127,7 +128,10 @@
     "seconds": "s",
     "started": "It has started!",
     "loading": "Countdown",
-    "aria": "Starts in {days} days, {hours} hours and {minutes} minutes"
+    "aria": "Starts in {days} days, {hours} hours and {minutes} minutes",
+    "today": "It's today!",
+    "timeTbc": "Time to be confirmed",
+    "ariaDays": "Starts in {days} days, time to be confirmed"
   },
   "board": {
     "board": "Chessboard",
@@ -317,7 +321,7 @@
     "sendError": "Could not send the code. Please try again.",
     "codeInvalid": "Wrong or expired code.",
     "tooMany": "Too many attempts. Please wait a few minutes.",
-    "oauthError": "Google sign-in failed. Try again or use your phone."
+    "oauthError": "Google sign-in failed. Try again or sign in with a code."
   },
   "errors": {
     "required": "Required field",
@@ -490,7 +494,8 @@
       "waitlisted": "waiting list",
       "cancelled": "cancelled",
       "refused": "refused"
-    }
+    },
+    "noMethod": "No payment method is offered online for this tournament at the moment. Please contact the organiser to register."
   },
   "payment": {
     "fakeKicker": "Test mode",
@@ -703,7 +708,8 @@
       "rating": "An internal rating computed with the Elo method after each rated tournament, in each time control. It does not replace FIDE Elo, shown alongside when you have one.",
       "minors": "Add your child under “My account › Family”, then register them from the tournament page. Their public profile stays limited and without photo.",
       "data": "Under “My account › My data” you can change your consents, export your data and request deletion.",
-      "organizers": "The tournament manager is free for every organiser in Benin. Contact us to use it."
+      "organizers": "The tournament manager is free for every organiser in Benin. Contact us to use it.",
+      "paymentOnSite": "For now, entry fees are paid on site on the day of the tournament, to the organiser. Online payment (Mobile Money and card) will be available soon."
     }
   },
   "contact": {
@@ -1124,7 +1130,8 @@
     "err": {
       "slot_full": "This slot was just booked. Please choose another one.",
       "slot_unavailable": "This slot is no longer available."
-    }
+    },
+    "onlinePaymentSoon": "Online payment is not open yet: write to us from the Contact page to book this lesson."
   },
   "placement": {
     "title": "Level test",
@@ -1300,7 +1307,7 @@
   },
   "shop": {
     "title": "Shop",
-    "intro": "Boards, clocks, books and accessories to play, learn and organise. Pay with Mobile Money or card, pick up or get delivery in Cotonou.",
+    "intro": "Boards, clocks, books and accessories to play, learn and organise. Pick up or get delivery in Cotonou.",
     "empty": "No products in this selection yet.",
     "preorder": "Pre-order",
     "soldOut": "Sold out",
@@ -1456,7 +1463,9 @@
     "yourGiftCards": "Your gift cards",
     "payNow": "Pay now",
     "cancelOrder": "Cancel order",
-    "cancelConfirm": "Cancel this order?"
+    "cancelConfirm": "Cancel this order?",
+    "onlineSoon": "Online orders will open together with online payment (Mobile Money and card). Meanwhile, write to us from the Contact page to reserve an item.",
+    "perkPaySoon": "Online payment coming soon"
   },
   "adminShop": {
     "title": "Shop",
@@ -1642,7 +1651,8 @@
       "self": "Not possible on your own account.",
       "two_accounts": "Both records have an account: merge not possible.",
       "already_merged": "Record already merged.",
-      "auth_update_failed": "The account could not be blocked."
+      "auth_update_failed": "The account could not be blocked.",
+      "auth_delete_failed": "Profile anonymised, but the sign-in account could not be deleted: delete it in Supabase (Authentication → Users), then close the request."
     }
   },
   "adminPayments": {
@@ -2545,7 +2555,8 @@
       "cardInvalid": "Unknown or expired card",
       "member": "Member",
       "premiumMember": "Premium member",
-      "privateName": "Private profile"
+      "privateName": "Private profile",
+      "noteSoon": "Premium membership will be payable online as soon as online payment opens; free membership is available now."
     },
     "premium": {
       "title": "Premium courses",

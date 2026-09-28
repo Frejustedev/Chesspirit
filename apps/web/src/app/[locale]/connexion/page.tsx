@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { getSession } from "@/lib/auth";
 import { safeNext } from "@/lib/safe-next";
-import { env } from "@/lib/env";
+import { getAuthMethods } from "@/lib/auth-methods";
 import { LoginForm } from "./login-form";
 import { PieceSvg } from "@/components/icons/pieces";
 
@@ -25,6 +25,7 @@ export default async function LoginPage({
   const target = safeNext(next);
   if (await getSession()) redirect({ href: target, locale });
   const t = await getTranslations("auth");
+  const methods = await getAuthMethods();
   return (
     <div className="mx-auto grid min-h-[70dvh] max-w-5xl items-center gap-10 px-4 py-12 lg:grid-cols-2 lg:px-6">
       <div className="hidden lg:block">
@@ -43,7 +44,7 @@ export default async function LoginPage({
             {t("oauthError")}
           </p>
         ) : null}
-        <LoginForm next={target} googleEnabled={env.googleAuthEnabled} />
+        <LoginForm next={target} methods={methods} />
       </div>
     </div>
   );

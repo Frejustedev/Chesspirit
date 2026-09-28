@@ -19,11 +19,14 @@ export function BookingForm({
   slots,
   people,
   paid,
+  online,
 }: {
   offerId: string;
   slots: Slot[];
   people: { id: string; name: string; self: boolean }[];
   paid: boolean;
+  /** Paiement en ligne disponible (sinon un cours payant ne peut pas être réservé en ligne). */
+  online: boolean;
 }) {
   const t = useTranslations("coaching");
   const te = useTranslations("errors");
@@ -136,7 +139,10 @@ export function BookingForm({
           {error}
         </p>
       ) : null}
-      <Button type="submit" disabled={pending}>
+      {paid && !online ? (
+        <p className="text-sm font-semibold text-bordeaux">{t("onlinePaymentSoon")}</p>
+      ) : null}
+      <Button type="submit" disabled={pending || (paid && !online)}>
         {paid ? t("bookAndPay") : t("bookFree")}
       </Button>
     </form>

@@ -2,12 +2,14 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/logo";
 import { NAV, LEGAL_NAV, SECONDARY_NAV } from "@/lib/nav";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 import { NewsletterForm } from "./newsletter-form";
 
 export async function Footer() {
   const t = await getTranslations("nav");
   const tf = await getTranslations("footer");
   const year = new Date().getFullYear();
+  const online = await onlinePaymentsEnabled();
   return (
     <footer className="mt-24 bg-ink text-cream">
       <div className="rule-checker !bg-[conic-gradient(var(--color-gold)_25%,transparent_0_50%,var(--color-gold)_0_75%,transparent_0)] opacity-60" />
@@ -57,10 +59,17 @@ export async function Footer() {
               </li>
             ))}
           </ul>
-          <p>
-            <span className="text-cream/50">{tf("payments")} </span>
-            MTN MoMo · Moov Money · Celtiis Cash · {tf("card")}
-          </p>
+          {online ? (
+            <p>
+              <span className="text-cream/50">{tf("payments")} </span>
+              MTN MoMo · Moov Money · Celtiis Cash · {tf("card")}
+            </p>
+          ) : (
+            <p>
+              <span className="text-cream/50">{tf("payments")} </span>
+              {tf("paymentsOnSite")}
+            </p>
+          )}
           <p className="lg:text-right">
             {tf("partners")} <span className="text-cream">FSS</span> ·{" "}
             <span className="text-cream">Ayelade Chess</span>

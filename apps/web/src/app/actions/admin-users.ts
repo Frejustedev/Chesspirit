@@ -112,7 +112,11 @@ export async function anonymizeProfileAction(
     p_profile: profileId,
   });
   if (error) return { ok: false, error: error.message };
-  if (userId) await createAdminClient().auth.admin.deleteUser(userId);
+  if (userId) {
+    // Le compte de connexion doit disparaître aussi : sinon la demande ne peut pas être close.
+    const { error: authError } = await createAdminClient().auth.admin.deleteUser(userId);
+    if (authError) return { ok: false, error: "auth_delete_failed" };
+  }
   if (requestId)
     await supabase
       .from("data_requests")

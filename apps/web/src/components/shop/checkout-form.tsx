@@ -21,10 +21,13 @@ export function CheckoutForm({
   settings,
   points,
   defaults,
+  online,
 }: {
   settings: Settings;
   points: number;
   defaults: { name: string; phone: string; email: string; city: string };
+  /** Paiement en ligne disponible : sinon la commande ne peut pas être passée. */
+  online: boolean;
 }) {
   const t = useTranslations("shop");
   const te = useTranslations("errors");
@@ -359,7 +362,8 @@ export function CheckoutForm({
           </p>
         ) : null}
         {blocked ? <p className="text-sm font-semibold text-bordeaux">{t("fixCart")}</p> : null}
-        <Button type="submit" disabled={pending || blocked} className="w-full">
+        {!online ? <p className="text-sm font-semibold text-bordeaux">{t("onlineSoon")}</p> : null}
+        <Button type="submit" disabled={pending || blocked || !online} className="w-full">
           {pending
             ? t("placing")
             : remaining > 0

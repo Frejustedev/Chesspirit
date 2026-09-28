@@ -1,5 +1,5 @@
 import "server-only";
-import { formatDateTime, formatXof } from "@chesspirit/shared";
+import { formatDate, formatDateTime, formatXof } from "@chesspirit/shared";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { notify, notifyProfile } from "@/lib/notifications";
 import { recomputeAllRatings } from "@/lib/ratings";
@@ -26,7 +26,9 @@ async function reminders(db: Db) {
   const in36 = new Date(now + 36 * 3600 * 1000).toISOString();
   const { data: regs } = await db
     .from("registrations")
-    .select("id, player_id, ticket_code, tournaments!inner(name, starts_at, venue)")
+    .select(
+      "id, player_id, ticket_code, tournaments!inner(name, starts_at, venue, unconfirmed_fields)",
+    )
     .in("status", ["confirmed", "pending_validation"])
     .is("reminder_sent_at", null)
     .gte("tournaments.starts_at", in24.slice(0, 10))
@@ -34,13 +36,17 @@ async function reminders(db: Db) {
   let sent = 0;
   for (const r of regs ?? []) {
     const t = r.tournaments;
+    // Horaire non confirmé : la date seule, jamais une heure provisoire présentée comme réelle.
+    const when = t.unconfirmed_fields.includes("schedule")
+      ? `${formatDate(t.starts_at)} (horaire à confirmer)`
+      : formatDateTime(t.starts_at);
     await notifyProfile(r.player_id, {
       template: "tournament_reminder",
       subject: `Rappel : ${t.name}`,
-      text: `Chesspirit : rappel, ${t.name} commence le ${formatDateTime(t.starts_at)}${t.venue ? ` (${t.venue})` : ""}. Billet : chesspirit.com/billet/${r.ticket_code}`,
+      text: `Chesspirit : rappel, ${t.name} commence le ${when}${t.venue ? ` (${t.venue})` : ""}. Billet : chesspirit.com/billet/${r.ticket_code}`,
       whatsappTemplate: {
         name: "tournament_reminder",
-        params: [t.name, formatDateTime(t.starts_at)],
+        params: [t.name, when],
       },
     });
     await db
@@ -74,7 +80,8 @@ async function reminders(db: Db) {
 async function fideImport(db: Db) {
   const url = process.env.CHESS_ENGINE_URL;
   const key = process.env.CHESS_ENGINE_KEY;
-  if (!url || !key) throw new Error("engine_not_configured");
+  // Service échecs pas encore déployé : tâche sautée (et non en échec chaque mois).
+  if (!url || !key) return { skipped: "engine_not_configured" };
   const { data: known } = await db.from("profiles").select("fide_id").not("fide_id", "is", null);
   const res = await fetch(`${url}/fide/import`, {
     method: "POST",

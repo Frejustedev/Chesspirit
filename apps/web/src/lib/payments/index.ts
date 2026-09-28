@@ -1,4 +1,8 @@
 import "server-only";
+import { cache } from "react";
+import { createClient } from "@supabase/supabase-js";
+import { env } from "@/lib/env";
+import type { Database } from "@/lib/supabase/types";
 import type { PaymentProvider } from "./types";
 import { fakeProvider } from "./fake";
 import { fedapayProvider } from "./fedapay";
@@ -48,3 +52,25 @@ export function getProvider(id: ProviderId = activeProviderId()): PaymentProvide
     }
   }
 }
+
+/**
+ * Paiement en ligne réellement possible : un prestataire est configuré et l'interrupteur
+ * « payments_online » (Administration → Réglages) est actif. Sinon, seuls le paiement sur place
+ * et la gratuité sont proposés, et les parcours payants sont fermés avant toute réservation.
+ */
+export const onlinePaymentsEnabled = cache(async (): Promise<boolean> => {
+  if (!getProvider()) return false;
+  try {
+    const db = createClient<Database>(env.supabaseUrl, env.supabaseAnonKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { data } = await db
+      .from("feature_flags")
+      .select("enabled")
+      .eq("key", "payments_online")
+      .maybeSingle();
+    return data?.enabled !== false;
+  } catch {
+    return true;
+  }
+});

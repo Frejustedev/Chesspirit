@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { startPayment } from "@/lib/payments/checkout";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 import { bookingConfirmation } from "@/lib/coaching/notify";
 
 type Result<T = undefined> = { ok: true; data?: T } | { ok: false; error: string };
@@ -22,6 +23,14 @@ export async function bookAction(input: {
   if (![input.slotId, input.offerId, input.studentId].every((x) => uuid.safeParse(x).success))
     return { ok: false, error: "invalid" };
   const supabase = await createClient();
+  // Cours payant sans paiement en ligne : refus avant de bloquer une place du créneau.
+  const { data: offer } = await supabase
+    .from("offers")
+    .select("price_xof")
+    .eq("id", input.offerId)
+    .maybeSingle();
+  if (offer && offer.price_xof > 0 && !(await onlinePaymentsEnabled()))
+    return { ok: false, error: "payment_unavailable" };
   const { data: b, error } = await supabase.rpc("book_slot", {
     p_slot_id: input.slotId,
     p_offer_id: input.offerId,

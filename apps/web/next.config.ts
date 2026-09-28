@@ -4,17 +4,21 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "http://localhost:54321";
+// Statistiques Plausible (facultatives) : le script et ses envois viennent de cet hôte.
+const plausible = process.env.NEXT_PUBLIC_PLAUSIBLE_HOST
+  ? ` ${process.env.NEXT_PUBLIC_PLAUSIBLE_HOST}`
+  : "";
 const isDev = process.env.NODE_ENV !== "production";
 
 // CSP stricte : aucune ressource tierce hormis Supabase et les prestataires de paiement déclarés.
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} 'wasm-unsafe-eval'`,
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} 'wasm-unsafe-eval'${plausible}`,
   "style-src 'self' 'unsafe-inline'",
   // Tuiles de la carte « Où jouer » (OpenStreetMap).
   `img-src 'self' data: blob: ${supabaseUrl} https://tile.openstreetmap.org`,
   "font-src 'self'",
-  `connect-src 'self' ${supabaseUrl} ${supabaseUrl.replace(/^http/, "ws")}${process.env.NEXT_PUBLIC_PLAUSIBLE_HOST ? ` ${process.env.NEXT_PUBLIC_PLAUSIBLE_HOST}` : ""}`,
+  `connect-src 'self' ${supabaseUrl} ${supabaseUrl.replace(/^http/, "ws")}${plausible}`,
   "media-src 'self' blob:",
   "worker-src 'self' blob:",
   "frame-src 'self' https://checkout.fedapay.com https://sandbox-checkout.fedapay.com https://widget-v3.kkiapay.me https://www.youtube-nocookie.com https://player.vimeo.com",

@@ -7,7 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { requireSession } from "@/lib/auth";
 import { getTournamentBySlug } from "@/lib/data/tournaments";
 import { createClient } from "@/lib/supabase/server";
-import { getProvider } from "@/lib/payments";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 import { RegistrationForm } from "./registration-form";
 
 export const metadata: Metadata = { robots: { index: false } };
@@ -41,11 +41,12 @@ export default async function RegistrationPage({
     .parse(form?.fields ?? []);
   const feeKnown = t.entry_fee_xof != null && !t.unconfirmed_fields.includes("fee");
   const fee = feeKnown ? t.entry_fee_xof! : null;
+  const online = await onlinePaymentsEnabled();
   const methods: ("online" | "on_site" | "free")[] =
     fee === 0
       ? ["free"]
       : [
-          ...(fee && t.allow_online_payment && getProvider() ? (["online"] as const) : []),
+          ...(fee && t.allow_online_payment && online ? (["online"] as const) : []),
           ...(t.allow_on_site_payment ? (["on_site"] as const) : []),
         ];
 
@@ -87,6 +88,10 @@ export default async function RegistrationPage({
       {t.status !== "registration_open" ? (
         <p className="mt-8 rounded bg-bordeaux-soft p-4 font-semibold text-bordeaux">
           {tr("closed")}
+        </p>
+      ) : feeKnown && methods.length === 0 ? (
+        <p className="mt-8 rounded bg-bordeaux-soft p-4 font-semibold text-bordeaux">
+          {tr("noMethod")}
         </p>
       ) : (
         <div className="mt-8">

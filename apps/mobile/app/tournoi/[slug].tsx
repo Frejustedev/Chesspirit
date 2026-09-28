@@ -19,7 +19,7 @@ export default function TournamentScreen() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [registered, setRegistered] = useState<Record<string, string>>({});
   const [playerId, setPlayerId] = useState<string | null>(null);
-  const [method, setMethod] = useState<"online" | "on_site">("online");
+  const [method, setMethod] = useState<"online" | "on_site">("on_site");
   const [rules, setRules] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);

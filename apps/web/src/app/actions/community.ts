@@ -7,6 +7,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { startPayment } from "@/lib/payments/checkout";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 import { REFERRAL_COOKIE } from "@/lib/referral";
 
 type Result<T = undefined> = { ok: true; data?: T } | { ok: false; error: string };
@@ -19,6 +20,8 @@ export async function requestMembershipAction(
   const session = await getSession();
   if (!session?.profile) return { ok: false, error: "auth_required" };
   if (plan !== "free" && plan !== "premium") return { ok: false, error: "invalid" };
+  if (plan === "premium" && !(await onlinePaymentsEnabled()))
+    return { ok: false, error: "payment_unavailable" };
   const supabase = await createClient();
   const { data: m, error } = await supabase.rpc("request_membership", { p_plan: plan });
   if (error || !m) return { ok: false, error: error?.message ?? "server" };

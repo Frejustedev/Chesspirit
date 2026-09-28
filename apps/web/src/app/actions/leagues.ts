@@ -5,6 +5,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { startPayment } from "@/lib/payments/checkout";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 
 type Result<T = undefined> = { ok: true; data?: T } | { ok: false; error: string };
 const uuid = z.string().uuid();
@@ -19,6 +20,13 @@ export async function requestLicenseAction(
   if (!uuid.safeParse(seasonId).success || !uuid.safeParse(profileId).success)
     return { ok: false, error: "invalid" };
   const supabase = await createClient();
+  const { data: fee } = await supabase
+    .from("seasons")
+    .select("license_fee_xof")
+    .eq("id", seasonId)
+    .maybeSingle();
+  if ((fee?.license_fee_xof ?? 0) > 0 && !(await onlinePaymentsEnabled()))
+    return { ok: false, error: "payment_unavailable" };
   const { data: lic, error } = await supabase.rpc("request_league_license", {
     p_season: seasonId,
     p_profile: profileId,

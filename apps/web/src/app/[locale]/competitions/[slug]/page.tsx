@@ -339,7 +339,11 @@ export default async function TournamentPage({ params }: Props) {
           <div className="rounded-lg bg-ink p-5 text-cream shadow-[var(--shadow-card)]">
             {upcoming ? (
               <div className="-mb-2 flex justify-center pt-3">
-                <ChessClock target={t.starts_at} compact />
+                <ChessClock
+                  target={t.starts_at}
+                  compact
+                  dateOnly={t.unconfirmed_fields.includes("schedule")}
+                />
               </div>
             ) : null}
             {myRegistration ? (

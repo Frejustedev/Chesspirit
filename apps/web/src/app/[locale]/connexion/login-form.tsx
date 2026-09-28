@@ -6,12 +6,14 @@ import { phoneSchema } from "@chesspirit/shared";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/client";
 import { IconPhone, IconMail, IconGlobe } from "@/components/icons";
+import type { AuthMethods } from "@/lib/auth-methods";
 
 type Mode = "phone" | "email";
 
-export function LoginForm({ next, googleEnabled }: { next: string; googleEnabled: boolean }) {
+export function LoginForm({ next, methods }: { next: string; methods: AuthMethods }) {
   const t = useTranslations("auth");
-  const [mode, setMode] = useState<Mode>("phone");
+  const modes = (["phone", "email"] as const).filter((m) => methods[m]);
+  const [mode, setMode] = useState<Mode>(modes[0] ?? "email");
   const [identifier, setIdentifier] = useState("");
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [code, setCode] = useState("");
@@ -41,7 +43,14 @@ export function LoginForm({ next, googleEnabled }: { next: string; googleEnabled
     const { error } =
       mode === "phone"
         ? await supabase.auth.signInWithOtp({ phone: value })
-        : await supabase.auth.signInWithOtp({ email: value, options: { shouldCreateUser: true } });
+        : await supabase.auth.signInWithOtp({
+            email: value,
+            options: {
+              shouldCreateUser: true,
+              // Si le modèle d'e-mail contient un lien plutôt que le code, le lien revient ici.
+              emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+            },
+          });
     setBusy(false);
     if (error) return setError(error.status === 429 ? t("tooMany") : t("sendError"));
     setSentTo(value);
@@ -83,30 +92,36 @@ export function LoginForm({ next, googleEnabled }: { next: string; googleEnabled
     <div className="mt-6">
       {!sentTo ? (
         <>
-          <div
-            role="tablist"
-            aria-label={t("method")}
-            className="grid grid-cols-2 gap-1 rounded-full bg-cream p-1"
-          >
-            {(["phone", "email"] as const).map((m) => (
-              <button
-                key={m}
-                role="tab"
-                type="button"
-                aria-selected={mode === m}
-                onClick={() => {
-                  setMode(m);
-                  setIdentifier("");
-                  setError(null);
-                }}
-                className={`flex min-h-11 items-center justify-center gap-2 rounded-full text-sm font-semibold ${mode === m ? "bg-ink text-cream" : "text-ink/75"}`}
-              >
-                {m === "phone" ? <IconPhone className="size-4" /> : <IconMail className="size-4" />}
-                {t(m)}
-              </button>
-            ))}
-          </div>
-          <form onSubmit={send} className="mt-5" noValidate>
+          {modes.length > 1 ? (
+            <div
+              role="tablist"
+              aria-label={t("method")}
+              className="grid grid-cols-2 gap-1 rounded-full bg-cream p-1"
+            >
+              {modes.map((m) => (
+                <button
+                  key={m}
+                  role="tab"
+                  type="button"
+                  aria-selected={mode === m}
+                  onClick={() => {
+                    setMode(m);
+                    setIdentifier("");
+                    setError(null);
+                  }}
+                  className={`flex min-h-11 items-center justify-center gap-2 rounded-full text-sm font-semibold ${mode === m ? "bg-ink text-cream" : "text-ink/75"}`}
+                >
+                  {m === "phone" ? (
+                    <IconPhone className="size-4" />
+                  ) : (
+                    <IconMail className="size-4" />
+                  )}
+                  {t(m)}
+                </button>
+              ))}
+            </div>
+          ) : null}
+          <form onSubmit={send} className={modes.length > 1 ? "mt-5" : undefined} noValidate>
             <label htmlFor="identifier" className="text-sm font-semibold">
               {mode === "phone" ? t("phoneLabel") : t("emailLabel")}
             </label>
@@ -140,7 +155,7 @@ export function LoginForm({ next, googleEnabled }: { next: string; googleEnabled
               {busy ? t("sending") : t("sendCode")}
             </button>
           </form>
-          {googleEnabled ? (
+          {methods.google ? (
             <>
               <div className="my-5 flex items-center gap-3 text-sm text-stone">
                 <span className="h-px flex-1 bg-line" /> {t("or")}{" "}

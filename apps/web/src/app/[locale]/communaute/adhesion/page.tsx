@@ -11,6 +11,7 @@ import { env } from "@/lib/env";
 import { Tbc } from "@/components/ui/tbc";
 import { CommunityHeader, CommunityNav } from "@/components/community/community-nav";
 import { MembershipButton } from "@/components/community/actions";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("community.membership");
@@ -132,7 +133,9 @@ export default async function MembershipPage({ params }: { params: Promise<{ loc
           </aside>
         ) : null}
       </div>
-      <p className="mt-8 text-sm text-stone">{tc("membership.note")}</p>
+      <p className="mt-8 text-sm text-stone">
+        {(await onlinePaymentsEnabled()) ? tc("membership.note") : tc("membership.noteSoon")}
+      </p>
     </div>
   );
 }

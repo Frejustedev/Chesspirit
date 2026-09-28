@@ -4,6 +4,7 @@ import { requireSession } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { getShopSettings } from "@/lib/shop/data";
 import { CheckoutForm } from "@/components/shop/checkout-form";
+import { onlinePaymentsEnabled } from "@/lib/payments";
 
 export const metadata: Metadata = { robots: { index: false } };
 
@@ -13,9 +14,10 @@ export default async function CheckoutPage({ params }: { params: Promise<{ local
   const session = await requireSession(locale, "/boutique/commande");
   const t = await getTranslations("shop");
   const supabase = await createClient();
-  const [settings, { data: points }] = await Promise.all([
+  const [settings, { data: points }, online] = await Promise.all([
     getShopSettings(),
     supabase.rpc("loyalty_balance"),
+    onlinePaymentsEnabled(),
   ]);
   const p = session.profile!;
   return (
@@ -25,6 +27,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ local
         <CheckoutForm
           settings={settings}
           points={points ?? 0}
+          online={online}
           defaults={{
             name: `${p.first_name} ${p.last_name}`.trim(),
             phone: p.phone ?? session.phone ?? "",

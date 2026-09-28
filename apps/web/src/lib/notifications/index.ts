@@ -114,7 +114,11 @@ async function deliver(m: Message): Promise<{
   } catch (e) {
     return { status: "failed", provider: m.channel, error: String(e) };
   }
-  console.info(`[notification factice] ${m.channel} → ${m.to} : ${m.text}`);
+  // Aucun prestataire : en production, pas de coordonnées ni de contenu dans les journaux (le message
+  // reste consultable dans la table notifications).
+  if (process.env.NODE_ENV === "production")
+    console.info(`[notification non envoyée] ${m.channel} ${m.template}`);
+  else console.info(`[notification factice] ${m.channel} → ${m.to} : ${m.text}`);
   return { status: "skipped", provider: "fake" };
 }
 

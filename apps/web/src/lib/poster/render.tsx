@@ -30,34 +30,20 @@ const C = {
 const KNIGHT =
   "M14.2 35.5c.2-4.8 2.3-8.1 5.4-10.9-2.6.5-5 1.5-6.6 2.9-1.7 1-3.6-.2-3.4-2 .5-3.6 2.4-6.7 5.1-9.4l.9-4.9 2.8 2.6c.9-.3 1.9-.5 2.9-.6L23.9 9l1.6 3.7c5.7 2.1 9.3 7.7 9.3 14.6 0 3-.4 5.7-1 8.2H14.2ZM11 40.5h23a1.5 1.5 0 0 0 1.5-1.5v-1.2a2.3 2.3 0 0 0-2.3-2.3H11.8a2.3 2.3 0 0 0-2.3 2.3V39a1.5 1.5 0 0 0 1.5 1.5Z";
 
+// Polices copiées dans assets/fonts (licence SIL OFL 1.1), lues par des chemins littéraux : le traçage des
+// fichiers de Next.js les embarque ainsi dans la fonction déployée, ce qui n'était pas le cas depuis node_modules.
 async function fonts() {
-  const dir = path.join(process.cwd(), "node_modules/@fontsource");
-  const read = (p: string) => fs.readFile(path.join(dir, p));
+  const [fraunces700, fraunces600, sans400, sans600] = await Promise.all([
+    fs.readFile(path.join(process.cwd(), "assets/fonts/fraunces-latin-700-normal.woff")),
+    fs.readFile(path.join(process.cwd(), "assets/fonts/fraunces-latin-600-normal.woff")),
+    fs.readFile(path.join(process.cwd(), "assets/fonts/source-sans-3-latin-400-normal.woff")),
+    fs.readFile(path.join(process.cwd(), "assets/fonts/source-sans-3-latin-600-normal.woff")),
+  ]);
   return [
-    {
-      name: "Fraunces",
-      data: await read("fraunces/files/fraunces-latin-700-normal.woff"),
-      weight: 700 as const,
-      style: "normal" as const,
-    },
-    {
-      name: "Fraunces",
-      data: await read("fraunces/files/fraunces-latin-600-normal.woff"),
-      weight: 600 as const,
-      style: "normal" as const,
-    },
-    {
-      name: "Sans",
-      data: await read("source-sans-3/files/source-sans-3-latin-400-normal.woff"),
-      weight: 400 as const,
-      style: "normal" as const,
-    },
-    {
-      name: "Sans",
-      data: await read("source-sans-3/files/source-sans-3-latin-600-normal.woff"),
-      weight: 600 as const,
-      style: "normal" as const,
-    },
+    { name: "Fraunces", data: fraunces700, weight: 700 as const, style: "normal" as const },
+    { name: "Fraunces", data: fraunces600, weight: 600 as const, style: "normal" as const },
+    { name: "Sans", data: sans400, weight: 400 as const, style: "normal" as const },
+    { name: "Sans", data: sans600, weight: 600 as const, style: "normal" as const },
   ];
 }
 

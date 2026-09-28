@@ -31,7 +31,8 @@ const MESSAGES: Record<string, string> = {
     "Ce tournoi demande des informations complémentaires : inscrivez-vous sur le site.",
   already_registered: "Ce joueur est déjà inscrit.",
   registration_closed: "Les inscriptions sont fermées.",
-  payment_unavailable: "Le paiement en ligne est momentanément indisponible.",
+  payment_unavailable:
+    "Le paiement en ligne est momentanément indisponible : choisissez « Sur place ».",
   network: "Pas de connexion au serveur. Réessayez.",
 };
 export const registerError = (code: string) =>
