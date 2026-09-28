@@ -17,4 +17,4 @@ select tests.login_as((select b from ids));
 select tests.eq((select count(*)::int from public.push_tokens), 0, 'jetons des autres invisibles');
 select tests.as_anon();
 select tests.eq((select count(*)::int from public.countries where enabled), 1, 'seul le Bénin est ouvert');
-select tests.throws($$select 1/0 from public.push_tokens$$, 'jetons non lisibles par un anonyme');
+select tests.no_read($$select * from public.push_tokens$$, 'jetons non lisibles par un anonyme');

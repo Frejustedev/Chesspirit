@@ -12,7 +12,6 @@ insert into public.organizations (id, type, name, slug, is_public) values ('0000
 
 select tests.as_anon();
 select tests.eq((select last_name from public.public_profiles where first_name = 'Kiki'), 'M.', 'mineur : nom de famille réduit');
-select tests.throws($$select 1/0 from public.listing_claims$$, 'revendications non lisibles par un anonyme');
 
 select tests.login_as((select membre from ids));
 select public.propose_organization('{"type":"club","name":"Nouveau club","city":"Cotonou"}');
@@ -27,6 +26,7 @@ insert into public.arbiter_profiles (profile_id, title, verified) values (privat
 select tests.eq((select verified from public.arbiter_profiles where profile_id = private.my_profile_id()), false, 'arbitre : badge vérifié non auto-attribué');
 
 select tests.as_anon();
+select tests.no_read($$select * from public.listing_claims$$, 'revendications non lisibles par un anonyme');
 select tests.eq((select count(*)::int from public.job_posts where title = 'Coach recherché'), 0, 'offre en attente invisible');
 select tests.eq((select count(*)::int from public.organizations where name = 'Nouveau club'), 0, 'structure en attente invisible');
 

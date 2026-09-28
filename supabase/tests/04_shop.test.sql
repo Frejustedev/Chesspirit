@@ -20,7 +20,7 @@ insert into public.gift_cards (code, initial_xof, balance_xof, status) values ('
 
 select tests.as_anon();
 select tests.eq((select count(*)::int from public.products where slug = 'produit-test'), 1, 'catalogue public');
-select tests.throws($$select 1/0 from public.promo_codes$$, 'codes promo non listables (anonyme)');
+select tests.no_read($$select * from public.promo_codes$$, 'codes promo non listables (anonyme)');
 select tests.eq((select valid from public.check_promo('test20', 10000)), true, 'code promo vérifiable');
 select tests.eq((select discount_xof from public.check_promo('TEST20', 10000)), 2000, 'remise de 20 %');
 select tests.eq((select valid from public.check_promo('EPUISE', 10000)), false, 'code épuisé refusé');
@@ -37,7 +37,7 @@ grant select on o1 to authenticated, service_role, anon;
 select tests.eq((select total_xof from o1), 14500, 'total calculé par la base (remise, livraison, carte cadeau)');
 select tests.eq((select status::text from o1), 'pending_payment', 'commande en attente de paiement');
 select tests.eq((select stock from public.product_variants where id = '00000000-0000-0000-0000-0000000d0011'), 1, 'stock réservé');
-select tests.throws($$update public.orders set total_xof = 1 returning 1/0$$, 'le client ne modifie pas sa commande');
+select tests.no_write($$update public.orders set total_xof = 1$$, 'le client ne modifie pas sa commande');
 select tests.throws($$select public.set_order_status((select id from o1), 'shipped')$$, 'le client ne change pas le statut');
 select tests.eq(public.gift_card_balance('CAD-TEST-TEST-0001'), null::int, 'carte cadeau entièrement utilisée');
 

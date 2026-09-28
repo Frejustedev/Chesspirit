@@ -24,13 +24,13 @@ select tests.login_as((select eleve from ids));
 select tests.eq((select status || '/' || amount_xof || '/' || commission_xof from public.book_slot('00000000-0000-0000-0000-0000000c0003', '00000000-0000-0000-0000-0000000c0002', private.my_profile_id())),
   'pending_payment/10000/1500', 'réservation avec commission de 15 %');
 select tests.throws($$select public.book_slot('00000000-0000-0000-0000-0000000c0003', '00000000-0000-0000-0000-0000000c0002', private.my_profile_id())$$, 'créneau individuel déjà pris');
-select tests.throws($$update public.bookings set status = 'confirmed' returning 1/0$$, 'l''élève ne confirme pas sa réservation');
+select tests.no_write($$update public.bookings set status = 'confirmed'$$, 'l''élève ne confirme pas sa réservation');
 select tests.throws($$insert into public.progress_notes (coach_id, student_id, note) values ('00000000-0000-0000-0000-0000000c0001', private.my_profile_id(), 'x')$$,
   'l''élève n''écrit pas de note de coach');
 
 select tests.login_as((select autre from ids));
 select tests.eq((select count(*)::int from public.bookings), 0, 'une autre personne ne voit pas la réservation');
-select tests.throws($$update public.offers set price_xof = 1 where id = '00000000-0000-0000-0000-0000000c0002' returning 1/0$$, 'impossible de modifier l''offre d''un autre coach');
+select tests.no_write($$update public.offers set price_xof = 1 where id = '00000000-0000-0000-0000-0000000c0002'$$, 'impossible de modifier l''offre d''un autre coach');
 
 select tests.login_as((select coach from ids));
 select tests.eq((select count(*)::int from public.bookings), 1, 'le coach voit la réservation');

@@ -62,3 +62,36 @@ end $$;
 
 grant usage on schema tests to anon, authenticated, service_role;
 grant execute on all functions in schema tests to anon, authenticated, service_role;
+
+-- Écriture refusée : l'ordre (update, insert ou delete, sans « returning ») n'écrit aucune ligne
+-- (règles d'accès) ou est rejeté (droits, garde, WITH CHECK). Les tables visées doivent contenir
+-- des lignes au moment du test, sinon l'assertion ne prouve rien.
+create or replace function tests.no_write(p_sql text, label text) returns void
+language plpgsql as $$
+declare n int;
+begin
+  begin
+    execute format('with w as (%s returning 1) select count(*)::int from w', p_sql) into n;
+  exception when insufficient_privilege then
+    raise notice 'ok - % (%)', label, sqlerrm;
+    return;
+  end;
+  if n > 0 then raise exception 'ÉCHEC % : % ligne(s) écrite(s)', label, n; end if;
+  raise notice 'ok - % (aucune ligne écrite)', label;
+end $$;
+
+-- Lecture refusée : la requête ne renvoie aucune ligne ou est rejetée faute de droits.
+create or replace function tests.no_read(p_sql text, label text) returns void
+language plpgsql as $$
+declare n int;
+begin
+  begin
+    execute format('select count(*)::int from (%s) q', p_sql) into n;
+  exception when insufficient_privilege then
+    raise notice 'ok - % (%)', label, sqlerrm;
+    return;
+  end;
+  if n > 0 then raise exception 'ÉCHEC % : % ligne(s) visible(s)', label, n; end if;
+  raise notice 'ok - % (aucune ligne visible)', label;
+end $$;
+

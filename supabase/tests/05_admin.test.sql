@@ -40,7 +40,7 @@ select tests.eq((select status from public.admin_record_refund('00000000-0000-00
 select tests.throws($$select public.admin_record_refund('00000000-0000-0000-0000-0000000e0020', 4000, 'trop')$$, 'remboursement au-delà du payé refusé');
 select public.admin_record_refund('00000000-0000-0000-0000-0000000e0020', 3000, 'solde');
 select tests.eq((select status from public.payments where id = '00000000-0000-0000-0000-0000000e0020'), 'refunded', 'paiement remboursé en totalité');
-select tests.throws($$insert into public.user_roles (user_id, role) values ((select joueur from ids), 'admin') returning 1/0$$, 'un admin simple n''attribue pas de rôle');
+select tests.no_write($$insert into public.user_roles (user_id, role) values ((select joueur from ids), 'admin')$$, 'un admin simple n''attribue pas de rôle');
 
 select tests.eq((select public.admin_anonymize_profile('00000000-0000-0000-0000-0000000e0001')), (select joueur from ids), 'anonymisation (renvoie le compte à supprimer)');
 select tests.eq((select first_name || ' ' || last_name || coalesce(phone, '-') from public.profiles where id = '00000000-0000-0000-0000-0000000e0001'), 'Joueur anonyme-', 'identité effacée');

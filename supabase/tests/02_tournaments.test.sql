@@ -24,13 +24,13 @@ select tests.throws($$select public.register_for_tournament('00000000-0000-0000-
   'anonyme : inscription impossible');
 
 select tests.login_as((select player from ids));
-select tests.throws($$update public.tournaments set name = 'Piraté'$$ || ' where slug = ''test-open'' returning 1/0', 'un joueur ne modifie pas un tournoi');
+select tests.no_write($$update public.tournaments set name = 'Piraté' where slug = 'test-open'$$, 'un joueur ne modifie pas un tournoi');
 select tests.eq((select status::text from public.register_for_tournament('00000000-0000-0000-0000-00000000a001', private.my_profile_id(), '{}', 'online')),
   'pending_payment', 'inscription avec paiement en ligne en attente');
 select tests.eq((select payment_status::text from public.registrations), 'pending', 'paiement en attente');
 select tests.throws($$select public.register_for_tournament('00000000-0000-0000-0000-00000000a001', (select id from public.public_profiles where first_name = 'Olga'))$$,
   'impossible d''inscrire un autre joueur');
-select tests.throws($$update public.registrations set status = 'confirmed', payment_status = 'paid' returning 1/0$$,
+select tests.no_write($$update public.registrations set status = 'confirmed', payment_status = 'paid'$$,
   'un joueur ne peut pas valider son propre paiement');
 select tests.eq((select count(*)::int from public.payments), 0, 'aucun paiement visible');
 select tests.throws($$insert into public.payments (provider, amount_xof, object_type, object_id) values ('fake', 1, 'registration', gen_random_uuid())$$,
@@ -69,7 +69,7 @@ insert into public.pairings (tournament_id, round_id, board, white_id, black_id)
     (select player_id from public.registrations r join public.profiles p on p.id = r.player_id where p.first_name = 'Olga');
 update public.pairings set result = '1-0';
 select tests.eq((select count(*)::int from public.audit_logs), 0, 'le journal n''est pas lisible par un arbitre');
-select tests.throws($$update public.tournaments set name = 'Autre nom' where slug = 'test-open' returning 1/0$$,
+select tests.no_write($$update public.tournaments set name = 'Autre nom' where slug = 'test-open'$$,
   'l''arbitre ne modifie pas la fiche du tournoi');
 
 -- Les appariements non publiés restent invisibles au public.

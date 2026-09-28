@@ -41,7 +41,6 @@ select tests.as_anon();
 select tests.eq((select count(*)::int from public.membership_plans), 2, 'formules visibles');
 select tests.eq((select count(*)::int from public.lesson_catalog where slug = 'lecon-premium-test'), 1, 'leçon premium au catalogue');
 select tests.eq((select count(*)::int from public.lessons_library where slug = 'lecon-premium-test'), 0, 'texte premium masqué');
-select tests.throws($$select 1/0 from public.memberships$$, 'adhésions non lisibles par un anonyme');
 select tests.eq((select count(*)::int from public.award_categories where name ->> 'fr' = 'Cachée'), 0, 'édition en brouillon masquée');
 
 -- Membre : adhésion gratuite, premium impossible tant que le tarif n'est pas fixé.
@@ -120,3 +119,4 @@ select tests.throws($$select public.pvm_vote('00000000-0000-0000-0000-0000000c11
 select tests.as_anon();
 select tests.eq((select votes::int from public.award_results('00000000-0000-0000-0000-0000000c0e01') where nominee_id = '00000000-0000-0000-0000-0000000c1002'), 1, 'résultats publiés après la clôture');
 select tests.eq((select points::int from public.prediction_leaderboard where display_name like 'Fifi%'), 1, 'classement des pronostics public');
+select tests.no_read($$select * from public.memberships$$, 'adhésions non lisibles par un anonyme');
