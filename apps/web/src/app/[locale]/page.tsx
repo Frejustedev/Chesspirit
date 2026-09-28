@@ -3,7 +3,8 @@ import { formatDate } from "@chesspirit/shared";
 import { Link } from "@/i18n/navigation";
 import { getNextEvent, getLatestResults } from "@/lib/data/tournaments";
 import { createClient } from "@/lib/supabase/server";
-import { puzzleOfTheDay } from "@/lib/puzzles";
+import type { Tables } from "@/lib/supabase/types";
+import { puzzleOfTheDay, type Puzzle } from "@/lib/puzzles";
 import { ChessClock } from "@/components/home/chess-clock";
 import { KnightDraw } from "@/components/home/knight-draw";
 import { PuzzleBoard } from "@/components/chess/puzzle";
@@ -28,7 +29,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       .order("rating", { ascending: false })
       .limit(10),
   ]);
-  const puzzle = puzzleOfTheDay();
+  // Même puzzle que l'académie (base de puzzles), repli sur la liste intégrée.
+  const daily = (await (await createClient()).rpc("daily_puzzle")).data as Tables<"puzzles"> | null;
+  const puzzle: Puzzle = daily
+    ? {
+        id: daily.code,
+        fen: daily.fen,
+        solution: daily.solution,
+        theme: daily.theme as Puzzle["theme"],
+        mateIn: daily.mate_in ?? Math.ceil(daily.solution.length / 2),
+      }
+    : puzzleOfTheDay();
 
   const pillars: { key: string; href: string; piece: PieceKind }[] = [
     { key: "coaching", href: "/coaching", piece: "p" },

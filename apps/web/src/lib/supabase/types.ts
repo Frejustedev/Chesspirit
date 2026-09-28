@@ -74,6 +74,54 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "arbiter_profiles_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: true; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      articles: {
+        Row: {
+          id: string;
+          slug: string;
+          title: Json;
+          excerpt: Json;
+          body: Json;
+          tags: string[];
+          tournament_id: string | null;
+          status: string;
+          published_at: string | null;
+          author_id: string | null;
+          is_demo: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          title: Json;
+          excerpt?: Json;
+          body?: Json;
+          tags?: string[];
+          tournament_id?: string | null;
+          status?: string;
+          published_at?: string | null;
+          author_id?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          title?: Json;
+          excerpt?: Json;
+          body?: Json;
+          tags?: string[];
+          tournament_id?: string | null;
+          status?: string;
+          published_at?: string | null;
+          author_id?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "articles_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "articles_author_id_fkey"; columns: ["author_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
       audit_logs: {
         Row: {
           id: string;
@@ -764,6 +812,75 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "gift_cards_purchase_order_id_fkey"; columns: ["purchase_order_id"]; isOneToOne: false; referencedRelation: "orders"; referencedColumns: ["id"] }];
       };
+      glossary_suggestions: {
+        Row: {
+          id: string;
+          term_id: string;
+          profile_id: string;
+          term_fon: string;
+          note: string | null;
+          status: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          term_id: string;
+          profile_id: string;
+          term_fon: string;
+          note?: string | null;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          term_id?: string;
+          profile_id?: string;
+          term_fon?: string;
+          note?: string | null;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "glossary_suggestions_term_id_fkey"; columns: ["term_id"]; isOneToOne: false; referencedRelation: "glossary_terms"; referencedColumns: ["id"] }, { foreignKeyName: "glossary_suggestions_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      glossary_terms: {
+        Row: {
+          id: string;
+          term_fr: string;
+          term_en: string;
+          term_fon: string | null;
+          fon_status: string;
+          definition: Json;
+          category: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          term_fr: string;
+          term_en: string;
+          term_fon?: string | null;
+          fon_status?: string;
+          definition?: Json;
+          category?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          term_fr?: string;
+          term_en?: string;
+          term_fon?: string | null;
+          fon_status?: string;
+          definition?: Json;
+          category?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       homework: {
         Row: {
           id: string;
@@ -1094,6 +1211,54 @@ export type Database = {
         };
         Relationships: [{ foreignKeyName: "leagues_season_id_fkey"; columns: ["season_id"]; isOneToOne: false; referencedRelation: "seasons"; referencedColumns: ["id"] }, { foreignKeyName: "leagues_champion_id_fkey"; columns: ["champion_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
       };
+      lessons_library: {
+        Row: {
+          id: string;
+          slug: string;
+          level: string;
+          theme: string;
+          title: Json;
+          summary: Json;
+          body: Json;
+          positions: Json;
+          position: number;
+          is_premium: boolean;
+          status: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          level: string;
+          theme: string;
+          title: Json;
+          summary?: Json;
+          body?: Json;
+          positions?: Json;
+          position?: number;
+          is_premium?: boolean;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          level?: string;
+          theme?: string;
+          title?: Json;
+          summary?: Json;
+          body?: Json;
+          positions?: Json;
+          position?: number;
+          is_premium?: boolean;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       lichess_accounts: {
         Row: {
           profile_id: string;
@@ -1201,6 +1366,120 @@ export type Database = {
           created_at?: string;
         };
         Relationships: [{ foreignKeyName: "masters_invitations_season_id_fkey"; columns: ["season_id"]; isOneToOne: false; referencedRelation: "seasons"; referencedColumns: ["id"] }, { foreignKeyName: "masters_invitations_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      media_episodes: {
+        Row: {
+          id: string;
+          series_id: string;
+          slug: string;
+          season: number;
+          number: number;
+          title: Json;
+          description: Json;
+          format: string;
+          video_url: string | null;
+          audio_url: string | null;
+          live_at: string | null;
+          duration_min: number | null;
+          language: string;
+          level: string | null;
+          theme: string | null;
+          transcript: string | null;
+          positions: Json;
+          status: string;
+          published_at: string | null;
+          is_demo: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          series_id: string;
+          slug: string;
+          season?: number;
+          number: number;
+          title: Json;
+          description?: Json;
+          format: string;
+          video_url?: string | null;
+          audio_url?: string | null;
+          live_at?: string | null;
+          duration_min?: number | null;
+          language?: string;
+          level?: string | null;
+          theme?: string | null;
+          transcript?: string | null;
+          positions?: Json;
+          status?: string;
+          published_at?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          series_id?: string;
+          slug?: string;
+          season?: number;
+          number?: number;
+          title?: Json;
+          description?: Json;
+          format?: string;
+          video_url?: string | null;
+          audio_url?: string | null;
+          live_at?: string | null;
+          duration_min?: number | null;
+          language?: string;
+          level?: string | null;
+          theme?: string | null;
+          transcript?: string | null;
+          positions?: Json;
+          status?: string;
+          published_at?: string | null;
+          is_demo?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "media_episodes_series_id_fkey"; columns: ["series_id"]; isOneToOne: false; referencedRelation: "media_series"; referencedColumns: ["id"] }];
+      };
+      media_series: {
+        Row: {
+          id: string;
+          slug: string;
+          kind: string;
+          title: Json;
+          description: Json;
+          language: string;
+          position: number;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          kind: string;
+          title: Json;
+          description?: Json;
+          language?: string;
+          position?: number;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          kind?: string;
+          title?: Json;
+          description?: Json;
+          language?: string;
+          position?: number;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
       newsletter_subscribers: {
         Row: {
@@ -2256,6 +2535,78 @@ export type Database = {
         };
         Relationships: [];
       };
+      puzzle_attempts: {
+        Row: {
+          id: string;
+          puzzle_id: string;
+          profile_id: string;
+          solved: boolean;
+          context: string;
+          attempted_on: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          puzzle_id: string;
+          profile_id: string;
+          solved: boolean;
+          context?: string;
+          attempted_on?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          puzzle_id?: string;
+          profile_id?: string;
+          solved?: boolean;
+          context?: string;
+          attempted_on?: string;
+          created_at?: string;
+        };
+        Relationships: [{ foreignKeyName: "puzzle_attempts_puzzle_id_fkey"; columns: ["puzzle_id"]; isOneToOne: false; referencedRelation: "puzzles"; referencedColumns: ["id"] }, { foreignKeyName: "puzzle_attempts_profile_id_fkey"; columns: ["profile_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      puzzles: {
+        Row: {
+          id: string;
+          code: string;
+          fen: string;
+          solution: string[];
+          theme: string;
+          mate_in: number | null;
+          rating: number | null;
+          source: string;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          code: string;
+          fen: string;
+          solution: string[];
+          theme: string;
+          mate_in?: number | null;
+          rating?: number | null;
+          source?: string;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          code?: string;
+          fen?: string;
+          solution?: string[];
+          theme?: string;
+          mate_in?: number | null;
+          rating?: number | null;
+          source?: string;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       quote_requests: {
         Row: {
           id: string;
@@ -2547,6 +2898,48 @@ export type Database = {
           bye_requests?: Json;
         };
         Relationships: [{ foreignKeyName: "registrations_tournament_id_fkey"; columns: ["tournament_id"]; isOneToOne: false; referencedRelation: "tournaments"; referencedColumns: ["id"] }, { foreignKeyName: "registrations_player_id_fkey"; columns: ["player_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] }];
+      };
+      resources: {
+        Row: {
+          id: string;
+          title: Json;
+          description: Json;
+          kind: string;
+          url: string;
+          level: string | null;
+          language: string;
+          is_premium: boolean;
+          status: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: Json;
+          description?: Json;
+          kind: string;
+          url: string;
+          level?: string | null;
+          language?: string;
+          is_premium?: boolean;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: Json;
+          description?: Json;
+          kind?: string;
+          url?: string;
+          level?: string | null;
+          language?: string;
+          is_premium?: boolean;
+          status?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
       rounds: {
         Row: {
@@ -3194,6 +3587,33 @@ export type Database = {
         };
         Relationships: [];
       };
+      weekly_challenges: {
+        Row: {
+          id: string;
+          week_start: string;
+          title: Json;
+          puzzle_ids: string[];
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          week_start: string;
+          title: Json;
+          puzzle_ids: string[];
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          week_start?: string;
+          title?: Json;
+          puzzle_ids?: string[];
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       wishlists: {
         Row: {
           profile_id: string;
@@ -3446,6 +3866,7 @@ export type Database = {
       cancel_booking: { Args: { p_booking_id: string }; Returns: Database["public"]["Tables"]["bookings"]["Row"] };
       cancel_order: { Args: { p_order_id: string; p_note?: string }; Returns: Database["public"]["Tables"]["orders"]["Row"] };
       cancel_registration: { Args: { p_registration_id: string }; Returns: Database["public"]["Tables"]["registrations"]["Row"] };
+      challenge_leaderboard: { Args: { p_challenge: string }; Returns: { display_name: string; solved: number }[] };
       check_in: { Args: { p_ticket_code: string; p_mark_paid?: boolean }; Returns: { registration_id: string; tournament_id: string; display_name: string; status: Database["public"]["Enums"]["registration_status"]; payment_status: Database["public"]["Enums"]["payment_status"]; checked_in_at: string; already: boolean }[] };
       check_promo: { Args: { p_code: string; p_subtotal: number }; Returns: { valid: boolean; kind: string; discount_xof: number }[] };
       close_league: { Args: { p_league: string }; Returns: string };
@@ -3453,6 +3874,7 @@ export type Database = {
       compute_tour_points: { Args: { p_tournament: string }; Returns: number };
       confirm_payment: { Args: { p_payment_id: string; p_status: string; p_provider_ref: string; p_reason?: string }; Returns: Database["public"]["Tables"]["payments"]["Row"] };
       create_league_matchday: { Args: { p_league: string; p_date?: string }; Returns: string };
+      daily_puzzle: { Args: { p_day?: string }; Returns: Database["public"]["Tables"]["puzzles"]["Row"] };
       decide_listing_claim: { Args: { p_claim: string; p_approve: boolean }; Returns: undefined };
       duplicate_tournament: { Args: { p_tournament_id: string; p_slug: string; p_starts_at: string }; Returns: Database["public"]["Tables"]["tournaments"]["Row"] };
       gift_card_balance: { Args: { p_code: string }; Returns: number };

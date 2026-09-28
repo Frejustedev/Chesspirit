@@ -1444,6 +1444,508 @@ async function seedDirectory() {
   console.log("✓ Annuaire de démonstration : 1 arbitre, 1 offre d'emploi");
 }
 
+const GLOSSARY: [string, string, string, string, string][] = [
+  [
+    "Échiquier",
+    "Chessboard",
+    "pieces",
+    "Plateau de 64 cases alternativement claires et foncées.",
+    "Board of 64 alternating light and dark squares.",
+  ],
+  [
+    "Roi",
+    "King",
+    "pieces",
+    "Pièce la plus importante : la partie se perd quand il est mat.",
+    "The most important piece: the game is lost when it is checkmated.",
+  ],
+  [
+    "Dame",
+    "Queen",
+    "pieces",
+    "Pièce la plus puissante, se déplace comme une tour et un fou.",
+    "The most powerful piece, moves like a rook and a bishop.",
+  ],
+  [
+    "Tour",
+    "Rook",
+    "pieces",
+    "Se déplace en ligne droite sur les colonnes et les rangées.",
+    "Moves in straight lines along files and ranks.",
+  ],
+  ["Fou", "Bishop", "pieces", "Se déplace en diagonale.", "Moves diagonally."],
+  [
+    "Cavalier",
+    "Knight",
+    "pieces",
+    "Se déplace en L et peut sauter par-dessus les pièces.",
+    "Moves in an L shape and can jump over pieces.",
+  ],
+  [
+    "Pion",
+    "Pawn",
+    "pieces",
+    "Avance d'une case (deux au premier coup) et prend en diagonale.",
+    "Moves forward one square (two on its first move) and captures diagonally.",
+  ],
+  [
+    "Échec",
+    "Check",
+    "rules",
+    "Le roi est attaqué et doit être protégé immédiatement.",
+    "The king is attacked and must be protected at once.",
+  ],
+  [
+    "Échec et mat",
+    "Checkmate",
+    "rules",
+    "Le roi est en échec sans aucun moyen d'y échapper : la partie est terminée.",
+    "The king is in check with no way out: the game is over.",
+  ],
+  [
+    "Pat",
+    "Stalemate",
+    "rules",
+    "Le joueur au trait n'a aucun coup légal sans être en échec : partie nulle.",
+    "The player to move has no legal move and is not in check: the game is drawn.",
+  ],
+  [
+    "Roque",
+    "Castling",
+    "rules",
+    "Coup spécial du roi et d'une tour, pour mettre le roi à l'abri.",
+    "Special move of the king and a rook to bring the king to safety.",
+  ],
+  [
+    "Prise en passant",
+    "En passant",
+    "rules",
+    "Prise spéciale d'un pion qui vient d'avancer de deux cases.",
+    "Special capture of a pawn that has just advanced two squares.",
+  ],
+  [
+    "Promotion",
+    "Promotion",
+    "rules",
+    "Un pion qui atteint la dernière rangée devient une autre pièce.",
+    "A pawn reaching the last rank becomes another piece.",
+  ],
+  [
+    "Nulle",
+    "Draw",
+    "rules",
+    "Partie sans vainqueur (accord, pat, répétition, matériel insuffisant…).",
+    "A game without a winner (agreement, stalemate, repetition, insufficient material…).",
+  ],
+  [
+    "Pièce touchée, pièce jouée",
+    "Touch-move",
+    "rules",
+    "Une pièce touchée volontairement doit être jouée si possible.",
+    "A piece deliberately touched must be moved if possible.",
+  ],
+  [
+    "Fourchette",
+    "Fork",
+    "tactics",
+    "Une pièce attaque deux cibles à la fois.",
+    "One piece attacks two targets at once.",
+  ],
+  [
+    "Clouage",
+    "Pin",
+    "tactics",
+    "Une pièce ne peut bouger sans exposer une pièce plus importante derrière elle.",
+    "A piece cannot move without exposing a more valuable piece behind it.",
+  ],
+  [
+    "Enfilade",
+    "Skewer",
+    "tactics",
+    "Attaque d'une pièce importante qui, en s'écartant, laisse prendre celle de derrière.",
+    "Attack on a valuable piece which, when it moves, exposes the piece behind.",
+  ],
+  [
+    "Attaque à la découverte",
+    "Discovered attack",
+    "tactics",
+    "Une pièce se déplace et démasque l'attaque d'une autre.",
+    "A piece moves and unmasks an attack by another.",
+  ],
+  [
+    "Sacrifice",
+    "Sacrifice",
+    "tactics",
+    "Abandon volontaire de matériel pour obtenir un avantage.",
+    "Deliberately giving up material to gain an advantage.",
+  ],
+  [
+    "Mat du couloir",
+    "Back-rank mate",
+    "tactics",
+    "Mat sur la dernière rangée d'un roi enfermé par ses propres pions.",
+    "Mate on the back rank of a king trapped by its own pawns.",
+  ],
+  [
+    "Mat étouffé",
+    "Smothered mate",
+    "tactics",
+    "Mat donné par un cavalier à un roi entouré de ses propres pièces.",
+    "Mate by a knight against a king surrounded by its own pieces.",
+  ],
+  [
+    "Ouverture",
+    "Opening",
+    "openings",
+    "Début de partie : développement des pièces et contrôle du centre.",
+    "Start of the game: developing pieces and controlling the centre.",
+  ],
+  [
+    "Gambit",
+    "Gambit",
+    "openings",
+    "Ouverture où l'on sacrifie un pion pour un avantage de développement.",
+    "An opening sacrificing a pawn for faster development.",
+  ],
+  [
+    "Milieu de partie",
+    "Middlegame",
+    "strategy",
+    "Phase de la partie après l'ouverture, riche en plans et en combinaisons.",
+    "The phase after the opening, rich in plans and combinations.",
+  ],
+  [
+    "Finale",
+    "Endgame",
+    "endgames",
+    "Dernière phase de la partie, avec peu de pièces.",
+    "The final phase of the game, with few pieces left.",
+  ],
+  [
+    "Opposition",
+    "Opposition",
+    "endgames",
+    "Rois face à face séparés d'une case : clé des finales de pions.",
+    "Kings facing each other one square apart: key to pawn endings.",
+  ],
+  [
+    "Pendule",
+    "Chess clock",
+    "competition",
+    "Double chronomètre qui mesure le temps de réflexion de chaque joueur.",
+    "Double timer measuring each player's thinking time.",
+  ],
+  [
+    "Cadence",
+    "Time control",
+    "competition",
+    "Temps accordé à chaque joueur (par exemple 15 min + 10 s par coup).",
+    "Time given to each player (for example 15 min + 10 s per move).",
+  ],
+  [
+    "Appariement",
+    "Pairing",
+    "competition",
+    "Désignation des adversaires de chaque ronde.",
+    "Assignment of opponents for each round.",
+  ],
+  [
+    "Système suisse",
+    "Swiss system",
+    "competition",
+    "Tournoi où les joueurs de même score se rencontrent, sans élimination.",
+    "Tournament where players with equal scores meet, without elimination.",
+  ],
+  [
+    "Départage",
+    "Tiebreak",
+    "competition",
+    "Critère qui sépare les joueurs à égalité de points.",
+    "Criterion separating players tied on points.",
+  ],
+  [
+    "Feuille de notation",
+    "Scoresheet",
+    "competition",
+    "Feuille où chaque joueur note les coups de la partie.",
+    "Sheet on which each player records the moves.",
+  ],
+];
+
+const LESSONS = [
+  {
+    slug: "deplacement-des-pieces",
+    level: "discovery",
+    theme: "rules",
+    fr: [
+      "Le déplacement des pièces",
+      "Comment bougent le roi, la dame, la tour, le fou, le cavalier et le pion.",
+      "## Les pièces\n\nChaque camp commence avec 16 pièces : un roi, une dame, deux tours, deux fous, deux cavaliers et huit pions.\n\n- **La tour** se déplace en ligne droite, sur les colonnes et les rangées.\n- **Le fou** se déplace en diagonale et reste toujours sur la même couleur de case.\n- **La dame** combine la tour et le fou.\n- **Le roi** se déplace d'une case dans toutes les directions.\n- **Le cavalier** se déplace en L et peut sauter par-dessus les autres pièces.\n- **Le pion** avance d'une case (deux cases lors de son premier coup) et prend en diagonale.\n\n## À retenir\n\nLe but de la partie est de mettre le roi adverse échec et mat.",
+    ],
+    en: [
+      "How the pieces move",
+      "How the king, queen, rook, bishop, knight and pawn move.",
+      "## The pieces\n\nEach side starts with 16 pieces: a king, a queen, two rooks, two bishops, two knights and eight pawns.\n\n- **The rook** moves in straight lines along files and ranks.\n- **The bishop** moves diagonally and always stays on the same colour.\n- **The queen** combines the rook and the bishop.\n- **The king** moves one square in any direction.\n- **The knight** moves in an L shape and can jump over other pieces.\n- **The pawn** moves forward one square (two on its first move) and captures diagonally.\n\n## Remember\n\nThe goal of the game is to checkmate the opponent's king.",
+    ],
+    positions: [
+      {
+        fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        caption: { fr: "Position de départ", en: "Starting position" },
+      },
+    ],
+  },
+  {
+    slug: "le-mat-du-couloir",
+    level: "beginner",
+    theme: "tactics",
+    fr: [
+      "Le mat du couloir",
+      "Profiter d'un roi enfermé derrière ses pions.",
+      "## L'idée\n\nQuand le roi a roqué et que ses trois pions sont restés devant lui, il n'a plus de case de fuite. Une tour ou une dame qui arrive sur la dernière rangée donne alors mat.\n\n## Se protéger\n\nPour éviter ce mat, on ouvre une « case d'aération » en avançant un pion (h3 ou g3 pour les Blancs) au bon moment.\n\n## À vous\n\nTrouvez le mat en un coup dans la position ci-dessous.",
+    ],
+    en: [
+      "The back-rank mate",
+      "Taking advantage of a king trapped behind its pawns.",
+      "## The idea\n\nWhen the king has castled and its three pawns are still in front of it, it has no escape square. A rook or queen reaching the back rank then gives mate.\n\n## Staying safe\n\nTo avoid this mate, make a “luft” by pushing a pawn (h3 or g3 for White) at the right moment.\n\n## Your turn\n\nFind the mate in one in the position below.",
+    ],
+    positions: [
+      {
+        fen: "6k1/5ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1",
+        caption: { fr: "Les Blancs jouent et font mat", en: "White to play and mate" },
+        solution: ["d1d8"],
+      },
+    ],
+  },
+  {
+    slug: "principes-de-l-ouverture",
+    level: "beginner",
+    theme: "openings",
+    fr: [
+      "Les principes de l'ouverture",
+      "Trois règles simples pour bien commencer une partie.",
+      "## 1. Contrôler le centre\n\nLes cases d4, e4, d5 et e5 sont les plus importantes : les pions et les pièces qui les contrôlent ont plus d'influence.\n\n## 2. Développer ses pièces\n\nSortez les cavaliers et les fous avant de déplacer plusieurs fois la même pièce. Évitez de sortir la dame trop tôt.\n\n## 3. Mettre le roi à l'abri\n\nRoquez tôt pour protéger votre roi et relier vos tours.",
+    ],
+    en: [
+      "Opening principles",
+      "Three simple rules to start a game well.",
+      "## 1. Control the centre\n\nThe squares d4, e4, d5 and e5 matter most: pawns and pieces controlling them have more influence.\n\n## 2. Develop your pieces\n\nBring out the knights and bishops before moving the same piece several times. Avoid bringing the queen out too early.\n\n## 3. Keep the king safe\n\nCastle early to protect your king and connect your rooks.",
+    ],
+    positions: [
+      {
+        fen: "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+        caption: { fr: "Développement harmonieux", en: "Harmonious development" },
+      },
+    ],
+  },
+  {
+    slug: "la-fourchette-du-cavalier",
+    level: "intermediate",
+    theme: "tactics",
+    fr: [
+      "La fourchette du cavalier",
+      "Attaquer deux pièces à la fois avec un cavalier.",
+      "## Le principe\n\nLe cavalier attaque jusqu'à huit cases et ne peut pas être bloqué. Il est idéal pour attaquer deux pièces à la fois : c'est la fourchette.\n\n## Repérer les cibles\n\nCherchez le roi, la dame et les tours adverses placés sur des cases de même couleur, à distance de saut de cavalier l'une de l'autre.",
+    ],
+    en: [
+      "The knight fork",
+      "Attacking two pieces at once with a knight.",
+      "## The principle\n\nThe knight attacks up to eight squares and cannot be blocked. It is ideal for attacking two pieces at once: the fork.\n\n## Spotting targets\n\nLook for the enemy king, queen and rooks on squares of the same colour, a knight's jump away from each other.",
+    ],
+    positions: [],
+  },
+];
+
+/** Contenus de base : émissions du dossier de projet, puzzles vérifiés, leçons, glossaire, ressources. */
+async function seedContent(demo: boolean) {
+  const { data: exists } = await db.from("media_series").select("id").limit(1);
+  if (exists?.length) {
+    console.log("• Contenus déjà présents");
+    return;
+  }
+  const series = must(
+    await db
+      .from("media_series")
+      .insert([
+        {
+          slug: "le-coup-de-la-semaine",
+          language: "fr",
+          kind: "show",
+          position: 1,
+          title: { fr: "Le Coup de la semaine", en: "Move of the Week" },
+          description: {
+            fr: "Une position marquante de la semaine, expliquée pas à pas.",
+            en: "A striking position of the week, explained step by step.",
+          },
+        },
+        {
+          slug: "echecs-en-fon",
+          kind: "show",
+          position: 2,
+          language: "fon",
+          title: { fr: "Échecs en fon", en: "Chess in Fon" },
+          description: { fr: "Les échecs expliqués en fon.", en: "Chess explained in Fon." },
+        },
+        {
+          slug: "au-coeur-de-la-ligue",
+          language: "fr",
+          kind: "show",
+          position: 3,
+          title: { fr: "Au cœur de la Ligue", en: "Inside the League" },
+          description: {
+            fr: "Les coulisses et les parties clés des ligues Chesspirit.",
+            en: "Behind the scenes and key games of the Chesspirit leagues.",
+          },
+        },
+        {
+          slug: "portraits",
+          language: "fr",
+          kind: "show",
+          position: 4,
+          title: { fr: "Portraits", en: "Portraits" },
+          description: {
+            fr: "Rencontres avec les joueurs, coachs et arbitres du Bénin.",
+            en: "Meeting the players, coaches and arbiters of Benin.",
+          },
+        },
+        {
+          slug: "chesspirit-live",
+          language: "fr",
+          kind: "live",
+          position: 5,
+          title: { fr: "Chesspirit Live", en: "Chesspirit Live" },
+          description: {
+            fr: "Les tournois commentés en direct.",
+            en: "Tournaments commented live.",
+          },
+        },
+      ])
+      .select("id, slug"),
+    "émissions",
+  );
+  const { BASE_PUZZLES } = await import("../apps/web/src/lib/puzzles");
+  const puzzles = must(
+    await db
+      .from("puzzles")
+      .insert(
+        BASE_PUZZLES.map((p) => ({
+          code: p.id,
+          fen: p.fen,
+          solution: p.solution,
+          theme: p.theme,
+          mate_in: p.mateIn,
+        })),
+      )
+      .select("id, code"),
+    "puzzles",
+  );
+  const monday = new Date();
+  monday.setUTCDate(monday.getUTCDate() - ((monday.getUTCDay() + 6) % 7));
+  must(
+    await db.from("weekly_challenges").insert({
+      week_start: monday.toISOString().slice(0, 10),
+      title: { fr: "Défi de la semaine : mats en un coup", en: "Weekly challenge: mates in one" },
+      puzzle_ids: puzzles
+        .filter((p) => ["anastasia", "arabian", "boden"].includes(p.code))
+        .map((p) => p.id),
+    }),
+    "défi",
+  );
+  must(
+    await db.from("lessons_library").insert(
+      LESSONS.map((l, i) => ({
+        slug: l.slug,
+        level: l.level,
+        theme: l.theme,
+        position: i,
+        title: { fr: l.fr[0], en: l.en[0] },
+        summary: { fr: l.fr[1], en: l.en[1] },
+        body: { fr: l.fr[2], en: l.en[2] },
+        positions: l.positions,
+        status: "published",
+      })),
+    ),
+    "leçons",
+  );
+  must(
+    await db.from("glossary_terms").insert(
+      GLOSSARY.map(([fr, en, category, dfr, den]) => ({
+        term_fr: fr,
+        term_en: en,
+        category,
+        definition: { fr: dfr, en: den },
+      })),
+    ),
+    "glossaire",
+  );
+  must(
+    await db.from("resources").insert([
+      {
+        title: { fr: "Règles du jeu d'échecs de la FIDE", en: "FIDE Laws of Chess" },
+        description: {
+          fr: "Le texte officiel des règles (site de la FIDE, en anglais).",
+          en: "The official rules (FIDE website).",
+        },
+        kind: "rules",
+        url: "https://handbook.fide.com/chapter/E012023",
+        language: "en",
+        status: "published",
+      },
+      {
+        title: { fr: "Règlement type des tournois Chesspirit", en: "Chesspirit tournament rules" },
+        description: {
+          fr: "Projet de règlement, à faire valider.",
+          en: "Draft rules, to be validated.",
+        },
+        kind: "rules",
+        url: "/legal/reglement-tournois",
+        language: "fr",
+        status: "published",
+      },
+    ]),
+    "ressources",
+  );
+  if (demo) {
+    const show = series.find((x) => x.slug === "le-coup-de-la-semaine")!;
+    must(
+      await db.from("media_episodes").insert({
+        series_id: show.id,
+        slug: "coup-de-la-semaine-demo-1",
+        number: 1,
+        format: "video",
+        title: {
+          fr: "Le mat étouffé de Philidor (démonstration)",
+          en: "Philidor's smothered mate (demo)",
+        },
+        description: {
+          fr: "Épisode de démonstration : la vidéo sera ajoutée avec les premières émissions.",
+          en: "Demo episode: the video will be added with the first shows.",
+        },
+        level: "beginner",
+        theme: "tactics",
+        transcript:
+          "Épisode de démonstration. Les Blancs sacrifient la dame en g8 : la tour doit la prendre, et le cavalier donne mat en f7.",
+        positions: [
+          {
+            fen: "5r1k/6pp/7N/8/2Q5/8/5PPP/6K1 w - - 0 1",
+            caption: {
+              fr: "Les Blancs jouent et font mat en deux",
+              en: "White to play, mate in two",
+            },
+            solution: ["c4g8", "f8g8", "h6f7"],
+          },
+        ],
+        status: "published",
+        published_at: new Date().toISOString(),
+        is_demo: true,
+      }),
+      "épisode démo",
+    );
+  }
+  console.log(
+    `✓ Contenus : 5 émissions, ${puzzles.length} puzzles, ${LESSONS.length} leçons, ${GLOSSARY.length} termes`,
+  );
+}
+
 const launchId = await seedLaunchTournament();
 await seedShop(withDemo);
 
@@ -1456,4 +1958,5 @@ if (withDemo) {
 }
 await seedLeagues(withDemo);
 if (withDemo) await seedDirectory();
+await seedContent(withDemo);
 console.log("✓ Seed terminé");

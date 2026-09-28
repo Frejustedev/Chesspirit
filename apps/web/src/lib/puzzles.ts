@@ -7,7 +7,16 @@ export type Puzzle = {
   fen: string;
   /** Coups UCI : joueur, réponse, joueur… */
   solution: string[];
-  theme: "backRank" | "smothered" | "scholar" | "queenSacrifice";
+  theme:
+    | "backRank"
+    | "smothered"
+    | "scholar"
+    | "queenSacrifice"
+    | "anastasia"
+    | "arabian"
+    | "boden"
+    | "foolsMate"
+    | "damiano";
   mateIn: number;
 };
 
@@ -44,6 +53,48 @@ export const BASE_PUZZLES: Puzzle[] = [
     id: "back-rank-2",
     fen: "6k1/pp3ppp/8/8/8/1Q6/5PPP/2R3K1 w - - 0 1",
     solution: ["c1c8"],
+    theme: "backRank",
+    mateIn: 1,
+  },
+  {
+    id: "anastasia",
+    fen: "5r2/4N1pk/8/8/8/3R4/5PPP/6K1 w - - 0 1",
+    solution: ["d3h3"],
+    theme: "anastasia",
+    mateIn: 1,
+  },
+  {
+    id: "arabian",
+    fen: "7k/4R3/5N2/8/8/8/6PP/7K w - - 0 1",
+    solution: ["e7h7"],
+    theme: "arabian",
+    mateIn: 1,
+  },
+  {
+    id: "boden",
+    fen: "2kr4/p2n1ppp/8/8/5B2/3B4/PPP2PPP/6K1 w - - 0 1",
+    solution: ["d3a6"],
+    theme: "boden",
+    mateIn: 1,
+  },
+  {
+    id: "fools-mate",
+    fen: "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2",
+    solution: ["d8h4"],
+    theme: "foolsMate",
+    mateIn: 1,
+  },
+  {
+    id: "damiano",
+    fen: "5rk1/5p2/6P1/8/8/8/6K1/7Q w - - 0 1",
+    solution: ["h1h7"],
+    theme: "damiano",
+    mateIn: 1,
+  },
+  {
+    id: "back-rank-queen",
+    fen: "6k1/5ppp/8/8/8/8/Q4PPP/6K1 w - - 0 1",
+    solution: ["a2a8"],
     theme: "backRank",
     mateIn: 1,
   },

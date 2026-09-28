@@ -17,7 +17,7 @@ const csp = [
   `connect-src 'self' ${supabaseUrl} ${supabaseUrl.replace(/^http/, "ws")}${process.env.NEXT_PUBLIC_PLAUSIBLE_HOST ? ` ${process.env.NEXT_PUBLIC_PLAUSIBLE_HOST}` : ""}`,
   "media-src 'self' blob:",
   "worker-src 'self' blob:",
-  "frame-src 'self' https://checkout.fedapay.com https://sandbox-checkout.fedapay.com https://widget-v3.kkiapay.me https://www.youtube-nocookie.com",
+  "frame-src 'self' https://checkout.fedapay.com https://sandbox-checkout.fedapay.com https://widget-v3.kkiapay.me https://www.youtube-nocookie.com https://player.vimeo.com",
   "frame-ancestors 'none'",
   "form-action 'self' https://checkout.fedapay.com https://sandbox-checkout.fedapay.com",
   "base-uri 'self'",

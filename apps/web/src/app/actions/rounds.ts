@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { generateNextRound, recomputeStandings } from "@/lib/tournament-engine";
 import { recomputeAllRatings } from "@/lib/ratings";
+import { createResultsDraft } from "@/lib/content-drafts";
 
 type Result<T = undefined> = { ok: true; data?: T } | { ok: false; error: string };
 const uuid = z.string().uuid();
@@ -254,6 +255,8 @@ export async function closeTournamentAction(tournamentId: string): Promise<Resul
     if (t.rated) await recomputeAllRatings();
     // Étape du Tour : points calculés depuis le classement final (sans effet sinon).
     await supabase.rpc("compute_tour_points", { p_tournament: tournamentId });
+    // Brouillon d'article pour la rédaction (podium et lien vers les résultats).
+    await createResultsDraft(tournamentId).catch(() => undefined);
     done(tournamentId);
     return { ok: true, data: n };
   } catch (e) {
