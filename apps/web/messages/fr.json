@@ -157,48 +157,38 @@
     "retry": "Recommencer"
   },
   "home": {
-    "nextEvent": "Prochain événement",
+    "welcomeKicker": "Chesspirit · Cotonou, Bénin",
+    "welcomeTitle": "Bienvenue sur le portail des échecs au <em>Bénin</em>.",
+    "welcomeText": "Apprendre avec un coach, jouer des tournois homologués, suivre sa cote, retrouver clubs et arbitres : tout l'échiquier béninois, réuni au même endroit.",
+    "explore": "Explorer le portail",
+    "nextTournament": "Prochain tournoi",
     "register": "S'inscrire",
     "seeEvent": "Voir le tournoi",
-    "kicker": "Les échecs au Bénin",
-    "fallbackTitle": "De la première leçon au podium.",
-    "fallbackText": "Cours, tournois, classement, parties et boutique : Chesspirit réunit l'écosystème des échecs au Bénin.",
+    "noEvent": "Le calendrier des prochains tournois sera publié ici.",
+    "calendar": "Voir le calendrier",
+    "latestResults": "Derniers résultats",
+    "portalKicker": "Le portail",
+    "portalTitle": "Huit colonnes, tout l'échiquier.",
+    "portalText": "De a à h, chaque colonne ouvre une part du jeu béninois. La rangée de départ est en place : à vous de jouer.",
+    "files": {
+      "coaching": "Cours en présentiel ou en ligne, en français, anglais ou fon.",
+      "competitions": "Tournois, ligues, Chesspirit Tour et résultats en direct.",
+      "rankings": "La cote Chesspirit et l'Elo FIDE officiel.",
+      "directory": "Joueurs, entraîneurs, arbitres et clubs du pays.",
+      "shop": "Échiquiers, pendules, livres et location de matériel.",
+      "media": "Vidéos, podcasts, émissions et directs.",
+      "academy": "Leçons par niveau, puzzle du jour et lexique en fon.",
+      "community": "Adhésion, badges, pronostics et Awards."
+    },
+    "todayKicker": "Aujourd'hui",
+    "todayTitle": "Sur l'échiquier ce jour.",
     "puzzleTitle": "Puzzle du jour",
     "morePuzzles": "Plus de puzzles",
-    "latestResults": "Derniers résultats",
-    "ecosystemKicker": "L'écosystème",
-    "ecosystemTitle": "Six piliers, une même passion.",
-    "ecosystemText": "Chaque cours suivi, chaque tournoi joué et chaque partie enregistrée alimentent votre tableau de bord.",
-    "pillars": {
-      "coaching": {
-        "title": "Coaching",
-        "text": "Cours en présentiel ou en ligne, en français, anglais ou fon."
-      },
-      "competitions": {
-        "title": "Compétitions",
-        "text": "Tournois, ligues en trois divisions, Chesspirit Tour, équipes."
-      },
-      "rankings": {
-        "title": "Classement",
-        "text": "La cote Chesspirit en blitz, rapide et classique, avec l'Elo FIDE."
-      },
-      "directory": {
-        "title": "Annuaire",
-        "text": "Joueurs, entraîneurs, arbitres, clubs et structures du pays."
-      },
-      "shop": {
-        "title": "Boutique",
-        "text": "Échiquiers, pendules, livres, accessoires et location de matériel."
-      },
-      "media": {
-        "title": "Média et académie",
-        "text": "Vidéos, podcasts, leçons, puzzles et ressources."
-      }
-    },
-    "top10": "Top 10 — cote Chesspirit (rapide)",
-    "fullRanking": "Classement complet",
+    "top5": "Cote Chesspirit · rapide",
+    "top5Fide": "Elo FIDE officiel · standard",
+    "fullRanking": "Tout le classement",
     "rankingEmpty": "Le premier classement sera publié après les premiers tournois homologués.",
-    "figures": "En chiffres",
+    "rankingEmptyFide": "Le classement FIDE apparaîtra après le premier import de la liste officielle.",
     "stats": {
       "ratedPlayers": "Joueurs classés",
       "tournaments": "Tournois organisés",
@@ -208,11 +198,7 @@
     "organizersTitle": "Organisateurs : l'outil est gratuit",
     "organizersText": "Inscriptions, appariements, résultats, affiches et archives : le module de gestion de tournois est offert à tous les organisateurs du Bénin.",
     "organizersCta": "Nous contacter",
-    "partnersTitle": "Avec nos partenaires",
-    "rankingsTitle": "Classements des joueurs",
-    "top10Fide": "Top 10 — Elo FIDE officiel (standard)",
-    "fullFide": "Elo FIDE complet",
-    "rankingEmptyFide": "Le classement FIDE apparaîtra après le premier import de la liste officielle."
+    "partnersTitle": "Avec nos partenaires"
   },
   "tournament": {
     "cadence": {
