@@ -103,7 +103,11 @@
       "cookies": "Cookies",
       "refunds": "Retours et remboursements",
       "rules": "Règlement type des tournois",
-      "pvm": "Public contre maître"
+      "pvm": "Public contre maître",
+      "becomeCoach": "Devenir coach",
+      "articles": "Articles",
+      "propose": "Proposer une fiche",
+      "orderTracking": "Suivi de commande"
     }
   },
   "footer": {
@@ -117,7 +121,6 @@
     "newsletterError": "Adresse invalide ou erreur serveur.",
     "payments": "Paiements :",
     "card": "carte bancaire",
-    "partners": "Partenaires :",
     "credit": "Conception : <link>Fréjuste Agboton</link>",
     "paymentsOnSite": "sur place pour le moment ; paiement en ligne bientôt"
   },
@@ -197,8 +200,7 @@
     "statsDemo": "Chiffres incluant des données de démonstration.",
     "organizersTitle": "Organisateurs : l'outil est gratuit",
     "organizersText": "Inscriptions, appariements, résultats, affiches et archives : le module de gestion de tournois est offert à tous les organisateurs du Bénin.",
-    "organizersCta": "Nous contacter",
-    "partnersTitle": "Avec nos partenaires"
+    "organizersCta": "Nous contacter"
   },
   "tournament": {
     "cadence": {
@@ -2866,5 +2868,46 @@
       "payment_invalid": "paiement invalide",
       "invalid": "ligne invalide"
     }
+  },
+  "competitionHubs": {
+    "teamsTitle": "Tournois par équipes",
+    "teamsIntro": "Interclubs, entreprises, écoles : les compétitions où l'on joue en équipe.",
+    "teamsNone": "Aucun tournoi par équipes annoncé pour le moment.",
+    "allCalendar": "Voir tout le calendrier",
+    "liveTitle": "Résultats en direct",
+    "liveIntro": "Appariements, résultats et classements des tournois en cours, mis à jour ronde après ronde.",
+    "liveNow": "En cours",
+    "liveNone": "Aucun tournoi en cours en ce moment.",
+    "liveNext": "Prochains tournois",
+    "liveArchives": "Parcourir les archives"
+  },
+  "menu": {
+    "button": "Menu",
+    "title": "Tout Chesspirit",
+    "next": "Prochain tournoi",
+    "register": "S'inscrire",
+    "see": "Voir le tournoi",
+    "about": "Chesspirit",
+    "mySpace": "Mon espace",
+    "account": "Mon compte",
+    "signIn": "Connexion",
+    "myTournaments": "Mes tournois",
+    "myOrders": "Mes commandes",
+    "cart": "Panier",
+    "search": "Rechercher",
+    "rules": "Règlement des tournois",
+    "language": "Langue"
+  },
+  "searchPage": {
+    "title": "Rechercher",
+    "label": "Que cherchez-vous ?",
+    "placeholder": "Tournoi, joueur, club, page…",
+    "submit": "Rechercher",
+    "hint": "Tapez au moins deux lettres : un tournoi, un joueur, un club ou une rubrique du site.",
+    "count": "{n, plural, =0 {Aucun résultat pour « {q} ».} one {1 résultat pour « {q} ».} other {# résultats pour « {q} ».}}",
+    "pages": "Pages du site",
+    "tournaments": "Tournois",
+    "players": "Joueurs",
+    "structures": "Clubs et structures"
   }
 }

@@ -1,17 +1,20 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/logo";
 import { IconAccount, IconSearch, IconChevronDown } from "@/components/icons";
-import { NAV } from "@/lib/nav";
+import { NAV, SECONDARY_NAV } from "@/lib/nav";
+import { formatDate } from "@chesspirit/shared";
 import { getSession } from "@/lib/auth";
 import { getNextEvent } from "@/lib/data/tournaments";
-import { MobileMenu } from "./mobile-menu";
+import { SiteMenu } from "./site-menu";
 import { LocaleSwitch } from "./locale-switch";
 import { CartLink } from "@/components/shop/cart-link";
 
 export async function Header() {
   const t = await getTranslations("nav");
   const tc = await getTranslations("common");
+  const tm = await getTranslations("menu");
+  const locale = await getLocale();
   const [session, next] = await Promise.all([getSession(), getNextEvent()]);
   const cta =
     next && ["registration_open", "published"].includes(next.status)
@@ -33,15 +36,51 @@ export async function Header() {
         {tc("skipToContent")}
       </a>
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 lg:h-[72px] lg:px-6">
-        <MobileMenu
+        <SiteMenu
           sections={sections}
+          info={[
+            ...SECONDARY_NAV.map((i) => ({ href: i.href, label: t(`items.${i.key}`) })),
+            { href: "/legal/reglement-tournois", label: tm("rules") },
+          ]}
+          mine={[
+            session
+              ? { href: "/compte", label: tm("account") }
+              : { href: "/connexion", label: tm("signIn") },
+            { href: "/compte/tournois", label: tm("myTournaments") },
+            { href: "/compte/commandes", label: tm("myOrders") },
+            { href: "/boutique/panier", label: tm("cart") },
+            { href: "/recherche", label: tm("search") },
+          ]}
+          next={
+            next
+              ? {
+                  href: `/competitions/${next.slug}`,
+                  registerHref:
+                    next.status === "registration_open"
+                      ? `/competitions/${next.slug}/inscription`
+                      : null,
+                  name: next.name,
+                  date: formatDate(next.starts_at, locale, {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  }),
+                }
+              : null
+          }
           labels={{
+            button: tm("button"),
             open: tc("openMenu"),
             close: tc("closeMenu"),
-            account: t("account"),
-            cta: cta.label,
+            title: tm("title"),
+            next: tm("next"),
+            register: tm("register"),
+            see: tm("see"),
+            about: tm("about"),
+            mySpace: tm("mySpace"),
+            language: tm("language"),
           }}
-          ctaHref={cta.href}
         />
         <Link
           href="/"

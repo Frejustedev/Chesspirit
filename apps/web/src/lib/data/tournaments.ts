@@ -51,10 +51,20 @@ export async function getTournamentExtras(id: string) {
   };
 }
 
-export async function listTournaments(opts: { past?: boolean; limit?: number } = {}) {
+export async function listTournaments(
+  opts: { past?: boolean; limit?: number; teams?: boolean; ongoing?: boolean } = {},
+) {
   const supabase = await createClient();
   const now = new Date().toISOString();
   let q = supabase.from("tournaments").select("*").neq("status", "draft");
+  if (opts.teams) q = q.eq("pairing_system", "team_swiss");
+  if (opts.ongoing) {
+    const { data } = await q
+      .eq("status", "ongoing")
+      .order("starts_at")
+      .limit(opts.limit ?? 50);
+    return data ?? [];
+  }
   q = opts.past
     ? q.lt("starts_at", now).order("starts_at", { ascending: false })
     : q.gte("starts_at", new Date(Date.now() - 18 * 3600 * 1000).toISOString()).order("starts_at");

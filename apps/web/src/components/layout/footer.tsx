@@ -70,10 +70,6 @@ export async function Footer() {
               {tf("paymentsOnSite")}
             </p>
           )}
-          <p className="lg:text-right">
-            {tf("partners")} <span className="text-cream">FSS</span> ·{" "}
-            <span className="text-cream">Ayelade Chess</span>
-          </p>
         </div>
         <div className="mt-6 flex flex-col gap-4 border-t border-cream/15 pt-6 text-xs text-cream/60 lg:flex-row lg:items-center lg:justify-between">
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
