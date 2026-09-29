@@ -68,6 +68,7 @@ Onglet **Rondes**.
 6. Quand « Tous les résultats sont saisis » s'affiche, générez la ronde suivante.
 
 **Joueur qui fait une pause ou abandonne** : dans **Rondes**, ouvrez **Joueurs (n)**.
+
 - Choisissez « Bye ½ point » ou « Absent (0) » pour la prochaine ronde.
 - Choisissez **Forfait général** s'il quitte le tournoi, ou **Réintégrer** s'il revient.
 
@@ -76,6 +77,7 @@ Onglet **Rondes**.
 **Horaires indicatifs** : une ronde en 15 + 0 dure au plus 30 minutes. Avec 5 minutes d'appariement, comptez environ 35 minutes par ronde. Pour 9 rondes à partir de 8 h 30, avec une pause de 30 minutes après la ronde 5, la fin arrive vers 14 h 15.
 
 **10 joueurs ou moins** : 9 rondes au système suisse deviennent mathématiquement impossibles sans faire rejouer deux joueurs ensemble. Avant la ronde 1, dans **Réglages** :
+
 - avec exactement 10 joueurs, choisissez le système « Toutes rondes » (9 rondes) ;
 - avec moins de 10 joueurs, réduisez le **Nombre de rondes** (au plus le nombre de joueurs moins 1).
 
@@ -94,10 +96,10 @@ Onglet **Rondes**.
 
 ## En cas de problème
 
-| Situation | Que faire |
-| --- | --- |
-| « Saisissez tous les résultats de la ronde en cours… » | Il manque un résultat : cherchez la table sans résultat dans la ronde en cours. |
-| Un appariement est faux | Crayon **Modifier l'appariement** avant **Publier**, ou **Supprimer cette ronde** (dernière ronde, sans résultat) puis la générer à nouveau. |
-| Un joueur arrive après la ronde 1 | **Ajouter un joueur sur place**, avec la case **Pointer tout de suite** cochée : il sera apparié à partir de la ronde suivante. |
-| Le site ne répond plus | Continuez en **Mode hors ligne**, ou notez les résultats sur papier et saisissez-les dès le retour du réseau. |
-| Code de connexion non reçu | Vérifiez les spams. Attendez une minute, puis **Renvoyer le code**. |
+| Situation                                              | Que faire                                                                                                                                    |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| « Saisissez tous les résultats de la ronde en cours… » | Il manque un résultat : cherchez la table sans résultat dans la ronde en cours.                                                              |
+| Un appariement est faux                                | Crayon **Modifier l'appariement** avant **Publier**, ou **Supprimer cette ronde** (dernière ronde, sans résultat) puis la générer à nouveau. |
+| Un joueur arrive après la ronde 1                      | **Ajouter un joueur sur place**, avec la case **Pointer tout de suite** cochée : il sera apparié à partir de la ronde suivante.              |
+| Le site ne répond plus                                 | Continuez en **Mode hors ligne**, ou notez les résultats sur papier et saisissez-les dès le retour du réseau.                                |
+| Code de connexion non reçu                             | Vérifiez les spams. Attendez une minute, puis **Renvoyer le code**.                                                                          |
