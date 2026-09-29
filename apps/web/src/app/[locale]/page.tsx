@@ -384,7 +384,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* Organisateurs, chiffres et partenaires */}
+      {/* Organisateurs et chiffres */}
       <section className="mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-20">
         <div className="grid gap-10 rounded-lg bg-bordeaux p-7 text-cream sm:p-10 lg:grid-cols-[1.4fr_1fr] lg:items-center">
           <div>
@@ -419,17 +419,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           ) : null}
         </div>
-
-        <p className="mt-14 text-center font-sans text-sm font-semibold uppercase tracking-[0.2em] text-stone">
-          {t("partnersTitle")}
-        </p>
-        <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-14 gap-y-4 font-display text-3xl text-fg/80">
-          <li>FSS</li>
-          <li aria-hidden className="text-gold">
-            ◆
-          </li>
-          <li>Ayelade Chess</li>
-        </ul>
       </section>
     </>
   );

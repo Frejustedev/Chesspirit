@@ -103,7 +103,11 @@
       "cookies": "Cookies",
       "refunds": "Returns and refunds",
       "rules": "Standard tournament rules",
-      "pvm": "Public vs master"
+      "pvm": "Public vs master",
+      "becomeCoach": "Become a coach",
+      "articles": "Articles",
+      "propose": "Suggest a listing",
+      "orderTracking": "Order tracking"
     }
   },
   "footer": {
@@ -117,7 +121,6 @@
     "newsletterError": "Invalid address or server error.",
     "payments": "Payments:",
     "card": "bank card",
-    "partners": "Partners:",
     "credit": "Design: <link>Fréjuste Agboton</link>",
     "paymentsOnSite": "on site for now; online payment coming soon"
   },
@@ -197,8 +200,7 @@
     "statsDemo": "Figures include demonstration data.",
     "organizersTitle": "Organisers: the tool is free",
     "organizersText": "Registrations, pairings, results, posters and archives: the tournament management module is free for every organiser in Benin.",
-    "organizersCta": "Contact us",
-    "partnersTitle": "With our partners"
+    "organizersCta": "Contact us"
   },
   "tournament": {
     "cadence": {
@@ -676,7 +678,7 @@
     "mission": "Training players, running quality competitions, following everyone's progress and showcasing Beninese talent.",
     "p1": "Chesspirit brings coaching, competitions, ratings, directory, shop and media for chess in Benin together in one ecosystem, with a single account per player.",
     "p2": "The Chesspirit rating acts as a de facto national ranking in blitz, rapid and classical until a federal ranking exists, with FIDE Elo shown alongside.",
-    "p3": "The tournament manager is free for every organiser in the country: each tournament run on Chesspirit enriches the national database of players and games. The first Chesspirit tournament takes place on Saturday 3 October 2026 at the FSS in Cotonou, with the FSS and Ayelade Chess as partners."
+    "p3": "The tournament manager is free for every organiser in the country: each tournament run on Chesspirit enriches the national database of players and games. First event: Le Gambit de Cotonou, Saturday 3 October 2026 at Jammin Bar in Cotonou."
   },
   "faq": {
     "title": "Frequently asked questions",
@@ -2866,5 +2868,46 @@
       "payment_invalid": "invalid payment",
       "invalid": "invalid line"
     }
+  },
+  "competitionHubs": {
+    "teamsTitle": "Team tournaments",
+    "teamsIntro": "Interclub, company and school events: the competitions played as a team.",
+    "teamsNone": "No team tournament announced yet.",
+    "allCalendar": "See the full calendar",
+    "liveTitle": "Live results",
+    "liveIntro": "Pairings, results and standings of ongoing tournaments, updated round by round.",
+    "liveNow": "Ongoing",
+    "liveNone": "No tournament is being played right now.",
+    "liveNext": "Upcoming tournaments",
+    "liveArchives": "Browse the archives"
+  },
+  "menu": {
+    "button": "Menu",
+    "title": "All of Chesspirit",
+    "next": "Next tournament",
+    "register": "Register",
+    "see": "See the tournament",
+    "about": "Chesspirit",
+    "mySpace": "My space",
+    "account": "My account",
+    "signIn": "Sign in",
+    "myTournaments": "My tournaments",
+    "myOrders": "My orders",
+    "cart": "Cart",
+    "search": "Search",
+    "rules": "Tournament rules",
+    "language": "Language"
+  },
+  "searchPage": {
+    "title": "Search",
+    "label": "What are you looking for?",
+    "placeholder": "Tournament, player, club, page…",
+    "submit": "Search",
+    "hint": "Type at least two letters: a tournament, a player, a club or a section of the site.",
+    "count": "{n, plural, =0 {No results for “{q}”.} one {1 result for “{q}”.} other {# results for “{q}”.}}",
+    "pages": "Site pages",
+    "tournaments": "Tournaments",
+    "players": "Players",
+    "structures": "Clubs and organisations"
   }
 }

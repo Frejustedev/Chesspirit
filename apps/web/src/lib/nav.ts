@@ -12,6 +12,7 @@ export const NAV: NavSection[] = [
       { key: "placement", href: "/coaching/test-de-niveau" },
       { key: "book", href: "/coaching/reserver" },
       { key: "schools", href: "/coaching/ecoles-entreprises" },
+      { key: "becomeCoach", href: "/coaching/devenir-coach" },
     ],
   },
   {
@@ -47,6 +48,7 @@ export const NAV: NavSection[] = [
       { key: "clubs", href: "/annuaire/clubs" },
       { key: "map", href: "/annuaire/carte" },
       { key: "jobs", href: "/annuaire/emplois" },
+      { key: "propose", href: "/annuaire/proposer" },
     ],
   },
   {
@@ -58,6 +60,7 @@ export const NAV: NavSection[] = [
       { key: "accessories", href: "/boutique/accessoires" },
       { key: "packs", href: "/boutique/packs" },
       { key: "rental", href: "/boutique/location" },
+      { key: "orderTracking", href: "/boutique/suivi" },
     ],
   },
   {
@@ -68,6 +71,7 @@ export const NAV: NavSection[] = [
       { key: "podcasts", href: "/media/podcasts" },
       { key: "liveMedia", href: "/media/direct" },
       { key: "shows", href: "/media/emissions" },
+      { key: "articles", href: "/media/articles" },
     ],
   },
   {
