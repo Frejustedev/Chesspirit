@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { teamsBody, onlineBody, scoresheetBody } from "./extra-tabs";
 import { ParticipantsImport } from "@/components/admin/participants-import";
+import { WalkInForm } from "@/components/admin/walk-in-form";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { formatXof } from "@chesspirit/shared";
 import { Link } from "@/i18n/navigation";
@@ -111,6 +112,7 @@ export default async function AdminTournament({
             <IconDownload className="size-5" /> {t("exportCsv")}
           </a>
         </div>
+        <WalkInForm tournamentId={tn.id} />
         <ParticipantsImport tournamentId={tn.id} />
         <div className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-line">
           <table className="w-full min-w-[52rem] text-left text-sm">
@@ -149,7 +151,13 @@ export default async function AdminTournament({
                   </td>
                   <td className="px-3 py-2">{r.checked_in_at ? "✓" : ""}</td>
                   <td className="px-3 py-2">
-                    <RegistrationActions id={r.id} status={r.status} payment={r.payment_status} />
+                    <RegistrationActions
+                      id={r.id}
+                      status={r.status}
+                      payment={r.payment_status}
+                      ticket={r.ticket_code}
+                      checkedIn={!!r.checked_in_at}
+                    />
                   </td>
                 </tr>
               ))}

@@ -652,7 +652,8 @@
       "needs_refund": "Paiements à rembourser",
       "pending_requests": "Demandes en attente"
     },
-    "offlineMode": "Mode hors ligne (saisie des résultats sans réseau)"
+    "offlineMode": "Mode hors ligne (saisie des résultats sans réseau)",
+    "checkInRow": "Pointer"
   },
   "viewer": {
     "board": "Position de la partie",
@@ -2909,5 +2910,30 @@
     "tournaments": "Tournois",
     "players": "Joueurs",
     "structures": "Clubs et structures"
+  },
+  "walkIn": {
+    "title": "Ajouter un joueur sur place",
+    "help": "Pour un joueur arrivé sans inscription : il est inscrit tout de suite (et pointé si la case est cochée). S'il donne son téléphone, il pourra retrouver ce profil en se connectant plus tard.",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "sex": "Sexe",
+    "male": "Homme",
+    "female": "Femme",
+    "birthDate": "Date de naissance",
+    "phone": "Téléphone",
+    "club": "Club",
+    "optional": "facultatif",
+    "checkInNow": "Pointer tout de suite (présent dans la salle)",
+    "add": "Ajouter le joueur",
+    "adding": "Ajout…",
+    "done": "{name} est inscrit.",
+    "doneAlready": "{name} était déjà inscrit.",
+    "errors": {
+      "name_required": "Prénom et nom obligatoires.",
+      "phone_invalid": "Téléphone invalide : format international, par exemple +22997000000.",
+      "birth_date_invalid": "Date de naissance invalide.",
+      "forbidden": "Vous n'avez pas le droit de gérer ce tournoi.",
+      "invalid": "Ajout impossible. Vérifiez les champs et réessayez."
+    }
   }
 }

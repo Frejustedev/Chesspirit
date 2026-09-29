@@ -457,3 +457,70 @@ export async function importParticipantsAction(
   revalidatePath(`/admin/tournois/${tournamentId}`);
   return { ok: true, data: data as never };
 }
+
+/** Pointage depuis la liste des inscrits (joueur venu sans son billet). */
+export async function checkInRowAction(ticketCode: string): Promise<Result> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("check_in", {
+    p_ticket_code: ticketCode,
+    p_mark_paid: true,
+  });
+  if (error || !data?.[0]) return { ok: false, error: error?.message ?? "ticket_not_found" };
+  revalidatePath(`/admin/tournois/${data[0].tournament_id}`);
+  return { ok: true };
+}
+
+const walkInRow = z.object({
+  first_name: z.string().trim().min(1).max(80),
+  last_name: z.string().trim().min(1).max(80),
+  sex: z.enum(["M", "F", ""]).optional(),
+  birth_date: z.string().max(10).optional(),
+  phone: z.string().max(20).optional(),
+  club: z.string().max(120).optional(),
+});
+
+/**
+ * Joueur arrivé sans inscription : inscription confirmée (profil importé, réclamable plus tard
+ * par son téléphone) puis, au choix, pointage immédiat.
+ */
+export async function walkInAction(
+  tournamentId: string,
+  raw: unknown,
+  checkIn: boolean,
+): Promise<Result<{ name: string; already: boolean }>> {
+  if (!uuid.safeParse(tournamentId).success) return { ok: false, error: "invalid" };
+  const parsed = walkInRow.safeParse(raw);
+  if (!parsed.success) return { ok: false, error: "name_required" };
+  const row = parsed.data;
+  // Téléphone béninois saisi sans indicatif (8 ou 10 chiffres) : +229 ajouté.
+  const digits = (row.phone ?? "").replace(/[\s.-]/g, "").replace(/^00/, "+");
+  row.phone = /^\d{8}$|^\d{10}$/.test(digits) ? `+229${digits}` : digits || undefined;
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("import_participants", {
+    p_tournament: tournamentId,
+    p_rows: [{ ...row, sex: row.sex || undefined }],
+  });
+  if (error)
+    return { ok: false, error: error.message.includes("forbidden") ? "forbidden" : "invalid" };
+  const report = data as { registered: number; already: number; errors: { error: string }[] };
+  if (report.errors.length) return { ok: false, error: report.errors[0]!.error };
+  if (checkIn) {
+    const esc = (s: string) => s.replace(/[\\%_]/g, (c) => `\\${c}`);
+    const { data: reg } = await supabase
+      .from("registrations")
+      .select("ticket_code, profiles!registrations_player_id_fkey!inner(first_name, last_name)")
+      .eq("tournament_id", tournamentId)
+      .ilike("profiles.first_name", esc(row.first_name))
+      .ilike("profiles.last_name", esc(row.last_name))
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (reg?.ticket_code)
+      await supabase.rpc("check_in", { p_ticket_code: reg.ticket_code, p_mark_paid: true });
+  }
+  revalidatePath(`/admin/tournois/${tournamentId}`);
+  return {
+    ok: true,
+    data: { name: `${row.first_name} ${row.last_name}`, already: report.already > 0 },
+  };
+}

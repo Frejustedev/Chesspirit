@@ -2,16 +2,20 @@
 
 import { useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { updateRegistrationAction } from "@/app/actions/admin";
+import { checkInRowAction, updateRegistrationAction } from "@/app/actions/admin";
 
 export function RegistrationActions({
   id,
   status,
   payment,
+  ticket,
+  checkedIn,
 }: {
   id: string;
   status: string;
   payment: string;
+  ticket?: string | null;
+  checkedIn?: boolean;
 }) {
   const t = useTranslations("admin");
   const [pending, start] = useTransition();
@@ -21,6 +25,16 @@ export function RegistrationActions({
     "min-h-9 rounded-full border border-line px-2.5 text-xs font-semibold hover:bg-surface disabled:opacity-50";
   return (
     <div className="flex flex-wrap gap-1" aria-busy={pending}>
+      {ticket && !checkedIn && status === "confirmed" ? (
+        <button
+          type="button"
+          className={`${btn} border-gold/60 text-accent`}
+          disabled={pending}
+          onClick={() => start(async () => void (await checkInRowAction(ticket)))}
+        >
+          {t("checkInRow")}
+        </button>
+      ) : null}
       {payment === "due_on_site" || payment === "pending" ? (
         <button type="button" className={btn} disabled={pending} onClick={() => act("paid")}>
           {t("markPaid")}

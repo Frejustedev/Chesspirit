@@ -652,7 +652,8 @@
       "needs_refund": "Payments to refund",
       "pending_requests": "Pending requests"
     },
-    "offlineMode": "Offline mode (enter results without network)"
+    "offlineMode": "Offline mode (enter results without network)",
+    "checkInRow": "Check in"
   },
   "viewer": {
     "board": "Game position",
@@ -2909,5 +2910,30 @@
     "tournaments": "Tournaments",
     "players": "Players",
     "structures": "Clubs and organisations"
+  },
+  "walkIn": {
+    "title": "Add a player on site",
+    "help": "For a player who arrives without registering: they are registered at once (and checked in if the box is ticked). If they give their phone number, they can claim this profile when they sign in later.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "sex": "Sex",
+    "male": "Male",
+    "female": "Female",
+    "birthDate": "Date of birth",
+    "phone": "Phone",
+    "club": "Club",
+    "optional": "optional",
+    "checkInNow": "Check in now (present in the hall)",
+    "add": "Add player",
+    "adding": "Adding…",
+    "done": "{name} is registered.",
+    "doneAlready": "{name} was already registered.",
+    "errors": {
+      "name_required": "First and last name are required.",
+      "phone_invalid": "Invalid phone: international format, e.g. +22997000000.",
+      "birth_date_invalid": "Invalid date of birth.",
+      "forbidden": "You are not allowed to manage this tournament.",
+      "invalid": "Could not add. Check the fields and try again."
+    }
   }
 }
