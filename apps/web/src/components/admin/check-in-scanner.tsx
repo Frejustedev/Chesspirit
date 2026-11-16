@@ -160,7 +160,7 @@ export function CheckInScanner() {
         />
       </div>
       <div>
-        <h2 className="font-display text-2xl font-semibold">{t("checkInLog")}</h2>
+        <h2 className="section-title text-2xl">{t("checkInLog")}</h2>
         <ul className="mt-3 space-y-2" aria-live="polite">
           {log.map((e, i) =>
             "error" in e ? (

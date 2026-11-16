@@ -85,7 +85,7 @@ export default async function ExplorerPage({
       >
         ← {t("title")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">{t("explorerTitle")}</h1>
+      <h1 className="mt-2 font-display text-4xl font-light sm:text-5xl">{t("explorerTitle")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("explorerIntro")}</p>
       {error ? (
         <p role="alert" className="mt-4 font-semibold text-accent">
@@ -120,7 +120,7 @@ export default async function ExplorerPage({
         </div>
         <div className="min-w-0 space-y-8">
           <section>
-            <h2 className="font-display text-2xl font-semibold">{t("nextMoves")}</h2>
+            <h2 className="section-title text-2xl">{t("nextMoves")}</h2>
             {stats?.length ? (
               <table className="mt-3 w-full text-left text-sm">
                 <thead>
@@ -167,9 +167,7 @@ export default async function ExplorerPage({
             )}
           </section>
           <section>
-            <h2 className="font-display text-2xl font-semibold">
-              {t("reachedIn", { n: games.length })}
-            </h2>
+            <h2 className="section-title text-2xl">{t("reachedIn", { n: games.length })}</h2>
             <ul className="mt-3 divide-y divide-line border-y border-line">
               {games.slice(0, 30).map((g) => (
                 <li key={g.id}>

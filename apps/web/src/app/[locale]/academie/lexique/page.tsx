@@ -40,7 +40,7 @@ export default async function LexiconPage({
   const validated = (terms ?? []).filter((x) => x.fon_status === "validated").length;
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("nav.lexicon")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("nav.lexicon")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("lexiconIntro")}</p>
       <div className="mt-6">
         <AcademyNav current="/academie/lexique" />

@@ -72,9 +72,7 @@ export default async function PvmGame({
       >
         ← {t("title")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
-        {tr(g.title, locale)}
-      </h1>
+      <h1 className="mt-2 font-display text-4xl font-light sm:text-5xl">{tr(g.title, locale)}</h1>
       <p className="mt-2 text-stone">
         {t("master", { name: g.master_name })} ·{" "}
         {t("publicPlays", { color: t(g.public_color === "w" ? "white" : "black") })}

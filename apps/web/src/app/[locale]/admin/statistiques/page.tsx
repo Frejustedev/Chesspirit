@@ -76,7 +76,7 @@ export default async function AdminStats({
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+        <h1 className="font-display text-4xl font-light">{t("title")}</h1>
         <a
           href={csv}
           className="inline-flex min-h-11 items-center rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"
@@ -119,7 +119,7 @@ export default async function AdminStats({
       {s ? (
         <>
           <section className="mt-8">
-            <h2 className="font-display text-2xl font-semibold">{t("users")}</h2>
+            <h2 className="section-title text-2xl">{t("users")}</h2>
             <dl className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
               {kpi(t("totalProfiles"), s.users.total)}
               {kpi(t("accounts"), s.users.accounts)}
@@ -146,7 +146,7 @@ export default async function AdminStats({
             </div>
           </section>
           <section className="mt-10">
-            <h2 className="font-display text-2xl font-semibold">{t("competitions")}</h2>
+            <h2 className="section-title text-2xl">{t("competitions")}</h2>
             <dl className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
               {kpi(t("tournaments"), s.competitions.tournaments)}
               {kpi(t("registrations"), s.competitions.registrations)}
@@ -158,7 +158,7 @@ export default async function AdminStats({
             </div>
           </section>
           <section className="mt-10">
-            <h2 className="font-display text-2xl font-semibold">{t("finance")}</h2>
+            <h2 className="section-title text-2xl">{t("finance")}</h2>
             <dl className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
               {kpi(t("revenue"), money(s.finance.revenue))}
               {kpi(t("refunds"), money(s.finance.refunds))}
@@ -184,7 +184,7 @@ export default async function AdminStats({
           </section>
           <section className="mt-10 grid gap-8 md:grid-cols-2">
             <div>
-              <h2 className="font-display text-2xl font-semibold">{t("activity")}</h2>
+              <h2 className="section-title text-2xl">{t("activity")}</h2>
               <dl className="mt-3 grid grid-cols-2 gap-3">
                 {kpi(t("bookings"), s.coaching.bookings)}
                 {kpi(t("orders"), s.shop.orders)}
@@ -193,7 +193,7 @@ export default async function AdminStats({
               </dl>
             </div>
             <div>
-              <h2 className="font-display text-2xl font-semibold">{t("topProducts")}</h2>
+              <h2 className="section-title text-2xl">{t("topProducts")}</h2>
               <Bars
                 data={Object.fromEntries(s.shop.top_products.map((p) => [p.name, p.qty]))}
                 label={t("topProducts")}

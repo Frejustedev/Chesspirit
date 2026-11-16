@@ -24,7 +24,7 @@ export default async function CoachesPage({ params }: { params: Promise<{ locale
     .order("display_name");
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("coachesTitle")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("coachesTitle")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("coachesIntro")}</p>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {(data ?? []).map((c, i) => (

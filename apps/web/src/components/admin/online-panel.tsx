@@ -36,7 +36,7 @@ export function OnlinePanel({
   return (
     <div className="grid gap-10 lg:grid-cols-2">
       <section className="space-y-4">
-        <h2 className="font-display text-2xl font-semibold">{t("lichess")}</h2>
+        <h2 className="section-title text-2xl">{t("lichess")}</h2>
         <p className="text-sm text-stone">{t("help")}</p>
         <form
           className="grid gap-3 sm:grid-cols-[10rem_1fr_auto] sm:items-end"
@@ -121,7 +121,7 @@ export function OnlinePanel({
         </div>
       </section>
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("players")}</h2>
+        <h2 className="section-title text-2xl">{t("players")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line text-sm">
           {players.map((p, i) => (
             <li key={i} className="flex gap-3 py-2">

@@ -236,7 +236,7 @@ export function ArbiterForm({
     });
   return (
     <section id="arbitre" className="rounded-lg border border-line p-5">
-      <h2 className="font-display text-2xl font-semibold">{t("arbiterCard")}</h2>
+      <h2 className="section-title text-2xl">{t("arbiterCard")}</h2>
       <p className="mt-1 text-sm text-stone">{t("arbiterCardHelp")}</p>
       <form
         className="mt-4 grid gap-4 sm:grid-cols-2"

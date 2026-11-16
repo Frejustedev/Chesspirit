@@ -26,7 +26,7 @@ export default async function CoachingPage({
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
         <div>
-          <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+          <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
           <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
         </div>
         <div className="flex flex-wrap gap-2 lg:justify-end">
@@ -58,9 +58,9 @@ export default async function CoachingPage({
           {t("noOffers")}
         </p>
       )}
-      <section className="mt-14 grid gap-6 rounded-lg bg-ink p-6 text-cream sm:grid-cols-2 sm:p-8">
+      <section className="exterieur mt-14 grid gap-6 rounded-lg bg-paper p-6 text-cream sm:grid-cols-2 sm:p-8">
         <div>
-          <h2 className="font-display text-2xl font-semibold">{t("schoolsTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("schoolsTitle")}</h2>
           <p className="mt-2 text-cream/80">{t("schoolsText")}</p>
           <Link
             href="/coaching/ecoles-entreprises"
@@ -70,7 +70,7 @@ export default async function CoachingPage({
           </Link>
         </div>
         <div>
-          <h2 className="font-display text-2xl font-semibold">{t("becomeTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("becomeTitle")}</h2>
           <p className="mt-2 text-cream/80">{t("becomeText")}</p>
           <Link
             href="/coaching/devenir-coach"

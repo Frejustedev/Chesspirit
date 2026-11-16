@@ -27,7 +27,7 @@ export default async function AdminProducts({ params }: { params: Promise<{ loca
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-4xl font-semibold">{t("products")}</h1>
+        <h1 className="font-display text-4xl font-light">{t("products")}</h1>
         <Link
           href="/admin/boutique/produits/nouveau"
           className="inline-flex min-h-11 items-center gap-2 rounded-full bg-bordeaux px-4 font-semibold text-cream hover:bg-bordeaux-bright"

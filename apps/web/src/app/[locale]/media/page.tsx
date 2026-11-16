@@ -36,23 +36,23 @@ export default async function MediaHome({ params }: { params: Promise<{ locale: 
   ]);
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
       <div className="mt-6">
         <MediaNav current="/media" />
       </div>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("latest")}</h2>
+        <h2 className="section-title text-2xl">{t("latest")}</h2>
         <EpisodeGrid episodes={(episodes ?? []) as unknown as EpisodeCardData[]} locale={locale} />
       </section>
       <section className="mt-12">
-        <h2 className="font-display text-2xl font-semibold">{t("nav.shows")}</h2>
+        <h2 className="section-title text-2xl">{t("nav.shows")}</h2>
         <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {(series ?? []).map((s) => (
             <li key={s.slug}>
               <Link
                 href={`/media/emissions/${s.slug}`}
-                className="flex h-full flex-col rounded-lg bg-ink p-5 text-cream hover:bg-bordeaux"
+                className="exterieur flex h-full flex-col rounded-lg bg-paper p-5 text-cream hover:bg-bordeaux"
               >
                 <span className="text-xs font-semibold uppercase tracking-wide text-gold">
                   {t(`kind.${s.kind}`)}
@@ -68,7 +68,7 @@ export default async function MediaHome({ params }: { params: Promise<{ locale: 
       </section>
       {articles?.length ? (
         <section className="mt-12">
-          <h2 className="font-display text-2xl font-semibold">{t("nav.articles")}</h2>
+          <h2 className="section-title text-2xl">{t("nav.articles")}</h2>
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {articles.map((a) => (
               <li key={a.slug} className="py-3">

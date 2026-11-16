@@ -51,7 +51,7 @@ export default async function ResultsPage({ params }: Props) {
           {t.name}
         </Link>
       </nav>
-      <h1 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">
+      <h1 className="mt-3 font-display text-4xl font-light sm:text-5xl">
         {tt("results")} {t.is_demo ? <DemoBadge /> : null}
       </h1>
       <p className="mt-2 text-stone first-letter:uppercase">

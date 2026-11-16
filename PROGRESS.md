@@ -1,8 +1,8 @@
 # Avancement
 
-- **Phase en cours** : mise en ligne assistée (le propriétaire a demandé de l'aide pour tout publier)
-- **Dernière tâche terminée** : correctifs de l'audit de mise en production (v1.0.1 : droits de l'API explicites, vues en lecture seule, réclamation des profils importés, connexion adaptée aux réglages Supabase, parcours payants fermés sans prestataire, Vercel compatible avec tous les forfaits, polices des affiches, appariement de secours conforme aux couleurs FIDE)
-- **Prochaine tâche** : mise en ligne terminée (28 septembre 2026) : www.chesspirit.com, base Supabase, SMTP o2switch `no-reply@chesspirit.com` et modèles à code vérifiés par le propriétaire, super-administrateur chesspiritbj@gmail.com, nouvel accueil publié (PR #6). Reste côté propriétaire : informations réelles du tournoi du 3 octobre dans l'administration ; ensuite (facultatif) service échecs, paiement en ligne, SMS
+- **Phase en cours** : site en ligne, retours du propriétaire
+- **Dernière tâche terminée** (16 novembre 2026) : typographie et composition du dossier de projet, de l'extérieur à l'intérieur (en-tête et couverture de l'accueil sombres, pages crème avec titre courant et folio, pied de page en dos du dossier, menu en sommaire, Fraunces maigre et EB Garamond partout) ; branche `ccr-49aca301-v95a6w`, à fusionner dans `main` par une PR pour la mise en production
+- **Prochaine tâche** : retours du propriétaire sur la nouvelle mise en page (interprétation de la demande notée dans docs/DECISIONS.md) ; ensuite (facultatif) service échecs, paiement en ligne, SMS. Mise en ligne terminée le 28 septembre 2026 (www.chesspirit.com, Supabase, SMTP o2switch, super-administrateur)
 
 ## Mise en ligne assistée — état (28 septembre 2026)
 

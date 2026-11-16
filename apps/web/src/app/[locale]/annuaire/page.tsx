@@ -33,7 +33,7 @@ export default async function DirectoryHome({ params }: { params: Promise<{ loca
   ] as const;
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
       <div className="mt-6">
         <DirectoryNav current="/annuaire" />
@@ -54,7 +54,7 @@ export default async function DirectoryHome({ params }: { params: Promise<{ loca
         <li>
           <Link
             href="/annuaire/carte"
-            className="flex h-full flex-col justify-between rounded-lg bg-ink p-5 text-cream hover:bg-bordeaux"
+            className="exterieur flex h-full flex-col justify-between rounded-lg bg-paper p-5 text-cream hover:bg-bordeaux"
           >
             <span className="font-display text-2xl font-semibold">{t("mapTitle")}</span>
             <span className="mt-2 text-cream/80">{t("mapIntro")}</span>
@@ -63,7 +63,7 @@ export default async function DirectoryHome({ params }: { params: Promise<{ loca
       </ul>
       <section className="mt-12 grid gap-6 rounded-lg border border-line p-6 sm:grid-cols-2">
         <div>
-          <h2 className="font-display text-2xl font-semibold">{t("proposeTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("proposeTitle")}</h2>
           <p className="mt-1 text-stone">{t("proposeIntro")}</p>
           <Link
             href="/annuaire/proposer"
@@ -73,7 +73,7 @@ export default async function DirectoryHome({ params }: { params: Promise<{ loca
           </Link>
         </div>
         <div>
-          <h2 className="font-display text-2xl font-semibold">{t("claimTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("claimTitle")}</h2>
           <p className="mt-1 text-stone">{t("claimText")}</p>
           <Link
             href="/annuaire/clubs"

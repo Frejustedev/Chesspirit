@@ -63,7 +63,7 @@ export default async function MyLeagues({ params }: { params: Promise<{ locale: 
       title={t("title")}
     >
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("licenses")}</h2>
+        <h2 className="section-title text-2xl">{t("licenses")}</h2>
         {seasons?.length ? (
           <ul className="mt-3 space-y-3">
             {seasons.map((s) => (
@@ -103,7 +103,7 @@ export default async function MyLeagues({ params }: { params: Promise<{ locale: 
         )}
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("myLeagues")}</h2>
+        <h2 className="section-title text-2xl">{t("myLeagues")}</h2>
         {memberships?.length ? (
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {memberships.map((m) =>
@@ -132,7 +132,7 @@ export default async function MyLeagues({ params }: { params: Promise<{ locale: 
         )}
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("postponements")}</h2>
+        <h2 className="section-title text-2xl">{t("postponements")}</h2>
         <p className="mt-1 text-sm text-stone">{t("postponeHelp")}</p>
         <ul className="mt-3 space-y-3">
           {(open ?? []).map((pr) => {

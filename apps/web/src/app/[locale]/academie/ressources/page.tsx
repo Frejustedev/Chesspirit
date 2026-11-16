@@ -28,7 +28,7 @@ export default async function ResourcesPage({ params }: { params: Promise<{ loca
   const urls = new Map((unlocked ?? []).map((u) => [u.id, u.url]));
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("nav.resources")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("nav.resources")}</h1>
       <p className="mt-3 font-serif text-xl text-stone">{t("resourcesIntro")}</p>
       <div className="mt-6">
         <AcademyNav current="/academie/ressources" />

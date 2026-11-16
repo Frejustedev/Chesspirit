@@ -40,7 +40,7 @@ export default async function MyLessons({ params }: { params: Promise<{ locale: 
       title={t("title")}
     >
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("planning")}</h2>
+        <h2 className="section-title text-2xl">{t("planning")}</h2>
         {bookings?.length ? (
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {bookings.map((b) => {
@@ -86,7 +86,7 @@ export default async function MyLessons({ params }: { params: Promise<{ locale: 
       </section>
       <div className="mt-10 grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="font-display text-2xl font-semibold">{t("homework")}</h2>
+          <h2 className="section-title text-2xl">{t("homework")}</h2>
           <ul className="mt-3 space-y-2">
             {(homework ?? []).map((h) => (
               <li key={h.id} className="rounded-md border border-line p-3">
@@ -100,7 +100,7 @@ export default async function MyLessons({ params }: { params: Promise<{ locale: 
           </ul>
         </section>
         <section>
-          <h2 className="font-display text-2xl font-semibold">{t("notes")}</h2>
+          <h2 className="section-title text-2xl">{t("notes")}</h2>
           <ul className="mt-3 space-y-2">
             {(notes ?? []).map((n) => (
               <li key={n.id} className="rounded-md border border-line p-3">

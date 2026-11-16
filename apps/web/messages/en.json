@@ -122,7 +122,19 @@
     "payments": "Payments:",
     "card": "bank card",
     "credit": "Design: <link>Fréjuste Agboton</link>",
-    "paymentsOnSite": "on site for now; online payment coming soon"
+    "paymentsOnSite": "on site for now; online payment coming soon",
+    "site": "chesspirit.com",
+    "city": "Cotonou, Benin"
+  },
+  "frame": {
+    "areas": {
+      "admin": "Administration",
+      "account": "My space",
+      "legal": "Legal",
+      "info": "Information",
+      "search": "Search"
+    },
+    "site": "chesspirit.com"
   },
   "countdown": {
     "days": "days",

@@ -43,7 +43,7 @@ export default async function ArticlePage({
       <Link href="/media/articles" className="text-sm font-semibold text-accent hover:underline">
         ← {t("articles")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
+      <h1 className="mt-2 font-display text-4xl font-light sm:text-5xl">
         {tr(a.title, locale)} {a.is_demo ? <DemoBadge /> : null}
       </h1>
       <p className="mt-2 text-stone">{a.published_at ? formatDate(a.published_at, locale) : ""}</p>

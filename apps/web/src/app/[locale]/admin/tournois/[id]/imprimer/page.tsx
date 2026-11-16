@@ -66,7 +66,7 @@ export default async function PrintPage({
         <section>
           <header className="flex items-baseline justify-between border-b-2 border-fg pb-2">
             <div>
-              <h1 className="font-display text-3xl font-semibold">{tn.name}</h1>
+              <h1 className="font-display text-3xl font-light">{tn.name}</h1>
               <p>
                 {t("round", { n: round.number })} · {formatDate(tn.starts_at, locale)}
               </p>

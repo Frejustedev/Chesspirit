@@ -42,7 +42,7 @@ export default async function CoachPage({ params }: Props) {
       <div className="flex items-start gap-5">
         <PieceSvg kind="k" color="w" className="size-20 shrink-0" />
         <div>
-          <h1 className="font-display text-4xl font-semibold">
+          <h1 className="font-display text-4xl font-light">
             {c.titles?.length ? (
               <span className="mr-2 text-2xl text-accent">{c.titles.join(" ")}</span>
             ) : null}
@@ -73,7 +73,7 @@ export default async function CoachPage({ params }: Props) {
           ))}
         </ul>
       ) : null}
-      <h2 className="mt-10 font-display text-2xl font-semibold">{t("offers")}</h2>
+      <h2 className="mt-10 section-title text-2xl">{t("offers")}</h2>
       <ul className="mt-4 grid gap-4 sm:grid-cols-2">
         {offers.map((o) => (
           <OfferCard key={o.id} o={o} locale={locale} />
@@ -81,7 +81,7 @@ export default async function CoachPage({ params }: Props) {
       </ul>
       {reviews?.length ? (
         <>
-          <h2 className="mt-10 font-display text-2xl font-semibold">{t("reviews")}</h2>
+          <h2 className="mt-10 section-title text-2xl">{t("reviews")}</h2>
           <ul className="mt-3 space-y-3">
             {reviews.map((r, i) => (
               <li key={i} className="rounded-md border border-line p-3">

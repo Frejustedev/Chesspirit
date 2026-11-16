@@ -87,7 +87,7 @@ export default async function AdminUser({
       >
         ← {t("title")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold">
+      <h1 className="mt-2 font-display text-4xl font-light">
         {p.first_name} {p.last_name} {p.is_demo ? <DemoBadge /> : null}
       </h1>
       {p.merged_into ? (
@@ -140,7 +140,7 @@ export default async function AdminUser({
               : null}
           </dl>
           <section className="mt-8">
-            <h2 className="font-display text-2xl font-semibold">{t("activity")}</h2>
+            <h2 className="section-title text-2xl">{t("activity")}</h2>
             <h3 className="mt-3 font-semibold">{t("registrations")}</h3>
             <ul className="text-sm">
               {(regs ?? []).map((r) => (

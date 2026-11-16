@@ -35,11 +35,11 @@ export default async function DataPage({ params }: { params: Promise<{ locale: s
     >
       <p className="max-w-2xl font-serif text-lg text-stone">{t("intro")}</p>
       <section className="mt-8">
-        <h2 className="font-display text-2xl font-semibold">{t("consents")}</h2>
+        <h2 className="section-title text-2xl">{t("consents")}</h2>
         <ConsentToggles initial={latest} minor={session.profile!.is_minor} />
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("export")}</h2>
+        <h2 className="section-title text-2xl">{t("export")}</h2>
         <p className="mt-2 text-stone">{t("exportText")}</p>
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- téléchargement d'un fichier, pas une page */}
         <a
@@ -50,7 +50,7 @@ export default async function DataPage({ params }: { params: Promise<{ locale: s
         </a>
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("delete")}</h2>
+        <h2 className="section-title text-2xl">{t("delete")}</h2>
         <p className="mt-2 max-w-2xl text-stone">{t("deleteText")}</p>
         <DeletionRequest
           pending={(requests ?? []).some((r) => r.type === "delete" && r.status === "pending")}

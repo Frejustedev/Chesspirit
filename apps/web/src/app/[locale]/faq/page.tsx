@@ -26,7 +26,7 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
   const online = await onlinePaymentsEnabled();
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 lg:px-6">
-      <h1 className="font-display text-5xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-5xl font-light">{t("title")}</h1>
       <div className="mt-8 divide-y divide-line border-y border-line">
         {KEYS.map((k) => (
           <details key={k} className="group py-2">

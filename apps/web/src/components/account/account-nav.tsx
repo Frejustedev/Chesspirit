@@ -64,7 +64,7 @@ export function AccountShell({
     <div className="mx-auto grid max-w-6xl gap-8 px-4 py-8 lg:grid-cols-[13rem_1fr] lg:px-6 lg:py-12">
       <aside className="min-w-0">{nav}</aside>
       <div className="min-w-0">
-        <h1 className="font-display text-4xl font-semibold">{title}</h1>
+        <h1 className="font-display text-4xl font-light">{title}</h1>
         <div className="mt-6">{children}</div>
       </div>
     </div>

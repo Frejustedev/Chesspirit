@@ -80,7 +80,7 @@ export function TeamsManager({
         </p>
       ) : null}
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("teams")}</h2>
+        <h2 className="section-title text-2xl">{t("teams")}</h2>
         <form
           className="mt-3 flex flex-wrap gap-2"
           onSubmit={(e) => {
@@ -167,7 +167,7 @@ export function TeamsManager({
 
       <section>
         <div className="flex flex-wrap items-center gap-3">
-          <h2 className="min-w-0 flex-1 font-display text-2xl font-semibold">{t("rounds")}</h2>
+          <h2 className="min-w-0 flex-1 section-title text-2xl">{t("rounds")}</h2>
           <Button
             disabled={pending}
             onClick={() => run(() => generateTeamRoundAction(tournamentId))}
@@ -266,7 +266,7 @@ export function TeamsManager({
       </section>
 
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("standings")}</h2>
+        <h2 className="section-title text-2xl">{t("standings")}</h2>
         <table className="mt-3 w-full">
           <thead>
             <tr className="border-b border-line text-left text-sm text-stone">

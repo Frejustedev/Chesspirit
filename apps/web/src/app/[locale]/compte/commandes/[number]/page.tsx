@@ -59,7 +59,7 @@ export default async function OrderPage({
       </div>
       {cards?.length ? (
         <section className="mt-8 rounded-lg bg-gold-soft/50 p-5">
-          <h2 className="font-display text-2xl font-semibold">{t("yourGiftCards")}</h2>
+          <h2 className="section-title text-2xl">{t("yourGiftCards")}</h2>
           <ul className="mt-2 space-y-1">
             {cards.map((c) => (
               <li key={c.code}>

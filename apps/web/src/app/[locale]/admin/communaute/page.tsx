@@ -40,7 +40,7 @@ export default async function AdminCommunity({
   const supabase = await createClient();
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       <nav aria-label={t("tabs")} className="mt-6 flex flex-wrap gap-2">
         {TABS.map((k) => (
           <Link
@@ -97,7 +97,7 @@ export default async function AdminCommunity({
           ))}
         </section>
         <p className="mt-6">{t("referralsCount", { n: referrals ?? 0 })}</p>
-        <h2 className="mt-8 font-display text-2xl font-semibold">{t("members")}</h2>
+        <h2 className="mt-8 section-title text-2xl">{t("members")}</h2>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
@@ -174,7 +174,7 @@ export default async function AdminCommunity({
         {(editions ?? []).map((e) => (
           <section key={e.id} className="mt-8 rounded-lg border border-line p-4">
             <div className="flex flex-wrap items-center gap-3">
-              <h2 className="min-w-0 flex-1 font-display text-2xl font-semibold">
+              <h2 className="min-w-0 flex-1 section-title text-2xl">
                 {tr(e.title, locale)}
                 {e.is_demo ? <span className="ml-2 text-sm text-accent">({t("demo")})</span> : null}
               </h2>

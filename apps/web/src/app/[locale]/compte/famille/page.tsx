@@ -43,7 +43,7 @@ export default async function FamilyPage({ params }: { params: Promise<{ locale:
       ) : (
         <p className="mt-6 text-stone">{t("none")}</p>
       )}
-      <h2 className="mt-10 font-display text-2xl font-semibold">{t("add")}</h2>
+      <h2 className="mt-10 section-title text-2xl">{t("add")}</h2>
       <div className="mt-4">
         <ProfileForm
           countries={countries}

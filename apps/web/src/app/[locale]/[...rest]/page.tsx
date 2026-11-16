@@ -48,7 +48,7 @@ export default async function ComingSoon({
       <p className="mt-6 font-sans text-sm font-semibold uppercase tracking-[0.16em] text-accent">
         {t(`nav.sections.${hit.section}`)}
       </p>
-      <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
+      <h1 className="mt-2 font-display text-4xl font-light sm:text-5xl">
         {hit.item ? t(`nav.items.${hit.item}`) : t(`nav.sections.${hit.section}`)}
       </h1>
       <p className="mx-auto mt-4 max-w-xl font-serif text-xl text-stone">

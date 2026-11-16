@@ -24,9 +24,7 @@ export default async function RentalPage({
       <ShopNav current="location" />
       <div className="mt-8 grid gap-10 lg:grid-cols-2">
         <div>
-          <h1 className="font-display text-4xl font-semibold sm:text-5xl">
-            {t("rentalPageTitle")}
-          </h1>
+          <h1 className="font-display text-4xl font-light sm:text-5xl">{t("rentalPageTitle")}</h1>
           <p className="mt-3 font-serif text-xl text-stone">{t("rentalIntro")}</p>
           <ul className="mt-6 space-y-3">
             {(["rentalItem1", "rentalItem2", "rentalItem3", "rentalItem4"] as const).map((k) => (

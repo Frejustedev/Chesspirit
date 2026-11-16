@@ -64,7 +64,7 @@ export default async function BookOffer({
           {coach?.display_name}
         </Link>
       </nav>
-      <h1 className="mt-2 font-display text-4xl font-semibold">{tr(offer.title, locale)}</h1>
+      <h1 className="mt-2 font-display text-4xl font-light">{tr(offer.title, locale)}</h1>
       <p className="mt-2 text-stone">
         {t(`lang.${offer.language}`)} · {t(`modality.${offer.modality}`)} ·{" "}
         {t(`level.${offer.level}`)} · {t(`format.${offer.format}`)} ·{" "}

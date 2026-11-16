@@ -44,7 +44,7 @@ export default async function AdminPayments({
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+        <h1 className="font-display text-4xl font-light">{t("title")}</h1>
         <a
           href={csv}
           className="inline-flex min-h-11 items-center rounded-full border border-fg/25 px-4 font-semibold hover:bg-surface"

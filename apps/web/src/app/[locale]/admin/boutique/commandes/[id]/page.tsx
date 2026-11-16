@@ -47,7 +47,7 @@ export default async function AdminOrder({
       <Link href="/admin/boutique" className="text-sm font-semibold text-accent hover:underline">
         ← {t("title")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold">
+      <h1 className="mt-2 font-display text-4xl font-light">
         {ts("order")} {o.number}
       </h1>
       <p className="text-stone">
@@ -58,7 +58,7 @@ export default async function AdminOrder({
       <div className="mt-6 grid gap-8 md:grid-cols-[1fr_18rem]">
         <div>
           <OrderSummary order={o} locale={locale} />
-          <h2 className="mt-8 font-display text-2xl font-semibold">{t("payments")}</h2>
+          <h2 className="mt-8 section-title text-2xl">{t("payments")}</h2>
           <ul className="mt-2 text-sm">
             {(payments ?? []).map((p) => (
               <li key={p.id}>
@@ -70,7 +70,7 @@ export default async function AdminOrder({
           </ul>
           {cards?.length ? (
             <>
-              <h2 className="mt-6 font-display text-2xl font-semibold">{ts("myGiftCards")}</h2>
+              <h2 className="mt-6 section-title text-2xl">{ts("myGiftCards")}</h2>
               <ul className="mt-2 text-sm">
                 {cards.map((c) => (
                   <li key={c.code} className="font-mono">

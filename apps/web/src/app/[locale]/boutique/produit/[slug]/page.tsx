@@ -123,7 +123,7 @@ export default async function ProductPage({
           />
         </div>
         <div>
-          <h1 className="font-display text-4xl font-semibold">{name}</h1>
+          <h1 className="font-display text-4xl font-light">{name}</h1>
           <p className="mt-2 flex flex-wrap items-center gap-2 text-sm text-stone">
             {p.reviews_count ? (
               <span>
@@ -156,7 +156,7 @@ export default async function ProductPage({
         </div>
       </div>
       <section className="mt-14 max-w-3xl">
-        <h2 className="font-display text-2xl font-semibold">{t("reviews")}</h2>
+        <h2 className="section-title text-2xl">{t("reviews")}</h2>
         {reviews?.length ? (
           <ul className="mt-4 space-y-4">
             {reviews.map((r) => (

@@ -25,7 +25,7 @@ export default async function OfflineArbitragePage({
       >
         ← {t("back")}
       </Link>
-      <h1 className="mt-2 font-display text-3xl font-semibold">{t("title")}</h1>
+      <h1 className="mt-2 font-display text-3xl font-light">{t("title")}</h1>
       <p className="mt-2 text-stone">{t("intro")}</p>
       <div className="mt-6">
         <OfflineArbiter tournamentId={id} />

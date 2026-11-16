@@ -25,7 +25,7 @@ export default async function AdminPromos({ params }: { params: Promise<{ locale
     .order("created_at", { ascending: false });
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("promos")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("promos")}</h1>
       <ShopAdminNav current="/admin/boutique/codes" />
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_20rem]">
         <ul className="divide-y divide-line border-y border-line">

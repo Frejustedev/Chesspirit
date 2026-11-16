@@ -50,10 +50,10 @@ export default async function AdminCoaching({ params }: { params: Promise<{ loca
             {t("back")}
           </Link>
         </nav>
-        <h1 className="mt-2 font-display text-4xl font-semibold">{t("title")}</h1>
+        <h1 className="mt-2 font-display text-4xl font-light">{t("title")}</h1>
       </div>
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("commission")}</h2>
+        <h2 className="section-title text-2xl">{t("commission")}</h2>
         <CommissionSettings
           enabled={setting("coaching_commission_enabled") !== false}
           rate={Number(setting("coaching_commission_rate") ?? 0.15)}
@@ -61,7 +61,7 @@ export default async function AdminCoaching({ params }: { params: Promise<{ loca
         />
       </section>
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("applications")}</h2>
+        <h2 className="section-title text-2xl">{t("applications")}</h2>
         <ul className="mt-3 space-y-3">
           {(apps ?? []).map((a) => (
             <li key={a.id} className="rounded-md border border-line p-3">
@@ -82,7 +82,7 @@ export default async function AdminCoaching({ params }: { params: Promise<{ loca
         </ul>
       </section>
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("coaches")}</h2>
+        <h2 className="section-title text-2xl">{t("coaches")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(coaches ?? []).map((c) => (
             <li key={c.id} className="flex flex-wrap items-center gap-3 py-2">
@@ -98,7 +98,7 @@ export default async function AdminCoaching({ params }: { params: Promise<{ loca
         </ul>
       </section>
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("quotes")}</h2>
+        <h2 className="section-title text-2xl">{t("quotes")}</h2>
         <ul className="mt-3 space-y-2">
           {(quotes ?? []).map((q) => (
             <li key={q.id} className="rounded-md border border-line p-3 text-sm">

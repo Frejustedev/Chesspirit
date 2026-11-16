@@ -29,7 +29,7 @@ export default async function TicketPage({
   return (
     <div className="mx-auto max-w-md px-4 py-10">
       <div className="overflow-hidden rounded-xl border border-line bg-paper shadow-[var(--shadow-card)] print:shadow-none">
-        <div className="flex items-center justify-between bg-ink px-5 py-4 text-cream">
+        <div className="exterieur flex items-center justify-between bg-paper px-5 py-4 text-cream">
           <Logo tone="light" className="text-2xl" />
           <span className="font-sans text-xs font-semibold uppercase tracking-[0.16em] text-gold">
             {t("ticket")}

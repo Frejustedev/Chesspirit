@@ -10,7 +10,7 @@ export default async function CartPage({ params }: { params: Promise<{ locale: s
   const t = await getTranslations("shop");
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("cart")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("cart")}</h1>
       <div className="mt-6">
         <CartView />
       </div>

@@ -60,7 +60,7 @@ export default async function AdminMessages({
   });
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       <nav aria-label={t("title")} className="-mx-4 mt-4 overflow-x-auto px-4">
         <ul className="flex gap-1 border-b border-line">
           {TABS.map((k) => (

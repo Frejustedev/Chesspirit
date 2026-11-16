@@ -56,7 +56,7 @@ export default async function AmbassadorsPage({ params }: { params: Promise<{ lo
       </CommunityHeader>
       <div className="mt-8 grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="font-display text-2xl font-semibold">{t("list")}</h2>
+          <h2 className="section-title text-2xl">{t("list")}</h2>
           {people?.length ? (
             <ul className="mt-3 divide-y divide-line border-y border-line">
               {(approved ?? []).map((a) => {
@@ -74,7 +74,7 @@ export default async function AmbassadorsPage({ params }: { params: Promise<{ lo
           ) : (
             <p className="mt-2 text-stone">{t("none")}</p>
           )}
-          <h2 className="mt-10 font-display text-2xl font-semibold">{t("apply")}</h2>
+          <h2 className="mt-10 section-title text-2xl">{t("apply")}</h2>
           <p className="mt-1 text-stone">{t("applyIntro")}</p>
           <div className="mt-4">
             {!me ? (
@@ -92,7 +92,7 @@ export default async function AmbassadorsPage({ params }: { params: Promise<{ lo
           </div>
         </section>
         <section>
-          <h2 className="font-display text-2xl font-semibold">{tr_("title")}</h2>
+          <h2 className="section-title text-2xl">{tr_("title")}</h2>
           <p className="mt-1 text-stone">{tr_("intro")}</p>
           {me && code ? (
             <div className="mt-4 space-y-3">

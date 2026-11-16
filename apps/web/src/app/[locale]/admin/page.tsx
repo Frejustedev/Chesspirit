@@ -26,7 +26,7 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
       <p className="font-sans text-sm font-semibold uppercase tracking-[0.16em] text-accent">
         {t("kicker")}
       </p>
-      <h1 className="mt-2 font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="mt-2 font-display text-4xl font-light">{t("title")}</h1>
       {o ? (
         <dl className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
           {(
@@ -59,7 +59,7 @@ export default async function AdminHome({ params }: { params: Promise<{ locale: 
       ) : null}
       <section className="mt-10">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-display text-2xl font-semibold">{t("tournaments")}</h2>
+          <h2 className="section-title text-2xl">{t("tournaments")}</h2>
           {admin ? (
             <Link
               href="/admin/tournois/nouveau"

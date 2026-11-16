@@ -36,7 +36,7 @@ export function TrackForm() {
       ) : null}
       {state?.ok && state.data ? (
         <section className="rounded-lg border border-line p-5" aria-live="polite">
-          <h2 className="font-display text-2xl font-semibold">
+          <h2 className="section-title text-2xl">
             {state.data.number} · {t(`status.${state.data.status}`)}
           </h2>
           <p className="text-sm text-stone">

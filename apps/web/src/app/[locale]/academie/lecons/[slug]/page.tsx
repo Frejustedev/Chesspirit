@@ -53,15 +53,13 @@ export default async function LessonPage({
       <Link href="/academie/lecons" className="text-sm font-semibold text-accent hover:underline">
         ← {t("nav.lessons")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
-        {tr(l.title, locale)}
-      </h1>
+      <h1 className="mt-2 font-display text-4xl font-light sm:text-5xl">{tr(l.title, locale)}</h1>
       <p className="mt-2 text-stone">
         {tc(`level.${l.level}`)} · {tm(`themes.${l.theme}`)}
       </p>
       <p className="mt-4 font-serif text-xl">{tr(l.summary, locale)}</p>
       {!full ? (
-        <div className="mt-8 rounded-lg bg-ink p-6 text-cream">
+        <div className="exterieur mt-8 rounded-lg bg-paper p-6 text-cream">
           <p className="font-display text-2xl font-semibold">{t("premiumLocked")}</p>
           <Link
             href="/academie/premium"

@@ -35,7 +35,7 @@ export default async function LessonsPage({
   const sel = "min-h-11 min-w-0 flex-1 rounded-md border border-line bg-field px-3 sm:flex-none";
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("nav.lessons")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("nav.lessons")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("lessonsIntro")}</p>
       <div className="mt-6">
         <AcademyNav current="/academie/lecons" />

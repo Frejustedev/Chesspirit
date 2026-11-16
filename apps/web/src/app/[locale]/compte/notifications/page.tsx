@@ -45,7 +45,7 @@ export default async function NotificationsPage({
     >
       <NotificationPrefs initial={prefs} whatsappAvailable={!!flag?.enabled} />
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("history")}</h2>
+        <h2 className="section-title text-2xl">{t("history")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(items ?? []).map((n) => (
             <li key={n.id} className="py-3">

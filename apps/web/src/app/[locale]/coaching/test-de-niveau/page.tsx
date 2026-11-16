@@ -18,7 +18,7 @@ export default async function PlacementPage({ params }: { params: Promise<{ loca
   const series = SERIES.map((id) => BASE_PUZZLES.find((p) => p.id === id)!).filter(Boolean);
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       <p className="mt-3 font-serif text-xl text-stone">{t("intro", { n: series.length })}</p>
       <div className="mt-8">
         <PlacementTest puzzles={series} />

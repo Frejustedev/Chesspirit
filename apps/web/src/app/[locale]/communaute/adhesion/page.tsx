@@ -58,7 +58,7 @@ export default async function MembershipPage({ params }: { params: Promise<{ loc
                 key={p.code}
                 className="flex flex-col rounded-[var(--radius-card)] border border-line p-5"
               >
-                <h2 className="font-display text-2xl font-semibold">{tr(p.name, locale)}</h2>
+                <h2 className="section-title text-2xl">{tr(p.name, locale)}</h2>
                 <p className="mt-1 text-lg font-semibold">
                   {p.price_xof === null ? (
                     <Tbc />
@@ -105,7 +105,7 @@ export default async function MembershipPage({ params }: { params: Promise<{ loc
         {current && card ? (
           <aside
             aria-labelledby="card-title"
-            className="self-start rounded-lg bg-ink p-5 text-cream"
+            className="exterieur self-start rounded-lg bg-paper p-5 text-cream"
           >
             <h2
               id="card-title"

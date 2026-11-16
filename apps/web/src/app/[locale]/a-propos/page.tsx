@@ -13,7 +13,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const t = await getTranslations("about");
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 lg:px-6">
-      <h1 className="font-display text-5xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-5xl font-light">{t("title")}</h1>
       <div className="mt-8 grid gap-8 sm:grid-cols-2">
         <section>
           <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.16em] text-accent">

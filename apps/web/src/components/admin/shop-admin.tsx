@@ -143,7 +143,7 @@ export function PromoForm() {
   const [kind, setKind] = useState("percent");
   return (
     <form action={action} className="h-fit space-y-4 rounded-lg border border-line p-5">
-      <h2 className="font-display text-2xl font-semibold">{t("newPromo")}</h2>
+      <h2 className="section-title text-2xl">{t("newPromo")}</h2>
       <Field id="p-code" label={t("code")}>
         <Input
           id="p-code"

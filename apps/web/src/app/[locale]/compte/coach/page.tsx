@@ -93,7 +93,7 @@ export default async function CoachSpace({ params }: { params: Promise<{ locale:
       </dl>
 
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("bookings")}</h2>
+        <h2 className="section-title text-2xl">{t("bookings")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(bookings ?? []).map((b) => (
             <li key={b.id} className="flex flex-wrap items-center gap-3 py-2.5">
@@ -118,13 +118,13 @@ export default async function CoachSpace({ params }: { params: Promise<{ locale:
 
       {students.size ? (
         <section className="mt-10">
-          <h2 className="font-display text-2xl font-semibold">{t("students")}</h2>
+          <h2 className="section-title text-2xl">{t("students")}</h2>
           <FollowUpForm students={[...students].map(([id, name]) => ({ id, name }))} />
         </section>
       ) : null}
 
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("slots")}</h2>
+        <h2 className="section-title text-2xl">{t("slots")}</h2>
         <ul className="mt-3 flex flex-wrap gap-2">
           {(slots ?? []).map((s) => (
             <li
@@ -140,7 +140,7 @@ export default async function CoachSpace({ params }: { params: Promise<{ locale:
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("offers")}</h2>
+        <h2 className="section-title text-2xl">{t("offers")}</h2>
         <ul className="mt-3 space-y-3">
           {(offers ?? []).map((o) => (
             <li key={o.id}>
@@ -168,7 +168,7 @@ export default async function CoachSpace({ params }: { params: Promise<{ locale:
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("profile")}</h2>
+        <h2 className="section-title text-2xl">{t("profile")}</h2>
         <CoachProfileForm
           c={{
             headline_fr: tr(coach!.headline, "fr"),
@@ -184,7 +184,7 @@ export default async function CoachSpace({ params }: { params: Promise<{ locale:
 
       {payouts?.length ? (
         <section className="mt-10">
-          <h2 className="font-display text-2xl font-semibold">{t("payouts")}</h2>
+          <h2 className="section-title text-2xl">{t("payouts")}</h2>
           <ul className="mt-3 divide-y divide-line border-y border-line text-sm">
             {payouts.map((p) => (
               <li key={p.id} className="flex justify-between py-2">

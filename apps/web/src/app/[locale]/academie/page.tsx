@@ -23,7 +23,7 @@ export default async function AcademyHome({ params }: { params: Promise<{ locale
     .limit(6);
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
       <div className="mt-6">
         <AcademyNav current="/academie" />
@@ -31,7 +31,7 @@ export default async function AcademyHome({ params }: { params: Promise<{ locale
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         <Link
           href="/academie/puzzle-du-jour"
-          className="rounded-lg bg-ink p-6 text-cream hover:bg-bordeaux md:col-span-1"
+          className="exterieur rounded-lg bg-paper p-6 text-cream hover:bg-bordeaux md:col-span-1"
         >
           <span className="font-display text-2xl font-semibold">{t("nav.puzzle")}</span>
           <span className="mt-2 block text-cream/80">{t("puzzleCard")}</span>
@@ -52,7 +52,7 @@ export default async function AcademyHome({ params }: { params: Promise<{ locale
         </Link>
       </div>
       <section className="mt-12">
-        <h2 className="font-display text-2xl font-semibold">{t("nav.lessons")}</h2>
+        <h2 className="section-title text-2xl">{t("nav.lessons")}</h2>
         <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {(lessons ?? []).map((l) => (
             <li key={l.slug}>

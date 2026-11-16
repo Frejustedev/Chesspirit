@@ -81,7 +81,7 @@ export function RatingCalculator() {
             {delta.toFixed(1)}
           </dd>
         </div>
-        <div className="rounded bg-ink p-3 text-cream">
+        <div className="exterieur rounded bg-paper p-3 text-cream">
           <dt className="text-sm text-cream/70">{t("newRating")}</dt>
           <dd className="font-display text-2xl">{Math.round(ra + delta)}</dd>
         </div>

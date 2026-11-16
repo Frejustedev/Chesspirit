@@ -74,7 +74,7 @@ export default async function PredictionsPage({ params }: { params: Promise<{ lo
       </CommunityHeader>
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_20rem]">
         <section>
-          <h2 className="font-display text-2xl font-semibold">{t("open")}</h2>
+          <h2 className="section-title text-2xl">{t("open")}</h2>
           <p className="mt-1 text-sm text-stone">{t("rules")}</p>
           {!hasOpen ? <p className="mt-4 text-stone">{t("noneOpen")}</p> : null}
           {open
@@ -128,7 +128,7 @@ export default async function PredictionsPage({ params }: { params: Promise<{ lo
           ) : null}
         </section>
         <aside>
-          <h2 className="font-display text-2xl font-semibold">{t("leaderboard")}</h2>
+          <h2 className="section-title text-2xl">{t("leaderboard")}</h2>
           {board?.length ? (
             <ol className="mt-3 divide-y divide-line border-y border-line">
               {board.map((b, i) => (

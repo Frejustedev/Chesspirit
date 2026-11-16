@@ -193,7 +193,7 @@ export function RoundsManager({
       {round ? (
         <section aria-labelledby="round-title">
           <div className="flex flex-wrap items-center gap-3">
-            <h2 id="round-title" className="mr-auto font-display text-2xl font-semibold">
+            <h2 id="round-title" className="mr-auto section-title text-2xl">
               {t("round", { n: round.number })}{" "}
               <span
                 className={`ml-2 align-middle text-xs font-semibold uppercase tracking-wide ${round.engine === "fallback" ? "text-accent" : "text-stone"}`}

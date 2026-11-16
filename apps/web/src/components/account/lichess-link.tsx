@@ -24,7 +24,7 @@ export function LichessLink({
   );
   return (
     <section id="lichess" className="rounded-lg border border-line p-5">
-      <h2 className="font-display text-2xl font-semibold">{t("title")}</h2>
+      <h2 className="section-title text-2xl">{t("title")}</h2>
       <p className="mt-1 text-sm text-stone">{t("help")}</p>
       {username ? (
         <div className="mt-3 flex flex-wrap items-center gap-3">

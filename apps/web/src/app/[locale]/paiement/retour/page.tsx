@@ -50,7 +50,7 @@ export default async function PaymentReturn({
   return (
     <div className="mx-auto max-w-lg px-4 py-14 text-center">
       {status === "pending" ? <AutoRefresh seconds={4} /> : null}
-      <h1 className="font-display text-4xl font-semibold">{t(`status.${status}`)}</h1>
+      <h1 className="font-display text-4xl font-light">{t(`status.${status}`)}</h1>
       <p className="mt-3 font-serif text-xl text-stone">{t(`statusText.${status}`)}</p>
       {pay ? (
         <p className="tabular mt-4 text-lg font-semibold">{formatXof(pay.amount_xof, locale)}</p>

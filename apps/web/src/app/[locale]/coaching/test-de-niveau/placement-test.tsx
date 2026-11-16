@@ -31,7 +31,7 @@ export function PlacementTest({ puzzles }: { puzzles: Puzzle[] }) {
 
   if (level) {
     return (
-      <div className="rounded-lg bg-ink p-6 text-cream" role="status">
+      <div className="exterieur rounded-lg bg-paper p-6 text-cream" role="status">
         <p className="text-sm uppercase tracking-[0.16em] text-gold">{t("result")}</p>
         <p className="mt-2 font-display text-4xl font-semibold">{tc(`level.${level}`)}</p>
         <p className="mt-2 text-cream/80">
@@ -39,7 +39,7 @@ export function PlacementTest({ puzzles }: { puzzles: Puzzle[] }) {
         </p>
         <Link
           href={`/coaching?niveau=${level}`}
-          className="mt-5 inline-flex min-h-12 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-accent"
+          className="mt-5 inline-flex min-h-12 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-gold-bright"
         >
           {t("seeOffers")}
         </Link>

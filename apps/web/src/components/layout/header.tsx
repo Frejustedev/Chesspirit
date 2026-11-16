@@ -28,10 +28,11 @@ export async function Header() {
   }));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/85">
+    // Extérieur du dossier : l'en-tête reprend la couverture (fond noir chaud, texte crème, or).
+    <header className="exterieur sticky top-0 z-40 border-b border-line bg-paper print:hidden">
       <a
         href="#contenu"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:rounded focus:bg-ink focus:px-3 focus:py-2 focus:text-cream"
+        className="exterieur sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:z-50 focus:rounded focus:bg-paper focus:px-3 focus:py-2 focus:text-cream"
       >
         {tc("skipToContent")}
       </a>

@@ -54,7 +54,7 @@ export default async function EpisodePage({
           ← {tr(e.media_series.title, locale)}
         </Link>
       ) : null}
-      <h1 className="mt-2 font-display text-4xl font-semibold">
+      <h1 className="mt-2 font-display text-4xl font-light">
         {title} {e.is_demo ? <DemoBadge /> : null}
       </h1>
       <p className="mt-2 text-stone">
@@ -76,7 +76,7 @@ export default async function EpisodePage({
             <a href={e.audio_url}>{t("listen")}</a>
           </audio>
         ) : e.format === "live" && e.live_at ? (
-          <p className="rounded-lg bg-ink p-6 font-display text-2xl text-cream">
+          <p className="exterieur rounded-lg bg-paper p-6 font-display text-2xl text-cream">
             {t("liveOn", { date: formatDateTime(e.live_at, locale) })}
           </p>
         ) : (
@@ -90,7 +90,7 @@ export default async function EpisodePage({
       ) : null}
       {(e.positions as ContentPosition[]).length ? (
         <section className="mt-10">
-          <h2 className="font-display text-2xl font-semibold">{t("positions")}</h2>
+          <h2 className="section-title text-2xl">{t("positions")}</h2>
           <div className="mt-4">
             <PositionList positions={e.positions as ContentPosition[]} />
           </div>

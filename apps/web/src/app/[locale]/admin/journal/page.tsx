@@ -39,7 +39,7 @@ export default async function AdminAudit({
   };
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       <p className="mt-2 text-stone">{t("intro")}</p>
       <form action="/admin/journal" className="mt-4 flex gap-2">
         <label htmlFor="a-obj" className="sr-only">

@@ -39,7 +39,7 @@ export default async function LeaguesPage({
   const monthYear = { month: "long", year: "numeric" } as const;
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-3xl font-serif text-xl text-stone">{t("intro")}</p>
       <div className="mt-6">
         <SeasonPicker
@@ -125,7 +125,7 @@ export default async function LeaguesPage({
           </div>
           <section className="mt-12 grid gap-8 md:grid-cols-2">
             <div>
-              <h2 className="font-display text-2xl font-semibold">{t("rulesTitle")}</h2>
+              <h2 className="section-title text-2xl">{t("rulesTitle")}</h2>
               <ul className="mt-3 space-y-2">
                 <li>{t("rulePoints")}</li>
                 <li>
@@ -161,8 +161,8 @@ export default async function LeaguesPage({
                 <li>{t("ruleTitles")}</li>
               </ul>
             </div>
-            <div className="rounded-lg bg-ink p-6 text-cream">
-              <h2 className="font-display text-2xl font-semibold">{t("licenseTitle")}</h2>
+            <div className="exterieur rounded-lg bg-paper p-6 text-cream">
+              <h2 className="section-title text-2xl">{t("licenseTitle")}</h2>
               <p className="mt-2 text-cream/80">{t("licenseText")}</p>
               <p className="mt-4 font-display text-3xl font-semibold">
                 {season.license_fee_xof === null ? (
@@ -175,7 +175,7 @@ export default async function LeaguesPage({
               </p>
               <Link
                 href="/compte/ligues"
-                className="mt-4 inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-accent"
+                className="mt-4 inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-gold-bright"
               >
                 {t("licenseCta")}
               </Link>

@@ -99,7 +99,7 @@ export default async function LivePage({ params, searchParams }: Props) {
 
   if (big) {
     return (
-      <div className="fixed inset-0 z-[60] overflow-hidden bg-ink p-[2vw] text-cream">
+      <div className="exterieur fixed inset-0 z-[60] overflow-hidden bg-paper p-[2vw] text-cream">
         <LiveRefresh tournamentId={t.id} fallbackSeconds={15} />
         <div className="flex items-baseline justify-between">
           <p className="font-display text-[2.6vw] font-semibold">
@@ -128,7 +128,7 @@ export default async function LivePage({ params, searchParams }: Props) {
           {t.name}
         </Link>
       </nav>
-      <h1 className="mt-2 flex items-center gap-3 font-display text-4xl font-semibold">
+      <h1 className="mt-2 flex items-center gap-3 font-display text-4xl font-light">
         <span className="relative flex size-3" aria-hidden>
           <span className="absolute inline-flex size-full animate-ping rounded-full bg-bordeaux opacity-60" />
           <span className="relative inline-flex size-3 rounded-full bg-bordeaux" />
@@ -154,15 +154,13 @@ export default async function LivePage({ params, searchParams }: Props) {
       )}
       <div className="mt-6 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
         <section>
-          <h2 className="font-display text-2xl font-semibold">
-            {current ? tr("round", { n: current }) : ""}
-          </h2>
+          <h2 className="section-title text-2xl">{current ? tr("round", { n: current }) : ""}</h2>
           <div className="mt-3 overflow-x-auto rounded-[var(--radius-card)] border border-line">
             {pairingsTable}
           </div>
         </section>
         <section>
-          <h2 className="font-display text-2xl font-semibold">{tr("standings")}</h2>
+          <h2 className="section-title text-2xl">{tr("standings")}</h2>
           <div className="mt-3">{standingsTable}</div>
         </section>
       </div>

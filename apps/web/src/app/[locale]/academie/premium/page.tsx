@@ -33,12 +33,12 @@ export default async function PremiumPage({ params }: { params: Promise<{ locale
   ]);
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
       <div className="mt-6">
         <AcademyNav current="/academie/premium" />
       </div>
-      <div className="mt-8 rounded-lg bg-ink p-6 text-cream">
+      <div className="exterieur mt-8 rounded-lg bg-paper p-6 text-cream">
         {premium ? (
           <p className="font-display text-2xl font-semibold">{t("youArePremium")}</p>
         ) : (
@@ -64,7 +64,7 @@ export default async function PremiumPage({ params }: { params: Promise<{ locale
           </>
         )}
       </div>
-      <h2 className="mt-10 font-display text-2xl font-semibold">{t("lessons")}</h2>
+      <h2 className="mt-10 section-title text-2xl">{t("lessons")}</h2>
       {lessons?.length ? (
         <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {lessons.map((l) => (
@@ -89,7 +89,7 @@ export default async function PremiumPage({ params }: { params: Promise<{ locale
       )}
       {resources?.length ? (
         <>
-          <h2 className="mt-10 font-display text-2xl font-semibold">{t("resources")}</h2>
+          <h2 className="mt-10 section-title text-2xl">{t("resources")}</h2>
           <ul className="mt-3 list-disc pl-5">
             {resources.map((r) => (
               <li key={r.id}>{tr(r.title, locale)}</li>

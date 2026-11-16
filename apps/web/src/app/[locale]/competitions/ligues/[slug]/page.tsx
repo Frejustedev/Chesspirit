@@ -74,7 +74,7 @@ export default async function LeaguePage({
       >
         ← {t("title")} · {l.seasons.name}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
+      <h1 className="mt-2 font-display text-4xl font-light sm:text-5xl">
         {t(`division.${l.division}`)} · {t(`cadence.${l.cadence}`)}{" "}
         {l.seasons.is_demo ? <DemoBadge /> : null}
       </h1>
@@ -87,7 +87,7 @@ export default async function LeaguePage({
         {tr(l.schedule_note, locale)}
       </p>
       <section className="mt-8">
-        <h2 className="font-display text-2xl font-semibold">{t("standings")}</h2>
+        <h2 className="section-title text-2xl">{t("standings")}</h2>
         {standings?.length ? (
           <div className="mt-3 overflow-x-auto">
             <table className="w-full">
@@ -157,7 +157,7 @@ export default async function LeaguePage({
         )}
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("matchdays")}</h2>
+        <h2 className="section-title text-2xl">{t("matchdays")}</h2>
         {days?.length ? (
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {days.map((d) => (

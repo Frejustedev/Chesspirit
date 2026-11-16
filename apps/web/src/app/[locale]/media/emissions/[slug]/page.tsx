@@ -45,14 +45,12 @@ export default async function ShowPage({
       <Link href="/media/emissions" className="text-sm font-semibold text-accent hover:underline">
         ← {t("shows")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
-        {tr(s.title, locale)}
-      </h1>
+      <h1 className="mt-2 font-display text-4xl font-light sm:text-5xl">{tr(s.title, locale)}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{tr(s.description, locale)}</p>
       {seasons.length ? (
         seasons.map((season) => (
           <section key={season} className="mt-10">
-            <h2 className="font-display text-2xl font-semibold">{t("season", { n: season })}</h2>
+            <h2 className="section-title text-2xl">{t("season", { n: season })}</h2>
             <EpisodeGrid
               episodes={
                 (episodes ?? []).filter((e) => e.season === season) as unknown as EpisodeCardData[]

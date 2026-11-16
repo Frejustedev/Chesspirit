@@ -42,9 +42,7 @@ export default async function StructuresDirectory({
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-4xl font-semibold sm:text-5xl">
-            {t("structuresTitle")}
-          </h1>
+          <h1 className="font-display text-4xl font-light sm:text-5xl">{t("structuresTitle")}</h1>
           <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("structuresIntro")}</p>
         </div>
         <Link

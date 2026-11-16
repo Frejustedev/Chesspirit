@@ -110,7 +110,7 @@ export function WalkInForm({ tournamentId }: { tournamentId: string }) {
           <button
             type="submit"
             disabled={busy}
-            className="inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-gold-deep disabled:opacity-60"
+            className="inline-flex min-h-11 items-center rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-gold-bright disabled:opacity-60"
           >
             {busy ? t("adding") : t("add")}
           </button>

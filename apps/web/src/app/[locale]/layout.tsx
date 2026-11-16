@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { env } from "@/lib/env";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { PageFrame } from "@/components/layout/page-frame";
 import { Analytics } from "@/components/analytics";
 
 export function generateStaticParams() {
@@ -57,8 +58,11 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className="min-h-dvh antialiased">
         <NextIntlClientProvider messages={messages}>
+          {/* De l'extérieur à l'intérieur : couverture (en-tête), pages crème, dos (pied de page). */}
           <Header />
-          <main id="contenu">{children}</main>
+          <main id="contenu">
+            <PageFrame>{children}</PageFrame>
+          </main>
           <Footer />
         </NextIntlClientProvider>
         <Analytics />

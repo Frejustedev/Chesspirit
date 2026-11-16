@@ -22,7 +22,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ local
   const p = session.profile!;
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("checkoutTitle")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("checkoutTitle")}</h1>
       <div className="mt-6">
         <CheckoutForm
           settings={settings}

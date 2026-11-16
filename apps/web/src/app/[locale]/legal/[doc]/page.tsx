@@ -35,7 +35,7 @@ export default async function LegalPage({
   return (
     <article className="mx-auto max-w-3xl px-4 py-10 lg:px-6">
       <p className="tbc">{t("common.draftLegal")}</p>
-      <h1 className="mt-4 font-display text-4xl font-semibold sm:text-5xl">
+      <h1 className="mt-4 font-display text-4xl font-light sm:text-5xl">
         {t(`nav.items.${DOCS[doc]}`)}
       </h1>
       {locale !== "fr" ? (

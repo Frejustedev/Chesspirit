@@ -31,7 +31,7 @@ export default async function MemberCheck({
   const p = m?.profiles;
   return (
     <div className="mx-auto max-w-lg px-4 py-16 text-center">
-      <h1 className="font-display text-4xl font-semibold">{t("checkTitle")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("checkTitle")}</h1>
       <p className="tabular mt-2 text-stone">{valid ? card : "—"}</p>
       <p
         className={`mt-6 rounded-lg p-5 text-xl font-semibold ${ok ? "bg-success/10 text-success" : "bg-bordeaux/10 text-rose"}`}

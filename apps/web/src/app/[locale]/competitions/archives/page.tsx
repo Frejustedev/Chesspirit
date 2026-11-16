@@ -73,7 +73,7 @@ export default async function ArchivesPage({
   const input = "min-h-11 w-full rounded-md border border-line bg-field px-3";
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
       <Link
         href="/competitions/archives/position"
@@ -83,7 +83,7 @@ export default async function ArchivesPage({
       </Link>
 
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("games")}</h2>
+        <h2 className="section-title text-2xl">{t("games")}</h2>
         <form action="/competitions/archives" className="mt-4 grid gap-3 sm:grid-cols-5">
           <div className="sm:col-span-2">
             <label htmlFor="a-p" className="block text-sm font-semibold">
@@ -197,7 +197,7 @@ export default async function ArchivesPage({
       </section>
 
       <section className="mt-12">
-        <h2 className="font-display text-2xl font-semibold">{t("pastTournaments")}</h2>
+        <h2 className="section-title text-2xl">{t("pastTournaments")}</h2>
         <ul className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {past.map((p) => (
             <li key={p.id}>

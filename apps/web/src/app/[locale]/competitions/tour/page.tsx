@@ -38,7 +38,7 @@ export default async function TourPage({
   ]);
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-3xl font-serif text-xl text-stone">{t("intro")}</p>
       <div className="mt-6">
         <SeasonPicker
@@ -50,7 +50,7 @@ export default async function TourPage({
       </div>
       <div className="mt-8 grid gap-10 lg:grid-cols-[1.4fr_1fr]">
         <section>
-          <h2 className="font-display text-2xl font-semibold">
+          <h2 className="section-title text-2xl">
             {t("stages")} {season?.is_demo ? <DemoBadge /> : null}
           </h2>
           <ol className="mt-4 space-y-3">
@@ -99,7 +99,7 @@ export default async function TourPage({
           </Link>
         </section>
         <section>
-          <h2 className="font-display text-2xl font-semibold">{t("rulesTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("rulesTitle")}</h2>
           <ul className="mt-3 space-y-2">
             <li>{t("ruleMajors")}</li>
             <li>{t("ruleOnline")}</li>

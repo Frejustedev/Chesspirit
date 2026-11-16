@@ -69,7 +69,7 @@ export default async function RegistrationPage({
           {t.name}
         </Link>
       </nav>
-      <h1 className="mt-3 font-display text-4xl font-semibold">{tr("title")}</h1>
+      <h1 className="mt-3 font-display text-4xl font-light">{tr("title")}</h1>
       <p className="mt-2 text-lg first-letter:uppercase">
         {t.name} ·{" "}
         {formatDate(t.starts_at, locale, { weekday: "long", day: "numeric", month: "long" })}

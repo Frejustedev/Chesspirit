@@ -64,7 +64,7 @@ export default async function AdminUsers({
     `/admin/utilisateurs?${new URLSearchParams({ ...(q ? { q } : {}), ...(filtre ? { filtre } : {}), page: String(p) })}`;
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       <form action="/admin/utilisateurs" className="mt-6 flex flex-wrap gap-2">
         <label htmlFor="u-q" className="sr-only">
           {t("search")}

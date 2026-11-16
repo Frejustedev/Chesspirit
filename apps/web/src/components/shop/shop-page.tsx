@@ -31,7 +31,7 @@ export async function ShopPage({
     <div className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
       <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr] lg:items-end">
         <div>
-          <h1 className="font-display text-4xl font-semibold sm:text-5xl">{title}</h1>
+          <h1 className="font-display text-4xl font-light sm:text-5xl">{title}</h1>
           <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{intro}</p>
         </div>
         {/* Conditions affichées avec le catalogue : sans produit, rien à livrer ni à payer. */}
@@ -84,9 +84,9 @@ export async function ShopPage({
         </button>
       </form>
       <ProductGrid products={products} locale={locale} />
-      <section className="mt-14 grid gap-6 rounded-lg bg-ink p-6 text-cream sm:grid-cols-3 sm:p-8">
+      <section className="exterieur mt-14 grid gap-6 rounded-lg bg-paper p-6 text-cream sm:grid-cols-3 sm:p-8">
         <div>
-          <h2 className="font-display text-2xl font-semibold">{t("groupTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("groupTitle")}</h2>
           <p className="mt-2 text-cream/80">{t("groupText")}</p>
           <Link
             href="/boutique/location?type=group_order"
@@ -96,7 +96,7 @@ export async function ShopPage({
           </Link>
         </div>
         <div>
-          <h2 className="font-display text-2xl font-semibold">{t("rentalTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("rentalTitle")}</h2>
           <p className="mt-2 text-cream/80">{t("rentalText")}</p>
           <Link
             href="/boutique/location"
@@ -106,7 +106,7 @@ export async function ShopPage({
           </Link>
         </div>
         <div>
-          <h2 className="font-display text-2xl font-semibold">{t("trackTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("trackTitle")}</h2>
           <p className="mt-2 text-cream/80">{t("trackText")}</p>
           <Link
             href="/boutique/suivi"

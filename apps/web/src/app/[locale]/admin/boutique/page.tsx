@@ -44,7 +44,7 @@ export default async function AdminShop({
   ]);
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       <ShopAdminNav current="/admin/boutique" />
       {overview ? (
         <dl className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">

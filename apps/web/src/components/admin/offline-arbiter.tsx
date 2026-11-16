@@ -132,7 +132,7 @@ export function OfflineArbiter({ tournamentId }: { tournamentId: string }) {
           </p>
           {pack.rounds.map((r) => (
             <section key={r.id} className="mt-6">
-              <h2 className="font-display text-2xl font-semibold">{t("round", { n: r.number })}</h2>
+              <h2 className="section-title text-2xl">{t("round", { n: r.number })}</h2>
               <ul className="mt-3 divide-y divide-line border-y border-line">
                 {r.pairings.map((p) => (
                   <li key={p.id} className="flex flex-wrap items-center gap-3 py-3">

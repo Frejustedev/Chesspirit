@@ -49,7 +49,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
       <div className="grid gap-8 xl:grid-cols-[1fr_18rem]">
         <div className="space-y-10">
           <section>
-            <h2 className="font-display text-2xl font-semibold">{t("tickets")}</h2>
+            <h2 className="section-title text-2xl">{t("tickets")}</h2>
             {regs?.length ? (
               <ul className="mt-3 divide-y divide-line border-y border-line">
                 {regs.map((r) => (
@@ -82,7 +82,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
             )}
           </section>
           <section>
-            <h2 className="font-display text-2xl font-semibold">{t("ratings")}</h2>
+            <h2 className="section-title text-2xl">{t("ratings")}</h2>
             <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {(["blitz", "rapid", "classical", "online"] as const).map((k) => {
                 const r = ratings?.find((x) => x.type === k);
@@ -108,7 +108,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
         </div>
         <aside
           aria-labelledby="member-card"
-          className="self-start rounded-lg bg-ink p-5 text-cream"
+          className="exterieur self-start rounded-lg bg-paper p-5 text-cream"
         >
           <h2
             id="member-card"

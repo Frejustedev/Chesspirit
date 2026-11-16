@@ -68,7 +68,7 @@ export default async function PlayerPage({ params }: Props) {
       <div className="flex items-start gap-4">
         <PieceSvg kind="p" color="w" className="size-16 shrink-0" />
         <div>
-          <h1 className="font-display text-4xl font-semibold">
+          <h1 className="font-display text-4xl font-light">
             {p.titles?.length ? (
               <span className="mr-2 text-2xl text-accent">{p.titles.join(" ")}</span>
             ) : null}
@@ -99,7 +99,7 @@ export default async function PlayerPage({ params }: Props) {
       </dl>
       {curve.length > 1 ? (
         <section className="mt-10">
-          <h2 className="font-display text-2xl font-semibold">
+          <h2 className="section-title text-2xl">
             {t("curve", {
               cadence: tt(`cadence.${main?.type === "online" ? "rapid" : (main?.type ?? "rapid")}`),
             })}
@@ -111,7 +111,7 @@ export default async function PlayerPage({ params }: Props) {
       ) : null}
       <div className="mt-10 grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="font-display text-2xl font-semibold">{t("tournaments")}</h2>
+          <h2 className="section-title text-2xl">{t("tournaments")}</h2>
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {(results ?? [])
               .map((r) => ({ ...r, t: byT.get(r.tournament_id!) }))
@@ -140,7 +140,7 @@ export default async function PlayerPage({ params }: Props) {
           </ul>
         </section>
         <section>
-          <h2 className="font-display text-2xl font-semibold">{t("games")}</h2>
+          <h2 className="section-title text-2xl">{t("games")}</h2>
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {(games ?? []).map((g) => (
               <li key={g.id}>

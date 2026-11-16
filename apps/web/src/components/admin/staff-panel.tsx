@@ -32,7 +32,7 @@ export function StaffPanel({
   return (
     <div className="grid gap-10 lg:grid-cols-2">
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("title")}</h2>
+        <h2 className="section-title text-2xl">{t("title")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {staff.map((s) => (
             <li key={s.id} className="flex items-center gap-3 py-2">
@@ -104,7 +104,7 @@ export function StaffPanel({
       </section>
       {canManage ? (
         <section>
-          <h2 className="font-display text-2xl font-semibold">{t("duplicateTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("duplicateTitle")}</h2>
           <p className="mt-2 text-sm text-stone">{t("duplicateHelp")}</p>
           <form
             className="mt-3 grid gap-3 sm:grid-cols-2 sm:items-end"

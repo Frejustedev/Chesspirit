@@ -70,7 +70,7 @@ export default async function MapPage({
   }
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("mapTitle")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("mapTitle")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("mapIntro")}</p>
       <div className="mt-6">
         <DirectoryNav current="/annuaire/carte" />
@@ -90,7 +90,7 @@ export default async function MapPage({
         <span>{t("mapApprox")}</span>
       </p>
       <section className="mt-8">
-        <h2 className="font-display text-2xl font-semibold">{t("mapList")}</h2>
+        <h2 className="section-title text-2xl">{t("mapList")}</h2>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {points.map((p) => (
             <li key={`${p.kind}-${p.id}`}>

@@ -72,13 +72,13 @@ export default async function TeamsPage({
       >
         ← {t.name}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold">{tt("title")}</h1>
+      <h1 className="mt-2 font-display text-4xl font-light">{tt("title")}</h1>
       <p className="mt-2 text-stone">
         {tt(`scoring.${t.team_scoring ?? "match_points"}`)} ·{" "}
         {tt("boards", { n: t.team_size ?? 4 })}
       </p>
       <section className="mt-8">
-        <h2 className="font-display text-2xl font-semibold">{tt("standings")}</h2>
+        <h2 className="section-title text-2xl">{tt("standings")}</h2>
         <table className="mt-3 w-full">
           <thead>
             <tr className="border-b border-line text-left text-sm text-stone">
@@ -121,7 +121,7 @@ export default async function TeamsPage({
       </section>
       {rounds.map((r) => (
         <section key={r} className="mt-10">
-          <h2 className="font-display text-2xl font-semibold">{tt("round", { n: r })}</h2>
+          <h2 className="section-title text-2xl">{tt("round", { n: r })}</h2>
           <ul className="mt-3 space-y-3">
             {(matches ?? [])
               .filter((m) => m.round_number === r)

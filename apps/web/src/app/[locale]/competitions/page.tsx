@@ -19,7 +19,7 @@ export default async function CalendarPage({ params }: { params: Promise<{ local
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{tt("calendarTitle")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{tt("calendarTitle")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{tt("calendarIntro")}</p>
       <h2 className="mt-10 font-sans text-sm font-semibold uppercase tracking-[0.14em] text-accent">
         {tt("upcoming")}

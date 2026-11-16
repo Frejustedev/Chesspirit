@@ -52,7 +52,7 @@ export default async function AdminTournament({
   if (isNew) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-10 lg:px-6">
-        <h1 className="font-display text-4xl font-semibold">{t("newTournament")}</h1>
+        <h1 className="font-display text-4xl font-light">{t("newTournament")}</h1>
         <div className="mt-6">
           <TournamentSettings tournament={null} prizesText="" partnersText="" />
         </div>
@@ -295,7 +295,7 @@ export default async function AdminTournament({
           {t("publicPage")}
         </Link>
       </nav>
-      <h1 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">{tn.name}</h1>
+      <h1 className="mt-2 font-display text-3xl font-light sm:text-4xl">{tn.name}</h1>
       <nav aria-label={t("tabs")} className="-mx-4 mt-6 overflow-x-auto px-4">
         <ul className="flex gap-1 border-b border-line">
           {tabs.map((k) => (

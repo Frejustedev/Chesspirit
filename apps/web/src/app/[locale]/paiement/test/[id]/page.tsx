@@ -32,7 +32,7 @@ export default async function FakeCheckoutPage({
         <p className="font-sans text-xs font-semibold uppercase tracking-[0.16em] text-accent">
           {t("fakeKicker")}
         </p>
-        <h1 className="mt-2 font-display text-3xl font-semibold">{t("fakeTitle")}</h1>
+        <h1 className="mt-2 font-display text-3xl font-light">{t("fakeTitle")}</h1>
         <p className="mt-2 text-stone">{t("fakeText")}</p>
         <p className="mt-5 text-sm text-stone">{pay.description}</p>
         <p className="tabular font-display text-4xl font-semibold">

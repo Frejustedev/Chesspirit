@@ -24,7 +24,7 @@ export default async function ArticlesPage({ params }: { params: Promise<{ local
     .limit(100);
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("articles")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("articles")}</h1>
       <p className="mt-3 font-serif text-xl text-stone">{t("articlesIntro")}</p>
       <div className="mt-6">
         <MediaNav current="/media/articles" />

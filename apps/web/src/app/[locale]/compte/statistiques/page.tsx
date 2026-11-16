@@ -86,7 +86,7 @@ export default async function MyStats({ params }: { params: Promise<{ locale: st
       {!games.length ? <p className="text-stone">{t("none")}</p> : null}
       {curves.map((c) => (
         <section key={c.k} className="mb-8">
-          <h2 className="font-display text-2xl font-semibold">
+          <h2 className="section-title text-2xl">
             {t("curve", { cadence: tt(`cadence.${c.k}`) })}
           </h2>
           <div className="mt-3 rounded-[var(--radius-card)] border border-line p-3">
@@ -97,14 +97,14 @@ export default async function MyStats({ params }: { params: Promise<{ locale: st
       {games.length ? (
         <div className="grid gap-10 lg:grid-cols-2">
           <section>
-            <h2 className="font-display text-2xl font-semibold">{t("byColor")}</h2>
+            <h2 className="section-title text-2xl">{t("byColor")}</h2>
             <div className="mt-4 space-y-4">
               <Bar t={white} label={t("white")} />
               <Bar t={black} label={t("black")} />
             </div>
           </section>
           <section>
-            <h2 className="font-display text-2xl font-semibold">{t("openings")}</h2>
+            <h2 className="section-title text-2xl">{t("openings")}</h2>
             <div className="mt-4 space-y-3">
               {top(openings).map(([k, v]) => (
                 <Bar key={k} t={v} label={k} />
@@ -112,7 +112,7 @@ export default async function MyStats({ params }: { params: Promise<{ locale: st
             </div>
           </section>
           <section className="lg:col-span-2">
-            <h2 className="font-display text-2xl font-semibold">{t("opponents")}</h2>
+            <h2 className="section-title text-2xl">{t("opponents")}</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {top(opponents).map(([k, v]) => (
                 <Bar key={k} t={v} label={k} />

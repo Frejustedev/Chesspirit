@@ -57,7 +57,7 @@ export default async function RankingsPage({
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
       <RankingTabs current="chesspirit" />
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("intro")}</p>
       <nav aria-label={t("cadences")} className="mt-6 flex flex-wrap gap-2">
         {TYPES.map((c) => (

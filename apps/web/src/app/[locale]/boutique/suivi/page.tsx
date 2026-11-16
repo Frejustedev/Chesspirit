@@ -13,7 +13,7 @@ export default async function TrackPage({ params }: { params: Promise<{ locale: 
   const t = await getTranslations("shop");
   return (
     <div className="mx-auto max-w-2xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("trackTitle")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("trackTitle")}</h1>
       <p className="mt-3 font-serif text-xl text-stone">{t("trackIntro")}</p>
       <div className="mt-6">
         <TrackForm />

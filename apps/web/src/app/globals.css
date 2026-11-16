@@ -1,14 +1,15 @@
 @import "tailwindcss";
 @import "./tokens.css";
 
-@import "@fontsource-variable/fraunces/index.css";
-@import "@fontsource-variable/fraunces/wght-italic.css";
+/* Fraunces avec l'axe de taille optique : maigre et contrasté en grand, comme les titres du dossier. */
+@import "@fontsource-variable/fraunces/opsz.css";
+@import "@fontsource-variable/fraunces/opsz-italic.css";
 @import "@fontsource-variable/eb-garamond/index.css";
-@import "@fontsource-variable/source-sans-3/index.css";
+@import "@fontsource-variable/eb-garamond/wght-italic.css";
 
 @layer base {
   html {
-    color-scheme: dark;
+    color-scheme: light;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
   }
@@ -19,6 +20,31 @@
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.55;
+    font-variant-numeric: lining-nums;
+    /*
+     * Compensation d'œil : Garamond a un œil plus petit que la linéale qu'il remplace.
+     * Le texte d'interface garde ainsi sa taille apparente (navigateurs récents ; ailleurs,
+     * Garamond s'affiche simplement un peu plus petit).
+     */
+    font-size-adjust: ex-height var(--eye-text);
+  }
+  .font-sans {
+    font-size-adjust: ex-height var(--eye-text);
+  }
+  /*
+   * Titres et texte de lecture : tailles choisies pour la fonte elle-même.
+   * Capitales (surtitres, en-têtes de tableaux) : la hauteur de capitale de Garamond
+   * vaut déjà celle de la linéale, pas de compensation.
+   */
+  h1,
+  h2,
+  h3,
+  .font-display,
+  .font-serif,
+  .uppercase,
+  .label-cs,
+  thead th {
+    font-size-adjust: none;
   }
   h1,
   h2,
@@ -27,6 +53,15 @@
     font-optical-sizing: auto;
     letter-spacing: -0.01em;
     line-height: 1.1;
+  }
+  /* En-têtes de tableaux : capitales espacées, comme les tableaux du dossier. */
+  thead th {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-bordeaux);
   }
   :focus-visible {
     outline: 2px solid var(--color-accent);
@@ -51,9 +86,30 @@
   .prose-cs p + p {
     margin-top: 0.9em;
   }
-  .prose-cs h2 {
+  /* Titres de section du dossier : bordeaux, précédés d'un carré d'or. */
+  .prose-cs h2,
+  .section-title {
+    font-family: var(--font-display);
     font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--color-bordeaux);
+  }
+  .prose-cs h2 {
     margin: 1.6em 0 0.5em;
+  }
+  .prose-cs h2::before,
+  .section-title::before {
+    content: "";
+    display: inline-block;
+    width: 0.32em;
+    height: 0.32em;
+    margin-right: 0.5em;
+    vertical-align: 0.22em;
+    background: var(--color-gold);
+  }
+  .exterieur .section-title {
+    color: var(--color-fg);
   }
   .prose-cs h3 {
     font-size: 1.25rem;
@@ -71,16 +127,39 @@
   .prose-cs li::before {
     content: "";
     position: absolute;
-    left: 0.2em;
-    top: 0.62em;
-    width: 0.4em;
-    height: 0.4em;
+    left: 0.15em;
+    top: 0.66em;
+    width: 0.32em;
+    height: 0.32em;
     background: var(--color-gold);
-    transform: rotate(45deg);
   }
   .prose-cs a {
-    color: var(--color-accent);
+    color: var(--color-bordeaux);
     text-decoration: underline;
+    text-decoration-color: var(--color-gold);
+  }
+  .exterieur .prose-cs a {
+    color: var(--color-accent);
+  }
+
+  /*
+   * Surtitre et titre courant du dossier : petites capitales d'or espacées.
+   * Exemple : « CHESSPIRIT · DOSSIER DE PROJET », « VISION », « LANCEMENT ».
+   */
+  .label-cs {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  /* Encadré du dossier : fond sable, filet bordeaux à gauche. */
+  .callout-cs {
+    border-left: 3px solid var(--color-bordeaux);
+    background: var(--color-surface);
+    padding: 1rem 1.25rem;
   }
 
   /* Filet décoratif : damier fin */
@@ -97,7 +176,7 @@
   }
 
   .tabular {
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: tabular-nums lining-nums;
   }
 
   /* Étiquette « À confirmer » */

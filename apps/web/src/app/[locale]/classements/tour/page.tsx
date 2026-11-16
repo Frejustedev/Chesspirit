@@ -42,7 +42,7 @@ export default async function TourRanking({
   const qualified = season?.masters_qualified ?? 8;
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("rankingTitle")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("rankingTitle")}</h1>
       <p className="mt-3 font-serif text-xl text-stone">
         {t("rankingIntro", { n: season?.tour_best_results ?? 6 })}
       </p>

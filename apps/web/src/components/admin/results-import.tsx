@@ -55,7 +55,7 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
   return (
     <div className="grid gap-10 lg:grid-cols-2">
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("standingsTitle")}</h2>
+        <h2 className="section-title text-2xl">{t("standingsTitle")}</h2>
         <p className="mt-2 text-sm text-stone">{t("standingsHelp")}</p>
         <input
           type="file"
@@ -116,7 +116,7 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
         ) : null}
       </section>
       <section>
-        <h2 className="font-display text-2xl font-semibold">{t("pgnTitle")}</h2>
+        <h2 className="section-title text-2xl">{t("pgnTitle")}</h2>
         <p className="mt-2 text-sm text-stone">{t("pgnHelp")}</p>
         <input
           type="file"
@@ -135,7 +135,7 @@ export function ResultsImport({ tournamentId, slug }: { tournamentId: string; sl
           }}
         />
         {pending ? <p className="mt-3 text-sm text-stone">{t("loading")}</p> : null}
-        <h2 className="mt-10 font-display text-2xl font-semibold">{t("exportsTitle")}</h2>
+        <h2 className="mt-10 section-title text-2xl">{t("exportsTitle")}</h2>
         <ul className="mt-3 space-y-2">
           <li>
             <a

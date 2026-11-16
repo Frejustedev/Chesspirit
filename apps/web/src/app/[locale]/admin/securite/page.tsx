@@ -20,7 +20,7 @@ export default async function SecurityPage({
   const t = await getTranslations("admin");
   return (
     <div className="mx-auto max-w-lg px-4 py-12">
-      <h1 className="font-display text-4xl font-semibold">{t("mfaTitle")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("mfaTitle")}</h1>
       <p className="mt-3 font-serif text-lg text-stone">{t("mfaIntro")}</p>
       <MfaForm next={safeNext(next, "/admin")} />
     </div>

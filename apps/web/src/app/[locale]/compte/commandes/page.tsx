@@ -72,7 +72,7 @@ export default async function MyOrders({ params }: { params: Promise<{ locale: s
       </section>
       {cards?.length ? (
         <section className="mt-10">
-          <h2 className="font-display text-2xl font-semibold">{t("myGiftCards")}</h2>
+          <h2 className="section-title text-2xl">{t("myGiftCards")}</h2>
           <ul className="mt-3 space-y-2">
             {cards.map((c) => (
               <li key={c.id} className="rounded-md border border-line px-4 py-3">
@@ -88,7 +88,7 @@ export default async function MyOrders({ params }: { params: Promise<{ locale: s
         </section>
       ) : null}
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("wishlist")}</h2>
+        <h2 className="section-title text-2xl">{t("wishlist")}</h2>
         {wishlist?.length ? (
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {wishlist.map((w) =>

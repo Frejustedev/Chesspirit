@@ -28,7 +28,7 @@ export default async function BecomeCoach({ params }: { params: Promise<{ locale
   }
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       <p className="mt-3 font-serif text-xl text-stone">{t("intro")}</p>
       <div className="mt-8">
         {!session?.profile ? (

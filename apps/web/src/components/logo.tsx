@@ -1,6 +1,7 @@
 /**
- * Logotype provisoire : « Chesspirit » en Fraunces, le « s » central (partagé entre
- * chess et spirit) en or. Remplaçable en un seul endroit.
+ * Logotype provisoire, dessiné comme sur la couverture et le dos du dossier de projet :
+ * « Chesspirit » en Fraunces maigre, le « s » central (partagé entre chess et spirit) en or.
+ * Remplaçable en un seul endroit.
  */
 export function Logo({
   tone = "dark",
@@ -11,17 +12,10 @@ export function Logo({
 }) {
   return (
     <span
-      className={`font-display font-semibold tracking-[-0.02em] ${tone === "dark" ? "text-fg" : "text-cream"} ${className}`}
-      style={{ fontVariationSettings: '"opsz" 72, "SOFT" 30' }}
+      className={`font-display font-light tracking-[-0.025em] ${tone === "dark" ? "text-fg" : "text-cream"} ${className}`}
+      style={{ fontVariationSettings: '"opsz" 144' }}
     >
-      Ches
-      <span
-        className={tone === "dark" ? "text-accent" : "text-gold"}
-        style={{ fontStyle: "italic" }}
-      >
-        s
-      </span>
-      pirit
+      Ches<span className="text-gold">s</span>pirit
     </span>
   );
 }

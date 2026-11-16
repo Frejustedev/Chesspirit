@@ -152,7 +152,7 @@ export function TournamentSettings({
   // En mode assistant, les étapes masquées restent dans le formulaire (valeurs conservées).
   const section = (s: Step) => (wizard && step !== s ? "hidden" : "grid gap-5 sm:grid-cols-2");
   const heading = (s: Step) => (
-    <h2 className="font-display text-2xl font-semibold sm:col-span-2">
+    <h2 className="section-title text-2xl sm:col-span-2">
       {wizard ? <span className="mr-2 text-accent">{STEPS.indexOf(s) + 1}.</span> : null}
       {tw(`step.${s}`)}
     </h2>

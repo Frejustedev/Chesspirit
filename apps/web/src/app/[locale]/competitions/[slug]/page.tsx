@@ -165,7 +165,7 @@ export default async function TournamentPage({ params }: Props) {
             ) : null}
             {t.is_demo ? <DemoBadge /> : null}
           </div>
-          <h1 className="mt-3 max-w-4xl font-display text-4xl font-semibold sm:text-5xl lg:text-6xl">
+          <h1 className="mt-3 max-w-4xl font-display text-4xl font-light sm:text-5xl lg:text-6xl">
             {t.name}
           </h1>
           <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[1.02rem]">
@@ -230,7 +230,7 @@ export default async function TournamentPage({ params }: Props) {
 
           {t.pairing_system === "team_swiss" ? (
             <section className="rounded-lg border border-line p-5">
-              <h2 className="font-display text-2xl font-semibold">{tt("teamsTitle")}</h2>
+              <h2 className="section-title text-2xl">{tt("teamsTitle")}</h2>
               <p className="mt-1 text-stone">{tt("teamsText")}</p>
               <Link
                 href={`/competitions/${t.slug}/equipes`}
@@ -242,7 +242,7 @@ export default async function TournamentPage({ params }: Props) {
           ) : null}
           {t.is_online ? (
             <section className="rounded-lg bg-gold-soft/50 p-5">
-              <h2 className="font-display text-2xl font-semibold">{tt("onlineTitle")}</h2>
+              <h2 className="section-title text-2xl">{tt("onlineTitle")}</h2>
               <p className="mt-1">{tt("onlineText")}</p>
               {t.lichess_id ? (
                 <a
@@ -336,7 +336,7 @@ export default async function TournamentPage({ params }: Props) {
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-lg bg-ink p-5 text-cream shadow-[var(--shadow-card)]">
+          <div className="exterieur rounded-lg bg-paper p-5 text-cream shadow-[var(--shadow-card)]">
             {upcoming ? (
               <div className="-mb-2 flex justify-center pt-3">
                 <ChessClock
@@ -351,7 +351,7 @@ export default async function TournamentPage({ params }: Props) {
                 <p className="font-display text-2xl text-gold">{tt("registered")}</p>
                 <Link
                   href={`/billet/${myRegistration.ticket_code}`}
-                  className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold font-semibold text-onaccent hover:bg-accent"
+                  className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold font-semibold text-onaccent hover:bg-gold-bright"
                 >
                   {tt("seeTicket")} <IconArrow className="size-5" />
                 </Link>
@@ -359,7 +359,7 @@ export default async function TournamentPage({ params }: Props) {
             ) : open ? (
               <Link
                 href={`/competitions/${t.slug}/inscription`}
-                className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold text-[1.05rem] font-semibold text-onaccent hover:bg-accent"
+                className="flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold text-[1.05rem] font-semibold text-onaccent hover:bg-gold-bright"
               >
                 {tt("register")} <IconArrow className="size-5" />
               </Link>

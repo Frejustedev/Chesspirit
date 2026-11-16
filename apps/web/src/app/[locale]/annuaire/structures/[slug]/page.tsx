@@ -63,7 +63,7 @@ export default async function StructurePage({
       <Link href="/annuaire/clubs" className="text-sm font-semibold text-accent hover:underline">
         ← {t("structuresTitle")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold">
+      <h1 className="mt-2 font-display text-4xl font-light">
         {o.name} {o.is_demo ? <DemoBadge /> : null}
       </h1>
       <p className="mt-2 flex flex-wrap items-center gap-2 text-stone">
@@ -135,7 +135,7 @@ export default async function StructurePage({
       ) : null}
       {tournaments?.length ? (
         <section className="mt-10">
-          <h2 className="font-display text-2xl font-semibold">{t("tournaments")}</h2>
+          <h2 className="section-title text-2xl">{t("tournaments")}</h2>
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {tournaments.map((x) => (
               <li key={x.slug} className="flex justify-between gap-3 py-2">
@@ -150,7 +150,7 @@ export default async function StructurePage({
       ) : null}
       {jobs?.length ? (
         <section className="mt-10">
-          <h2 className="font-display text-2xl font-semibold">{t("jobsHere")}</h2>
+          <h2 className="section-title text-2xl">{t("jobsHere")}</h2>
           <ul className="mt-2 list-disc pl-5">
             {jobs.map((j) => (
               <li key={j.id}>
@@ -164,7 +164,7 @@ export default async function StructurePage({
       ) : null}
       {!o.claimed_by ? (
         <section className="mt-10 rounded-lg border border-line p-5">
-          <h2 className="font-display text-2xl font-semibold">{t("claimTitle")}</h2>
+          <h2 className="section-title text-2xl">{t("claimTitle")}</h2>
           <p className="mt-1 text-stone">{t("claimText")}</p>
           {claim ? (
             <p className="mt-3 font-semibold">{t(`claimStatus.${claim.status}`)}</p>

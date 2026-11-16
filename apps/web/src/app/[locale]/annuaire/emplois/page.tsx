@@ -37,7 +37,7 @@ export default async function JobsPage({
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("jobsTitle")}</h1>
+          <h1 className="font-display text-4xl font-light sm:text-5xl">{t("jobsTitle")}</h1>
           <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{t("jobsIntro")}</p>
         </div>
         <Link
@@ -57,7 +57,7 @@ export default async function JobsPage({
               {t(`jobKinds.${j.kind}`)}
               {j.contract ? ` · ${t(`contracts.${j.contract}`)}` : ""}
             </p>
-            <h2 className="mt-1 font-display text-2xl font-semibold">
+            <h2 className="mt-1 section-title text-2xl">
               {j.title} {j.is_demo ? <DemoBadge /> : null}
             </h2>
             <p className="text-sm text-stone">

@@ -93,7 +93,7 @@ export default async function AdminProduct({
       >
         ← {t("products")}
       </Link>
-      <h1 className="mt-2 font-display text-4xl font-semibold">
+      <h1 className="mt-2 font-display text-4xl font-light">
         {isNew ? t("newProduct") : tr(p!.name, locale)}
       </h1>
       <div className="mt-6">

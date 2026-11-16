@@ -51,7 +51,7 @@ export default async function GamePage({ params }: Props) {
           {g.round_number ? ` · ${t("round", { n: g.round_number })}` : ""}
         </nav>
       ) : null}
-      <h1 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">
+      <h1 className="mt-2 font-display text-3xl font-light sm:text-4xl">
         {g.white_name} <span className="text-accent">{g.result.replace(/1\/2/g, "½")}</span>{" "}
         {g.black_name}
       </h1>

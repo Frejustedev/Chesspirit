@@ -13,14 +13,14 @@ export default async function MethodPage({ params }: { params: Promise<{ locale:
   const t = await getTranslations("method");
   return (
     <article className="mx-auto max-w-3xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <div className="prose-cs mt-6">
         <p>{t("p1")}</p>
         <h2>{t("formulaTitle")}</h2>
         <p>{t("p2")}</p>
       </div>
       <div
-        className="my-6 rounded-lg bg-ink p-5 text-center font-serif text-xl text-cream sm:text-2xl"
+        className="exterieur my-6 rounded-lg bg-paper p-5 text-center font-serif text-xl text-cream sm:text-2xl"
         aria-label={t("formulaAria")}
       >
         <p>

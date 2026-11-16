@@ -26,10 +26,10 @@ export default async function AdminSettings({ params }: { params: Promise<{ loca
   const canEdit = session.roles.includes("super_admin");
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       {!canEdit ? <p className="mt-2 text-stone">{t("superOnly")}</p> : null}
       <section className="mt-8">
-        <h2 className="font-display text-2xl font-semibold">{t("flags")}</h2>
+        <h2 className="section-title text-2xl">{t("flags")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(flags ?? []).map((f) => (
             <li key={f.key} className="flex flex-wrap items-center gap-3 py-3">
@@ -43,7 +43,7 @@ export default async function AdminSettings({ params }: { params: Promise<{ loca
         </ul>
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("countries")}</h2>
+        <h2 className="section-title text-2xl">{t("countries")}</h2>
         <p className="mt-1 text-sm text-stone">{t("countriesHelp")}</p>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(countries ?? []).map((c) => (
@@ -68,7 +68,7 @@ export default async function AdminSettings({ params }: { params: Promise<{ loca
         </ul>
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("settings")}</h2>
+        <h2 className="section-title text-2xl">{t("settings")}</h2>
         <p className="mt-1 text-sm text-stone">{t("settingsHelp")}</p>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(settings ?? []).map((s) => (

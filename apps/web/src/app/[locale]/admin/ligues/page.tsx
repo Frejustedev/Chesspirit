@@ -87,7 +87,7 @@ export default async function AdminLeagues({
   );
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
       <div className="mt-6 flex flex-wrap items-start gap-6">
         <div className="min-w-0 flex-1">
           <SeasonPicker
@@ -102,7 +102,7 @@ export default async function AdminLeagues({
       {season ? (
         <>
           <section className="mt-8">
-            <h2 className="font-display text-2xl font-semibold">
+            <h2 className="section-title text-2xl">
               {season.name} · {formatDate(season.starts_on, locale)} →{" "}
               {formatDate(season.ends_on, locale)}
             </h2>
@@ -121,7 +121,7 @@ export default async function AdminLeagues({
           </section>
 
           <section className="mt-10">
-            <h2 className="font-display text-2xl font-semibold">{t("leagues")}</h2>
+            <h2 className="section-title text-2xl">{t("leagues")}</h2>
             <ul className="mt-3 space-y-3">
               {sorted.map((l) => (
                 <li key={l.id} className="rounded-lg border border-line p-4">
@@ -180,7 +180,7 @@ export default async function AdminLeagues({
           </section>
 
           <section className="mt-10">
-            <h2 className="font-display text-2xl font-semibold">{t("movements")}</h2>
+            <h2 className="section-title text-2xl">{t("movements")}</h2>
             <p className="mt-1 text-sm text-stone">{t("movementsHelp")}</p>
             <ul className="mt-3 space-y-2">
               {(["classical", "rapid", "blitz"] as const).map((c) => {
@@ -212,7 +212,7 @@ export default async function AdminLeagues({
           </section>
 
           <section className="mt-10">
-            <h2 className="font-display text-2xl font-semibold">{t("postponements")}</h2>
+            <h2 className="section-title text-2xl">{t("postponements")}</h2>
             <ul className="mt-3 space-y-2">
               {(postponements ?? [])
                 .filter((p) => leagueIds.includes(p.pairings?.tournaments?.league_id ?? ""))
@@ -237,7 +237,7 @@ export default async function AdminLeagues({
           </section>
 
           <section className="mt-10">
-            <h2 className="font-display text-2xl font-semibold">{tt("title")}</h2>
+            <h2 className="section-title text-2xl">{tt("title")}</h2>
             <ul className="mt-3 space-y-2">
               {(stages ?? []).map((s) => (
                 <StageRow

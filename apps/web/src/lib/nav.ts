@@ -115,6 +115,68 @@ export const LEGAL_NAV: NavItem[] = [
   { key: "rules", href: "/legal/reglement-tournois" },
 ];
 
+/** Lettre de colonne de chaque rubrique, de a à h, comme sur la rangée de départ de l'accueil. */
+export const FILES = "abcdefgh";
+
+/** Pages rattachées à une rubrique sans figurer dans son menu. */
+const ATTACHED: Record<string, string> = {
+  "/parties": "competitions",
+  "/billet": "competitions",
+  "/arbitrage": "competitions",
+  "/joueurs": "rankings",
+  "/membre": "community",
+};
+
+/** Zones hors des huit rubriques, nommées dans le titre courant. */
+const AREAS: Record<string, PageArea> = {
+  "/admin": "admin",
+  "/compte": "account",
+  "/connexion": "account",
+  "/legal": "legal",
+  "/a-propos": "info",
+  "/contact": "info",
+  "/faq": "info",
+  "/recherche": "search",
+};
+
+export type PageArea = "admin" | "account" | "legal" | "info" | "search";
+
+export type PageLocation = {
+  /** Rubrique (une des huit), avec sa lettre de colonne. */
+  section: { key: string; href: string; file: string } | null;
+  /** Page de la rubrique ou d'information la plus proche (clé de `nav.items`). */
+  item: NavItem | null;
+  /** Zone hors rubrique (administration, espace personnel…). */
+  area: PageArea | null;
+};
+
+const under = (path: string, href: string) => path === href || path.startsWith(`${href}/`);
+
+/** Situe une page (chemin sans préfixe de langue) dans l'arborescence, pour le titre courant. */
+export function locatePage(pathname: string): PageLocation {
+  const path = pathname.replace(/[?#].*$/, "").replace(/\/+$/, "") || "/";
+  const longest = (items: NavItem[]) =>
+    items.filter((i) => under(path, i.href)).sort((a, b) => b.href.length - a.href.length)[0] ??
+    null;
+
+  const attached = Object.entries(ATTACHED).find(([href]) => under(path, href))?.[1];
+  const index = NAV.findIndex((s) => under(path, s.href) || s.key === attached);
+  if (index >= 0) {
+    const s = NAV[index]!;
+    return {
+      section: { key: s.key, href: s.href, file: FILES[index]! },
+      item: longest(s.items),
+      area: null,
+    };
+  }
+  const area = Object.entries(AREAS).find(([href]) => under(path, href))?.[1] ?? null;
+  return {
+    section: null,
+    item: longest([...SECONDARY_NAV, ...LEGAL_NAV]),
+    area,
+  };
+}
+
 /** Toutes les URL connues de l'arborescence (pour la page « en préparation »). */
 export const ALL_NAV_HREFS = new Set<string>([
   ...NAV.flatMap((s) => [s.href, ...s.items.map((i) => i.href)]),

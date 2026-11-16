@@ -5,12 +5,11 @@ import { createPortal } from "react-dom";
 import { Link, usePathname } from "@/i18n/navigation";
 import { IconArrow, IconClose, IconMenu } from "@/components/icons";
 import { Logo } from "@/components/logo";
+import { FILES } from "@/lib/nav";
 import { LocaleSwitch } from "./locale-switch";
 
 type Item = { href: string; label: string };
 type Section = Item & { key: string; items: Item[] };
-
-const FILES = "abcdefgh";
 
 /**
  * Menu complet du site : les huit rubriques et toutes leurs pages d'un seul coup d'œil,
@@ -76,7 +75,8 @@ export function SiteMenu({
               aria-label={labels.title}
               className="fixed inset-0 z-50 flex animate-[rise_300ms_var(--ease-out-soft)_both] flex-col bg-paper"
             >
-              <div className="border-b border-line">
+              {/* Bandeau de couverture, puis le sommaire sur papier crème. */}
+              <div className="exterieur border-b border-line bg-paper">
                 <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:h-[72px] lg:px-6">
                   <Link href="/" className="text-[1.65rem] leading-none lg:text-[1.8rem]">
                     <Logo />
@@ -98,12 +98,10 @@ export function SiteMenu({
               <div className="flex-1 overflow-y-auto">
                 <div className="mx-auto max-w-7xl px-4 pb-12 pt-6 lg:px-6 lg:pt-10">
                   {next ? (
-                    <div className="flex flex-col gap-4 rounded-lg border border-gold/40 bg-gold-soft/40 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+                    <div className="callout-cs flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                       <div>
-                        <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                          {labels.next}
-                        </p>
-                        <p className="mt-1 font-display text-2xl font-semibold leading-tight">
+                        <p className="label-cs text-xs">{labels.next}</p>
+                        <p className="mt-1 font-display text-2xl font-light leading-tight">
                           {next.name}
                         </p>
                         <p className="mt-0.5 text-stone first-letter:uppercase">{next.date}</p>
@@ -133,23 +131,19 @@ export function SiteMenu({
                         <li key={s.key}>
                           <Link
                             href={s.href}
-                            className="group flex items-center gap-3 border-b border-line pb-2"
+                            className="group flex items-baseline gap-3 border-b border-line pb-2"
                           >
                             <span
                               aria-hidden
-                              className={`grid size-7 shrink-0 place-items-center rounded-sm font-sans text-sm font-bold ${
-                                i % 2 === 0
-                                  ? "bg-square-light text-square-dark"
-                                  : "bg-square-dark text-square-light"
-                              }`}
+                              className="w-6 shrink-0 font-display text-3xl font-light italic leading-none text-gold"
                             >
                               {FILES[i]}
                             </span>
-                            <span className="font-display text-2xl font-semibold group-hover:text-accent">
+                            <span className="font-display text-2xl font-light group-hover:text-bordeaux">
                               {s.label}
                             </span>
                           </Link>
-                          <ul className="mt-2 grid grid-cols-2 gap-x-4 sm:grid-cols-1">
+                          <ul className="mt-2 grid grid-cols-2 gap-x-4 pl-9 sm:grid-cols-1">
                             {s.items.map((it) => (
                               <li key={it.href}>
                                 <Link
@@ -171,9 +165,7 @@ export function SiteMenu({
                     <MenuGroup title={labels.about} items={info} />
                     <MenuGroup title={labels.mySpace} items={mine} />
                     <div>
-                      <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-stone">
-                        {labels.language}
-                      </p>
+                      <p className="label-cs text-xs">{labels.language}</p>
                       <div className="mt-3">
                         <LocaleSwitch />
                       </div>
@@ -192,9 +184,7 @@ export function SiteMenu({
 function MenuGroup({ title, items }: { title: string; items: Item[] }) {
   return (
     <div>
-      <p className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-stone">
-        {title}
-      </p>
+      <p className="label-cs text-xs">{title}</p>
       <ul className="mt-2">
         {items.map((it) => (
           <li key={it.href}>

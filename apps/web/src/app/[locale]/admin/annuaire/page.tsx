@@ -44,10 +44,10 @@ export default async function AdminDirectory({ params }: { params: Promise<{ loc
   ]);
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light">{t("title")}</h1>
 
       <section className="mt-8">
-        <h2 className="font-display text-2xl font-semibold">{t("claims")}</h2>
+        <h2 className="section-title text-2xl">{t("claims")}</h2>
         <ul className="mt-3 space-y-3">
           {(claims ?? []).map((c) => (
             <li key={c.id} className="rounded-md border border-line p-3">
@@ -69,7 +69,7 @@ export default async function AdminDirectory({ params }: { params: Promise<{ loc
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("structures")}</h2>
+        <h2 className="section-title text-2xl">{t("structures")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(orgs ?? []).map((o) => (
             <li key={o.id} className="flex flex-wrap items-center gap-3 py-3">
@@ -96,7 +96,7 @@ export default async function AdminDirectory({ params }: { params: Promise<{ loc
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("jobs")}</h2>
+        <h2 className="section-title text-2xl">{t("jobs")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(jobs ?? []).map((j) => (
             <li key={j.id} className="flex flex-wrap items-center gap-3 py-3">
@@ -112,7 +112,7 @@ export default async function AdminDirectory({ params }: { params: Promise<{ loc
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("arbiters")}</h2>
+        <h2 className="section-title text-2xl">{t("arbiters")}</h2>
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {(arbiters ?? []).map((a) => (
             <li key={a.profile_id} className="flex flex-wrap items-center gap-3 py-3">

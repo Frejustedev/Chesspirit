@@ -40,7 +40,7 @@ export default async function BadgesPage({ params }: { params: Promise<{ locale:
         <p className="mt-8 text-stone">{t("signIn")}</p>
       )}
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("levels")}</h2>
+        <h2 className="section-title text-2xl">{t("levels")}</h2>
         <ol className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {LEVELS.map((l) => (
             <li
@@ -63,7 +63,7 @@ export default async function BadgesPage({ params }: { params: Promise<{ locale:
         </ul>
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("all")}</h2>
+        <h2 className="section-title text-2xl">{t("all")}</h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {(all ?? []).map((b) => (
             <li
@@ -83,7 +83,7 @@ export default async function BadgesPage({ params }: { params: Promise<{ locale:
         </ul>
       </section>
       <section className="mt-10">
-        <h2 className="font-display text-2xl font-semibold">{t("passport")}</h2>
+        <h2 className="section-title text-2xl">{t("passport")}</h2>
         <p className="mt-1 text-stone">{t("passportIntro")}</p>
         {tourBadges.length ? (
           <ul className="mt-3 flex flex-wrap gap-2">

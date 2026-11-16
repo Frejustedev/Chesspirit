@@ -262,7 +262,7 @@ export function CheckoutForm({
       </div>
 
       <aside className="h-fit space-y-4 rounded-lg border border-line p-5">
-        <h2 className="font-display text-2xl font-semibold">{t("summary")}</h2>
+        <h2 className="section-title text-2xl">{t("summary")}</h2>
         <div>
           <label htmlFor="promo" className="block text-sm font-semibold">
             {t("promo")}

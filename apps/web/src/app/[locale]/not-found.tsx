@@ -7,7 +7,7 @@ export default async function NotFound() {
   return (
     <div className="mx-auto max-w-xl px-4 py-20 text-center">
       <PieceSvg kind="k" color="w" className="mx-auto size-20 rotate-90" />
-      <h1 className="mt-6 font-display text-5xl font-semibold">{t("notFoundTitle")}</h1>
+      <h1 className="mt-6 font-display text-5xl font-light">{t("notFoundTitle")}</h1>
       <p className="mt-3 font-serif text-xl text-stone">{t("notFoundText")}</p>
       <Link
         href="/"

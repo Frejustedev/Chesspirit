@@ -93,7 +93,7 @@ export default async function SearchPage({
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 lg:px-6">
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{t("title")}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{t("title")}</h1>
       <form action="/recherche" role="search" className="mt-6 flex gap-2">
         <label htmlFor="q" className="sr-only">
           {t("label")}
@@ -109,7 +109,7 @@ export default async function SearchPage({
         />
         <button
           type="submit"
-          className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-gold-deep"
+          className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gold px-5 font-semibold text-onaccent hover:bg-gold-bright"
         >
           <IconSearch className="size-5" />
           <span className="hidden sm:inline">{t("submit")}</span>

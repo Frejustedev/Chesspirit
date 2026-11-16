@@ -42,7 +42,7 @@ export function CommunityHeader({
 }) {
   return (
     <>
-      <h1 className="font-display text-4xl font-semibold sm:text-5xl">{title}</h1>
+      <h1 className="font-display text-4xl font-light sm:text-5xl">{title}</h1>
       {intro ? <p className="mt-3 max-w-2xl font-serif text-xl text-stone">{intro}</p> : null}
       <div className="mt-6">{children}</div>
     </>
